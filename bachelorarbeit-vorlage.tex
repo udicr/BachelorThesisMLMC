@@ -21,6 +21,7 @@
 \usepackage{latexsym}
 \usepackage{amsmath,amssymb,amsthm}
 \usepackage{setspace}
+\usepackage{url}
 
 
 
@@ -45,6 +46,9 @@
 \newcommand{\Z}{\mathbb{Z}} % ganze
 \newcommand{\N}{\mathbb{N}} % natuerliche
 
+% eigene Definitionen
+\DeclareMathOperator{\lTG}{(TG)}
+\DeclareMathOperator{\dive}{div}
 
 
 \begin{document}
@@ -93,8 +97,21 @@
 
 \section{Einleitung}
 
-Some claim \cite{barth2013multilevel}
 
+Monte Carlo Methoden sind weit verbreitet und finden in verschiedenen Bereichen der Mathematik ihre Anwendung.
+Neben der numerischen Integration können sie unter anderem auch bei der Lösung von partiellen Differentialgleichungen auf Grundlage unsicherer Daten genutzt werden.
+So entstehende Problemstellungen fallen in das Gebiet der Uncertainty Quantification, einem 'Zusammentreffen der Wahrscheinlichkeitstheorie, Numerik, Statistik und der echten Welt' \cite{sullivan2015introduction}.
+Allerdings besitzt die Monte Carlo Methode einen entscheidenden Nachteil, will man sie im Zusammenhang unsicherer Ausgangsdaten für die Lösung von partiellen Differentialgleichungen nutzen, sie konvergiert im Normalfall relativ langsam und das (numerische) Lösen von PDE's ist oft sehr aufwändig.
+Es werden also unter Umständen sehr viele, sehr teure (Zufalls-)Samples benötigt, um ein vernünftiges Ergebnis zu erhalten. \newline
+Diese Thesis soll sich daher mit der Multilevel Monte Carlo Methode (im Folgenden MLMC Methode genannt) beschäftigen, welche an die Monte Carlo Methode angelehnt ist, aber durch die geschickte Auswertung der (Zufalls-Samples) deutliche Effizienzvorteile gegenüber der Standard Monte Carlo Methode besitzt.
+Die MLMC Methode soll, nach einer ausführlichen theoretischen Analyse auch praktisch auf das (lineare) Transportproblem angewandt werden. \newline
+Die Thesis ist dazu folgendermaßen unterteilt: 
+Abschnitt 2 sammelt verschiedene Grundlagen aus den Bereichen der Stochastik, der Analysis und Numerik partieller Differentialgleichungen, sowie einige Aspekte der (standard) Monte Carlo Methoden, welche auch der MLMC Methode als theoretischer Unterbau dienen soll. \newline
+In Abschnitt 3 wird anschließend die MLMC Methode an sich erklärt, ohne die Theorie hierbei allzu sehr auf die Anwendung auf das Transportproblem zu beschränken. \newline
+In Abschnitt 4 werden dann das (lineare) Transportproblem und das Potentialströmungsproblem beschrieben, welches wir lösen müssen, um an die entsprechenden Ausgangsdaten zu kommen. Anschließend wird die numerische Lösung der beiden Probleme mit Finite Elementen Methoden behandelt, bevor schließlich auf die Anwendung der MLMC Methode auf das Transportproblem mit unsicheren Ausgangsdaten am Beispiel der Permeabilität $\kappa$ eingegangen wird. \newline
+Der fünfte und letzte Abschnitt befasst sich mit konkreten Durchführung und Implementierung des zuvor theoretisch beleuchteten Problem innerhalb der parallelen Finte Elemente Softwarebibliothek "M++" \cite{siteM++},
+welche am Institut für Angewandte und Numerische Mathematik 3 (KIT) von Herrn Prof. Dr. C. Wieners entwickelt wurde. \newline
+Am Schluss der Thesis steht eine kleine Zusammenfassung der bis dahin erarbeiteten Resultate und der Ausblick auf Möglichkeiten vielfältiger Art an diese in weiteren Arbeiten anzuknüpfen.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
  \newpage  % neuer Abschnitt auf neue Seite, kann auch entfallen
@@ -106,9 +123,14 @@ Some claim \cite{barth2013multilevel}
 \subsection{Monte Carlo Methoden}
 \section{Multilevel Monte Carlo Methode (MLMC)}
 \section{MLMC angewandt auf das Transportproblem}
+\subsection{Problemstellung}
+\subsection{Numerische Lösung des Potentialströmungsproblem}
+\subsection{Numerische Lösung des Transportproblem}
+\subsection{Anwendung der MLMC Methode auf das Transportproblem für unsichere Permeabilität $\kappa$ }
 \section{Beispiel/Experiment}
+\subsection{Konkretes Problem}
+\subsection{Ergebnisse}
 \section{Ausblick und Fazit}
-
 
   % Literaturverzeichnis (beginnt auf einer ungeraden Seite)
   \newpage
