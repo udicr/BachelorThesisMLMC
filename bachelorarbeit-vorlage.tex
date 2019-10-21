@@ -101,12 +101,12 @@
 
 
 Monte Carlo Methoden sind weit verbreitet und finden in verschiedenen Bereichen der Mathematik ihre Anwendung.
-Neben der numerischen Integration können sie unter anderem auch bei der Lösung von partiellen Differentialgleichungen auf Grundlage unsicherer Daten genutzt werden.
+Neben der numerischen Integration können sie unter anderem auch bei der Lösung von partiellen Differentialgleichungen in Situationen genutzt werden, in denen Teile der benötigten Daten, wie zum Beispiel Anfangs- und oder Randwerte, unsicher sind bzw. nicht zu Verfügung stehen.
 So entstehende Problemstellungen fallen in das Gebiet der Uncertainty Quantification, einem 'Zusammentreffen der Wahrscheinlichkeitstheorie, Numerik, Statistik und der echten Welt' \cite{sullivan2015introduction}.
-Allerdings besitzt die Monte Carlo Methode einen entscheidenden Nachteil, will man sie im Zusammenhang unsicherer Ausgangsdaten für die Lösung von partiellen Differentialgleichungen nutzen, sie konvergiert im Normalfall relativ langsam und das (numerische) Lösen von PDE's ist oft sehr aufwändig.
+Allerdings besitzt die Monte Carlo Methode einen entscheidenden Nachteil, will man sie im Zusammenhang unsicherer Ausgangsdaten für die Lösung von partiellen Differentialgleichungen nutzen, sie konvergiert im Normalfall relativ langsam und das (numerische) Lösen von PDE's ist oft sehr aufwendig.
 Es werden also unter Umständen sehr viele, sehr teure (Zufalls-)Samples benötigt, um ein vernünftiges Ergebnis zu erhalten. \newline
 Diese Thesis soll sich daher mit der Multilevel Monte Carlo Methode (im Folgenden MLMC Methode genannt) beschäftigen, welche an die Monte Carlo Methode angelehnt ist, aber durch die geschickte Auswertung der (Zufalls-Samples) deutliche Effizienzvorteile gegenüber der Standard Monte Carlo Methode besitzt.
-Die MLMC Methode soll, nach einer ausführlichen theoretischen Analyse auch praktisch auf das (lineare) Transportproblem angewandt werden.
+Die MLMC Methode soll nach einer ausführlichen theoretischen Analyse auch praktisch auf das (lineare) Transportproblem angewandt werden.
 Genauer soll für
 \begin{itemize}
 	\item ein beschränktes Gebiet $\mathbb{D} \subseteq \R^d$
@@ -138,9 +138,9 @@ Die Thesis ist dazu folgendermaßen unterteilt:\newline
 Abschnitt 2 sammelt verschiedene Grundlagen aus den Bereichen der Stochastik, der Analysis und Numerik partieller Differentialgleichungen, sowie einige Aspekte der (standard) Monte Carlo Methoden, welche auch der MLMC Methode als theoretischer Unterbau dienen soll. \newline
 In Abschnitt 3 wird anschließend die MLMC Methode an sich erklärt, ohne die Theorie hierbei allzu sehr auf die Anwendung auf das Transportproblem zu beschränken. \newline
 In Abschnitt 4 werden dann das (lineare) Transportproblem und das Potentialströmungsproblem beschrieben, welches wir lösen müssen, um an die entsprechenden Ausgangsdaten zu kommen. Anschließend wird die numerische Lösung der beiden Probleme mit Finite Elementen Methoden behandelt, bevor schließlich auf die Anwendung der MLMC Methode auf das Transportproblem mit unsicheren Ausgangsdaten am Beispiel der Permeabilität $\kappa$ eingegangen wird. \newline
-Der fünfte und letzte Abschnitt befasst sich mit konkreten Durchführung und Implementierung des zuvor theoretisch beleuchteten Problem innerhalb der parallelen Finte Elemente Softwarebibliothek "M++" \cite{siteM++},
+Der fünfte und letzte Abschnitt befasst sich mit konkreten Durchführung und Implementierung des zuvor theoretisch beleuchteten Problem innerhalb der parallelen Finite Elemente Softwarebibliothek "M++" \cite{siteM++},
 welche am Institut für Angewandte und Numerische Mathematik 3 (KIT) von Herrn Prof. Dr. C. Wieners entwickelt wurde. \newline
-Am Schluss der Thesis steht eine kleine Zusammenfassung der bis dahin erarbeiteten Resultate und der Ausblick auf Möglichkeiten vielfältiger Art an diese in weiteren Arbeiten anzuknüpfen.
+Am Schluss der Thesis steht eine kleine Zusammenfassung der bis dahin erarbeiteten Resultate und der Ausblick auf Möglichkeiten vielfältiger Art an, diese in weiteren Arbeiten anzuknüpfen.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
  \newpage  % neuer Abschnitt auf neue Seite, kann auch entfallen
@@ -161,7 +161,7 @@ Bevor wir uns allerdings dem eigentlichen Transportproblem widmen können, müss
 Sei hierfür $p: D \rightarrow \R$ der hydrostatische Druck, $\kappa: D \rightarrow (\R_{\text{sym}})^{d \times d}$ der Permeabilitätstensor und $G=(0,0,p_0 g_0)^{\top}$. 
 Wie bereits in der Einleitung angedeutet, kann der Fluss des Regenwassers durch das Darcy-Gesetz $q=-\kappa(\nabla p + G)$ modelliert werden.
 Durch $u(x) := p(x) + p_0 g_0 x_3$ vereinfacht sich das Darcy-Gesetz zu $q=-\kappa \nabla u$.\newline
-Nehmen wir die physikalische Annahme hinzu, dass der Fluss $q$ "quellfrei" sein soll, also an keiner Stelle Masse verschwinden oder erscheinen kann, erhalten wir das Potentialströmungsproblem:
+Nehmen wir die physikalische Annahme hinzu, dass der Fluss $q$ 'quellfrei' sein soll, also an keiner Stelle Masse verschwinden oder erscheinen kann, erhalten wir das Potentialströmungsproblem:
 \begin{gather*}
 \text{Bestimme } u:\overline{\mathbb{D}} \to \R \text{ und } q: \overline{\mathbb{D}} \to \R^2 \text{ mit } \\
 \text{(PS)}\begin{cases}
@@ -182,8 +182,8 @@ $.
 Dabei ist $n(z)$ der äußere Normalenvektor im (Rand-)Punkt $z$.
 Wir bedienen uns wieder der Physik und fordern die Erfüllung der Bilanzgleichung
 \begin{align*}
-	\forall K \subseteq \mathbb{D} , t\in \mathbb{T} : \frac{d}{dt} \int_K \rho(x,t) \, \mathrm{d}x + \int_{\partial K} \rho(x,t)q(x)\cdot n(x) \, \mathrm{d}a = 0
-\end{align*}.
+	\forall K \subseteq \mathbb{D} , t\in \mathbb{T} : \frac{d}{dt} \int_K \rho(x,t) \, \mathrm{d}x + \int_{\partial K} \rho(x,t)q(x)\cdot n(x) \, \mathrm{d}a = 0.
+\end{align*}
 Wenden wir für ein zulässiges $K \subseteq \mathbb{D}$ und $\rho,q \in C^1(\mathbb{D})$ den Satz von Gauß an erhalten wir
 \begin{align*}
 	\int_K \partial_t \rho(x,t) + \dive (\rho q)(x,t) \, \mathrm{d}x = 0
@@ -202,7 +202,7 @@ Mit den entsprechenden Rand- und Anfangswerten erhalten wir so:
 \rho(x,0) = \rho_0(x) &\text{ auf } \mathbb{D}.
 \end{cases}
 \end{gather*}
-Nun ist es allerdings so, dass wir bereits bei der Lösung des Potentialströmungsproblems davon ausgehen sämtliche benötigten Randwerte sowie (vor allem) den Permeabilitätstensor $\kappa$ exakt für das gesamte Gebiet $\mathbb{D}$ kennen.
+Nun ist es allerdings so, dass wir bereits bei der Lösung des Potentialströmungsproblems davon ausgehen, sämtliche benötigten Randwerte sowie (vor allem) den Permeabilitätstensor $\kappa$ exakt für das gesamte Gebiet $\mathbb{D}$ zu kennen.
 Klar sollte jedoch sein, dass dies in der Realität eigentlich nie der Fall ist.
 Wir wollen deshalb zusätzlich die Permeabilität $\kappa$ mit Mitteln der Stochastik modellieren.
 Sei dazu $(\Omega, \mathcal{A},\mathbb{P})$ ein Wahrscheinlichkeitsraum und ab nun $d=2$, also $\mathbb{D} \subseteq \R^2$.
@@ -235,7 +235,7 @@ Unser so entstehendes Problem fällt somit in den Bereich der Uncertainty Quanti
 	\rho_0: \mathbb{D} \to \R_{\geq0} \\
 	\text{ wobei } \partial \mathbb{D} = \Gamma_{\text{D}} \dot{\cup} \Gamma_{\text{N}}  \text{ und }  \Gamma_{\text{in}} \coloneqq  \{ z \in \partial \mathbb{D}: q(z)\cdot n(z) \leq 0 \} \subset  \partial \mathbb{D}
 \end{gather*}
-Dabei stellen wir uns die Aufgabe den Erwartungswert eines gegebenen Zielfunktionals $Q(\rho)$ zu berechnen, etwa dem Ausfluss der transportierten Substanz über den Rand. An dieser Stelle können wir dann, nachdem wir uns in den nächsten zwei Unterabschnitten damit beschäftigt haben, wie wir obige Probleme numerisch lösen, die MLMC Methode nutzen, um diesen Erwartungswert zu berechnen. 
+Dabei stellen wir uns die Aufgabe, den Erwartungswert eines gegebenen Zielfunktionals $Q(\rho)$ zu berechnen, etwa dem Ausfluss der transportierten Substanz über den Rand. An dieser Stelle können wir dann, nachdem wir uns in den nächsten zwei Unterabschnitten damit beschäftigt haben, wie wir obige Probleme numerisch lösen, die MLMC Methode nutzen, um diesen Erwartungswert zu berechnen. 
  
 \subsection{Numerische Lösung des Potentialströmungsproblem}
 \subsection{Numerische Lösung des Transportproblem}
