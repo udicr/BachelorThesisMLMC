@@ -1,0 +1,35 @@
+% !TeX root = bachelorarbeit.tex
+Sei $\mathbb{D} \subseteq \R^d$ für $d\in \N$
+\begin{Definition}(Einige Operatoren)
+	\begin{enumerate}
+		\item Für $F: \R^d \to \R^d$ ist die \underline{Divergenz} von F definiert durch
+			\begin{align*}
+				\dive F = \nabla \cdot F \coloneqq \sum_{i=1}^{d} \frac{\partial F_i}{ \partial x_i}
+			\end{align*}
+		\item Für $f: \R^d \to \R$ und $\alpha = (\alpha_1,\dots,\alpha_d) \in \N^d$ ist die partielle Ableitung von $f$ nach dem Multiindex $\alpha$ definiert durch
+			\begin{align*}
+				D^{\alpha}f \coloneqq 
+				\frac{\partial^{|\alpha|} f}{\partial x_1 ^{\alpha_1} \cdots  \partial x_d^{\alpha_d} } 
+				=\frac{\partial^{\alpha_1+\dots +\alpha_d} f}{\partial x_1 ^{\alpha_1} \cdots  \partial x_d^{\alpha_d} } 
+			\end{align*}
+	\end{enumerate}
+\end{Definition}
+\begin{Definition}(Einige Funktionenräume)
+	todo C,C1,Ccinf,Lp, L1loc
+\end{Definition}
+\begin{Definition}(schwache Ableitung)\\
+	Sei $u \in L_{\text{loc}}^1$. Wir sagen v besitzt eine schwache Ableitung zum Multiindex $\alpha$, falls eine Funktion $v \in L_{\text{loc}}^1$ existiert, mit 
+	\begin{align*}
+		\int_{\mathbb{D}} u D^{\alpha} \Phi \dx = (-1)^{|\alpha|} \int_{\mathbb{D}} v \Phi \dx \qquad \forall \Phi \in C_0^{\infty}(\mathbb{D})
+	\end{align*}
+	In diesem Zusammenhang nennen wir $\Phi$ auch Testfunktion und wir definieren $D^{\alpha} u \coloneqq v$ als die schwache Ableitung von $u$ zum Multiindex $\alpha$.
+\end{Definition}
+\begin{Definition}(Sobolevräume)
+	todo RWP 
+\end{Definition}
+\begin{Satz} (Satz von Gauß)
+	todo RWP/FEM
+\end{Satz}
+\begin{Satz} (Rechnen mit Differentialoperatoren)
+	todo FEM
+\end{Satz}
