@@ -1,0 +1,85 @@
+% !TeX root = bachelorarbeit.tex
+\subsubsection{deterministisches Problem}
+Sei $\mathbb{T} = [0,T]$ ein Zeitintervall für $T>0$ und $\mathbb{D} \subset \R^d , d \in \N$ ein beschränktes, offenes und konvexes L-Gebiet mit Rand $ \partial \mathbb{D} = \Gamma_{\text{D}}  \dot{\cup} \Gamma_{\text{N}} $. 
+Wie bereits in der Einleitung beschrieben, wollen wir den Transport eines Stoffes in einer porösen Bodenschicht auf Grundlage eines vorhandenen Flusses beschreiben. 
+Als modellhaftes Problem soll uns hierfür die Regenwasserversickerung dienen: In einer porösen Bodenschicht befindet sich zum Zeitpunkt $t=0$ ein Stoff (beispielsweise Öl) in einer gegebenen Anfangskonzentration und -verteilung. Nun sickert Regenwasser in diese poröse Bodenschicht ein. Zusätzlich wollen wir weitere Zuflüsse des Fremdstoffes über den Einflussrand $\Gamma_{\text{in}} \subset \partial \mathbb{D}$ zulassen.
+Wir sind letztendlich an der Konzentration dieser Substanz an einer Stelle $x \in \overline{\mathbb{D}}$ zu einem Zeitpunkt $t \in \mathbb{T}$ interessiert. \newline
+Bevor wir uns allerdings dem eigentlichen Transportproblem widmen können, müssen wir zunächst das Flussvektorfeld $q: \overline{\mathbb{D}} \rightarrow \R^d$ berechnen. \newline
+Sei hierfür $p: D \rightarrow \R$ der hydrostatische Druck, $\kappa: D \rightarrow (\R_{\text{sym}})^{d \times d}$ der Permeabilitätstensor und $G=(0,0,p_0 g_0)^{\top}$. 
+Wie bereits in der Einleitung angedeutet, kann der Fluss des Regenwassers durch das Darcy-Gesetz $q=-\kappa(\nabla p + G)$ modelliert werden.
+Durch $u(x) := p(x) + p_0 g_0 x_3$ vereinfacht sich das Darcy-Gesetz zu $q=-\kappa \nabla u$.\newline
+Nehmen wir die physikalische Annahme hinzu, dass der Fluss $q$ 'quellfrei' sein soll, also an keiner Stelle Masse verschwinden oder erscheinen kann, erhalten wir das Potentialströmungsproblem:
+\begin{gather*}
+\text{Bestimme } u:\overline{\mathbb{D}} \to \R \text{ und } q: \overline{\mathbb{D}} \to \R^2 \text{ mit } \\
+\text{(PS)}\begin{cases}
+\dive q &= 0 \text{ in } \mathbb{D}\\
+q &= - \kappa \nabla u \text{ in } \mathbb{D}\\
+u &= u_D \text{ auf } \Gamma_D \\
+-q \cdot n &= g_N \text{ auf } \Gamma_N \\
+\end{cases}
+\end{gather*} 
+\begin{Bemerkung}
+	Wir wollen aus verschiedenen Gründen direkt die sogenannte gemischte Formulierung des Potentialströmungsproblem nutzen. Näheres dazu findet sich im nächsten Abschnitt.
+\end{Bemerkung}
+Anschließend suchen wir die Dichteverteilung $\rho: \mathbb{D} \times \mathbb{T} \rightarrow \R_{\geq0} $ einer transportierten Substanz (in unserem Modell das Öl).  \newline
+Gegeben sei dazu die Anfangsverteilung $\rho_0: \mathbb{D} \rightarrow \R_{\geq0}$ und der Einfluss der Substanz über die Zeit
+$
+\rho_{\text{in}} : \Gamma_{\text{in}} \times \mathbb{T} \rightarrow \R_{\geq0} \text{ mit }  \Gamma_{\text{in}} \coloneqq  \{ z \in \partial \mathbb{D}: q(z)\cdot n(z) \leq 0 \} \subset  \partial \mathbb{D}
+$.
+Dabei ist $n(z)$ der äußere Normalenvektor im (Rand-)Punkt $z$.
+Wir bedienen uns wieder der Physik und fordern die Erfüllung der Bilanzgleichung
+\begin{align*}
+\forall K \subseteq \mathbb{D} , t\in \mathbb{T} : \frac{d}{dt} \int_K \rho(x,t) \, \mathrm{d}x + \int_{\partial K} \rho(x,t)q(x)\cdot n(x) \, \mathrm{d}a = 0.
+\end{align*}
+Wenden wir für ein zulässiges $K \subseteq \mathbb{D}$ und $\rho,q \in C^1(\mathbb{D})$ den Satz von Gauß an erhalten wir
+\begin{align*}
+\int_K \partial_t \rho(x,t) + \dive (\rho q)(x,t) \, \mathrm{d}x = 0
+\end{align*}
+und können so die (lineare) Transportgleichung ableiten:
+\begin{align*}
+\partial_t \rho + \dive (\rho q) = 0 \text{ in } \mathbb{D} \times (0,T]
+\end{align*}
+Mit den entsprechenden Rand- und Anfangswerten erhalten wir so:
+\begin{gather*}
+\text{Bestimme } \rho: \overline{\mathbb{D}} \times \mathbb{T} \to \R_{\geq 0} \text{, sodass}\\
+(\text{TP})
+\begin{cases}
+\partial_t \rho + \dive(\rho q) = 0 &\text{ in } \mathbb{D} \times (0,T)\\
+\rho(x,t) = \rho_{\text{in}}(x,t) &\text{ auf } \Gamma_{\text{in}} \times (0,T)\\
+\rho(x,0) = \rho_0(x) &\text{ auf } \mathbb{D}.
+\end{cases}
+\end{gather*}
+\subsubsection{probabilistisches Problem}
+Nun ist es allerdings so, dass wir bereits bei der Lösung des Potentialströmungsproblems davon ausgehen, sämtliche benötigten Randwerte sowie (vor allem) den Permeabilitätstensor $\kappa$ exakt für das gesamte Gebiet $\mathbb{D}$ zu kennen.
+Wir wollen uns von dieser durchaus starken Annahme lösen und deshalb zusätzlich die Permeabilität $\kappa$ mit Mitteln der Stochastik modellieren.
+Sei dazu $(\Omega, \mathcal{A},\mathbb{P})$ ein Wahrscheinlichkeitsraum und ab nun $d=2$, also $\mathbb{D} \subseteq \R^2$.
+\begin{Bemerkung}
+	Grundsätzlich funktionieren die vorgestellten Verfahren auch für $d=3$, wir wollen uns aber der Anschaulichkeit halber auf zwei Dimensionen beschränken. Das so betrachtete Gebiet $\mathbb{D}$ lässt sich so z.B. als Querschnitt einer Bodenschicht interpretieren.
+\end{Bemerkung} 
+Weiter sei nun $\kappa (\cdot,x): \Omega \rightarrow \R_{\geq0}$ die (vom Zufall abhängige) Permeabilität.
+Wie schon an anderer Stelle (z.B. in \cite{kumar2018multigrid} oder cite) wollen wir die Permeabilität als lognormal-Feld (TODO) modellieren.
+Unser so entstehendes Problem fällt somit in den Bereich der Uncertainty Quantification und lautet (TODO SPACING): 
+\begin{align*}
+&\text{Für } \omega \in \Omega \text{, bestimme } u(\omega,\cdot):\overline{\mathbb{D}} \to \R \text{ und } q(\omega, \cdot): \overline{\mathbb{D}} \to \R^2 \text{ mit } \\
+&\text{(PS)}
+\begin{cases}
+\dive (q(\omega,x)) &= 0  \text{, für } x \in \mathbb{ D}\\  
+q(\omega,x) &= - \kappa(\omega) \nabla u(\omega,x)  \text{, für } x \in \mathbb{D}\\
+-q(\omega,x) \cdot n &= g_N(x)  \text{, für } x \in \Gamma_N \\
+u(\omega,x) &= u_D(x)  \text{, für } x \in \Gamma_D \\
+\end{cases} \\
+&\text{Für } \omega \in \Omega \text{ und }q(\omega,\cdot): \overline{\mathbb{D}} \to \R \text{, bestimme }\rho(\omega,\cdot): \overline{\mathbb{D}} \times \mathbb{T} \to \R_{\geq 0} \text{ mit} \\
+&\text{(TP)} 
+\begin{cases}
+\partial_t \rho (\omega, x, t) + \dive(\rho(\omega,x,t)q(\omega,x)) &= 0 \text{, für } (x,t) \in \mathbb{D} \times (0,T] \\
+\rho(\omega,x,t) &= \rho_{\text{in}}(x,t) \text{, für } (x,t) \in \Gamma_{\text{in}} \times \mathbb{T} \\
+\rho(\omega,x,0)  &= \rho_0(x) \text{, für } x \in  \mathbb{D}
+\end{cases} \\
+&\text{ für die Anfangs- und Randwerte: } \\ 
+&g_N: \Gamma_{\text{N}} \to \R \\
+&u_D: \Gamma_{\text{D}} \to \R \\
+&\rho_{\text{in}}: \Gamma_{\text{in}} \times \mathbb{T} \to \R_{\geq0} \\
+&\rho_0: \mathbb{D} \to \R_{\geq0} \\
+&\text{ wobei } \partial \mathbb{D} = \Gamma_{\text{D}} \dot{\cup} \Gamma_{\text{N}}  \text{ und }  \Gamma_{\text{in}} \coloneqq  \{ z \in \partial \mathbb{D}: q(z)\cdot n(z) \leq 0 \} \subset  \partial \mathbb{D}
+\end{align*}
+Dabei stellen wir uns die Aufgabe, den Erwartungswert eines gegebenen Zielfunktionals $Q(\rho)$ zu berechnen, etwa dem Ausfluss der transportierten Substanz über den Rand. An dieser Stelle können wir dann, nachdem wir uns in den nächsten zwei Unterabschnitten damit beschäftigt haben, wie wir obige Probleme numerisch lösen, die MLMC Methode nutzen, um diesen Erwartungswert zu berechnen. 

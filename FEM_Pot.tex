@@ -1,0 +1,11 @@
+% !TeX root = bachelorarbeit.tex
+\begin{Bemerkung}
+	Die beiden folgenden Abschnitte bauen im Wesentlichen auf den beiden Vorlesungen 'Einführung in das Wissenschaftliche Rechnen' (SS 2019) und 'Finite Elemente Methoden' (WS 2019/2020) von Herrn Prof. Dr. Wieners auf. Dem entsprechend sind als Quellen neben \cite{brenner2007mathematical} und 
+	\cite{braess2013finite} vor allem die Mitschriebe zu den oben genannten Vorlesungen, sowie die Berichte zum Rechnerpraktikum mit M++ \cite{siteM++}
+\end{Bemerkung}
+Wie bereits in obigem Abschnitt erwähnt, sollen sich die nächsten beiden Abschnitte damit beschäftigen, wie wir die oben beschriebenen Probleme für ein festes $\omega \in \Omega$ numerisch lösen können. 
+Ein Überblick über alle möglichen Verfahren, welche zur Lösung der beiden Probleme geeignet sind, würde den Rahmen dieser Thesis sprengen. Wir wollen deshalb im Folgenden auf eine Möglichkeit eingehen diese Berechnung numerisch durchzuführen. Insbesondere werden dabei jene Verfahren beschrieben, welche wir auch später innerhalb der MLMC Methode in M++ nutzen wollen.
+Da wir in diesen beiden Abschnitte $\omega \in \Omega$ ohnehin fest halten, genügt es zudem das deterministische Problem zu betrachten. \newline
+Sowohl das hybride Finite Elemente Verfahren, welches wir zur Lösung des Potentialströmungsproblem nutzen wollen, als auch das Discontinuous Galerkin Vefahren, mit dessen Hilfe wir das Transportproblem lösen wollen, bauen auf der Finite Elemente Theorie auf. 
+Diese ist im Wesentlichen in der zweiten Hälfte des 20. Jahrhunderts entstanden, ist aber bis heute in praktischer wie auch in theoretischer Sicht aktuell.
+Die Grundidee ist hierbei die vorliegenden Rand-Anfangswertaufgaben in einem passenden endlichen Unterraum zu lösen. Dabei löst man sich auf analytischer Seite zunächst oft von einzelnen Regularitäts- und Differenzierbarkeitsbedingungen und führt einen sogenannten schwachen Lösungsbegriff ein (vergleiche Abschnitt 2.1). Statt nun aber solch eine schwache Lösung in einem unendlich dimensionalen Funktionenraum, wie beispielsweise in den Sobolevräumen $W^{1,2}(\mathbb{D})$ oder $W_0^{1,2}(\mathbb{D})$ zu bestimmen, zieht man sich auf endliche Unterräume, genauer sogenannte Finite-Elemente-Räume, zurück. 
