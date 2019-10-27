@@ -52,15 +52,51 @@ Sei nun $\mathbb{D} \subseteq \R ^2$ zudem ein polygonales Gebiet, um eine einfa
 \end{figure}
 
 \subsubsection{Schwache Formulierung}
-Betrachten wir also das Potentialströmungsproblem (NEW ALIGNMENT? do everywhere):
+Betrachten wir also die deterministische Version des Potentialströmungsproblem:
 \[ \text{Bestimme } u:\overline{\mathbb{D}} \to \R \text{ und } q: \overline{\mathbb{D}} \to \R^2 \text{ mit } \newline \]
 \[\setlength\arraycolsep{1pt}
 \text{(PS)}\begin{cases} 
-\begin{array}{rlcl}
-\dive q     &= 0                 &\text{ ,} \text{in } \mathbb{D}\\
-q           &= - \kappa \nabla u &\text{ ,} \text{in }\mathbb{D}\\
+\begin{array}{rlcr}
+\dive q     &= 0                 &\text{ ,} \text{in } \mathbb{D} &(1)\\
+q           &= - \kappa \nabla u &\text{ ,} \text{in }\mathbb{D} &(2)\\
 u           &= u_D               &\text{ ,} \text{auf } \Gamma_D \\
 -q \cdot n  &= g_N               &\text{ ,} \text{auf } \Gamma_N 
 \end{array}
 \end{cases} 
 \]
+In Satz (ref todo) haben wir gesehen, dass wir in obiger Formulierung Gleichung (1) mit Testfunktionen $\Phi \in W_0^{1,2}(\mathbb{D})$ und Gleichung (2) mit Testfunktionen $\Psi \in ??? $ multiplizieren und anschließend über $\mathbb{D}$ integrieren können und so eine äquivalente schwache Formulierung herleiten:
+\begin{align*}
+	\int_{\mathbb{D}} \dive(q) \Phi \dx &= 0 \text{ für alle Testfunktionen } \Phi : \mathbb{D} \to \R \\
+	\int_{\mathbb{D}} (q + \kappa \nabla u) \cdot \Psi \dx &= 0 \text{ für alle Testfunktionen } \Psi : \mathbb{D} \to \R^2
+\end{align*}
+Da $\kappa$ weiter symmetrisch positiv definit ist, lässt sich letztere Gleichung zu 
+\begin{align*}
+	&\int_{\mathbb{D}} \kappa^{-1} (q + \kappa \nabla u) \cdot \Psi \dx = 0 \text{ für alle Testfunktionen } \Psi : \mathbb{D} \to \R^2\\
+	\Leftrightarrow \qquad &\int_{\mathbb{D}} \nabla u \cdot \Psi \dx = - \int_{\mathbb{D}} (\kappa^{-1}q)\cdot \Psi \dx \text{ für alle Testfunktionen } \Psi : \mathbb{D} \to \R^2
+\end{align*}
+umformen. Außerdem wollen wir nun noch die Dirichlet-Randbedingungen $u = u_D \text{ auf } \Gamma_{\text{D}}$ einfließen lassen. Dazu verwenden wir den Satz von Gauß:
+
+=========
+TODO
+=========
+\[ \int_{\partial\Omega} (u\Psi) \cdot n \da \stackrel{\text{Gauß}}{=} 
+ \int_{\Omega} \dive(u\Psi) \dx = \int_{\Omega} \nabla u \cdot \Psi \dx + \int_{\Omega} u \dive(\Psi) \dx \quad (\Psi:\Omega \to \R^2) \]
+Wählen wir nun unseren Ansatzraum so, dass  für die Funktion $ \Psi: \Omega \to \R$ gilt $ \Psi \cdot n = 0 \text{ auf } \Gamma_N $. Damit folgt
+\begin{align*}
+\int_{\Gamma_D} (u_D\Psi) \cdot n \da \overset{\Psi \cdot n|_{\Gamma_N} = 0}{\underset{u |_{\Gamma_D} = u_D} {=}} \int_{\partial\Omega} (u\Psi) \cdot n \da = \underbrace{\int_{\Omega} \nabla u \cdot \Psi \dx}_{\stackrel{(\star)}{=}- \int_{\Omega} (\kappa^{-1} q) \cdot \Psi \dx } + \int_{\Omega} u \dive(\Psi) \dx.
+\end{align*}
+Die Neumann-Randbedingung $ (\kappa\nabla u) \cdot n = g_N \text{ auf } \Gamma_N $ wird durch die Wahl des Lösungsraumes erfüllt.
+
+
+Wir erhalten die gewünschte schwache Formulierung, im Folgenden genannt:
+\begin{gather*}
+\text{Bestimme } (q,u) \text{ mit } q\cdot n = -g_N \text{ auf } \Gamma_N \text{ und}\\
+\text{(gFE)}\begin{cases}
+\int_{\Omega} \kappa^{-1} q \cdot \Psi \dx \, - \mkern-15mu &\int_{\Omega} u \, \dive(\Psi) \dx = - \int_{\Gamma_D} (u_D \Psi) \cdot n \da\\
+&\int_{\Omega} \dive(q) \, \Phi \dx = 0
+\end{cases}	\\
+\text{ für alle } (\Psi, \Phi) \text{ mit } \Psi \cdot n = 0 \text{ auf } \Gamma_N 
+\end{gather*}
+
+
+

@@ -1,7 +1,12 @@
 % !TeX root = bachelorarbeit.tex
 
+TODO(Einleitung wird zu einem späterem Zeitpunkt noch ausgebaut und nachgebessert mehr cites mehr forschung mehr inhalt)
 Monte Carlo Methoden sind weit verbreitet und finden in verschiedenen Bereichen der Mathematik ihre Anwendung.
-Neben der numerischen Integration können sie unter anderem auch bei der Lösung von partiellen Differentialgleichungen in Situationen genutzt werden, in denen Teile der benötigten Daten, wie zum Beispiel Anfangs- und oder Randwerte, unsicher sind bzw. nicht zu Verfügung stehen.
+Sie dienen dabei als statistische Schätzer für Erwartungswerte. 
+Eine der bekanntesten Anwendungen ist wohl die Monte Carlo Quadratur, welche zur numerischen Integration genutzt werden kann.
+ 
+Nachdem Giles (cite ...) ... gewöhnliche DGL ... kam ... für SPDE's zu nutzen ...cite .
+
 So entstehende Problemstellungen fallen in das Gebiet der Uncertainty Quantification, einem 'Zusammentreffen der Wahrscheinlichkeitstheorie, Numerik, Statistik und der echten Welt' \cite{sullivan2015introduction}.
 Allerdings besitzt die Monte Carlo Methode einen entscheidenden Nachteil, will man sie im Zusammenhang unsicherer Ausgangsdaten für die Lösung von partiellen Differentialgleichungen nutzen, sie konvergiert im Normalfall relativ langsam und das (numerische) Lösen von PDE's ist oft sehr aufwendig.
 Es werden also unter Umständen sehr viele, sehr teure (Zufalls-)Samples benötigt, um ein vernünftiges Ergebnis zu erhalten. \newline
@@ -11,11 +16,12 @@ Genauer soll für
 \begin{itemize}
 	\item ein beschränktes Gebiet $\mathbb{D} \subseteq \R^d$
 	\item  ein Zeitintervall $\mathbb{T} = [0,T]$
-	\item  ein (unsicheres) Flussvektorfeld $q: \overline{\mathbb{D}} \rightarrow \R^d$
+	\item  ein Wahrscheinlichkeitsraum $(\Omega,\mathcal{A},\mathbb{P})$
+	\item  ein zufälliges Flussvektorfeld $q: \Omega \times \overline{\mathbb{D}} \rightarrow \R^d$
 	\item  eine Anfangskonzentration eines (zu transportierenden) Stoffes $\rho_0: \overline{\mathbb{D}} \rightarrow \R^d$
 	\item einen Einfluss $\rho_{\text{in}} : \Gamma_{\text{in}} \times \mathbb{T} \rightarrow \R$ über den Einflussrand $\Gamma_{\text{in}} \coloneqq  \{ z \in \partial \mathbb{D}: q(z)\cdot n(z) \leq 0 \} \subset  \partial \mathbb{D}$ mit $n(z)$ als äußeren Normalenvektor im (Rand-)Punkt $z$
 \end{itemize}
-die Konzentration des Stoffes $\rho: \overline{\mathbb{D}} \times \mathbb{T}  \rightarrow \R_{\geq0}$ als Lösung der folgenden (partiellen) Differentialgleichung bestimmt werden.
+der Erwartungswert eines Funktionals der  Konzentration des Stoffes $\rho: \overline{\mathbb{D}} \times \mathbb{T}  \rightarrow \R_{\geq0}$ bestimmt werden. Dabei erhält man $\rho$ als Lösung der folgenden partiellen Differentialgleichung:
 \begin{gather*}
 \text{Bestimme } \rho: \overline{\mathbb{D}} \times \mathbb{T} \to \R_{\geq 0} \text{, sodass}\\
 (\text{TP})
@@ -29,13 +35,13 @@ Außerdem muss zunächst ein zwar zufälliges aber dennoch sinnvolles Vektorfeld
 Dabei ist 
 \begin{itemize}
 	\item $p:\mathbb{D} \rightarrow \R$ der hydrostatische Druck
-	\item $\kappa: \mathbb{D} \rightarrow (\R_{\text{sym}})^{d \times d}$ der Permeabilitätstensor 
+	\item $\kappa: \Omega \times \mathbb{D} \rightarrow (\R_{\text{sym}})^{d \times d}$ der Permeabilitätstensor 
 	\item $G = (0,0,p_0 g_0)^{\top}$ der Gravitationsvektor	
 \end{itemize}
 und es soll später, bevor wir das eigentliche Transportproblem lösen, stets zunächst für ein zufälliges $\kappa$ ein entsprechendes Flussvektorfeld $q$ über das sogenannte Potentialströmungsproblem, welches sich aus dem Darcy-Gesetz ableitet, berechnet werden. 
 Die genauere Modellierung des so entstehenden Gesamtproblems soll aber an späterer Stelle erfolgen. \newline
 Die Thesis ist dazu folgendermaßen unterteilt:\newline 
-Abschnitt 2 sammelt verschiedene Grundlagen aus den Bereichen der Stochastik, der Analysis und Numerik partieller Differentialgleichungen, sowie einige Aspekte der (standard) Monte Carlo Methoden, welche auch der MLMC Methode als theoretischer Unterbau dienen soll. \newline
+Abschnitt 2 sammelt verschiedene Grundlagen aus den Bereichen der Stochastik, der Analysis und Numerik partieller Differentialgleichungen, sowie einige Aspekte der (standard) Monte Carlo Methoden, welche auch der MLMC Methode als theoretischer Unterbau dienen sollen. \newline
 In Abschnitt 3 wird anschließend die MLMC Methode an sich erklärt, ohne die Theorie hierbei allzu sehr auf die Anwendung auf das Transportproblem zu beschränken. \newline
 In Abschnitt 4 werden dann das (lineare) Transportproblem und das Potentialströmungsproblem beschrieben, welches wir lösen müssen, um an die entsprechenden Ausgangsdaten zu kommen. Anschließend wird die numerische Lösung der beiden Probleme mit Finite Elementen Methoden behandelt, bevor schließlich auf die Anwendung der MLMC Methode auf das Transportproblem mit unsicheren Ausgangsdaten am Beispiel der Permeabilität $\kappa$ eingegangen wird. \newline
 Der fünfte und letzte Abschnitt befasst sich mit konkreten Durchführung und Implementierung des zuvor theoretisch beleuchteten Problem innerhalb der parallelen Finite Elemente Softwarebibliothek "M++" \cite{siteM++},
