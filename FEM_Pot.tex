@@ -71,8 +71,8 @@ In Satz (ref todo) haben wir gesehen, dass wir in obiger Formulierung Gleichung 
 \end{align*}
 Da $\kappa$ weiter symmetrisch positiv definit ist, lässt sich letztere Gleichung zu 
 \begin{align*}
-	&\int_{\mathbb{D}} \kappa^{-1} (q + \kappa \nabla u) \cdot \Psi \dx = 0 \text{ für alle Testfunktionen } \Psi : \mathbb{D} \to \R^2\\
-	\Leftrightarrow \qquad &\int_{\mathbb{D}} \nabla u \cdot \Psi \dx = - \int_{\mathbb{D}} (\kappa^{-1}q)\cdot \Psi \dx \text{ für alle Testfunktionen } \Psi : \mathbb{D} \to \R^2
+	&\int_{\mathbb{D}} \kappa^{-1} (q + \kappa \nabla u) \cdot \Psi \dx = 0 \\
+	\Leftrightarrow \qquad &\int_{\mathbb{D}} \nabla u \cdot \Psi \dx = - \int_{\mathbb{D}} (\kappa^{-1}q)\cdot \Psi \dx \qquad (\star) 
 \end{align*}
 umformen. Außerdem wollen wir nun noch die Dirichlet-Randbedingungen $u = u_D \text{ auf } \Gamma_{\text{D}}$ einfließen lassen. Dazu verwenden wir den Satz von Gauß:
 
@@ -81,17 +81,17 @@ TODO
 =========
 \[ \int_{\partial\Omega} (u\Psi) \cdot n \da \stackrel{\text{Gauß}}{=} 
  \int_{\Omega} \dive(u\Psi) \dx = \int_{\Omega} \nabla u \cdot \Psi \dx + \int_{\Omega} u \dive(\Psi) \dx \quad (\Psi:\Omega \to \R^2) \]
-Wählen wir nun unseren Ansatzraum so, dass  für die Funktion $ \Psi: \Omega \to \R$ gilt $ \Psi \cdot n = 0 \text{ auf } \Gamma_N $. Damit folgt
+Wählen wir nun unseren Ansatzraum so, dass  für die Funktion $ \Psi: \Omega \to \R^2$ gilt $ \Psi \cdot n = 0 \text{ auf } \Gamma_N $. Damit folgt
 \begin{align*}
 \int_{\Gamma_D} (u_D\Psi) \cdot n \da \overset{\Psi \cdot n|_{\Gamma_N} = 0}{\underset{u |_{\Gamma_D} = u_D} {=}} \int_{\partial\Omega} (u\Psi) \cdot n \da = \underbrace{\int_{\Omega} \nabla u \cdot \Psi \dx}_{\stackrel{(\star)}{=}- \int_{\Omega} (\kappa^{-1} q) \cdot \Psi \dx } + \int_{\Omega} u \dive(\Psi) \dx.
 \end{align*}
 Die Neumann-Randbedingung $ (\kappa\nabla u) \cdot n = g_N \text{ auf } \Gamma_N $ wird durch die Wahl des Lösungsraumes erfüllt.
 
 
-Wir erhalten die gewünschte schwache Formulierung, im Folgenden genannt:
+Wir erhalten so folgende schwache Formulierung:
 \begin{gather*}
 \text{Bestimme } (q,u) \text{ mit } q\cdot n = -g_N \text{ auf } \Gamma_N \text{ und}\\
-\text{(gFE)}\begin{cases}
+\text{(sPS)}\begin{cases}
 \int_{\Omega} \kappa^{-1} q \cdot \Psi \dx \, - \mkern-15mu &\int_{\Omega} u \, \dive(\Psi) \dx = - \int_{\Gamma_D} (u_D \Psi) \cdot n \da\\
 &\int_{\Omega} \dive(q) \, \Phi \dx = 0
 \end{cases}	\\

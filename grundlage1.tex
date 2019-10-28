@@ -1,37 +1,80 @@
 % !TeX root = bachelorarbeit.tex
-Sei $\mathbb{D} \subseteq \R^d$ für $d\in \N$
+Sei $\mathcal{D} \subseteq \R^d$ für $d\in \N$ und $\lVert \cdot \rVert$ eine Norm auf $\R^d$
+Die folgenden Definitionen und Sätze sollen als Grundlagen für die weiteren Betrachtungen dieser Thesis dienen. Insbesondere wollen wir hierbei meist auf konkrete Beweise verzichten und verweisen dahingehend auf die Literatur. 
+Die analytischen Grundlagen bauen zum Teil auf der Vorlesung Rand- und Eigenwertprobleme aus dem Sommersemester 2019 von Herrn Prof. Dr. Reichel auf sind aber auch in der angegebenen Literatur zu finden (TODO find Literatur).
 \begin{Definition}(Einige Operatoren)
 	\begin{enumerate}
 		\item Für $F: \R^d \to \R^d$ ist die \underline{Divergenz} von F definiert durch
 			\begin{align*}
 				\dive F = \nabla \cdot F \coloneqq \sum_{i=1}^{d} \frac{\partial F_i}{ \partial x_i}
 			\end{align*}
-		\item Für $f: \R^d \to \R$ und $\alpha = (\alpha_1,\dots,\alpha_d) \in \N^d$ ist die partielle Ableitung von $f$ nach dem Multiindex $\alpha$ definiert durch
+		\item Für $f: \R^d \to \R$ und $\alpha = (\alpha_1,\dots,\alpha_d) \in \N^d$ ist die partielle Ableitung von $f$ nach dem sogenannten Multiindex $\alpha$ definiert durch
 			\begin{align*}
-				D^{\alpha}f \coloneqq 
+				\partial^{\alpha}f \coloneqq 
 				\frac{\partial^{|\alpha|} f}{\partial x_1 ^{\alpha_1} \cdots  \partial x_d^{\alpha_d} } 
 				=\frac{\partial^{\alpha_1+\dots +\alpha_d} f}{\partial x_1 ^{\alpha_1} \cdots  \partial x_d^{\alpha_d} } 
 			\end{align*}
 	\end{enumerate}
 \end{Definition}
+
 \begin{Definition}(Einige Funktionenräume)
 	todo C,C1,Ccinf,Lp, L1loc
 \end{Definition}
+
+\begin{Definition}(Lipschitz-Gebiet TODO cite rwp) \newline 
+	\begin{enumerate}
+		\item Eine offene zusammenhängenden Menge $\mathcal{D} \subset \R^d$ heißt Lipschitz-Gebiet, falls für jedes $x_0 \in \partial \mathcal{D}$ ein Radius $r>0$ und eine Lipschitz-stetige Funktion $\phi : \R^{d-1} \to \R$ existiert, so dass (nach einer geeigneten Bewegung des Koordinatensystems) gilt: \\
+		Für $ x' = (x_1,\dots,x_{d-1})  \text{ und } B_r(x_0) \coloneqq \{ x\in \R^d : \lVert x-x_0 \rVert < r\}  \text{ ist }$
+			\begin{align*}
+				\mathcal{D} \cap B_r(x_0) = \{x = (x',x_d) \in B_r(x_0): x_d > \phi(x')\} 
+			\end{align*}
+		Es gilt dann notwendigerweise:
+			\begin{align*}
+				\partial \mathcal{D} \cap B_r(x_0) = \{x = (x',x_d) \in B_r(x_0): x_d = \phi(x')\}
+			\end{align*}
+		\item Ist $\mathcal{D}$ ein Lipschitz-Gebiet so existiert $x = (x',\phi(x')) \in \partial \mathcal{D} \cap B_r(x_0)$ der Vektor
+			\begin{align*}
+				n(x) = \frac{1}{\sqrt{1+|\nabla \phi(x')|^2}} \icol{\nabla \phi(x')\\-1}
+			\end{align*}
+		fast überall bezüglich des Oberflächenmaßes auf $\partial \mathcal{D}$ und heißt der äußere 
+		Einheitsnormalenvektor an $\partial \mathcal{D}$ im Punkt $x$. 
+	\end{enumerate}
+	
+\end{Definition}
+
+
+\begin{Satz} (Gaußscher Integralsatz für Lipschitz-Gebiete) \newline
+ 	Sei $\mathcal{D}  \subset \R^d$ ein beschränktes Lipschitz-Gebiet und sei $n$ der äußere Einheitsnormalenvektor an $\partial \mathcal{D}$. Dann gilt:
+ 		\begin{align*}
+	 		\int_{\mathcal{D}} \frac{\partial f}{\partial x_i} \dx  = \int_{\partial \mathcal{D}} f n_i \da
+ 		\end{align*}
+ 		für jede Funktion $f \in C^1(\overline{\mathcal{D}})$. \\ 
+ 		Oft erscheint der Gaußsche Integralsatz in auch folgender Form:
+ 		\begin{align*}
+ 		\int_{\mathcal{D}} \dive F \dx =  \int_{\partial \mathcal{D}} F \cdot n \da
+ 		\end{align*}
+ 		wobei $F:\mathcal{D} \to \R^d$ ein Vektorfeld ist. Die Komponentenfunktionen von $F = (F_1,\dots,F_d)$ sollen dann $F_i \in C^1(\overline{\mathcal{D}})$ für $i=1,\dots,n$ erfüllen.
+\end{Satz}
+
+
 \begin{Definition}(schwache Ableitung)\\
 	Sei $u \in L_{\text{loc}}^1$. Wir sagen v besitzt eine schwache Ableitung zum Multiindex $\alpha$, falls eine Funktion $v \in L_{\text{loc}}^1$ existiert, mit 
-	\begin{align*}
-		\int_{\mathbb{D}} u D^{\alpha} \Phi \dx = (-1)^{|\alpha|} \int_{\mathbb{D}} v \Phi \dx \qquad \forall \Phi \in C_0^{\infty}(\mathbb{D})
-	\end{align*}
-	In diesem Zusammenhang nennen wir $\Phi$ auch Testfunktion und wir definieren $D^{\alpha} u \coloneqq v$ als die schwache Ableitung von $u$ zum Multiindex $\alpha$.
+		\begin{align*}
+			\int_{\mathcal{D}} u \partial^{\alpha} \Phi \dx = (-1)^{|\alpha|} \int_{\mathcal{D}} v \Phi \dx \qquad \forall \Phi \in C_0^{\infty}(\mathcal{D})
+		\end{align*}
+	In diesem Zusammenhang nennen wir $\Phi$ auch Testfunktion und wir definieren $D^{\alpha} u \coloneqq v$ als die schwache Ableitung von $u$ zum Multiindex $\alpha$. 
 \end{Definition}
-\begin{Definition}(Sobolevräume)
-	todo RWP 
+\begin{Definition}(Sobolevräume)\\
+	Sei $\mathcal{D} \subseteq \R^d $ offen, $ k \in \N $ und $ 1 \leq p \leq \infty $ 
+	\begin{enumerate}[label=(\alph*)]
+		\item $ W^{k,p} (\mathcal{D}) \coloneqq \{ u \in L^p(\mathcal{D})$ und die schwachen Ableitungen $ \partial^{\alpha}u $ existieren, mit $ \partial^{\alpha}u \in L^p(\mathcal{D}) $ für alle $ \alpha \in \N_0^d , |\alpha| \leq k \} $
+		\item $ \lVert u \rVert_{k,p} =  \lVert u \rVert_{W^{k,p}(\mathcal{D})} \coloneqq  $ ==========TODO=======
+	\end{enumerate}
 \end{Definition}
-\begin{Satz} (Satz von Gauß)
-	todo RWP/FEM
-\end{Satz}
-\begin{Satz}(Multiplikation mit Testfunktionen und Integration)
-	todo RWP
+
+\begin{Satz}(Multiplikation mit Testfunktionen und Integration) \\
+	Sei $\mathcal{D} \subset \R^d$ offen und $u \in L_{\text{loc}}^1(\mathcal{D})$ und $\int_{\mathcal{D}} u \psi \dx = 0 \; \forall \psi \in C_c^{\infty}(\mathcal{D})$ \\
+	Dann gilt $ u \equiv 0 $.
 \end{Satz}
 \begin{Satz} (Rechnen mit Differentialoperatoren)
 	todo FEM

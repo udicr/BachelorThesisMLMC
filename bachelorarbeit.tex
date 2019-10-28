@@ -23,6 +23,7 @@
 \usepackage{setspace}
 \usepackage{url}
 \usepackage{mathtools}
+\usepackage{enumitem}
 
 
 % Abstand obere Blattkante zur Kopfzeile ist 2.54cm - 15mm
@@ -32,6 +33,7 @@
 % Umgebungen für Definitionen, Sätze, usw.
 % Es werden Sätze, Definitionen etc innerhalb einer Section mit
 % 1.1, 1.2 etc durchnummeriert, ebenso die Gleichungen mit (1.1), (1.2) ..
+\theoremstyle{definition}
 \newtheorem{Satz}{Satz}[section]
 \newtheorem{Definition}[Satz]{Definition} 
 \newtheorem{Lemma}[Satz]{Lemma}		   
@@ -51,9 +53,10 @@
 % eigene Definitionen
 \newcommand{\dx}{\, \mathrm{d} x}
 \newcommand{\da}{\, \mathrm{d} a}
+\newcommand{\icol}[1]{%inline row vector
+		\left(	\begin{smallmatrix}#1\end{smallmatrix} \right) %
+	}
 \DeclareMathOperator{\dive}{div}
-
-
 
 \begin{document}
   % Keine Seitenzahlen im Vorspann
