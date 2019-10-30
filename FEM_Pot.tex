@@ -47,7 +47,7 @@ Sei nun $\mathbb{D} \subseteq \R ^2$ zudem ein polygonales Gebiet, um eine einfa
 \begin{figure}[h]
 	\centering
 	\captionabove{Zulässige Zerlegung und unzulässige Zerlegung mit hängendem Knoten}
-	\includegrapsics[width=0.8\textwidth]{triangulierung.png} \\
+	\includegraphics[width=0.8\textwidth]{triangulierung.png} \\
 	Abbildung aus \cite{braess2013finite} Seite 58
 \end{figure}
 Wir führen außerdem folgende Bezeichnungen ein:
@@ -74,9 +74,9 @@ u           &= u_D               &\text{ ,} \text{auf } \Gamma_D \\
 \end{array}
 \end{cases} 
 \]
-Satz \ref{testfunktionen} sagt uns , dass wir in obiger Formulierung Gleichung (1) mit Testfunktionen $\psi \in W_0^{1,2}(\mathbb{D})$ und Gleichung (2) mit Testfunktionen $\psi \in ??? $ multiplizieren und anschließend über $\mathbb{D}$ integrieren können und so eine äquivalente schwache Formulierung herleiten:
+Satz \ref{testfunktionen} sagt uns , dass wir in obiger Formulierung Gleichung (1) mit Testfunktionen $\phi \in W_0^{1,2}(\mathbb{D})$ und Gleichung (2) mit Testfunktionen $\psi \in ??? $ multiplizieren und anschließend über $\mathbb{D}$ integrieren können und so eine äquivalente schwache Formulierung herleiten:
 \begin{align*}
-	\int_{\mathbb{D}} \dive(q) \psi \dx &= 0 \text{ für alle Testfunktionen } \psi : \mathbb{D} \to \R \\
+	\int_{\mathbb{D}} \dive(q) \phi \dx &= 0 \text{ für alle Testfunktionen } \phi : \mathbb{D} \to \R \\
 	\int_{\mathbb{D}} (q + \kappa \nabla u) \cdot \psi \dx &= 0 \text{ für alle Testfunktionen } \psi : \mathbb{D} \to \R^2
 \end{align*}
 Da $\kappa$ weiter symmetrisch positiv definit ist, lässt sich letztere Gleichung zu 
@@ -102,11 +102,11 @@ Wir erhalten so folgende schwache Formulierung:
 &\text{Bestimme } (q,u) \text{ mit } q\cdot n = -g_N \text{ auf } \Gamma_N \text{ und}\\
 &\text{(sPS)}\begin{cases}
 \begin{array}{llll}
-\int_{\Omega} \kappa^{-1} q \cdot \psi \dx \, - \mkern-15mu &\int_{\Omega} u \, \dive(\psi) \dx &= - \int_{\Gamma_D} (u_D \psi) \cdot n \da\\
-&\int_{\Omega} \dive(q) \, \psi \dx &= 0
+\int_{\mathbb{D}} \kappa^{-1} q \cdot \psi \dx \, - \mkern-15mu &\int_{\mathbb{D}} u \, \dive(\psi) \dx &= - \int_{\Gamma_D} (u_D \psi) \cdot n \da\\
+&\int_{\mathbb{D}} \dive(q) \, \phi \dx &= 0
 \end{array}
 \end{cases}	\\
-&\text{ für alle } (\psi, \psi) \text{ mit } \psi \cdot n = 0 \text{ auf } \Gamma_N 
+&\text{ für alle } (\psi, \phi) \text{ in einem geeigneten Testraum mit } \psi \cdot n = 0 \text{ auf } \Gamma_N 
 \end{align*}
 
 \subsubsection{Diskretisierung}
@@ -135,7 +135,7 @@ Anschließend wählen wir als Testräume bzw. Finite Elemente Räume:
 	\begin{enumerate}[label=(\alph*)]
 		\item $ W_h \coloneqq \spann \{ \psi_1,\dots,\psi_{|\mathcal{F}|}\}$ (Seitenansatzraum/ Raum für $ \psi $ und $ q_h $)
 		\item $ W_h(g) \coloneqq \{ \psi_h \in W_h:  \int_F \psi_h \cdot n \da = \int_F g \da \; \text{ für alle } F \subseteq \Gamma_{\text{N}})  \}$
-		\item $ Q_h \coloneqq \spann \{ \mu_1, \dots, \mu_{|\mathcal{K}|} \} $ (Zellenansatzraum/ Raum für $\psi $ und $ u_h $)
+		\item $ Q_h \coloneqq \spann \{ \mu_1, \dots, \mu_{|\mathcal{K}|} \} $ (Zellenansatzraum/ Raum für $\phi $ und $ u_h $)
 	\end{enumerate}
 \end{Definition}
 
@@ -155,10 +155,10 @@ Zusammen mit der schwachen Formulierung \eqref{sPS} erhalten wir so
 &\begin{cases}
 \begin{array}{llll}
 \int_{\Omega} \kappa^{-1} q_h \cdot \psi_h \dx \, - \mkern-15mu &\int_{\Omega} u_h \, \dive(\psi_h) \dx &= - \int_{\Gamma_D} (u_D \psi_h) \cdot n \da\\
-&\int_{\Omega} \dive(q_h) \, \psi_h \dx &= 0
+&\int_{\Omega} \dive(q_h) \, \phi_h \dx &= 0
 \end{array}
 \end{cases}	\\
-&\text{ für alle } (\psi_h, \psi_h) \in W_h(0) \times Q_h
+&\text{ für alle } (\psi_h, \phi_h) \in W_h(0) \times Q_h
 \end{align*} 
 
 
@@ -242,9 +242,9 @@ Weiter setzen wir noch
 \text{ die Menge der Seiten }&& \hat{\mathcal{F}} &\coloneqq \left\{ \hat{F}_0, \hat{F}_1, \hat{F}_2 \right\} \\
 \text{und den Seitenansatzraum }&&  \hat{W} &\coloneqq \spann \left\{ \psi_0,\psi_1, \psi_2 \right\}.
 \end{align*}
-\textbf{Transformation von $ \hat{K} $ zu $ K $:} Für ein beliebiges $ K \in \mathcal{K} $ wollen wir jetzt eine Seitenbasis $ \{ \psi_1^K, \psi_2^K, \psi_3^K \} $ berechnen (Wie bisher gegeben durch $ \forall i\in\{1,2,3\}: \psi_i^K\in\mathbb{P}_1(K,\R^2) \text{ und } \int_{F_j^K} \psi_i^K \cdot n^K \da = \delta_{i,j} $, wobei $ n^K $ äußere Normale von  $ K $ und $ F_j^K  $ beliebige Seite von $ K $). Dazu betrachten wir die affine Transformationsabbildung $ \varpsi_K $ von $ \hat{K} $ zu $ K $:
+\textbf{Transformation von $ \hat{K} $ zu $ K $:} Für ein beliebiges $ K \in \mathcal{K} $ wollen wir jetzt eine Seitenbasis $ \{ \psi_1^K, \psi_2^K, \psi_3^K \} $ berechnen (Wie bisher gegeben durch $ \forall i\in\{1,2,3\}: \psi_i^K\in\mathbb{P}_1(K,\R^2) \text{ und } \int_{F_j^K} \psi_i^K \cdot n^K \da = \delta_{i,j} $, wobei $ n^K $ äußere Normale von  $ K $ und $ F_j^K  $ beliebige Seite von $ K $). Dazu betrachten wir die affine Transformationsabbildung $ \varphi_K $ von $ \hat{K} $ zu $ K $:
 \begin{align*}
-\varpsi_K: \hat{K} \to K, \varpsi_K(\xi) = z_{0,K} + B_K \xi \text{ mit passenden } B_K\in\R^{2 \times 2} \text{ und } \\
+\varphi_K: \hat{K} \to K, \varphi_K(\xi) = z_{0,K} + B_K \xi \text{ mit passenden } B_K\in\R^{2 \times 2} \text{ und } \\
 J_K \coloneqq \det(B_K) > 0.
 \end{align*}
 \begin{Lemma}
@@ -252,7 +252,7 @@ J_K \coloneqq \det(B_K) > 0.
 \end{Lemma}
 
 Die Seitenbasis auf $ K $ ist dann gegeben durch 
-\[ \psi_i^K = J_K^{-1}B_K \hat{\psi}_i \circ \varpsi_K \ (i\in \{1,2,3\}) \]
+\[ \psi_i^K = J_K^{-1}B_K \hat{\psi}_i \circ \varphi_K \ (i\in \{1,2,3\}) \]
 
 Die globale Seitenbasis $\{\psi_j\}_{j = 1}^{\abs{\mathcal{F}}}$ auf $ \mathbb{D}  $ erhalten wir dann mithilfe einer weiteren Abbildung $l$ die zwischen der Seitennummerierung in einer Zelle $ K $ und der globalen Seitennummerierung vermittelt. Es ist dabei
 \[ l:\mathcal{K}\times \{1,2,3\} \to \{1, \dots , \abs{\mathcal{F}} \}, (K,i) \mapsto l(K,i). \]
@@ -321,7 +321,7 @@ oder anders geschrieben
 \subsection{Hybridisierung}
 
 Wir betrachten die Räume
-\[W_K \coloneqq \left\{ \psi_K:K \to \R^2: \psi_K = J_K^{-1}  B_K \hat{\psi} \circ \varpsi_K^{-1}, \hat{\psi} \in \hat{W} \right\} \]
+\[W_K \coloneqq \left\{ \psi_K:K \to \R^2: \psi_K = J_K^{-1}  B_K \hat{\psi} \circ \varphi_K^{-1}, \hat{\psi} \in \hat{W} \right\} \]
 \[ W_\mathcal{K} \coloneqq \prod_{K \in \mathcal{K}} W_K, \qquad M_h \coloneqq \prod_{F \in \mathcal{F}} \mathbb{P}_0(F) \]
 \[ M_h(u_D) \coloneqq \left\{ \mu_h \in M_h:\forall  F \subset \Gamma_D \int_F \mu_h \da = \int_F u_D \da  \right\}\]
 
@@ -336,10 +336,10 @@ Und untersuchen folgendes Problem:
 \text{Bestimmme } (q_h,u_h, \lambda_h) \in W_\mathcal{K} \times Q_h \times M_h(u_D) \text{ mit}\\
 \begin{dcases}
 (1) \int_K \kappa^{-1} q_h \psi_K \dx - \int_K u_h \dive(\psi_K) \dx = - \int_{\partial K} \lambda_h \psi_K \cdot n^K \da \\
-(2) \int_K \dive(q_h) \psi_K \dx = 0\\
+(2) \int_K \dive(q_h) \phi_K \dx = 0\\
 (3) \sum_{K\in \mathcal{K}} \int_{\partial K} q_h \cdot n \mu_h \da = - \int_{\Gamma_N} g_N \mu_h \da
 \end{dcases}\\
-\text{für alle } K \in \mathcal{K}, \psi_K \in W_K, \psi_K \in Q_h  \text{ und } \mu_h \in M_h(0)
+\text{für alle } K \in \mathcal{K}, \psi_K \in W_K, \phi_K \in Q_h  \text{ und } \mu_h \in M_h(0)
 \end{align*}
 
 Dieses Problem ist äquivalent zu dem diskreten gemischten FE-Problem, welches wir zuvor betrachtet haben:
@@ -347,9 +347,9 @@ Dieses Problem ist äquivalent zu dem diskreten gemischten FE-Problem, welches w
 \text{Bestimme } (q_h,u_h) \in W_h(-g_N) \times Q_h \text{ mit}\\
 \begin{cases}
 \int_{\Omega} \kappa ^{-1} q_h \cdot \psi_h \dx \mkern-15mu &- \int_{\Omega} u_h \dive(\psi_h) \dx = - \int_{\Gamma_D} u_D \psi_h \cdot n \da\\
-&- \int_{\Omega} \dive(q_h) \psi_h \dx = 0
+&- \int_{\Omega} \dive(q_h) \phi_h \dx = 0
 \end{cases} \\
-\text{für alle } (\psi_h, \psi_h) \in W_h(0) \times Q_h
+\text{für alle } (\psi_h, \phi_h) \in W_h(0) \times Q_h
 \end{align*}
 
 Für ein festes $ K \in \mathcal{K} $ ergibt sich mit der Wahl einer Basis von $ W_K $, $ Q_h $ und $ M_h $ 
