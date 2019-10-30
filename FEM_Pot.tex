@@ -46,10 +46,20 @@ Sei nun $\mathbb{D} \subseteq \R ^2$ zudem ein polygonales Gebiet, um eine einfa
 
 \begin{figure}[h]
 	\centering
-	\captionabove{Zulässige Triangulierung und unzulässige Triangulierung mit hängendem Knoten}
+	\captionabove{Zulässige Zerlegung und unzulässige Zerlegung mit hängendem Knoten}
 	\includegraphics[width=0.8\textwidth]{triangulierung.png} \\
 	Abbildung aus \cite{braess2013finite} Seite 58
 \end{figure}
+Wir führen außerdem folgende Bezeichnungen ein:
+\begin{itemize}
+	\item ein $ K \in \mathfrak{K} $ nennen wir Zelle
+	\item $ \mathbb{D}_h \coloneqq \bigcup_{K \in \mathfrak{K}} K $ sei die Menge der Zellen
+	\item ein $ z \in \mathcal{V}_K \coloneqq \{ z_{K,0} , z_{K,1} , z_{K,2}\} \subset \R^2 $ nennen wir Knoten und $\mathcal{V}_K$ die Menge der Knoten von K
+	\item $ \mathcal{V}_{\mathfrak{K}} \coloneqq \bigcup_{K \in \mathfrak{K}} \mathcal{V}_K $ sei die Menge aller Knoten
+	\item $\mathcal{F}  \coloneqq (\{ \partial K_1 \cap \partial K_2 : K_1,K_2 \in \mathfrak{K} \} \cup \{ \partial K_1 \cap \partial \mathbb{D} : K_1 \in \mathfrak{K} \}) \setminus \{\emptyset\} $ sei die Menge aller Seiten
+	\item $ \mathcal{F}_K \coloneqq (\{ \partial K \cap \partial K' : K' \in \mathfrak{K} \} \cup \{ \partial K \cap \partial \mathbb{D} \}) \setminus \{ \emptyset \} $ sei die Menge aller Seiten von K 
+	\item $ \partial \mathbb{D}_h \coloneqq \bigcup_{F \in \mathcal{F}} F $ sei der Rand von $ \mathbb{D}_h $
+\end{itemize}
 
 \subsubsection{Schwache Formulierung}
 Betrachten wir also die deterministische Version des Potentialströmungsproblem:
@@ -76,12 +86,10 @@ Da $\kappa$ weiter symmetrisch positiv definit ist, lässt sich letztere Gleichu
 \end{align*}
 umformen. Außerdem wollen wir nun noch die Dirichlet-Randbedingungen $u = u_D \text{ auf } \Gamma_{\text{D}}$ einfließen lassen. Dazu verwenden wir den Satz von Gauß:
 
-=========
-TODO
-=========
+
 \[ \int_{\partial\Omega} (u\Psi) \cdot n \da \stackrel{\text{Gauß}}{=} 
  \int_{\Omega} \dive(u\Psi) \dx = \int_{\Omega} \nabla u \cdot \Psi \dx + \int_{\Omega} u \dive(\Psi) \dx \quad (\Psi:\Omega \to \R^2) \]
-Wählen wir nun unseren Ansatzraum so, dass  für die Funktion $ \Psi: \Omega \to \R^2$ gilt $ \Psi \cdot n = 0 \text{ auf } \Gamma_N $. Damit folgt
+Wählen wir nun unseren Ansatzraum so, dass  für die Funktion $ \Psi$ gilt $ \Psi \cdot n = 0 \text{ auf } \Gamma_N $. Damit folgt
 \begin{align*}
 \int_{\Gamma_D} (u_D\Psi) \cdot n \da \overset{\Psi \cdot n|_{\Gamma_N} = 0}{\underset{u |_{\Gamma_D} = u_D} {=}} \int_{\partial\Omega} (u\Psi) \cdot n \da = \underbrace{\int_{\Omega} \nabla u \cdot \Psi \dx}_{\stackrel{(\star)}{=}- \int_{\Omega} (\kappa^{-1} q) \cdot \Psi \dx } + \int_{\Omega} u \dive(\Psi) \dx.
 \end{align*}
@@ -89,14 +97,45 @@ Die Neumann-Randbedingung $ (\kappa\nabla u) \cdot n = g_N \text{ auf } \Gamma_N
 
 
 Wir erhalten so folgende schwache Formulierung:
-\begin{gather*}
-\text{Bestimme } (q,u) \text{ mit } q\cdot n = -g_N \text{ auf } \Gamma_N \text{ und}\\
-\text{(sPS)}\begin{cases}
-\int_{\Omega} \kappa^{-1} q \cdot \Psi \dx \, - \mkern-15mu &\int_{\Omega} u \, \dive(\Psi) \dx = - \int_{\Gamma_D} (u_D \Psi) \cdot n \da\\
-&\int_{\Omega} \dive(q) \, \Phi \dx = 0
+\begin{align*}
+&\text{Bestimme } (q,u) \text{ mit } q\cdot n = -g_N \text{ auf } \Gamma_N \text{ und}\\
+&\text{(sPS)}\begin{cases}
+\begin{array}{llll}
+\int_{\Omega} \kappa^{-1} q \cdot \Psi \dx \, - \mkern-15mu &\int_{\Omega} u \, \dive(\Psi) \dx &= - \int_{\Gamma_D} (u_D \Psi) \cdot n \da\\
+&\int_{\Omega} \dive(q) \, \Phi \dx &= 0
+\end{array}
 \end{cases}	\\
-\text{ für alle } (\Psi, \Phi) \text{ mit } \Psi \cdot n = 0 \text{ auf } \Gamma_N 
-\end{gather*}
+&\text{ für alle } (\Psi, \Phi) \text{ mit } \Psi \cdot n = 0 \text{ auf } \Gamma_N 
+\end{align*}
+
+\subsubsection{Diskretisierung}
+Sei $ \mathfrak{K}  $ eine zulässige Zerlegung von $ \mathbb{D} $ und alle Bezeichnungen wie oben.
+Wir nummerieren zunächst die Zellen und die Seiten durch:
+\begin{align*}
+	\mathcal{F} &= \{ F_1,\dots,F_{|\mathcal{F}|}\} \qquad \text{globale Seitennummerierung} \\
+	\mathfrak{K} &=  \{ K_1,\dots,K_{|\mathfrak{K}|}\} \qquad \text{globale Zellennumerierung}
+\end{align*}
+Außerdem definieren wir:
+\begin{Definition}(Seiten- und Zellenbasis) \\
+	\begin{enumerate}[label=(\alph*)]
+		\item $ \{ \Psi_i \}_{i=1}^{|\mathcal{F}|} $ heißt Seitenbasis und ist definiert durch
+			\begin{align*}
+					\forall i,j \in \{1, \dots , |\mathcal{F}| \} : \int_{F_j} \psi_i \cdot n^K \da = \pm \delta_{i,j} \text{ und }  \psi_i|_K \in \mathbb{P}_1(K,\R^2) \cap C(\overline{\mathbb{D}}) \ (K \in \mathcal{K}) 
+			\end{align*} 
+		\item $ \{ \mu_i \}_{m=1}^{|\mathcal{K}|} $ heißt Zellenbasis und ist gegeben durch
+			\begin{align*}
+				\forall m \in \{1, \dots , |\mathcal{K}| \} : \mu_m \coloneqq  1_{K_m}.
+			\end{align*}
+	\end{enumerate}
+\end{Definition} 
+
+Anschließend wählen wir als Testräume bzw. Finite Elemente Räume:
+\begin{Definition}(Ansatzräume)\\
+	$ W_h \coloneqq \spann \{ \Psi_1,\dots,\Psi_{|\mathcal{F}|}\}$ (Seitenansatzraum/ Raum für $ \Psi $ und $ q_h $)
+	
+\end{Definition}
+
+
 
 
 

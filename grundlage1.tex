@@ -3,7 +3,7 @@ Sei $\mathcal{D} \subseteq \R^d$ für $d\in \N$ und $\lVert \cdot \rVert$ eine N
 Die folgenden Definitionen und Sätze sollen als Grundlagen für die weiteren Betrachtungen dieser Thesis dienen. Insbesondere wollen wir hierbei meist auf konkrete Beweise verzichten und verweisen dahingehend auf die Literatur. 
 Die analytischen Grundlagen bauen zum Teil auf der Vorlesung Rand- und Eigenwertprobleme aus dem Sommersemester 2019 von Herrn Prof. Dr. Reichel auf sind aber auch in der angegebenen Literatur zu finden (TODO find Literatur).
 \begin{Definition}(Einige Operatoren)
-	\begin{enumerate}
+	\begin{enumerate}[label=(\alph*)]
 		\item Für $F: \R^d \to \R^d$ ist die \underline{Divergenz} von F definiert durch
 			\begin{align*}
 				\dive F = \nabla \cdot F \coloneqq \sum_{i=1}^{d} \frac{\partial F_i}{ \partial x_i}
@@ -21,8 +21,14 @@ Die analytischen Grundlagen bauen zum Teil auf der Vorlesung Rand- und Eigenwert
 	todo C,C1,Ccinf,Lp, L1loc
 \end{Definition}
 
+\begin{Satz}
+	Sei $ \mathcal{D} \subset \R^d $ offen und beschränkt und $ 1 \leq p < \infty $, dann gilt: \\
+	$ C_c^{\infty} (\mathcal{D})$ liegt dicht in $ L^p(\mathcal{D}) $, d.h. $ C_c^{\infty}(\mathcal{D}) \subseteq L^p(\mathcal{D})$ und $ \overline{ C_c^{\infty}(\mathcal{D}) }^{\lVert \cdot \rVert_p}  = L^p(\mathcal{D})$
+\end{Satz}
+
+
 \begin{Definition}(Lipschitz-Gebiet TODO cite rwp) \newline 
-	\begin{enumerate}
+	\begin{enumerate}[label=(\alph*)]
 		\item Eine offene zusammenhängenden Menge $\mathcal{D} \subset \R^d$ heißt Lipschitz-Gebiet, falls für jedes $x_0 \in \partial \mathcal{D}$ ein Radius $r>0$ und eine Lipschitz-stetige Funktion $\phi : \R^{d-1} \to \R$ existiert, so dass (nach einer geeigneten Bewegung des Koordinatensystems) gilt: \\
 		Für $ x' = (x_1,\dots,x_{d-1})  \text{ und } B_r(x_0) \coloneqq \{ x\in \R^d : \lVert x-x_0 \rVert < r\}  \text{ ist }$
 			\begin{align*}
@@ -64,11 +70,21 @@ Die analytischen Grundlagen bauen zum Teil auf der Vorlesung Rand- und Eigenwert
 		\end{align*}
 	In diesem Zusammenhang nennen wir $\Phi$ auch Testfunktion und wir definieren $D^{\alpha} u \coloneqq v$ als die schwache Ableitung von $u$ zum Multiindex $\alpha$. 
 \end{Definition}
+\begin{Bemerkung}
+	Per Konvention ist für $ \alpha = (0,\dots, 0) \quad \partial^{\alpha}u = u $
+\end{Bemerkung}
 \begin{Definition}(Sobolevräume)\\
 	Sei $\mathcal{D} \subseteq \R^d $ offen, $ k \in \N $ und $ 1 \leq p \leq \infty $ 
 	\begin{enumerate}[label=(\alph*)]
-		\item $ W^{k,p} (\mathcal{D}) \coloneqq \{ u \in L^p(\mathcal{D})$ und die schwachen Ableitungen $ \partial^{\alpha}u $ existieren, mit $ \partial^{\alpha}u \in L^p(\mathcal{D}) $ für alle $ \alpha \in \N_0^d , |\alpha| \leq k \} $
-		\item $ \lVert u \rVert_{k,p} =  \lVert u \rVert_{W^{k,p}(\mathcal{D})} \coloneqq  $ ==========TODO=======
+		\item $ W^{k,p} (\mathcal{D}) \coloneqq \{ u \in L^p(\mathcal{D})$ und die schwachen Ableitungen $ \partial^{\alpha}u $ existieren, mit $ \partial^{\alpha}u \in L^p(\mathcal{D}) $ für alle $ \alpha \in \N_0^d , |\alpha| \leq k \} $	
+		\item $ \lVert u \rVert_{k,p} =  \lVert u \rVert_{W^{k,p}(\mathcal{D})} \coloneqq 
+				\begin{cases}
+					\begin{array}{lll}
+						(\sum\limits_{|\alpha|\leq k} \int_{\mathcal{D}} |\partial^{\alpha} u |^p \dx)^{\frac{1}{p}} &, 1 \leq p < \infty \\
+						\sum\limits_{|\alpha|\leq k}   \lVert \partial^{\alpha} u \rVert_{\infty}        &, p = \infty
+					\end{array}
+				\end{cases}  $
+		\item $ W_0^{k,p}(\mathcal{D}) \coloneqq \overline{ C_c^{\infty}(\mathcal{D}) }^{\lVert \cdot \rVert_{k,p}} $
 	\end{enumerate}
 \end{Definition}
 
