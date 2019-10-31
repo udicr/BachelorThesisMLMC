@@ -162,8 +162,66 @@ Zusammen mit der schwachen Formulierung \eqref{sPS} erhalten wir so
 \end{align*} 
 
 
-\subsubsection{Referenzzelle}
 
+
+\subsection{Formulierung als LGS}
+Es seien wie bisher Seiten, Seitenbasis, Zellen und Zellenbasis global nummeriert 
+\begin{align*}
+&N \coloneqq \abs{\mathcal{F}} &&\mathcal{F} = \{F_1, \dots , F_{N} \}  \\
+&&&W_h =\{\psi_1, \dots , \psi_N\}\\
+&M \coloneqq \abs{\mathcal{K}} &&\mathcal{K} = \{K_1, \dots , K_{M} \}  \\
+&&&Q_h = \{\mu_1 , \dots , \mu_M  \}.
+\end{align*}
+
+Wir können nun damit beginnen das so entstandene endlich dimensionale Problem in eine Lineares Gleichungs System umformulieren. Dazu definieren wir:
+	\begin{align*}
+	&\underline{A} \in \R^{N \times N} \text{ mit } \underline{A}[n,k] \coloneqq \int_{\Omega} \kappa^{-1} \psi_n \cdot \psi_k \dx \\
+	&\underline{B} \in \R^{M \times N} \text{ mit } \underline{B}[m,k] \coloneqq - \int_{\Omega} \mu_m \dive(\psi_k) \dx \\
+	&\underline{b} \in \R^N \text{ mit } \underline{b}[k] \coloneqq - \int_{\Gamma_D} u_D \psi_k \cdot n \da
+	\end{align*}
+	und (für die Randbedingungen)
+	\begin{align*}
+	\underline{W}(g) \coloneqq \left\{ \underline{q} \in \R^N : \underline{q}[k] = \int_{F_k} g  \da \ (\text{für } k \text{ mit } F_k \subseteq \Gamma_N) \right\} 
+	\end{align*}
+
+
+Unser zu lösendes Problem lässt sich so mit $ q_h = \sum_{n=1}^{N} \underline{q}[n] \psi_n $ und $ u_h = \sum_{m=1}^{M} \underline{u}[m] \mu_m $ umformen zu 
+\begin{align*}
+\text{Bestimme} (\underline{q},\underline{u}) \in \underline{W}(-g_N)\times \R^M \text{ mit }\\
+\text{(L gFE)}\begin{cases}
+\underline{A} \underline{q} + \underline{B}^T \underline{u} &= \underline{b} \\
+\underline{B} \underline{q} &= 0
+\end{cases}
+\end{align*}
+oder anders geschrieben 
+\begin{align*}
+\text{Bestimme} (\underline{q},\underline{u}) \in \underline{W}(-g_N)\times \R^M \text{ mit }\\
+\text{(dgPS)}\begin{cases}
+\begin{pmatrix}
+\underline{A} &\underline{B}^T\\
+\underline{B} &0
+\end{pmatrix}
+\begin{pmatrix}
+\underline{q} \\
+\underline{u} 
+\end{pmatrix}
+=
+\begin{pmatrix}
+\underline{b}\\
+0
+\end{pmatrix}.
+\end{cases}
+\end{align*}
+
+Wir haben so eine diskrete gemischte Formulierung des Potentialströmungsproblem hergeleitet und können mit dieser aus gegebenen Rand- und Anfangswerten ein Flussvektorfeld $q$ erzeugen, welches der obigen Differentialgleichung genügt.
+Es handelt sich hierbei um das gemischte Finite Elemente Verfahren. In M++ selbst lösen wir das Potentialströmungsproblem durch eine Abwandlung dieses Verfahrens. Wir diskretisieren dazu eine äquivalente Formulierung von (sPS) und erhalten so mit dem hybriden Finite Elemente Verfahren die gleichen Ergebnisse, die auch der vorgestellte gemischte Ansatz liefern würde, bei besserer Effizienz und guter Parallelisierbarkeit. Da das Potentialströumgsproblem in dieser Thesis primär dazu genutzt werden soll das Vektorfeld $q$ zu bestimmen, soll uns aus theoretischer Sicht aber obige Formulierung genügen und wir verweisen hinsichtlich der Lösung mit hybriden gemischten Finiten Elementen auf die Literatur, wie etwa \cite{brezzi2012mixed},\cite{arnold2002mixed} oder \cite{roberts1991mixed}.
+
+
+
+
+
+\subsubsection{Referenzzelle}
+========TODO=einbinden?======
 An dieser Stelle hat es sich bei konkreten Implementierung Finiter Elemente bereits oft als nützlich erwiesen eine Referenzzelle einzuführen. Statt sich also die Daten jeder Zelle statisch zu speichern und dann darauf zuzugreifen, gehen wir stets von der Referenzzelle aus und können über eine linear affine Abbildung in der jeweiligen Zelle operieren.
 
 \begin{Definition}
@@ -267,57 +325,6 @@ Wir setzen nun also $ \psi_j (j \in \{1,\dots , \abs{\mathcal{F}}\})$ durch
 	\[ \psi_j|_K = \psi_i^K. \]
 \end{Bemerkung}
 
-\subsection{Formulierung als LGS}
-Es seien wie bisher Seiten, Seitenbasis, Zellen und Zellenbasis global nummeriert 
-\begin{align*}
-&N \coloneqq \abs{\mathcal{F}} &&\mathcal{F} = \{F_1, \dots , F_{N} \}  \\
-&&&W_h =\{\psi_1, \dots , \psi_N\}\\
-&M \coloneqq \abs{\mathcal{K}} &&\mathcal{K} = \{K_1, \dots , K_{M} \}  \\
-&&&Q_h = \{\mu_1 , \dots , \mu_M  \}.
-\end{align*}
-
-Wir können nun damit beginnen das so entstandene endlich dimensionale Problem in eine Lineares Gleichungs System umformulieren. Dazu definieren wir:
-	\begin{align*}
-	&\underline{A} \in \R^{N \times N} \text{ mit } \underline{A}[n,k] \coloneqq \int_{\Omega} \kappa^{-1} \psi_n \cdot \psi_k \dx \\
-	&\underline{B} \in \R^{M \times N} \text{ mit } \underline{B}[m,k] \coloneqq - \int_{\Omega} \mu_m \dive(\psi_k) \dx \\
-	&\underline{b} \in \R^N \text{ mit } \underline{b}[k] \coloneqq - \int_{\Gamma_D} u_D \psi_k \cdot n \da
-	\end{align*}
-	und (für die Randbedingungen)
-	\begin{align*}
-	\underline{W}(g) \coloneqq \left\{ \underline{q} \in \R^N : \underline{q}[k] = \int_{F_k} g  \da \ (\text{für } k \text{ mit } F_k \subseteq \Gamma_N) \right\} 
-	\end{align*}
-
-
-Unser zu lösendes Problem lässt sich so mit $ q_h = \sum_{n=1}^{N} \underline{q}[n] \psi_n $ und $ u_h = \sum_{m=1}^{M} \underline{u}[m] \mu_m $ umformen zu 
-\begin{align*}
-\text{Bestimme} (\underline{q},\underline{u}) \in \underline{W}(-g_N)\times \R^M \text{ mit }\\
-\text{(L gFE)}\begin{cases}
-\underline{A} \underline{q} + \underline{B}^T \underline{u} &= \underline{b} \\
-\underline{B} \underline{q} &= 0
-\end{cases}
-\end{align*}
-oder anders geschrieben 
-\begin{align*}
-\text{Bestimme} (\underline{q},\underline{u}) \in \underline{W}(-g_N)\times \R^M \text{ mit }\\
-\begin{cases}
-\begin{pmatrix}
-\underline{A} &\underline{B}^T\\
-\underline{B} &0
-\end{pmatrix}
-\begin{pmatrix}
-\underline{q} \\
-\underline{u} 
-\end{pmatrix}
-=
-\begin{pmatrix}
-\underline{b}\\
-0
-\end{pmatrix}.
-\end{cases}
-\end{align*}
-
-
-========TODO=======
 \subsection{Hybridisierung}
 
 Wir betrachten die Räume
