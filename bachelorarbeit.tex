@@ -53,6 +53,7 @@
 % eigene Definitionen
 \newcommand{\dx}{\, \mathrm{d} x}
 \newcommand{\da}{\, \mathrm{d} a}
+\newcommand{\dt}{\, \mathrm{d} t}
 \newcommand{\icol}[1]{%inline row vector
 		\left(	\begin{smallmatrix}#1\end{smallmatrix} \right) %
 	}
@@ -131,8 +132,9 @@
 \subsection{Numerische Lösung des Potentialströmungsproblem}
 \input{FEM_Pot}
 \subsection{Numerische Lösung des Transportproblem}
+\input{DG_TP}
 
-\subsection{Anwendung der MLMC Methode auf das Transportproblem für unsichere Permeabilität $\kappa$ }
+\subsection{Anwendung der MLMC Methode auf das probabilistische Transportproblem}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newpage  % neuer Abschnitt auf neue Seite, kann auch entfallen
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

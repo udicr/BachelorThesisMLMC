@@ -1,0 +1,42 @@
+% !TeX root = bachelorarbeit.tex
+
+In diesem Abchnitt soll nun, nachdem wir $q(\omega,\cdot)$ als Finite-Elemente-Lösung des Potentialströmungsproblems erhalten haben, die numerische Lösung des linearen Transportproblems behandelt werden:
+\begin{align*}
+	&\text{Für } \omega \in \Omega \text{ und }q(\omega,\cdot): \overline{\mathbb{D}} \to \R^2 \text{, bestimme }\rho(\omega,\cdot): \overline{\mathbb{D}} \times \mathbb{T} \to \R_{\geq 0} \text{ mit} \\
+	&\text{(TP)} 
+	\begin{cases}
+	\begin{array}{rlll}
+	\partial_t \rho (\omega, x, t) + \dive(\rho(\omega,x,t)q(\omega,x)) &= 0 &\text{, für } (x,t) \in \mathbb{D} \times (0,T] \\
+	\rho(\omega,x,t) &= \rho_{\text{in}}(x,t) &\text{, für } (x,t) \in \Gamma_{\text{in}} \times \mathbb{T} \\
+	\rho(\omega,x,0)  &= \rho_0(x) &\text{, für } x \in  \mathbb{D}
+	\end{array}
+	\end{cases} \\
+\end{align*}
+Insbesondere wollen wir an dieser Stelle wieder $\omega \in \Omega$ fest halten und betrachten deshalb zunächst nur das deterministische Problem wie in \ref{det_prob}.
+Wie im letzten Abschnitt führen wir zudem einen schwachen Lösungsbegriff ein:
+
+
+===TODO SPACING + Herleitung====
+\begin{align*}
+\text{Gegeben } q(\cdot) : \overline{\mathbb{D}} \to \R^2 \text{, bestimme } \rho:\Omega\times [0,T] \to \R_{\ge 0} \text{ so, dass}\\
+\text{(swTP)}\begin{cases}
+\displaystyle
+\int_{\Omega} \rho_0 \phi(0) \dx = \mkern-16mu &- \displaystyle \int_{0}^{T} \int_{\Omega} \rho (\partial_t \phi + q \nabla \phi ) \dx \dt \\
+&+\displaystyle\int_{0}^{T}  \int_{\Gamma_{\text{in}}} \rho_{\text{in}} q \cdot \nu \phi \da  \dt \\
+&+\displaystyle\int_{0}^{T}  \int_{\Gamma_{\text{out}}} \rho q \cdot \nu \phi \da  \dt
+\end{cases}	\\
+\text{ für alle } \phi: \Omega \times (0,T) \to \R \text{ mit } \phi(\cdot,T) = 0 \text{ auf } \Omega.
+\end{align*}
+
+Dabei hängen der klassische und der schwache Lösungsbegriff folgendermaßen miteinander zusammen:
+\begin{Lemma}(Zusammenhang der Lösungsbegriffe)
+	
+	\begin{enumerate}[label=(\alph*)]
+		\item Ist $ \rho $ eine klassische Lösung, so ist $ \rho $ auch eine schwache Lösung.
+		\item Ist $ \rho $ glatt genug (TODO) und eine schwache Lösung, so ist $ \rho $ eine klassische Lösung. 
+	\end{enumerate}
+\end{Lemma}
+
+%\begin{Beweis}
+ %  todo
+%\end{Beweis}
