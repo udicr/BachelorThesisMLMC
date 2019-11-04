@@ -62,6 +62,17 @@ Die analytischen Grundlagen bauen zum Teil auf der Vorlesung Rand- und Eigenwert
  		wobei $F:\mathcal{D} \to \R^d$ ein Vektorfeld ist. Die Komponentenfunktionen von $F = (F_1,\dots,F_d)$ sollen dann $F_i \in C^1(\overline{\mathcal{D}})$ für $i=1,\dots,n$ erfüllen.
 \end{Satz}
 
+\begin{Folgerung}(mehrdimensionale partielle Integration) \\
+	\label{n_pI}
+	Sei $ u \in C^1(\R^d, \R)$ und $ \vec v : \mathcal{D} \to \R^d $ ein stetig partiell differenzierbares Vektorfeld.
+	Dann gilt:
+	
+	\begin{align*}
+		\int_{\mathcal{D}} u \dive ( \vec v) \dx = \int_{\partial \mathcal{D}} u \vec v \cdot n \da
+		- \int_{\mathcal{D}} \vec v \cdot \nabla \phi \dx
+	\end{align*}
+\end{Folgerung}
+
 
 \begin{Definition}(schwache Ableitung)\\
 	Sei $u \in L_{\text{loc}}^1$. Wir sagen v besitzt eine schwache Ableitung zum Multiindex $\alpha$, falls eine Funktion $v \in L_{\text{loc}}^1$ existiert, mit 

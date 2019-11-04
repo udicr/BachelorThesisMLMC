@@ -12,31 +12,67 @@ In diesem Abchnitt soll nun, nachdem wir $q(\omega,\cdot)$ als Finite-Elemente-L
 	\end{array}
 	\end{cases} \\
 \end{align*}
-Insbesondere wollen wir an dieser Stelle wieder $\omega \in \Omega$ fest halten und betrachten deshalb zunächst nur das deterministische Problem wie in \ref{det_prob}.
-Wie im letzten Abschnitt führen wir zudem einen schwachen Lösungsbegriff ein:
+Insbesondere wollen wir an dieser Stelle wieder $\omega \in \Omega$ fest halten und betrachten deshalb zunächst nur das deterministische Problem wie in \ref{det_prob}:
+\[ 
+\text{Bestimme } \rho: \overline{\mathbb{D}} \times \mathbb{T} \to \R_{\geq 0} \text{, sodass} \newline \]
+\[\setlength\arraycolsep{1pt}
+\text{(TP)}\begin{cases} 
+\begin{array}{rlll}
+\partial_t \rho(x,t) + \dive(\rho(x,t) q(x)) &= 0 &\text{ ,in } &\mathbb{D} \times (0,T)\\
+\rho(x,t) &= \rho_{\text{in}}(x,t) &\text{ ,auf } &\Gamma_{\text{in}} \times (0,T)\\
+\rho(x,0) &= \rho_0(x) &\text{ ,auf } &\mathbb{D} \\
+\end{array}
+\end{cases} \\
+\]
+Anders als zuvor das Potentialströmungsproblem ist die lineare Transportgleichung sowohl Orts- als auch Zeitabhängig. Daher werden wir, nachdem wieder zuerst eine schwache Formulierung eingeführt wird,  die lineare Transportgleichung zunächst im Ort diskretisieren. Wir erhalten so eine Semidiskretisierung, welche wir anschließend mit einem Zeitintegrator, wie beispielsweise der impliziten Mittelpunktsregel, in eine Volldiskretisierung überführen. Wir greifen dabei auf ein sogenanntes Discontinuous Galerkin Verfahren zurück, welches für diese Problemklasse bereits an anderen Stellen (z.B. in \cite{cockburn1998runge}) erprobt wurde. Einen guten (wenn auch mittlerweile etwas in die Jahre gekommenen) Überblick über die Anwendung von Discontinuous Galerkin Verfahren bietet \cite{cockburn2000development}.
 
-
-===TODO SPACING + Herleitung====
+\subsubsection{Schwache Formulierung}
+Wie im letzten Abschnitt führen wir zudem einen schwachen Lösungsbegriff ein. Sei dazu $ \phi : \mathbb{D} \times \mathbb{T} \to \R $ eine beliebige Testfunktion, etwa aus  $W_0^{1,2}(\mathbb{D} \times \mathbb{T}) $. Es gelte $ \phi(\cdot,T) = 0 $. 
+Wir beginnen mit der Differentialgleichung $ \partial_t \rho(x,t) + \dive(\rho(x,t) q(x)) = 0  $, multiplizieren zunächst mit der Testfunktion $ \phi $ und integrieren anschließend über den Raum-Zeitzylinder $ \mathbb{D} \times \mathbb{T} $:
 \begin{align*}
-\text{Gegeben } q(\cdot) : \overline{\mathbb{D}} \to \R^2 \text{, bestimme } \rho:\Omega\times [0,T] \to \R_{\ge 0} \text{ so, dass}\\
-\text{(swTP)}\begin{cases}
-\displaystyle
-\int_{\Omega} \rho_0 \phi(0) \dx = \mkern-16mu &- \displaystyle \int_{0}^{T} \int_{\Omega} \rho (\partial_t \phi + q \nabla \phi ) \dx \dt \\
-&+\displaystyle\int_{0}^{T}  \int_{\Gamma_{\text{in}}} \rho_{\text{in}} q \cdot \nu \phi \da  \dt \\
-&+\displaystyle\int_{0}^{T}  \int_{\Gamma_{\text{out}}} \rho q \cdot \nu \phi \da  \dt
-\end{cases}	\\
-\text{ für alle } \phi: \Omega \times (0,T) \to \R \text{ mit } \phi(\cdot,T) = 0 \text{ auf } \Omega.
+	\int_{\mathbb{D} \times \mathbb{T}} \big(\partial_t \rho(x,t) &+ \dive(\rho(x,t) q(x) ) \big) \phi(x,t) \; \mathrm{d} (x,t) =  \\
+	&\underbrace{\int_{\mathbb{D} \times \mathbb{T}}  \partial_t \rho(x,t) \phi(x,t) \; \mathrm{d} (x,t)}_{(1)} +\underbrace{\int_{\mathbb{D} \times \mathbb{T}}  
+    \dive(\rho(x,t) q(x) ) \phi(x,t)\; \mathrm{d} (x,t)}_{(2)}
 \end{align*}
+Betrachten wir nun zunächst Integral (1), so folgt mit partieller Integration:
+\begin{align*}
+	\int_{\mathbb{D} \times \mathbb{T}}  \partial_t \rho(x,t) &\phi(x,t) \; \mathrm{d} (x,t) = \int_{\mathbb{D}} \int_{\mathbb{T}} \partial_t \rho(x,t) \phi(x,t) \dt \dx \\&= \int_{\mathbb{D}} \big( - \int_{\mathbb{T}} \rho(x,t) \partial_t \phi(x,t) \dt + \big[ \rho(x,t) \phi(x,t) \big]_0^T  \big) \dx \\
+	&= - \int_{\mathbb{D} \times \mathbb{T}} \rho(x,t) \partial_t \phi(x,t) \; \mathrm{d} (x,t) + \int_{\mathbb{D}} \underbrace{\rho(x,T) \phi(x,T)}_{ = 0 } - \underbrace{\rho(x,0)}_{ = \rho_0(x) \text{ auf } \mathbb{D}} \phi(x,0)  \dx\\
+	&= - \int_{\mathbb{D} \times \mathbb{T}} \rho(x,t) \partial_t \phi(x,t) \; \mathrm{d} (x,t) - \int_{\mathbb{D}} \rho_0(x) \phi(x,0) \dx 
+\end{align*}
+Außerdem können wir Integral (2) mit  \ref{n_pI} wie folgt ausdrücken:
+\begin{align*}
+	\int_{\mathbb{D} \times \mathbb{T}}  
+	\dive(\rho(x,t) &q(x) ) \phi(x,t)\; \mathrm{d} (x,t) = \int_{\mathbb{T}} \int_{\mathbb{D}} \dive(\rho(x,t) q(x) ) \phi(x,t) \dx \dt \\
+	&= \int_{\mathbb{T}} \big( - \int_{\mathbb{D}} \rho(x,t) q(x) \nabla \phi(x,t) \dx + \int_{\partial \mathbb{D}} \rho(x,t) q(x) \cdot n \ \phi(x,t) \da \big)  \dt \\
+	&= - \int_{\mathbb{D} \times \mathbb{T}} \rho(x,t) q(x) \nabla \phi(x,t)) \; \mathrm{d} (x,t) + \int_{\mathbb{T}} \int_{\partial \mathbb{D}} \rho(x,t) q(x) \cdot n \phi(x,t) \da \dt 
+\end{align*}
+Mit $ \partial \mathbb{D} = \Gamma_{\text{in}} \dot{\cup} \Gamma_{\text{out}} $ und 
+$\rho(x,t) = \rho_{\text{in}}(x,t) \text{ für } (x,t) \in \Gamma_{\text{in}} \times (0,T)$ erhalten wir so die folgende Formulierung:
+\begin{Definition} 
+$ \rho \in L_1 (\mathbb{D} \times (0,T)) $ heißt schwache Lösung des linearen Transportproblems, falls es für ein gegebenes $ q : \overline{\mathbb{D}} \to \R^2 $ folgende Bedingungen erfüllt:
+\begin{align*}
+\text{(swTP)}
+\begin{cases}
+\begin{array}{rlll}
+\displaystyle
+\int_{\mathbb{D}} \rho_0 \phi(0) \dx = \mkern-16mu &- \displaystyle \int_{0}^{T} \int_{\mathbb{D}} \rho (\partial_t \phi + q \nabla \phi ) \dx \dt \\
+&+\displaystyle\int_{0}^{T}  \int_{\Gamma_{\text{in}}} \rho_{\text{in}} q \cdot n \phi \da  \dt \\
+&+\displaystyle\int_{0}^{T}  \int_{\Gamma_{\text{out}}} \rho q \cdot n \phi \da  \dt
+\end{array}
+\end{cases}	
+\end{align*}
+für alle Testfunktionen $ \phi: \mathbb{D} \times (0,T) \to \R $ mit $ \phi(\cdot,T) = 0 $ auf $ \mathbb{D}  $ und $ \phi|_{\Gamma_{\text{out}}} = 0 $.
+\end{Definition}
+Dabei ist $  \Gamma_{\text{out}} \coloneqq  \{ z \in \partial \mathbb{D}: q(z)\cdot n(z) > 0 \}$ 
+und $  \Gamma_{\text{in}} \coloneqq  \{ z \in \partial \mathbb{D}: q(z)\cdot n(z) \leq 0 \} $. \\
+Obige Herleitung zeigt zusammen mit \ref{testfunktionen} insbesondere die Gültigkeit des folgenden Zusammenhangs zwischen klassischen Lösungen der linearen Transportgleichung und schwachen Lösungen von (swTP):
 
-Dabei hängen der klassische und der schwache Lösungsbegriff folgendermaßen miteinander zusammen:
 \begin{Lemma}(Zusammenhang der Lösungsbegriffe)
-	
-	\begin{enumerate}[label=(\alph*)]
+	\begin{enumerate}
 		\item Ist $ \rho $ eine klassische Lösung, so ist $ \rho $ auch eine schwache Lösung.
-		\item Ist $ \rho $ glatt genug (TODO) und eine schwache Lösung, so ist $ \rho $ eine klassische Lösung. 
+		\item Ist $ \rho \in C^2(\mathbb{D} \times \mathbb{T} , \R )$ und eine schwache Lösung, so ist $ \rho $ eine klassische Lösung. 
 	\end{enumerate}
 \end{Lemma}
-
-%\begin{Beweis}
- %  todo
-%\end{Beweis}
+\subsubsection{Diskretisierung}
+Wie bereits weiter oben beschrieben werden wir im Folgenden zunächst den Raum diskretisieren und anschließend die so entstandene Semidiskretisierung in eine Volldiskretisierung auflösen. Insgesamt wollen wir das Discontinuous Galerkin Verfahren mit einem Zeitintegrator, wie der impliziten Mittelpunktsregel oder einem klassischen Runge-Kutta-Verfahren nutzen. Grob gesehen handelt es sich beim Discontinuous Galerkin Verfahren ebenfalls um einen FEM Ansatz, der zwar Änhlichkeiten zum Finite Elemente Verfahren aufweist, welches wir im letzten Abschnitt gesehen hatten, aber auch einige bedeutende Unterschiede aufweist, auf welche im Folgenden besonders eingehen wollen. 
