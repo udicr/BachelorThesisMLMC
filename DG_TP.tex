@@ -3,7 +3,7 @@
 In diesem Abchnitt soll nun, nachdem wir $q(\omega,\cdot)$ als Finite-Elemente-Lösung des Potentialströmungsproblems erhalten haben, die numerische Lösung des linearen Transportproblems behandelt werden:
 \begin{align*}
 	&\text{Für } \omega \in \Omega \text{ und }q(\omega,\cdot): \overline{\mathbb{D}} \to \R^2 \text{, bestimme }\rho(\omega,\cdot): \overline{\mathbb{D}} \times \mathbb{T} \to \R_{\geq 0} \text{ mit} \\
-	&\text{(TP)} 
+	&\text{(pTP)} 
 	\begin{cases}
 	\begin{array}{rlll}
 	\partial_t \rho (\omega, x, t) + \dive(\rho(\omega,x,t)q(\omega,x)) &= 0 &\text{, für } (x,t) \in \mathbb{D} \times (0,T] \\
@@ -16,7 +16,7 @@ Insbesondere wollen wir an dieser Stelle wieder $\omega \in \Omega$ fest halten 
 \[ 
 \text{Bestimme } \rho: \overline{\mathbb{D}} \times \mathbb{T} \to \R_{\geq 0} \text{, sodass} \newline \]
 \[\setlength\arraycolsep{1pt}
-\text{(TP)}\begin{cases} 
+\text{(dTP)}\begin{cases} 
 \begin{array}{rlll}
 \partial_t \rho(x,t) + \dive(\rho(x,t) q(x)) &= 0 &\text{ ,in } &\mathbb{D} \times (0,T)\\
 \rho(x,t) &= \rho_{\text{in}}(x,t) &\text{ ,auf } &\Gamma_{\text{in}} \times (0,T)\\
@@ -24,10 +24,14 @@ Insbesondere wollen wir an dieser Stelle wieder $\omega \in \Omega$ fest halten 
 \end{array}
 \end{cases} \\
 \]
-Anders als zuvor das Potentialströmungsproblem ist die lineare Transportgleichung sowohl Orts- als auch Zeitabhängig. Daher werden wir, nachdem wieder zuerst eine schwache Formulierung eingeführt wird,  die lineare Transportgleichung zunächst im Ort diskretisieren. Wir erhalten so eine Semidiskretisierung, welche wir anschließend mit einem Zeitintegrator, wie beispielsweise der impliziten Mittelpunktsregel, in eine Volldiskretisierung überführen. Wir greifen dabei auf ein sogenanntes Discontinuous Galerkin Verfahren zurück, welches für diese Problemklasse bereits an anderen Stellen (z.B. in \cite{cockburn1998runge}) erprobt wurde. Einen guten (wenn auch mittlerweile etwas in die Jahre gekommenen) Überblick über die Anwendung von Discontinuous Galerkin Verfahren bietet \cite{cockburn2000development}.
+ Wir greifen dabei auf ein sogenanntes Discontinuous Galerkin Verfahren zurück, welches für diese Problemklasse bereits an anderen Stellen (z.B. in \cite{cockburn1998runge}) erprobt wurde. Einen guten (wenn auch mittlerweile etwas in die Jahre gekommenen) Überblick über die Anwendung von Discontinuous Galerkin Verfahren bietet \cite{cockburn2000development}.
+Grundätzlich handelt es sich beim Discontinuous Galerkin Verfahren ebenfalls um einen FEM Ansatz, der zwar Änhlichkeiten zum Finite Elemente Verfahren aufweist, welches wir im letzten Abschnitt gesehen hatten, aber auch einige bedeutende Unterschiede aufweist, auf welche wir im Folgenden besonders eingehen wollen. 
+So werden wir wieder eine schwache Formulierung des analytischen Problems herleiten und uns dann im Rahmen des Diskretisierung erneut auf endlich dimensionale Räume zurückziehen.
+Anders als zuvor das Potentialströmungsproblem ist die lineare Transportgleichung  aber sowohl Orts- als auch Zeitabhängig. Daher werden wir, nachdem wieder zuerst eine schwache Formulierung eingeführt wird,  die lineare Transportgleichung zunächst im Ort diskretisieren. Wir erhalten so eine Semidiskretisierung, welche wir anschließend mit einem Zeitintegrator, wie beispielsweise der impliziten Mittelpunktsregel, in eine Volldiskretisierung überführen.
+ 
 
 \subsubsection{Schwache Formulierung}
-Wie im letzten Abschnitt führen wir zudem einen schwachen Lösungsbegriff ein. Sei dazu $ \phi : \mathbb{D} \times \mathbb{T} \to \R $ eine beliebige Testfunktion, etwa aus  $W_0^{1,2}(\mathbb{D} \times \mathbb{T}) $. Es gelte $ \phi(\cdot,T) = 0 $. 
+Wie im letzten Abschnitt führen wir nun einen schwachen Lösungsbegriff ein. Sei dazu $ \phi : \mathbb{D} \times \mathbb{T} \to \R $ eine beliebige Testfunktion, etwa aus  $W_0^{1,2}(\mathbb{D} \times \mathbb{T}) $, für die $ \phi(\cdot,T) = 0 $ gelte. 
 Wir beginnen mit der Differentialgleichung $ \partial_t \rho(x,t) + \dive(\rho(x,t) q(x)) = 0  $, multiplizieren zunächst mit der Testfunktion $ \phi $ und integrieren anschließend über den Raum-Zeitzylinder $ \mathbb{D} \times \mathbb{T} $:
 \begin{align*}
 	\int_{\mathbb{D} \times \mathbb{T}} \big(\partial_t \rho(x,t) &+ \dive(\rho(x,t) q(x) ) \big) \phi(x,t) \; \mathrm{d} (x,t) =  \\
@@ -75,4 +79,32 @@ Obige Herleitung zeigt zusammen mit \ref{testfunktionen} insbesondere die Gülti
 	\end{enumerate}
 \end{Lemma}
 \subsubsection{Diskretisierung}
-Wie bereits weiter oben beschrieben werden wir im Folgenden zunächst den Raum diskretisieren und anschließend die so entstandene Semidiskretisierung in eine Volldiskretisierung auflösen. Insgesamt wollen wir das Discontinuous Galerkin Verfahren mit einem Zeitintegrator, wie der impliziten Mittelpunktsregel oder einem klassischen Runge-Kutta-Verfahren nutzen. Grob gesehen handelt es sich beim Discontinuous Galerkin Verfahren ebenfalls um einen FEM Ansatz, der zwar Änhlichkeiten zum Finite Elemente Verfahren aufweist, welches wir im letzten Abschnitt gesehen hatten, aber auch einige bedeutende Unterschiede aufweist, auf welche wir im Folgenden besonders eingehen wollen. 
+Wie bereits weiter oben beschrieben werden wir im Folgenden zunächst den Raum diskretisieren und anschließend die so entstandene Semidiskretisierung in eine Volldiskretisierung auflösen. Insgesamt wollen wir das Discontinuous Galerkin Verfahren mit einem Zeitintegrator, wie der impliziten Mittelpunktsregel oder einem klassischen Runge-Kutta-Verfahren nutzen. Zunächst führen wir die analytische Flussfunktion ein. 
+\begin{Definition}(Flussfunkion) \\
+	\label{Flussfunktion}
+	Zu einem gegebenen Flussvektorfeld $ q : \mathbb{D} \to \R^2 $ ist die Flussfunktion $ \Upsilon$ definiert als:\\
+	\begin{align*}
+		 \Upsilon : \text{Abb}(\mathbb{D}\times\mathbb{T},\R) &\to \text{Abb}(\mathbb{D}\times\mathbb{T},\R^2) \\
+		 \rho &\mapsto \rho q
+	\end{align*}
+\end{Definition}
+Für eine klassische Lösung $ \rho  $ von (dTP) gilt dann insbesondere $ \partial_t \rho = - \dive (\Upsilon(\rho)) $ auf $ \mathbb{D} \times (0,T] $.	\\
+Halten wir also zunächst $ t \in \mathbb{T} $ und leiten so zunächst die Semidiskretisierung her.\\
+Sei nun $ \mathfrak{K} $ eine zulässige Triangulierung von $ \mathbb{D} $ aus Dreiecken wie in \ref{num_pot} und $ (\cdot , \cdot)_A $ das $ L^2(A)-$Skalarprodukt.
+Wir wählen als Lösungs-/Testraum $Q_h = \prod_{K \in \mathfrak{K}} \mathbb{P}_p(K,\R) $ für ein festes $p \geq 1 $. Anders als zuvor fordern wir für unsere Lösungs- und Testfunktionen diesmal aber explizit nicht die Stetigkeit auf $\mathbb{D}$. Da so $Q_h$ nicht im betrachteten analytischen Lösungs- und Testraum liegt, etwa  $Q_h \nsubseteq W^{1,2}(\mathbb{D})$, nennt man $Q_h$ auch einen nicht-konformen Ansatzraum.
+Außerdem lässt sich im Allgemeinen auch die später bestimmt Lösung $ \rho_h \in Q_h $ (definiert auf $\mathbb{D}_h = \bigcup_{K \in \mathfrak{K}} K$ ) nicht stetig auf $ \mathbb{D} $ fortsetzen, denn für eine beliebige innere Kante $ F $ kann der Grenzwert von $ \rho_h $ auf den anliegenden Zellen $ K,K' $ ($ \overline{F} = \partial K \cap \partial K' $) unterschiedlich sein. \\
+Trotzdem müssen wir auch auf den inneren Kanten $ \mathcal{F}^0 \subset \mathcal{F} $ festlegen, welcher Grenzwert in einem solchen Falle gewählt wird. \\
+Dazu führen wir als Pendant zur analytischen Flussfunktion (vgl. \ref{Flussfunktion})
+auch eine numerische Flussfunktion ein. Grundsätzlich kommen mehrere solche Flussfunktionen in Frage, welche direkten Einfluss auf Eigenschaften des entstehenden Verfahrens besitzen. Wir entscheiden uns an dieser Stelle für den weit verbreiteten 
+sogenannten upwind flux:
+\begin{Definition}(upwind flux)\\
+	Sei $K \in \mathfrak{K}$ eine beliebige Zelle und $ F \in \mathcal{F}_K$ eine Kante von $K$. Dann ist  (TODO Was passiert bei q*n = 0????)
+	\begin{align*}
+		\Upsilon^{\star} : \text{Abb}(\mathbb{D}\times\mathbb{T},\R) &\to \text{Abb}(\mathbb{D}\times\mathbb{T},\R^2) \\
+		\rho_h &\mapsto 
+		\begin{cases}
+			\Upsilon(\rho_h|K) , \ \text{ für } q\cdot n_F^K > 0 \\  
+			\Upsilon(\rho_h|K') ,\text{ für } q\cdot n_F^K < 0 \text{ und } \overline{F} = \partial K \cap \partial K'
+		\end{cases}
+	\end{align*}
+\end{Definition}
