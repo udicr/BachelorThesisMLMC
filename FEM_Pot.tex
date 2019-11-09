@@ -45,7 +45,7 @@ Sei nun $\mathbb{D} \subseteq \R ^2$ zudem ein polygonales Gebiet, um eine einfa
 	\end{enumerate}
 \end{Definition}
 
-\begin{figure}[h]
+\begin{figure}[H]
 	\centering
 	\captionabove{Zulässige Zerlegung und unzulässige Zerlegung mit hängendem Knoten}
 	\includegraphics[width=0.8\textwidth]{triangulierung.png} \\
@@ -174,7 +174,7 @@ Es seien wie bisher Seiten, Seitenbasis, Zellen und Zellenbasis global nummerier
 &&&Q_h = \{\mu_1 , \dots , \mu_M  \}.
 \end{align*}
 
-Wir können nun damit beginnen das so entstandene endlich dimensionale Problem in eine Lineares Gleichungs System umformulieren. Dazu definieren wir:
+Wir können nun damit beginnen das so entstandene endlich dimensionale Problem in ein Lineares Gleichungs System umzuformulieren. Dazu definieren wir:
 	\begin{align*}
 	&\underline{A} \in \R^{N \times N} \text{ mit } \underline{A}[n,k] \coloneqq \int_{\Omega} \kappa^{-1} \psi_n \cdot \psi_k \dx \\
 	&\underline{B} \in \R^{M \times N} \text{ mit } \underline{B}[m,k] \coloneqq - \int_{\Omega} \mu_m \dive(\psi_k) \dx \\
@@ -291,6 +291,13 @@ An dieser Stelle hat es sich bei konkreten Implementierung Finiter Elemente bere
 	und $ \hat{n} $ sei der äußere Normalenvektor von $ \hat{K} $
 \end{Definition}
 
+\begin{figure}[H]
+	\centering
+	\captionabove{Referenzzelle}
+	\includegraphics[width=0.33\textwidth]{referenzzelle.png} \\
+	Abbildung aus \cite{knabner2013numerik} Seite 51
+\end{figure}
+
 \begin{Bemerkung}
 	$\forall i,j\in\{1,2,3\}: \int_{F_j} \hat{\psi}_i \cdot \hat{n} \da = \delta_{i,j} \text{ und } \hat{\psi}_i \in \mathbb{P}_1(\hat{K}, \R^2).$
 \end{Bemerkung}
@@ -305,6 +312,14 @@ Weiter setzen wir noch
 \varphi_K: \hat{K} \to K, \varphi_K(\xi) = z_{0,K} + B_K \xi \text{ mit passenden } B_K\in\R^{2 \times 2} \text{ und } \\
 J_K \coloneqq \det(B_K) > 0.
 \end{align*}
+
+\begin{figure}[H]
+	\centering
+	\captionabove{Affine lineare Transformation von $\hat{K}$ nach $ K $}
+	\includegraphics[width=0.55\textwidth]{affinlinearetransf.png} \\
+	Abbildung aus \cite{knabner2013numerik} Seite 53
+\end{figure} 
+
 \begin{Lemma}
 	Es gilt: $\tilde{n}^K = \frac{1}{\abs{B_K^{-T} \hat{n}}} B_K^{-T} \hat{n} $ ist Normale zu $ \partial K $.
 \end{Lemma}
