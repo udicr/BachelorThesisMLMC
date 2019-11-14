@@ -24,62 +24,64 @@ Insbesondere wollen wir an dieser Stelle wieder $\omega \in \Omega$ fest halten 
 \end{array}
 \end{cases} \\
 \]
- Wir greifen dabei auf ein sogenanntes Discontinuous Galerkin Verfahren zurück, welches für diese Problemklasse bereits an anderen Stellen (z.B. in \cite{cockburn1998runge}) erprobt wurde. Einen guten (wenn auch mittlerweile etwas in die Jahre gekommenen) Überblick über die Anwendung von Discontinuous Galerkin Verfahren bietet \cite{cockburn2000development}.
-Grundätzlich handelt es sich beim Discontinuous Galerkin Verfahren ebenfalls um einen FEM Ansatz, der zwar Änhlichkeiten zum Finite Elemente Verfahren aufweist, welches wir im letzten Abschnitt gesehen hatten, aber auch einige bedeutende Unterschiede aufweist, auf welche wir im Folgenden besonders eingehen wollen. 
-So werden wir wieder eine schwache Formulierung des analytischen Problems herleiten und uns dann im Rahmen des Diskretisierung erneut auf endlich dimensionale Räume zurückziehen.
-Anders als zuvor das Potentialströmungsproblem ist die lineare Transportgleichung  aber sowohl Orts- als auch Zeitabhängig. Daher werden wir, nachdem wieder zuerst eine schwache Formulierung eingeführt wird,  die lineare Transportgleichung zunächst im Ort diskretisieren. Wir erhalten so eine Semidiskretisierung, welche wir anschließend mit einem Zeitintegrator, wie beispielsweise der impliziten Mittelpunktsregel, in eine Volldiskretisierung überführen.
+ Wir greifen dabei auf ein sogenanntes discontinuous Galerkin Verfahren zurück, welches für diese Problemklasse bereits an anderen Stellen (z.B. in \cite{cockburn1998runge}) erprobt wurde. Ursprünglich geht das Discontinuous Galerkin Verfahren auf Reed und Hill \cite{reed1973triangular} zurück. Einen guten (wenn auch mittlerweile etwas in die Jahre gekommenen) Überblick über die Anwendung von discontinuous Galerkin Verfahren bietet \cite{cockburn2000development}.
+Grundätzlich handelt es sich beim discontinuous Galerkin Verfahren ebenfalls um einen FEM Ansatz, der zwar Änhlichkeiten zum Finite Elemente Verfahren aufweist, welches wir im letzten Abschnitt gesehen hatten, aber auch einige bedeutende Unterschiede aufweist, auf welche wir im Folgenden besonders eingehen wollen. 
+%So werden wir wieder eine schwache Formulierung des analytischen Problems herleiten und uns dann im Rahmen des diskretisierung erneut auf endlich dimensionale Räume zurückziehen.
+Anders als zuvor das Potentialströmungsproblem ist die lineare Transportgleichung  nämlich sowohl Orts- als auch Zeitabhängig. Daher werden wir
+%, nachdem wieder zuerst eine schwache Formulierung eingeführt wird,
+  die lineare Transportgleichung zunächst im Ort diskretisieren. Wir erhalten so eine Semidiskretisierung, welche wir anschließend mit einem Zeitintegrator, wie beispielsweise der impliziten Mittelpunktsregel, in eine Volldiskretisierung überführen.
  
 
-\subsubsection{Schwache Formulierung}
-Wie im letzten Abschnitt führen wir nun einen schwachen Lösungsbegriff ein. Sei dazu $ \phi : \mathbb{D} \times \mathbb{T} \to \R $ eine beliebige Testfunktion, etwa aus  $W_0^{1,2}(\mathbb{D} \times \mathbb{T}) $, für die $ \phi(\cdot,T) = 0 $ gelte. 
-Wir beginnen mit der Differentialgleichung $ \partial_t \rho(x,t) + \dive(\rho(x,t) q(x)) = 0  $, multiplizieren zunächst mit der Testfunktion $ \phi $ und integrieren anschließend über den Raum-Zeitzylinder $ \mathbb{D} \times \mathbb{T} $:
-\begin{align*}
-	\int_{\mathbb{D} \times \mathbb{T}} \big(\partial_t \rho(x,t) &+ \dive(\rho(x,t) q(x) ) \big) \phi(x,t) \; \mathrm{d} (x,t) =  \\
-	&\underbrace{\int_{\mathbb{D} \times \mathbb{T}}  \partial_t \rho(x,t) \phi(x,t) \; \mathrm{d} (x,t)}_{(1)} +\underbrace{\int_{\mathbb{D} \times \mathbb{T}}  
-    \dive(\rho(x,t) q(x) ) \phi(x,t)\; \mathrm{d} (x,t)}_{(2)}
-\end{align*}
-Betrachten wir nun zunächst Integral (1), so folgt mit partieller Integration:
-\begin{align*}
-	\int_{\mathbb{D} \times \mathbb{T}}  \partial_t \rho(x,t) &\phi(x,t) \; \mathrm{d} (x,t) = \int_{\mathbb{D}} \int_{\mathbb{T}} \partial_t \rho(x,t) \phi(x,t) \dt \dx \\&= \int_{\mathbb{D}} \big( - \int_{\mathbb{T}} \rho(x,t) \partial_t \phi(x,t) \dt + \big[ \rho(x,t) \phi(x,t) \big]_0^T  \big) \dx \\
-	&= - \int_{\mathbb{D} \times \mathbb{T}} \rho(x,t) \partial_t \phi(x,t) \; \mathrm{d} (x,t) + \int_{\mathbb{D}} \underbrace{\rho(x,T) \phi(x,T)}_{ = 0 } - \underbrace{\rho(x,0)}_{ = \rho_0(x) \text{ auf } \mathbb{D}} \phi(x,0)  \dx\\
-	&= - \int_{\mathbb{D} \times \mathbb{T}} \rho(x,t) \partial_t \phi(x,t) \; \mathrm{d} (x,t) - \int_{\mathbb{D}} \rho_0(x) \phi(x,0) \dx 
-\end{align*}
-Außerdem können wir Integral (2) mit  \ref{n_pI} wie folgt ausdrücken:
-\begin{align*}
-	\int_{\mathbb{D} \times \mathbb{T}}  
-	\dive(\rho(x,t) &q(x) ) \phi(x,t)\; \mathrm{d} (x,t) = \int_{\mathbb{T}} \int_{\mathbb{D}} \dive(\rho(x,t) q(x) ) \phi(x,t) \dx \dt \\
-	&= \int_{\mathbb{T}} \big( - \int_{\mathbb{D}} \rho(x,t) q(x) \nabla \phi(x,t) \dx + \int_{\partial \mathbb{D}} \rho(x,t) q(x) \cdot n \ \phi(x,t) \da \big)  \dt \\
-	&= - \int_{\mathbb{D} \times \mathbb{T}} \rho(x,t) q(x) \nabla \phi(x,t)) \; \mathrm{d} (x,t) + \int_{\mathbb{T}} \int_{\partial \mathbb{D}} \rho(x,t) q(x) \cdot n \phi(x,t) \da \dt 
-\end{align*}
-Mit $ \partial \mathbb{D} = \Gamma_{\text{in}} \dot{\cup} \Gamma_{\text{out}} $ und 
-$\rho(x,t) = \rho_{\text{in}}(x,t) \text{ für } (x,t) \in \Gamma_{\text{in}} \times (0,T)$ erhalten wir so die folgende Formulierung:
-\begin{Definition} 
-$ \rho \in L_1 (\mathbb{D} \times (0,T)) $ heißt schwache Lösung des linearen Transportproblems, falls es für ein gegebenes $ q : \overline{\mathbb{D}} \to \R^2 $ folgende Bedingungen erfüllt:
-\begin{align*}
-\text{(swTP)}
-\begin{cases}
-\begin{array}{rlll}
-\displaystyle
-\int_{\mathbb{D}} \rho_0 \phi(0) \dx = \mkern-16mu &- \displaystyle \int_{0}^{T} \int_{\mathbb{D}} \rho (\partial_t \phi + q \nabla \phi ) \dx \dt \\
-&+\displaystyle\int_{0}^{T}  \int_{\Gamma_{\text{in}}} \rho_{\text{in}} q \cdot n \phi \da  \dt \\
-&+\displaystyle\int_{0}^{T}  \int_{\Gamma_{\text{out}}} \rho q \cdot n \phi \da  \dt
-\end{array}
-\end{cases}	
-\end{align*}
-für alle Testfunktionen $ \phi: \mathbb{D} \times (0,T) \to \R $ mit $ \phi(\cdot,T) = 0 $ auf $ \mathbb{D}  $ und $ \phi|_{\Gamma_{\text{out}}} = 0 $.
-\end{Definition}
-Dabei ist $  \Gamma_{\text{out}} \coloneqq  \{ z \in \partial \mathbb{D}: q(z)\cdot n(z) > 0 \}$ 
-und $  \Gamma_{\text{in}} \coloneqq  \{ z \in \partial \mathbb{D}: q(z)\cdot n(z) \leq 0 \} $. \\
-Obige Herleitung zeigt zusammen mit \ref{testfunktionen} insbesondere die Gültigkeit des folgenden Zusammenhangs zwischen klassischen Lösungen der linearen Transportgleichung und schwachen Lösungen von (swTP):
-
-\begin{Lemma}(Zusammenhang der Lösungsbegriffe)
-	\begin{enumerate}
-		\item Ist $ \rho $ eine klassische Lösung, so ist $ \rho $ auch eine schwache Lösung.
-		\item Ist $ \rho \in C^2(\mathbb{D} \times \mathbb{T} , \R )$ und eine schwache Lösung, so ist $ \rho $ auch eine klassische Lösung. 
-	\end{enumerate}
-\end{Lemma}
+%\subsubsection{Schwache Formulierung}
+%Wie im letzten Abschnitt führen wir nun einen schwachen Lösungsbegriff ein. Sei dazu $ \phi : \mathbb{D} \times \mathbb{T} \to \R $ eine beliebige Testfunktion, etwa aus  $W_0^{1,2}(\mathbb{D} \times \mathbb{T}) $, für die $ \phi(\cdot,T) = 0 $ gelte. 
+%Wir beginnen mit der differentialgleichung $ \partial_t \rho(x,t) + \dive(\rho(x,t) q(x)) = 0  $, multiplizieren zunächst mit der Testfunktion $ \phi $ und integrieren anschließend über den Raum-Zeitzylinder $ \mathbb{D} \times \mathbb{T} $:
+%\begin{align*}
+%	\int_{\mathbb{D} \times \mathbb{T}} \big(\partial_t \rho(x,t) &+ \dive(\rho(x,t) q(x) ) \big) \phi(x,t) \; \mathrm{d} (x,t) =  \\
+%	&\underbrace{\int_{\mathbb{D} \times \mathbb{T}}  \partial_t \rho(x,t) \phi(x,t) \; \mathrm{d} (x,t)}_{(1)} +\underbrace{\int_{\mathbb{D} \times \mathbb{T}}  
+%    \dive(\rho(x,t) q(x) ) \phi(x,t)\; \mathrm{d} (x,t)}_{(2)}
+%\end{align*}
+%Betrachten wir nun zunächst Integral (1), so folgt mit partieller Integration:
+%\begin{align*}
+%	\int_{\mathbb{D} \times \mathbb{T}}  \partial_t \rho(x,t) &\phi(x,t) \; \mathrm{d} (x,t) = \int_{\mathbb{D}} \int_{\mathbb{T}} \partial_t \rho(x,t) \phi(x,t) \dt \dx \\&= \int_{\mathbb{D}} \big( - \int_{\mathbb{T}} \rho(x,t) \partial_t \phi(x,t) \dt + \big[ \rho(x,t) \phi(x,t) \big]_0^T  \big) \dx \\
+%	&= - \int_{\mathbb{D} \times \mathbb{T}} \rho(x,t) \partial_t \phi(x,t) \; \mathrm{d} (x,t) + \int_{\mathbb{D}} \underbrace{\rho(x,T) \phi(x,T)}_{ = 0 } - \underbrace{\rho(x,0)}_{ = \rho_0(x) \text{ auf } \mathbb{D}} \phi(x,0)  \dx\\
+%	&= - \int_{\mathbb{D} \times \mathbb{T}} \rho(x,t) \partial_t \phi(x,t) \; \mathrm{d} (x,t) - \int_{\mathbb{D}} \rho_0(x) \phi(x,0) \dx 
+%\end{align*}
+%Außerdem können wir Integral (2) mit  \ref{n_pI} wie folgt ausdrücken:
+%\begin{align*}
+%	\int_{\mathbb{D} \times \mathbb{T}}  
+%	\dive(\rho(x,t) &q(x) ) \phi(x,t)\; \mathrm{d} (x,t) = \int_{\mathbb{T}} \int_{\mathbb{D}} \dive(\rho(x,t) q(x) ) \phi(x,t) \dx \dt \\
+%	&= \int_{\mathbb{T}} \big( - \int_{\mathbb{D}} \rho(x,t) q(x) \nabla \phi(x,t) \dx + \int_{\partial \mathbb{D}} \rho(x,t) q(x) \cdot n \ \phi(x,t) \da \big)  \dt \\
+%	&= - \int_{\mathbb{D} \times \mathbb{T}} \rho(x,t) q(x) \nabla \phi(x,t)) \; \mathrm{d} (x,t) + \int_{\mathbb{T}} \int_{\partial \mathbb{D}} \rho(x,t) q(x) \cdot n \phi(x,t) \da \dt 
+%\end{align*}
+%Mit $ \partial \mathbb{D} = \Gamma_{\text{in}} \dot{\cup} \Gamma_{\text{out}} $ und 
+%$\rho(x,t) = \rho_{\text{in}}(x,t) \text{ für } (x,t) \in \Gamma_{\text{in}} \times (0,T)$ erhalten wir so die folgende Formulierung:
+%\begin{definition} 
+%$ \rho \in L_1 (\mathbb{D} \times (0,T)) $ heißt schwache Lösung des linearen Transportproblems, falls es für ein gegebenes $ q : \overline{\mathbb{D}} \to \R^2 $ folgende Bedingungen erfüllt:
+%\begin{align*}
+%\text{(swTP)}
+%\begin{cases}
+%\begin{array}{rlll}
+%\displaystyle
+%\int_{\mathbb{D}} \rho_0 \phi(0) \dx = \mkern-16mu &- \displaystyle \int_{0}^{T} \int_{\mathbb{D}} \rho (\partial_t \phi + q \nabla \phi ) \dx \dt \\
+%&+\displaystyle\int_{0}^{T}  \int_{\Gamma_{\text{in}}} \rho_{\text{in}} q \cdot n \phi \da  \dt \\
+%&+\displaystyle\int_{0}^{T}  \int_{\Gamma_{\text{out}}} \rho q \cdot n \phi \da  \dt
+%\end{array}
+%\end{cases}	
+%\end{align*}
+%für alle Testfunktionen $ \phi: \mathbb{D} \times (0,T) \to \R $ mit $ \phi(\cdot,T) = 0 $ auf $ \mathbb{D}  $ und $ \phi|_{\Gamma_{\text{out}}} = 0 $.
+%\end{definition}
+%dabei ist $  \Gamma_{\text{out}} \coloneqq  \{ z \in \partial \mathbb{D}: q(z)\cdot n(z) > 0 \}$ 
+%und $  \Gamma_{\text{in}} \coloneqq  \{ z \in \partial \mathbb{D}: q(z)\cdot n(z) \leq 0 \} $. \\
+%Obige Herleitung zeigt zusammen mit \ref{testfunktionen} insbesondere die Gültigkeit des folgenden Zusammenhangs zwischen klassischen Lösungen der linearen Transportgleichung und schwachen Lösungen von (swTP):
+%
+%\begin{Lemma}(Zusammenhang der Lösungsbegriffe)
+%	\begin{enumerate}
+%		\item Ist $ \rho $ eine klassische Lösung, so ist $ \rho $ auch eine schwache Lösung.
+%		\item Ist $ \rho \in C^2(\mathbb{D} \times \mathbb{T} , \R )$ und eine schwache Lösung, so ist $ \rho $ auch eine klassische Lösung. 
+%	\end{enumerate}
+%\end{Lemma}
 \subsubsection{Diskretisierung}
-Wie bereits weiter oben beschrieben werden wir im Folgenden zunächst den Raum diskretisieren und anschließend die so entstandene Semidiskretisierung in eine Volldiskretisierung auflösen. Insgesamt wollen wir das Discontinuous Galerkin Verfahren mit einem Zeitintegrator, wie der impliziten Mittelpunktsregel oder einem klassischen Runge-Kutta-Verfahren nutzen. Zunächst führen wir die analytische Flussfunktion ein. 
+Wie bereits weiter oben beschrieben werden wir im Folgenden zunächst den Raum diskretisieren und anschließend die so entstandene Semidiskretisierung in eine Volldiskretisierung auflösen. Insgesamt wollen wir das discontinuous Galerkin Verfahren mit einem Zeitintegrator, wie der impliziten Mittelpunktsregel oder einem klassischen Runge-Kutta-Verfahren nutzen. Zunächst führen wir die analytische Flussfunktion ein. 
 \begin{Definition}(Flussfunkion) \\
 	\label{Flussfunktion}
 	Zu einem gegebenen Flussvektorfeld $ q : \mathbb{D} \to \R^2 $ ist die Flussfunktion $ \Upsilon$ definiert als:\\
@@ -90,11 +92,11 @@ Wie bereits weiter oben beschrieben werden wir im Folgenden zunächst den Raum d
 \end{Definition}
 Für eine klassische Lösung $ \rho  $ von (dTP) gilt dann insbesondere $ \partial_t \rho = - \dive (\Upsilon(\rho)) $ auf $ \mathbb{D} \times (0,T] $.	\\
 Halten wir also zunächst $ t \in \mathbb{T} $ und leiten so zunächst die Semidiskretisierung her.\\
-Sei nun $ \mathfrak{K} $ eine zulässige Triangulierung von $ \mathbb{D} $ aus Dreiecken wie in \ref{num_pot} und  $ (\cdot , \cdot)_A $ das $ L^2(A)-$Skalarprodukt..
+Sei nun $ \mathfrak{K} $ eine zulässige Triangulierung von $ \mathbb{D} $ aus dreiecken wie in \ref{num_pot} und  $ (\cdot , \cdot)_A $ das $ L^2(A)-$Skalarprodukt..
 Wir wählen als Lösungs-/Testraum $Q_h = \prod_{K \in \mathfrak{K}} \mathbb{P}_p(K,\R) $ für ein festes $p \geq 1 $. Anders als zuvor fordern wir für unsere Lösungs- und Testfunktionen diesmal aber explizit nicht die Stetigkeit auf $\mathbb{D}$. Da so $Q_h$ nicht im betrachteten analytischen Lösungs- und Testraum liegt, etwa  $Q_h \nsubseteq W^{1,2}(\mathbb{D})$, nennt man $Q_h$ auch einen nicht-konformen Ansatzraum.
 Außerdem lässt sich im Allgemeinen auch die später bestimmt Lösung $ \rho_h \in Q_h $ (definiert auf $\mathbb{D}_h = \bigcup_{K \in \mathfrak{K}} K$ ) nicht stetig auf $ \mathbb{D} $ fortsetzen, denn für eine beliebige innere Kante $ F $ kann der Grenzwert von $ \rho_h $ auf den anliegenden Zellen $ K,K' $ ($ \overline{F} = \partial K \cap \partial K' $) unterschiedlich sein. \\
 Trotzdem müssen wir auch auf den inneren Kanten $ \mathcal{F}^0 \subset \mathcal{F} $ festlegen, welcher Grenzwert in einem solchen Falle gewählt wird. \\
-Dazu führen wir als Pendant zur analytischen Flussfunktion (vgl. \ref{Flussfunktion})
+dazu führen wir als Pendant zur analytischen Flussfunktion (vgl. \ref{Flussfunktion})
 auch eine numerische Flussfunktion ein. Grundsätzlich kommen mehrere solche Flussfunktionen in Frage, welche direkten Einfluss auf Eigenschaften des entstehenden Verfahrens besitzen. Wir entscheiden uns an dieser Stelle für den weit verbreiteten 
 sogenannten upwind flux:
 \begin{Definition}(upwind flux)\\
@@ -139,10 +141,10 @@ Sei nun $ \mathfrak{K} = \{ K_1,\dots , K_N\} , N \coloneqq |\mathfrak{K}| $. Di
 \end{align}
 
 
-Durch Einsetzen der Zeilenbasis $ \{\mu_i\}_{i=1}^N $ mit $ \mu_i = \chi_{K_i} $  und mit $ \supp(\mu_i) \subseteq \overline{K_i} (\ i \in \{1, \dots , N\})$ ergibt sich für alle $\ i \in \{1, \dots , N\}$ 
+Durch Einsetzen der Zellenbasis $ \{\mu_i\}_{i=1}^N $ mit $ \mu_i = \chi_{K_i} $  und mit $ \supp(\mu_i) \subseteq \overline{K_i} (\ i \in \{1, \dots , N\})$ ergibt sich für alle $\ i \in \{1, \dots , N\}$ 
 \begin{align*}
 \left(\partial_t \rho_h, \mu_i  \right)_{K_i}  &= \bigg( \underbrace{(\Psi(\rho_h), \nabla\mu_i)_{K_i}}_{=0 \text{, da } \nabla \mu_i = 0} - \sum_{\substack{F \in \mathcal{F}_{K_i} \\ F \not\subseteq \Gamma_{\text{in}}}} \left(\Psi^*(\rho_h) \cdot n^{K_i}, \mu_i \right)_{F} - \left(\rho_{\text{in}} q \cdot n^{K_i}, \mu_i \right)_{\partial K_i \cap \Gamma_{\text{in}}} \bigg) \\
-&= \bigg( - \sum_{\substack{F \in \mathcal{F}_{K_i}, F \not\subseteq \Gamma_{\text{in}}\\ F \text{ mit }q \cdot n^K_{|F} > 0} } \left(\underbrace{\Psi^*(\rho_h)}_{= \rho_{h|K}\, q} \cdot n^{K_i}, \mu_i \right)_{F} - \sum_{\substack{F \in \mathcal{F}_{K_i}, F \not\subseteq \Gamma_{\text{in}}\\ F \text{ mit }q \cdot n^K_{|F} < 0} } \left(\underbrace{\Psi^*(\rho_h)}_{= \rho_{h|K_F} \, q} \cdot n^{K_i}, \mu_i \right)_{F}\\
+&= \bigg( - \sum_{\substack{F \in \mathcal{F}_{K_i}, F \not\subseteq \Gamma_{\text{in}}\\ F \text{ mit }q \cdot n^K_{|F} > 0} } \left(\underbrace{\Psi^*(\rho_h)}_{= \rho_{h|K}\, q} \cdot n^{K_i}, \mu_i \right)_{F} - \sum_{\substack{F \in \mathcal{F}_{K_i}, F \not\subseteq \Gamma_{\text{in}}\\ F \text{ mit }q \cdot n^K_{|F} < 0} } \left(\underbrace{\Psi^*(\rho_h)}_{= \rho_{h|K'} \, q} \cdot n^{K_i}, \mu_i \right)_{F}\\
 & \qquad \qquad \qquad \qquad \qquad \qquad  \qquad \qquad\qquad \qquad- \left(\rho_{\text{in}} q \cdot n^{K_i}, \mu_i \right)_{\partial K_i \cap \Gamma_{\text{in}}} \bigg)\qquad \qquad
 \end{align*} 
 
@@ -161,14 +163,14 @@ Zusammen mit der Basisdarstellung von $ \rho_h $ in $\{\mu_i  \}_{i=1}^N$, $ \rh
 \end{align*}
 
 
-ergibt sich die DGL
+ergibt sich die dGL
 \begin{align*}
 \begin{cases}
 \underline{M} \partial_t \underline{\rho}(t) = \underline{A} \underline{\rho}(t) + \underline{b}(t) \\
 \underline{\rho}(0) = \underline{\rho_0}
 \end{cases}\\
 \end{align*}
-Da es sich hierbei nun um eine gewöhnliche Differentialgleichung handelt können wir die Lösung 
+Da es sich hierbei nun um eine gewöhnliche differentialgleichung handelt können wir die Lösung 
 \begin{align}
  \label{semidisklsg}
  \underline{\rho}(t) = \exp(t \underline{M}^{-1} \underline{A}) \left( \underline{\rho_0} + \int_{0}^{t} \exp(-s\underline{M}^{-1} \underline{A}) \underline{b}(s) \ds \right)
@@ -177,8 +179,8 @@ Da es sich hierbei nun um eine gewöhnliche Differentialgleichung handelt könne
 Es handelt sich hierbei aber immer noch um eine semidiskrete Formulierung. 
 
 Wir wollen deshalb zuletzt noch auf die Herleitung der Zeitintegratoren eingehen. Diese nutzen wir um unter Verwendung der oben hergeleiteten Semidiskretisierung unsere numerische Lösung $ \underline{\rho} $ sowohl orts- al auch zeitdiskret zu berechnen. Der Ansatz leitet sich hierbei direkt aus dem  aus dem Resultat (\ref{semidisklsg}) ab und besteht aus der 
-Integration der Differentialgleichung $\underline{M} \partial_t \underline{\rho} = \underline{A} \underline{\rho} + \underline{b}$ über die Zeit $t$ im Intervall $[t_i, t_{i+1}]$.
-Dabei ist $t_i = i \Delta t$. Hiermit folgt:
+Integration der differentialgleichung $\underline{M} \partial_t \underline{\rho} = \underline{A} \underline{\rho} + \underline{b}$ über die Zeit $t$ im Intervall $[t_i, t_{i+1}]$.
+Dabei ist $t_i = i \delta t$. Hiermit folgt:
 \begin{align*}
 \underline{M}\underline{\rho}(t_{i+1}) - \underline{M}\underline{\rho}(t_i) = \int_{t_i}^{t_{i+1}}
 \underline{M} \partial_t \underline{\rho}(t) dt =\int_{t_i}^{t_{i+1}} \underline{A} \underline{\rho}(t) + \underline{b}(t) dt.
@@ -186,30 +188,30 @@ Dabei ist $t_i = i \Delta t$. Hiermit folgt:
 Mithilfe der Anwendung verschiedener Quadraturformeln lässt sich daraus ein Runge-Kutta Verfahren herleiten. Über die Rechteckformel 
 \begin{align*}
 \int_{t_i}^{t_{i+1}}\underline{A} \underline{\rho}(t) + \underline{b} dt \approx (t_{i+1}-t_i)( 
-\underline{A} \underline{\rho}(t_{i+1}) + \underline{b}(t_{i+1})) = \Delta t (\underline{A} \underline{\rho}(t_{i+1}) + \underline{b}(t_{i+1}))
+\underline{A} \underline{\rho}(t_{i+1}) + \underline{b}(t_{i+1})) = \delta t (\underline{A} \underline{\rho}(t_{i+1}) + \underline{b}(t_{i+1}))
 \end{align*}
 ergibt sich z.B. das implizite Euler Verfahren
 \begin{align*}
-\underline{\rho}(t_{i+1}) = \underline{\rho}(t_{i}) + \Delta t \underline{M}^{-1}(\underline{A} \underline{\rho}(t_{i+1}) + \underline{b}(t_{i+1})).
+\underline{\rho}(t_{i+1}) = \underline{\rho}(t_{i}) + \delta t \underline{M}^{-1}(\underline{A} \underline{\rho}(t_{i+1}) + \underline{b}(t_{i+1})).
 \end{align*}
-Weitere Verfahren, die wir verwenden werden, sind zum einen das
-klassische Runge-Kutta Verfahren (der Übersicht wegen für $\underline{b} \equiv 0$)
+%Weitere Verfahren, die wir verwenden werden, sind zum einen das
+%klassische Runge-Kutta Verfahren (der Übersicht wegen für $\underline{b} \equiv 0$)
+%\begin{align*}
+%\underline{\rho}(t_{i+1}) = \underline{\rho}(t_{i}) +
+%\delta t \underline{M}^{-1}\underline{A} (
+%\underline{\rho}(t_{i}) +
+%\frac{\delta t}{2} \underline{M}^{-1}\underline{A} (
+%\underline{\rho}(t_{i}) +
+%\frac{\delta t}{3} \underline{M}^{-1}\underline{A} (
+%\underline{\rho}(t_{i}) +
+%\frac{\delta t}{4} \underline{M}^{-1}\underline{A} 
+%\underline{\rho}(t_{i}) )))
+%\end{align*}
+%und zum anderen die implizite Mittelpunktsregel 
+Ein weiteres Verfahren dieser Art, welches wir an dieser Stelle verwenden werden, ist die implizite Mittelpunktsregel (der Übersicht wegen für $\underline{b} \equiv 0$):
 \begin{align*}
 \underline{\rho}(t_{i+1}) = \underline{\rho}(t_{i}) +
-\Delta t \underline{M}^{-1}\underline{A} (
-\underline{\rho}(t_{i}) +
-\frac{\Delta t}{2} \underline{M}^{-1}\underline{A} (
-\underline{\rho}(t_{i}) +
-\frac{\Delta t}{3} \underline{M}^{-1}\underline{A} (
-\underline{\rho}(t_{i}) +
-\frac{\Delta t}{4} \underline{M}^{-1}\underline{A} 
-\underline{\rho}(t_{i}) )))
-\end{align*}
-und zum anderen die implizite Mittelpunktsregel 
-(der Übersicht wegen für $\underline{b} \equiv 0$)
-\begin{align*}
-\underline{\rho}(t_{i+1}) = \underline{\rho}(t_{i}) +
-\Delta t \underline{M}^{-1} (
+\delta t \underline{M}^{-1} (
 \underline{A} 
 \frac{1}{2}(\underline{\rho}(t_{i}) +
 \underline{\rho}(t_{i+1}) )
@@ -218,8 +220,40 @@ und zum anderen die implizite Mittelpunktsregel
 \underline{\rho}(t_{i+1}) )).
 \end{align*}
 
-Die so entstehenden Gesamtverfahren sind aufgrund der Kombination von Discontinuous Galerkin Verfahren und Runge-Kutta-Zeitintegratoren in der Literatur oft auch unter dem Namen 'Runge–Kutta Discontinuous Galerkin Methods' zu finden. Einen schönen Überblick über diese Verfahrensklasse bietet der Artikel \cite{cockburn2001runge}.
+Das so entstehenden Gesamtverfahren ist aufgrund der Kombination von Discontinuous Galerkin Verfahren und Runge-Kutta-Zeitintegratoren in der Literatur oft auch unter dem Namen 'Runge–Kutta discontinuous Galerkin Methods' zu finden. Einen schönen Überblick über diese Verfahrensklasse bietet der Artikel \cite{cockburn2001runge}.
+Nachdem wir nun das Discontinuous Galerkin Verfahren für die lineare Transportgleichung eingeführt und erklärt haben, sollen nun noch auf einige Eigenschaften des Verfahrens verwiesen werden. Dabei wollen wir uns aber beschränken einige grundlegende Resultate zu nennen und so eher einen groben Überblick mit Referenzen zur Literatur zu geben. Mehr zur numerischen Analyse des Discontinuous Galerkin Verfahren findet sich zum einen in Standardwerken, wie \cite{ern2004theory}, eine schöne Zusammenstellung bietet aber auch
+\cite{Har08b}. \\
+Ebenfalls findet sich in \cite{Har08b} eine grundlegende numerische Analyse des Discontinuous Galerkin Verfahrens angewandt auf die stationäre (TODO stimmt das? fehlende Zeitabhängigkeit) lineare Transportgleichung. Dabei werden unter anderem die Konsistenz, die sogenannte Galerkin-Orthogonalität sowie die Stabilität und Konvergenz des Verfahrens behandelt.
+Mit der numerischen Analyse des Discontinuous Galerkin Verfahrens an sich befassten sich unter anderem LeSaint und Raviart \cite{lesaint1974finite}, Peterson \cite{peterson1991note} und Richter \cite{richter1988optimal}.
+Runge-Kutta DG verfahren für hyperbolische Probleme betrachteten Cockburn und Shu in einer 5 teiligen Serie von Arbeiten. Besonders zu nennen sind in unserem Kontext dabei \cite{cockburn1989tvb} und \cite{cockburn1990runge}.
 
-\subsubsection{Eigenschaften des Verfahren}
-Nachdem wir nun das Discontinuous Galerkin Verfahren für die lineare Transportgleichung eingeführt und erklärt haben, sollen nun noch einige Eigenschaften des Verfahrens beleuchtet werden. Eine vollständige numerische Anaylse würde hier abermals den Rahmen der Thesis sprengen, einige grundlegende Resultate sollen dem Leser aber nicht vorenthalten werden. Mehr zur numerischen Analyse des Discontinuous Galerkin Verfahren findet sich zum einen in Standardwerken, wie \cite{ern2004theory}, eine schöne Zusammenstellung bietet aber auch \cite{Har08b}.
 
+%\subsubsection{Eigenschaften des Verfahren}
+%Nachdem wir nun das Discontinuous Galerkin Verfahren für die lineare Transportgleichung eingeführt und erklärt haben, sollen nun noch einige Eigenschaften des Verfahrens beleuchtet werden. Dabei wollen wir uns aber beschränken einige grundlegende Resultate zu nennen und so eher einen groben Überblick mit Referenzen zur Literatur zu geben. Mehr zur numerischen Analyse des Discontinuous Galerkin Verfahren findet sich zum einen in Standardwerken, wie \cite{ern2004theory}, eine schöne Zusammenstellung bietet aber auch \cite{Har08b}.
+%Ebenfalls findet sich in \cite{Har08b} eine grundlegende numerische Analyse des Discontinuous Galerkin Verfahrens auf die stationäre (stimmt das? fehlende Zeitabhängigkeit) lineare Transportgleichung.
+
+
+%\begin{itemize}
+%	\item \textbf{Konsistenz} \\
+%	 Der letzte Abschnitt hat sich damit beschäftigt, aus dem ursprünglich unendlich dimensionalen Problem letztendlich eine volldiskretisierte Verfahrensvorschrift in einem endlichen Ansatzraum herzuleiten. Fragen wir nun nach der Konsistenz des Verfahren, stellen wir damit zugleich die Frage, ob wir immer noch die richtige Gleichung lösen. Genauer heißt das Verfahren genau dann konsistent, wenn eine analytische Lösung $ \rho $ des ursprünglichen Problems (dTP) auch die hergeleitete Verfahrensvorschrift erfüllt. 
+%	 Wir betrachten zunächst etwas abstrakter den formalen Prozess der Diskretisierung einer abstrakten Gleichung $ T \rho=0 $:
+%	 \begin{figure}[H]
+%	 	\centering
+%	 	\captionabove{Diskretisierungsprozess}
+%	 	\includegraphics[width=0.45\textwidth]{abstraktkonsistenz.png} \\
+%	 	Abbildung aus \cite{brokate2016grundwissen} Seite 392
+%	 \end{figure}
+%	 Das diskretisierte Problem $ T_h \rho_h = 0  $ heißt genau dann konsistent, wenn für eine analytische Lösung $ \rho^{\star} \in E $ gilt, dass $ \lim\limits_{h \to 0}\lVert \Phi_h(T)L_1\rho - L_2T\rho \rVert_{F_h} = 0 $.
+%	 Betrachten wir zunächst in einem Zwischenschritt die Semidiskretisierung (5.3).
+%	 Die gewählte Herleitung dieser Formulierung soll dabei nahelegen, dass für eine exakte (und glatte) Lösung $ \rho $ die Konsistenz für die Semidiskretisierung erfüllt ist. Wichtig ist dabei unter anderem auch die Wahl der numerischen Flussfunktion, der upwind flux erhält aber gerade gewünschten Eigenschaften. 
+%	 Mehr dazu findet sich in \cite{Har08b}.
+%	 Für die Zeitdiskretisierung in Form der impliziten Mittelpunktsregel gilt als einstufige Gauß-Quadratur $ \lVert \Phi_h(T)L_1\rho - L_2T\rho \rVert_{F_h} = O(h^2)$, womit sie insbesondere konsistent ist. \\
+%	 Auf eine nähergehende Konsistenzanalyse soll an dieser Stelle verzichtet werden
+%	 
+%	 
+%	 
+%	 
+%	\item \textbf{Galerkin Orthogonalität}
+%	\item \textbf{Koerzivität und Stabilität}
+%	\item \textbf{Konvergenz}
+%\end{itemize}

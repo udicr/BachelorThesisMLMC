@@ -117,16 +117,18 @@ Wir nummerieren zunächst die Zellen und die Seiten durch:
 	\mathcal{F} &= \{ F_1,\dots,F_{|\mathcal{F}|}\} \qquad \text{globale Seitennummerierung} \\
 	\mathfrak{K} &=  \{ K_1,\dots,K_{|\mathfrak{K}|}\} \qquad \text{globale Zellennumerierung}
 \end{align*}
-Außerdem definieren wir:
-\begin{Definition}(Seiten- und Zellenbasis) 
+Dabei sei im Weiteren $ N \coloneqq \abs{\mathcal{F}} $ und M $\coloneqq \abs{\mathfrak{K}}$
+Als Nächstes soll es nun Ziel sein, eine Lösung der im letzten Abschnitt erklärten schwachen Formulierung in einem endlich dimensionalen Finite Elemente Ansatzraum zu bestimmen. Um aber hierfür genau diese Räume definieren zu können, benötigen wir zuerst sogenannte Basisfunktionen, genauer die Seiten- und die Zellenbasis.\\
+
+ \begin{Definition}(Seiten- und Zellenbasis) 
 	\begin{enumerate}[label=(\alph*)]
-		\item $ \{ \psi_i \}_{i=1}^{|\mathcal{F}|} $ heißt Seitenbasis und ist definiert durch
+		\item $ \{ \psi_i \}_{i=1}^{N} $ heißt Seitenbasis und ist definiert durch
 			\begin{align*}
-					\forall i,j \in \{1, \dots , |\mathcal{F}| \} : \int_{F_j} \psi_i \cdot n^K \da = \pm \delta_{i,j} \text{ und }  \psi_i|_K \in \mathbb{P}_1(K,\R^2) \cap C(\overline{\mathbb{D}}) \ (K \in \mathcal{K}) 
+					\forall i,j \in \{1, \dots , N \} : \int_{F_j} \psi_i \cdot n^K \da = \pm \delta_{i,j} \text{ und }  \psi_i|_K \in \mathbb{P}_1(K,\R^2) \cap C(\overline{\mathbb{D}}) \ (K \in \mathfrak{K}) 
 			\end{align*} 
 		\item $ \{ \mu_i \}_{m=1}^{|\mathcal{K}|} $ heißt Zellenbasis und ist gegeben durch
 			\begin{align*}
-				\forall m \in \{1, \dots , |\mathcal{K}| \} : \mu_m \coloneqq  \chi_{K_m}.
+				\forall m \in \{1, \dots , M \} : \mu_m \coloneqq  \chi_{K_m}.
 			\end{align*}
 	\end{enumerate}
 \end{Definition} 
@@ -134,23 +136,23 @@ Außerdem definieren wir:
 Anschließend wählen wir als Testräume bzw. Finite Elemente Räume:
 \begin{Definition}(Ansatzräume)
 	\begin{enumerate}[label=(\alph*)]
-		\item $ W_h \coloneqq \spann \{ \psi_1,\dots,\psi_{|\mathcal{F}|}\}$ (Seitenansatzraum/ Raum für $ \psi $ und $ q_h $)
+		\item $ W_h \coloneqq \spann \{ \psi_1,\dots,\psi_{N}\}$ (Seitenansatzraum/ Raum für $ \psi $ und $ q_h $)
 		\item $ W_h(g) \coloneqq \{ \psi_h \in W_h:  \int_F \psi_h \cdot n \da = \int_F g \da \; \text{ für alle } F \subseteq \Gamma_{\text{N}})  \}$
-		\item $ Q_h \coloneqq \spann \{ \mu_1, \dots, \mu_{|\mathcal{K}|} \} $ (Zellenansatzraum/ Raum für $\phi $ und $ u_h $)
+		\item $ Q_h \coloneqq \spann \{ \mu_1, \dots, \mu_{M} \} $ (Zellenansatzraum/ Raum für $\phi $ und $ u_h $)
 	\end{enumerate}
 \end{Definition}
 
-\begin{Bemerkung}
-	
-	\[	\forall K \in \mathcal{K}:\psi_i|_K \in \mathbb{P}_1(K,\R^2) \text{ und } \mu_m|_K \in \mathbb{P}_0(K,\R) \]
-	Also
-	\begin{align*}	
-	W_h &\subseteq \prod_{K \in \mathcal{K}} \mathbb{P}_1(K,\R^2) &&\text{(Menge der zellenweisen linearen Funktionen) und }\\
-	Q_h &\subseteq \prod_{K \in \mathcal{K}} \mathbb{P}_0(K,\R) &&\text{(Menge der zellenweisen konstanten Funktionen)}. 
-	\end{align*}	
-\end{Bemerkung}
+%\begin{Bemerkung}
+%	
+%	\[	\forall K \in \mathcal{K}:\psi_i|_K \in \mathbb{P}_1(K,\R^2) \text{ und } \mu_m|_K \in \mathbb{P}_0(K,\R) \]
+%	Also
+%	\begin{align*}	
+%	W_h &\subseteq \prod_{K \in \mathcal{K}} \mathbb{P}_1(K,\R^2) &&\text{(Menge der zellenweisen linearen Funktionen) und }\\
+%	Q_h &\subseteq \prod_{K \in \mathcal{K}} \mathbb{P}_0(K,\R) &&\text{(Menge der zellenweisen konstanten Funktionen)}. 
+%	\end{align*}	
+%\end{Bemerkung}
 
-Zusammen mit der schwachen Formulierung \eqref{sPS} erhalten wir so
+Zusammen mit der schwachen Formulierung \eqref{sPS} erhalten wir so das nun diskretisierte Problem:
 \begin{align*}
 &\text{Bestimme } (q_h,u_h) \in W_h(-g_N) \times Q_h \text{ mit}\\
 &\begin{cases}
@@ -166,13 +168,13 @@ Zusammen mit der schwachen Formulierung \eqref{sPS} erhalten wir so
 
 
 \subsection{Formulierung als LGS}
-Es seien wie bisher Seiten, Seitenbasis, Zellen und Zellenbasis global nummeriert 
-\begin{align*}
-&N \coloneqq \abs{\mathcal{F}} &&\mathcal{F} = \{F_1, \dots , F_{N} \}  \\
-&&&W_h =\{\psi_1, \dots , \psi_N\}\\
-&M \coloneqq \abs{\mathcal{K}} &&\mathcal{K} = \{K_1, \dots , K_{M} \}  \\
-&&&Q_h = \{\mu_1 , \dots , \mu_M  \}.
-\end{align*}
+%Es seien wie bisher Seiten, Seitenbasis, Zellen und Zellenbasis global nummeriert 
+%\begin{align*}
+%&N \coloneqq \abs{\mathcal{F}} &&\mathcal{F} = \{F_1, \dots , F_{N} \}  \\
+%&&&W_h =\{\psi_1, \dots , \psi_N\}\\
+%&M \coloneqq \abs{\mathcal{K}} &&\mathcal{K} = \{K_1, \dots , K_{M} \}  \\
+%&&&Q_h = \{\mu_1 , \dots , \mu_M  \}.
+%\end{align*}
 
 Wir können nun damit beginnen das so entstandene endlich dimensionale Problem in ein Lineares Gleichungs System umzuformulieren. Dazu definieren wir:
 	\begin{align*}
