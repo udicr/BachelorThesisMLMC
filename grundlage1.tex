@@ -17,36 +17,32 @@ Die analytischen Grundlagen bauen zum Teil auf der Vorlesung Rand- und Eigenwert
 	\end{enumerate}
 \end{Definition}
 
-\begin{Definition}(Einige Funktionenräume)
-	todo C,C1,Ccinf,Lp, L1loc
-\end{Definition}
-
-\begin{Satz}
-	Sei $ \mathcal{D} \subset \R^d $ offen und beschränkt und $ 1 \leq p < \infty $, dann gilt: \\
-	$ C_c^{\infty} (\mathcal{D})$ liegt dicht in $ L^p(\mathcal{D}) $, d.h. $ C_c^{\infty}(\mathcal{D}) \subseteq L^p(\mathcal{D})$ und $ \overline{ C_c^{\infty}(\mathcal{D}) }^{\lVert \cdot \rVert_p}  = L^p(\mathcal{D})$
-\end{Satz}
+%\begin{Satz}
+%	Sei $ \mathcal{D} \subset \R^d $ offen und beschränkt und $ 1 \leq p < \infty $, dann gilt: \\
+%	$ C_c^{\infty} (\mathcal{D})$ liegt dicht in $ L^p(\mathcal{D}) $, d.h. $ C_c^{\infty}(\mathcal{D}) \subseteq L^p(\mathcal{D})$ und $ \overline{ C_c^{\infty}(\mathcal{D}) }^{\lVert \cdot \rVert_p}  = L^p(\mathcal{D})$
+%\end{Satz}
 
 
-\begin{Definition}(Lipschitz-Gebiet TODO cite rwp) \newline 
-	\begin{enumerate}[label=(\alph*)]
-		\item Eine offene zusammenhängenden Menge $\mathcal{D} \subset \R^d$ heißt Lipschitz-Gebiet, falls für jedes $x_0 \in \partial \mathcal{D}$ ein Radius $r>0$ und eine Lipschitz-stetige Funktion $\phi : \R^{d-1} \to \R$ existiert, so dass (nach einer geeigneten Bewegung des Koordinatensystems) gilt: \\
-		Für $ x' = (x_1,\dots,x_{d-1})  \text{ und } B_r(x_0) \coloneqq \{ x\in \R^d : \lVert x-x_0 \rVert < r\}  \text{ ist }$
-			\begin{align*}
-				\mathcal{D} \cap B_r(x_0) = \{x = (x',x_d) \in B_r(x_0): x_d > \phi(x')\} 
-			\end{align*}
-		Es gilt dann notwendigerweise:
-			\begin{align*}
-				\partial \mathcal{D} \cap B_r(x_0) = \{x = (x',x_d) \in B_r(x_0): x_d = \phi(x')\}
-			\end{align*}
-		\item Ist $\mathcal{D}$ ein Lipschitz-Gebiet so existiert $x = (x',\phi(x')) \in \partial \mathcal{D} \cap B_r(x_0)$ der Vektor
-			\begin{align*}
-				n(x) = \frac{1}{\sqrt{1+|\nabla \phi(x')|^2}} \icol{\nabla \phi(x')\\-1}
-			\end{align*}
-		fast überall bezüglich des Oberflächenmaßes auf $\partial \mathcal{D}$ und heißt der äußere 
-		Einheitsnormalenvektor an $\partial \mathcal{D}$ im Punkt $x$. 
-	\end{enumerate}
-	
-\end{Definition}
+%\begin{Definition}(Lipschitz-Gebiet TODO cite rwp) \newline 
+%	\begin{enumerate}[label=(\alph*)]
+%		\item Eine offene zusammenhängenden Menge $\mathcal{D} \subset \R^d$ heißt Lipschitz-Gebiet, falls für jedes $x_0 \in \partial \mathcal{D}$ ein Radius $r>0$ und eine Lipschitz-stetige Funktion $\phi : \R^{d-1} \to \R$ existiert, so dass (nach einer geeigneten Bewegung des Koordinatensystems) gilt: \\
+%		Für $ x' = (x_1,\dots,x_{d-1})  \text{ und } B_r(x_0) \coloneqq \{ x\in \R^d : \lVert x-x_0 \rVert < r\}  \text{ ist }$
+%			\begin{align*}
+%				\mathcal{D} \cap B_r(x_0) = \{x = (x',x_d) \in B_r(x_0): x_d > \phi(x')\} 
+%			\end{align*}
+%		Es gilt dann notwendigerweise:
+%			\begin{align*}
+%				\partial \mathcal{D} \cap B_r(x_0) = \{x = (x',x_d) \in B_r(x_0): x_d = \phi(x')\}
+%			\end{align*}
+%		\item Ist $\mathcal{D}$ ein Lipschitz-Gebiet so existiert $x = (x',\phi(x')) \in \partial \mathcal{D} \cap B_r(x_0)$ der Vektor
+%			\begin{align*}
+%				n(x) = \frac{1}{\sqrt{1+|\nabla \phi(x')|^2}} \icol{\nabla \phi(x')\\-1}
+%			\end{align*}
+%		fast überall bezüglich des Oberflächenmaßes auf $\partial \mathcal{D}$ und heißt der äußere 
+%		Einheitsnormalenvektor an $\partial \mathcal{D}$ im Punkt $x$. 
+%	\end{enumerate}
+%	
+%\end{Definition}
 
 
 \begin{Satz} (Gaußscher Integralsatz für Lipschitz-Gebiete) \newline
@@ -74,8 +70,14 @@ Die analytischen Grundlagen bauen zum Teil auf der Vorlesung Rand- und Eigenwert
 \end{Folgerung}
 
 
+%\begin{Definition}($ L^1_{\text{loc}} $)\\
+%	Todo
+%\end{Definition}
+
+
+
 \begin{Definition}(schwache Ableitung)\\
-	Sei $u \in L_{\text{loc}}^1$. Wir sagen v besitzt eine schwache Ableitung zum Multiindex $\alpha$, falls eine Funktion $v \in L_{\text{loc}}^1$ existiert, mit 
+	Sei $u \in L_{\text{loc}}^1(\mathcal{D})$. Dabei bezeichne $  L_{\text{loc}}^1(\mathcal{D}) $ den Raum der lokal integrierbaren Funktionen auf $ \mathcal{D} $. Wir sagen v besitzt eine schwache Ableitung zum Multiindex $\alpha$, falls eine Funktion $v \in L_{\text{loc}}^1$ existiert, mit 
 		\begin{align*}
 			\int_{\mathcal{D}} u \partial^{\alpha} \Phi \dx = (-1)^{|\alpha|} \int_{\mathcal{D}} v \Phi \dx \qquad \forall \Phi \in C_0^{\infty}(\mathcal{D})
 		\end{align*}
@@ -85,7 +87,11 @@ Die analytischen Grundlagen bauen zum Teil auf der Vorlesung Rand- und Eigenwert
 	Per Konvention ist für $ \alpha = (0,\dots, 0) \quad \partial^{\alpha}u = u $
 \end{Bemerkung}
 \begin{Definition}(Sobolevräume)\\
-	Sei $\mathcal{D} \subseteq \R^d $ offen, $ k \in \N $ und $ 1 \leq p \leq \infty $ 
+	Sei $\mathcal{D} \subseteq \R^d $ offen, $ k \in \N $ und $ 1 \leq p \leq \infty $.  Weiter sei $ L : C^1(\mathcal{D},\R^m) \to L^{\infty}(\mathcal{D},\R^k) $ ein linearer Differentialoperator erster Ordnung und $ L^{\star} : C^1(\mathcal{D},\R^k) \to L^{\infty}(\mathcal{D},\R^m) $ der zugehörige adjungierte Operator. Es gelte also
+	\[
+	\int_{\mathcal{D}} Lu \cdot \phi \dx = \int_{\mathcal{D}} u \cdot L^{\star} \phi \dx \text{ für } u \in C^1_c(\mathcal{D},\R^m) \text{ , } \phi \in C^1_c (\mathcal{D},\R^k)
+	\]
+	Dann sind:
 	\begin{enumerate}[label=(\alph*)]
 		\item $ W^{k,p} (\mathcal{D}) \coloneqq \{ u \in L^p(\mathcal{D})$ und die schwachen Ableitungen $ \partial^{\alpha}u $ existieren, mit $ \partial^{\alpha}u \in L^p(\mathcal{D}) $ für alle $ \alpha \in \N_0^d , |\alpha| \leq k \} $	
 		\item $ \lVert u \rVert_{k,p} =  \lVert u \rVert_{W^{k,p}(\mathcal{D})} \coloneqq 
@@ -95,7 +101,10 @@ Die analytischen Grundlagen bauen zum Teil auf der Vorlesung Rand- und Eigenwert
 						\sum\limits_{|\alpha|\leq k}   \lVert \partial^{\alpha} u \rVert_{\infty}        &, p = \infty
 					\end{array}
 				\end{cases}  $
-		\item $ W_0^{k,p}(\mathcal{D}) \coloneqq \overline{ C_c^{\infty}(\mathcal{D}) }^{\lVert \cdot \rVert_{k,p}} $
+		\item $ W_0^{k,p}(\mathcal{D}) \coloneqq \overline{ C_c^{\infty}(\mathcal{D}) }^{\lVert \cdot \rVert_{k,p}} $. Über den sogenannten Spursatz erhält man eine äquivalente Charakterisierung durch: 
+		$ W_0^{k,p}(\mathcal{D}) = \{ v \in W^{k,p}(\mathcal{D}) : v|_{\partial \mathcal{D}} = 0 \}$
+		\item Im Falle $ p = 2 $ schreibt man aufgrund der Tatsache, dass es sich dann bei $ W^{k,p}(\mathcal{D}) $ um einen Hilbertraum handelt, oft auch $ H^k(\mathcal{D}) \coloneqq W^{k,p}(\mathcal{D}) $
+		\item $ H(L,\mathcal{D}) \coloneqq \{ u \in L^2(\mathcal{D},\R^m) : \exists v \in L^2(\mathbb{D},R^k) \text{ mit } \int_{\mathcal{D}} v \cdot \phi \dx = \int_{\mathcal{D}} u \cdot L^{\star}\phi \dx \ \forall \phi \in C^1_c(\mathcal{D},\R^k) \}$
 	\end{enumerate}
 \end{Definition}
 
@@ -104,9 +113,9 @@ Die analytischen Grundlagen bauen zum Teil auf der Vorlesung Rand- und Eigenwert
 	Sei $\mathcal{D} \subset \R^d$ offen und $u \in L_{\text{loc}}^1(\mathcal{D})$ und $\int_{\mathcal{D}} u \psi \dx = 0 \; \forall \psi \in C_c^{\infty}(\mathcal{D})$ \\
 	Dann gilt $ u \equiv 0 $.
 \end{Satz}
-\begin{Satz} (Rechnen mit Differentialoperatoren)
-	todo FEM
-\end{Satz}
-\begin{Definition}
-	Hdiv? todo
-\end{Definition}
+%\begin{Satz} (Rechnen mit Differentialoperatoren)
+%	todo FEM
+%\end{Satz}
+%\begin{Definition}
+%	Hdiv? todo
+%\end{Definition}

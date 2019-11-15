@@ -92,15 +92,15 @@ Wie bereits weiter oben beschrieben werden wir im Folgenden zunächst den Raum d
 \end{Definition}
 Für eine klassische Lösung $ \rho  $ von (dTP) gilt dann insbesondere $ \partial_t \rho = - \dive (\Upsilon(\rho)) $ auf $ \mathbb{D} \times (0,T] $.	\\
 Halten wir also zunächst $ t \in \mathbb{T} $ und leiten so zunächst die Semidiskretisierung her.\\
-Sei nun $ \mathfrak{K} $ eine zulässige Triangulierung von $ \mathbb{D} $ aus dreiecken wie in \ref{num_pot} und  $ (\cdot , \cdot)_A $ das $ L^2(A)-$Skalarprodukt..
-Wir wählen als Lösungs-/Testraum $Q_h = \prod_{K \in \mathfrak{K}} \mathbb{P}_p(K,\R) $ für ein festes $p \geq 1 $. Anders als zuvor fordern wir für unsere Lösungs- und Testfunktionen diesmal aber explizit nicht die Stetigkeit auf $\mathbb{D}$. Da so $Q_h$ nicht im betrachteten analytischen Lösungs- und Testraum liegt, etwa  $Q_h \nsubseteq W^{1,2}(\mathbb{D})$, nennt man $Q_h$ auch einen nicht-konformen Ansatzraum.
-Außerdem lässt sich im Allgemeinen auch die später bestimmt Lösung $ \rho_h \in Q_h $ (definiert auf $\mathbb{D}_h = \bigcup_{K \in \mathfrak{K}} K$ ) nicht stetig auf $ \mathbb{D} $ fortsetzen, denn für eine beliebige innere Kante $ F $ kann der Grenzwert von $ \rho_h $ auf den anliegenden Zellen $ K,K' $ ($ \overline{F} = \partial K \cap \partial K' $) unterschiedlich sein. \\
+Sei nun $ \mathcal{T} $ eine zulässige Triangulierung von $ \mathbb{D} $ aus Dreiecken wie in \ref{num_pot} und  $ (\cdot , \cdot)_A $ das $ L^2(A)-$Skalarprodukt.
+Wir wählen als Lösungs-/Testraum $Q_h = \prod_{K \in \mathcal{T}} \mathbb{P}_p(K,\R) $ für ein festes $p \geq 1 $. Anders als zuvor fordern wir für unsere Lösungs- und Testfunktionen diesmal aber explizit nicht die Stetigkeit auf $\mathbb{D}$. Da so $Q_h$ nicht im betrachteten analytischen Lösungs- und Testraum liegt, etwa  $Q_h \nsubseteq H^1(\mathbb{D})$, nennt man $Q_h$ auch einen nicht-konformen Ansatzraum.
+Außerdem lässt sich im Allgemeinen auch die später bestimmt Lösung $ \rho_h \in Q_h $ (definiert auf $\mathbb{D}_h = \bigcup_{K \in \mathcal{T}} K$ ) nicht stetig auf $ \mathbb{D} $ fortsetzen, denn für eine beliebige innere Kante $ F $ kann der Grenzwert von $ \rho_h $ auf den anliegenden Zellen $ K,K' $ ($ \overline{F} = \partial K \cap \partial K' $) unterschiedlich sein. \\
 Trotzdem müssen wir auch auf den inneren Kanten $ \mathcal{F}^0 \subset \mathcal{F} $ festlegen, welcher Grenzwert in einem solchen Falle gewählt wird. \\
 dazu führen wir als Pendant zur analytischen Flussfunktion (vgl. \ref{Flussfunktion})
 auch eine numerische Flussfunktion ein. Grundsätzlich kommen mehrere solche Flussfunktionen in Frage, welche direkten Einfluss auf Eigenschaften des entstehenden Verfahrens besitzen. Wir entscheiden uns an dieser Stelle für den weit verbreiteten 
 sogenannten upwind flux:
 \begin{Definition}(upwind flux)\\
-	Sei $K \in \mathfrak{K}$ eine beliebige Zelle und $ F \in \mathcal{F}_K$ eine Kante von $K$. Dann ist
+	Sei $K \in \mathcal{T}$ eine beliebige Zelle und $ F \in \mathcal{F}_K$ eine Kante von $K$. Dann ist
 	\begin{align*}
 		\Upsilon^{\star} : \text{Abb}(\mathbb{D}\times\mathbb{T},\R) &\to \text{Abb}(\mathbb{D}\times\mathbb{T},\R^2) \\
 		\rho_h &\mapsto 
@@ -115,11 +115,11 @@ Sei nun also $ \rho $ klassische Lösung von (dTP) mit $ \partial_t \rho = -\div
 		\label{gaus1}
 		\int_{\partial \mathbb{D}} \rho q \cdot n \phi \da  =\int_{\partial \mathbb{D}} \Upsilon(\rho) \cdot n \phi \da = \int_{\mathbb{D}} \dive (\Upsilon(\rho)\phi) \dx
 \end{align}
-Das Integral über den Rand von $ \mathbb{D} $ können wir nach der folgenden kleinen Vorüberlegung auch als Integral über alle Kanten der gewählten Zerlegung $ \mathfrak{K} $ ausdrücken: \\
+Das Integral über den Rand von $ \mathbb{D} $ können wir nach der folgenden kleinen Vorüberlegung auch als Integral über alle Kanten der gewählten Zerlegung $ \mathcal{T} $ ausdrücken: \\
 Es gilt nämlich für alle inneren Kanten, also solche Kanten $ F $ für die zwei Zellen $ K $ und $ K' $ existieren, sodass $ \overline{F} = K \cap K' $ ist, dass $ \int_F \Upsilon^{\star}(\rho) \cdot n^K \phi \da = - \int_F \Upsilon^{\star}(\rho) \cdot n^{K'} \phi \da $ stets erhalten ist. \\
 Summieren wir also zunächst über alle Zellen, addieren anschließend die Integrale über die Kanten und ersetzen dabei den analytischen durch den numerischen Fluss, erhalten wir gerade wieder obiges Randintegral. Es gilt also:
 \begin{align*}
-	\sum_{K\in \mathfrak{K}} \sum_{F \in \mathcal{F}_K} \int_F \Upsilon^{\star}(\rho) \cdot n^K \phi \da = \int_{\partial \mathbb{D}} \Upsilon(\rho) \cdot n \phi \da \stackrel{\text{\ref{gaus1}}}{=} \int_{\mathbb{D}} \dive (\Upsilon(\rho)\phi) \dx
+	\sum_{K\in \mathcal{T}} \sum_{F \in \mathcal{F}_K} \int_F \Upsilon^{\star}(\rho) \cdot n^K \phi \da = \int_{\partial \mathbb{D}} \Upsilon(\rho) \cdot n \phi \da \stackrel{\text{\ref{gaus1}}}{=} \int_{\mathbb{D}} \dive (\Upsilon(\rho)\phi) \dx
 \end{align*}
 Nach der Produktregel der Divergenz lässt sich das letzte Integral auswerten zu:
 \begin{align*}
@@ -127,14 +127,14 @@ Nach der Produktregel der Divergenz lässt sich das letzte Integral auswerten zu
 \end{align*}
 Durch Umstellen und das Zusammenfassen der obigen Resultate erhalten wir so: 
 \begin{align*}
-	\sum_{K \in \mathfrak{K}} \int_K \partial_t \rho  \phi \dx = \sum_{K \in \mathfrak{K}} \int_K \Upsilon(\rho ) \cdot \nabla \phi \dx - 	\sum_{K\in \mathfrak{K}} \sum_{F \in \mathcal{F}_K} \int_F \Upsilon^{\star}(\rho) \cdot n^K \phi \da
+	\sum_{K \in \mathcal{T}} \int_K \partial_t \rho  \phi \dx = \sum_{K \in \mathcal{T}} \int_K \Upsilon(\rho ) \cdot \nabla \phi \dx - 	\sum_{K\in \mathcal{T}} \sum_{F \in \mathcal{F}_K} \int_F \Upsilon^{\star}(\rho) \cdot n^K \phi \da
 \end{align*}
 Dabei wurde zusätzlich ausgenutzt, dass es sich bei den Kanten um Nullmengen handelt und wir so das Integral über $ \mathbb{D} $ als Summe der Integrale über alle Zellen auffassen können. Nutzen wir nun noch aus, dass für den Fluss  $\rho(x,t) = \rho_{\text{in}}(x,t)$ für $ x \in \Gamma_{\text{in}} $ gilt, kommen wir so auf 
 \begin{align}
 	\label{fastfertigsemi}
-	\sum_{K \in \mathfrak{K}} \int_K \partial_t \rho  \phi \dx = \sum_{K \in \mathfrak{K}} \int_K \Upsilon(\rho ) \cdot \nabla \phi \dx - 	\sum_{K\in \mathfrak{K}} \big( \sum_{\substack{F \in \mathcal{F}_K \\ F \not\subseteq \Gamma_{\text{in}}}} \int_F \Upsilon^{\star}(\rho) \cdot n^K \phi \da - \sum_{\substack{F \in \mathcal{F}_K \\ F \subseteq \Gamma_{\text{in}}}} \rho_{\text{in}} q \cdot n^K \phi \da \big)
+	\sum_{K \in \mathcal{T}} \int_K \partial_t \rho  \phi \dx = \sum_{K \in \mathcal{T}} \int_K \Upsilon(\rho ) \cdot \nabla \phi \dx - 	\sum_{K\in \mathcal{T}} \big( \sum_{\substack{F \in \mathcal{F}_K \\ F \not\subseteq \Gamma_{\text{in}}}} \int_F \Upsilon^{\star}(\rho) \cdot n^K \phi \da - \sum_{\substack{F \in \mathcal{F}_K \\ F \subseteq \Gamma_{\text{in}}}} \rho_{\text{in}} q \cdot n^K \phi \da \big)
 \end{align}
-Sei nun $ \mathfrak{K} = \{ K_1,\dots , K_N\} , N \coloneqq |\mathfrak{K}| $. Die Semidiskretisierung ist motiviert durch (\ref{fastfertigsemi}) und lautet: Bestimme  $\rho_h \in Q_h$, sodass für alle $ \phi_h \in Q_h $ gilt:
+Sei nun $ \mathcal{T} = \{ K_1,\dots , K_N\} , N \coloneqq |\mathcal{T}| $. Die Semidiskretisierung ist motiviert durch (\ref{fastfertigsemi}) und lautet: Bestimme  $\rho_h \in Q_h$, sodass für alle $ \phi_h \in Q_h $ gilt:
 \begin{align}
 	\label{Semidiskretisierung}
 	\sum_{i=1}^N (\partial_t \rho_h, \phi_h)_{K_i} &= \sum_{i=1}^{N} \big( (\Upsilon(\rho_h), \nabla \phi_h)_{K_i} - \sum_{\substack{F \in \mathcal{F}_K \\ F \subseteq \Gamma_{\text{in}}}}(\Upsilon^{\star}(\rho_h)\cdot n^K,\phi_h)_{F} - (\rho_{\text{in}}q \cdot n^K,\phi_h)_{\partial K_i \cap \Gamma_{\text{in}}} \big)
@@ -144,8 +144,11 @@ Sei nun $ \mathfrak{K} = \{ K_1,\dots , K_N\} , N \coloneqq |\mathfrak{K}| $. Di
 Durch Einsetzen der Zellenbasis $ \{\mu_i\}_{i=1}^N $ mit $ \mu_i = \chi_{K_i} $  und mit $ \supp(\mu_i) \subseteq \overline{K_i} (\ i \in \{1, \dots , N\})$ ergibt sich für alle $\ i \in \{1, \dots , N\}$ 
 \begin{align*}
 \left(\partial_t \rho_h, \mu_i  \right)_{K_i}  &= \bigg( \underbrace{(\Psi(\rho_h), \nabla\mu_i)_{K_i}}_{=0 \text{, da } \nabla \mu_i = 0} - \sum_{\substack{F \in \mathcal{F}_{K_i} \\ F \not\subseteq \Gamma_{\text{in}}}} \left(\Psi^*(\rho_h) \cdot n^{K_i}, \mu_i \right)_{F} - \left(\rho_{\text{in}} q \cdot n^{K_i}, \mu_i \right)_{\partial K_i \cap \Gamma_{\text{in}}} \bigg) \\
-&= \bigg( - \sum_{\substack{F \in \mathcal{F}_{K_i}, F \not\subseteq \Gamma_{\text{in}}\\ F \text{ mit }q \cdot n^K_{|F} > 0} } \left(\underbrace{\Psi^*(\rho_h)}_{= \rho_{h|K}\, q} \cdot n^{K_i}, \mu_i \right)_{F} - \sum_{\substack{F \in \mathcal{F}_{K_i}, F \not\subseteq \Gamma_{\text{in}}\\ F \text{ mit }q \cdot n^K_{|F} < 0} } \left(\underbrace{\Psi^*(\rho_h)}_{= \rho_{h|K'} \, q} \cdot n^{K_i}, \mu_i \right)_{F}\\
-& \qquad \qquad \qquad \qquad \qquad \qquad  \qquad \qquad\qquad \qquad- \left(\rho_{\text{in}} q \cdot n^{K_i}, \mu_i \right)_{\partial K_i \cap \Gamma_{\text{in}}} \bigg)\qquad \qquad
+\end{align*}
+Teilen wir nun noch die Kanten gemäß der Definition des numerischen Flusses auf erhalten wir so: 
+\begin{align*}
+\left(\partial_t \rho_h, \mu_i  \right)_{K_i} = \bigg( - \sum_{\substack{F \in \mathcal{F}_{K_i}, F \not\subseteq \Gamma_{\text{in}}\\ F \text{ mit }q \cdot n^K_{|F} > 0} } \left(\underbrace{\Psi^*(\rho_h)}_{= \rho_{h|K}\, q} \cdot n^{K_i}, \mu_i \right)_{F} - \sum_{\substack{F \in \mathcal{F}_{K_i}, F \not\subseteq \Gamma_{\text{in}}\\ F \text{ mit }q \cdot n^K_{|F} < 0} } \left(\underbrace{\Psi^*(\rho_h)}_{= \rho_{h|K'} \, q} \cdot n^{K_i}, \mu_i \right)_{F}\\
+ - \left(\rho_{\text{in}} q \cdot n^{K_i}, \mu_i \right)_{\partial K_i \cap \Gamma_{\text{in}}} \bigg)
 \end{align*} 
 
 Zusammen mit der Basisdarstellung von $ \rho_h $ in $\{\mu_i  \}_{i=1}^N$, $ \rho_h = \sum_{i=1}^{N} \underline{\rho}[i] \; \mu_i$, und 
@@ -225,7 +228,7 @@ Nachdem wir nun das Discontinuous Galerkin Verfahren für die lineare Transportg
 \cite{Har08b}. \\
 Ebenfalls findet sich in \cite{Har08b} eine grundlegende numerische Analyse des Discontinuous Galerkin Verfahrens angewandt auf die stationäre (TODO stimmt das? fehlende Zeitabhängigkeit) lineare Transportgleichung. Dabei werden unter anderem die Konsistenz, die sogenannte Galerkin-Orthogonalität sowie die Stabilität und Konvergenz des Verfahrens behandelt.
 Mit der numerischen Analyse des Discontinuous Galerkin Verfahrens an sich befassten sich unter anderem LeSaint und Raviart \cite{lesaint1974finite}, Peterson \cite{peterson1991note} und Richter \cite{richter1988optimal}.
-Runge-Kutta DG verfahren für hyperbolische Probleme betrachteten Cockburn und Shu in einer 5 teiligen Serie von Arbeiten. Besonders zu nennen sind in unserem Kontext dabei \cite{cockburn1989tvb} und \cite{cockburn1990runge}.
+Runge-Kutta DG verfahren für der linearen Transportgleichung ähnliche Problemstellungen betrachteten Cockburn und Shu in einer 5 teiligen Serie von Arbeiten. Besonders zu nennen sind dabei in unserem Kontext \cite{cockburn1989tvb} und \cite{cockburn1990runge}.
 
 
 %\subsubsection{Eigenschaften des Verfahren}
