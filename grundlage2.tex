@@ -1,0 +1,105 @@
+% !TeX root = bachelorarbeit.tex
+An dieser Stelle wollen wir an einige grundlegende Resultate der Wahrscheinlichkeitstheorie erinnern. Außerdem führen wir dabei auch Teile der Notation ein, die wir an späterer Stelle noch brauchen werden. Als Referenzen sind vor allem \cite{brokate2016grundwissen} und die Vorlesung Wahrscheinlichkeitstheorie von Herrn Prof. Dr. Henze (SS18) 
+%sowie die gleichnamige Vorlesung von Herrn Prof. Dr. Hug (SS19) 
+zu nennen.\\ Sei $ \Omega \not = \emptyset $ eine beliebige nichtleere Teilmenge.
+Einige grundlegende Begriffe der Maßtheorie wollen wir an dieser Stelle voraussetzen, sie sind aber ebenfalls in \cite{brokate2016grundwissen} und zum Teil in \cite{lapeyre2003introduction} zu finden. Dazu zählen:
+\begin{itemize}
+	\item eine $ \sigma $-Algebra $ \mathcal{A} \subset \mathcal{P}(\Omega) $
+	\item die von einem Mengensystem $ \mathcal{M} \subset \mathcal{P}(\Omega)  $ erzeugte $ \sigma $-Algebra $ \sigma(\mathcal{M}) $
+	\item ein Maß $ \mu $ auf einer $ \sigma $-Algebra $ \mathcal{A} $
+	\item das Maß-Integral einer messbaren Funktion $ f:\Omega \to \overline{\R} $ über einem Maßraum $ (\Omega, \mathcal{A},\mu) $
+\end{itemize}
+
+\begin{Definition}(Wahrscheinlichkeitsraum)\\
+	\label{Wraum}
+	Ein Wahrscheinlichkeitsraum ist ein Tripel $ (\Omega,\mathcal{A},\mathbb{P}) $. Dabei seien:
+	\begin{enumerate}[label=(\alph*)]
+		\item $ \Omega $ eine beliebige nichtleere Teilmenge
+		\item $ \mathcal{A} $ eine $ \sigma $-Algebra über $ \Omega $
+		\item $ \mathbb{P}:\mathcal{A} \to \R $ eine Funktion mit:
+		\begin{enumerate}[label=(\roman*)]
+			\item $ \mathbb{P}(A) \geq 0 $ für jedes $ A \in \mathcal{A} $
+			\item $ \mathbb{P}(\Omega) = 1 $
+			\item Sind $ A_1,A_2,\dots $ $\in  \mathcal{A} $ paarweise disjunkt , dann gilt $ \mathbb{P}(\sum\limits_{j=1}^{\infty}A_j) = \sum\limits_{j=1}^{\infty} \mathbb{P}(A_j)$
+		\end{enumerate}
+	\end{enumerate}
+Insbesondere erfüllt $ \mathbb{P} $ auch die Bedingungen eines Maßes. Somit sind Wahrscheinlichkeitsräume Spezialfälle eines Maßraumes.
+Jede Menge $ A \in \mathcal{A} $ heißt dann auch Ereignis, zu $ \mathbb{P} $ sagen wir Wahrscheinlichkeitsmaß und wir nennen $ \mathbb{P}(A) $ die Wahrscheinlichkeit des Ereignisses $ A $.  Ein Tupel $ (\Omega,\mathcal{A}) $ heißt Messraum oder auch messbarer Raum. 
+\end{Definition}
+\begin{Definition}(Zufallsvariable und deren Verteilung.)
+	\begin{enumerate}[label=(\alph*)]
+		\item Seien $ (\Omega,\mathcal{A}) $ und $ (\Omega',\mathcal{A}')  $ Messräume.
+		Eine ($ \Omega' $-wertige) Zufallsvariable ist ein eine $ (\mathcal{A},\mathcal{A}') $-messbare Funktion $ X:\Omega \to \Omega' $, d.h. es gilt: $ X^{-1}(A') \in \mathcal{A} \quad \forall A' \in \mathcal{A}' $.\\
+		Der Wert $ X(\omega) $ heißt auch Realisierung der Zufallsvariablen $ X $ zum Ausgang $ \omega\in\Omega $
+		\item Sei in obiger Situation zusätzlich $ (\Omega,\mathcal{A}) $ ausgerüstet mit Wahrscheinlichkeitsmaß $ \mathbb{P} $, also ein Wahrscheinlichkeitsraum. Dann ist durch 
+		\begin{align*}
+			\mathbb{P}^X : \mathcal{A}' &\to [0,1] \\
+			A' &\mapsto \mathbb{P}(X^{-1}(A')), \quad A'\in \mathcal{A}'
+		\end{align*}
+		ein Maß auf $ \mathcal{A}' $ definiert. $ \mathbb{P}^X $ heißt dann die Verteilung von $ X $.
+	\end{enumerate}
+\end{Definition}
+$ \newline $
+Sei ab nun $ (\Omega,\mathcal{A},\mathbb{P}) $ stets ein Wahrscheinlichkeitsraum.
+
+\begin{Definition}(Unabhängigkeit)\\
+	Sei $ \mathcal{J} $ eine Menge mit mindestens zwei Elementen.
+	\begin{enumerate}[label=(\alph*)]
+		\item Es seien $ A_j \in \mathcal{A}$ für $ j \in \mathcal{J} $ Ereignisse. Die Familie $ (A_j)_{j \in \mathcal{J}} $ heißt unabhängig, falls gilt:
+		\begin{align}
+			\label{unabh1}
+			\mathbb{P}\left( \bigcap_{j \in J} A_j \right) = \prod_{j \in J} \mathbb{P}(A_j) \; \forall J \subset\mathcal{J} \text{ mit } 2\leq|J|\leq\infty
+		\end{align}
+		\item Seien $ \mathcal{M}_j \subset \mathcal{A} $ für $ j \in \mathcal{J} $ Mengensysteme. Die Familie $ (\mathcal{M}_j)_{j \in \mathcal{J}} $ von Mengensystemen heißt unabhängig, falls Bedingung (\ref{unabh1}) für jede endliche mindestens zweielementige Teilmenge $ J \subset \mathcal{J} $ und jede Wahl $ A_j \in \mathcal{M}_j, \; j \in J $ erfüllt ist.
+		\item Seien $ (\Omega_j,\mathcal{A}_j)_{j \in \mathcal{J}} $ messbare Räume und $ X_j : \Omega \to \Omega_j $ für $ j \in \mathcal{J} $ Zufallsvariablen.
+		Die Familie $ (X_j)_{j \in \mathcal{J}} $ heißt unabhängig, falls die Familie der erzeugten $ \sigma $-Algebren \[ (\sigma(X_j))_{j \in \mathcal{J}} \coloneqq \sigma \left(\bigcup_{j \in \mathcal{J}} X_j^{-1}(\mathcal{A}_j) \right) \] unabhängig ist.
+	\end{enumerate}	
+\end{Definition} 
+\begin{Definition}(Erwartungswert)\\
+	$ X:\Omega \to \overline{\R} $ sei eine Zufallsvariable.
+	Der Erwartungswert von $ X $ existiert genau dann, wenn $ \int_{\Omega} |X| \dP < \infty $. In diesem Fall heißt
+	\begin{align*}
+	\mathbb{E}[X] \coloneqq \int_{\Omega} X \dP 
+	\end{align*}
+	der Erwartungswert von X
+\end{Definition}
+\begin{Satz}(schwaches Gesetz großer Zahlen) \\
+	Sei $ (X_n)_{n \in \N } $ eine Folge unabhängiger reellwertiger Zufallsvariablen auf $ (\Omega,\mathcal{A},\mathbb{P}) $ mit identischer Verteilung $ \mathbb{P}^{X_1} = \mathbb{P}^{X_n} \; \forall n \in \N$. Wir nennen $ (X_n) $ dann auch eine u.i.v-Folge, dabei steht u.i.v. für 'unabhängig identisch verteilt'.
+	Ist zudem $ \mathbb{E}[X_1^2] < \infty $ so gilt:
+	\[
+		\frac{1}{n} \sum_{j=1}^n X_j \stackrel{\mathbb{P}}{\to} \mathbb{E}[X_1]
+	\]
+	Mit $ \stackrel{\mathbb{P}}{\to} $ bezeichnen wir dabei die Konvergenz bezüglich des Wahrscheinlichkeitsmaßes $ \mathbb{P} $. Es gilt also 
+	$ \lim\limits_{n \to \infty} \mathbb{P}(|\frac{1}{n} \sum\limits_{j=1}^n X_j - \mathbb{E}[X_1]|>\epsilon) = 0 $. Wir sagen auch $ \frac{1}{n} \sum\limits_{j=1}^n X_j $ konvergiert stochastisch gegen $ \mathbb{E}[X_1] $. Im Falle eines Zufallsvektors (einer $ \R^d $-wertigen Zufallsvariable) kann der Betrag gegen eine beliebige Norm auf $ \R^d $ ersetzt werden.
+\end{Satz}
+
+\begin{Satz}(starkes Gesetz großer Zahlen)\\
+	Es sei $ (X_n)_{n \in \N} $ eine u.i.v.-Folge und es gelte $ \mathbb{E}[|X_1|] < \infty$. Dann gilt für fast alle $ \omega  \in \Omega$ 
+	\[
+		\mathbb{E}[X] = \lim_{n \to \infty} \sum_{i=1}^n X_i(\omega)
+	\]
+	das heißt es existiert eine Menge $ N \subset \Omega $ mit $ \mathbb{P}(N)=0 $ und obige Aussage gilt für alle $ \omega \not \in N $. Eine solche Menge $ N $ heißt auch Nullmenge. In der Literatur findet man diese Art der Konvergenz oft auch unter dem Namen der ($\mathbb{P}$)-fast sicheren Konvergenz.
+\end{Satz} 
+\begin{Bemerkung}
+	Aus Konvergenz für fast alle $ \omega \in \Omega $ folgt insbesondere Konvergenz bezüglich des Wahrscheinlichkeitsmaßes $ \mathbb{P} $.\\
+	 Denn falls $ \mathbb{E}[X] = \lim\limits_{n \to \infty} \sum_{i=1}^n X_i(\omega) $ für fast alle $ \omega \in \Omega $, dann ist das gleichbedeutend mit $ \mathbb{P}(\{ \omega \in \Omega:  \lim\limits_{n \to \infty} \sum_{i=1}^n X_i(\omega) \not = \mathbb{E}[X] \}) = 0 $ und somit insbesondere $ \frac{1}{n} \sum_{j=1}^n X_j \stackrel{\mathbb{P}}{\to} \mathbb{E}[X_1] $.
+\end{Bemerkung}
+\begin{Satz}(Zentraler Grenzwertsatz)\\
+	Sei $ (X_n)_{n \in \N} $ eine u.i.v.-Folge und es gelte $ \mathbb{E}[X_1^2] < \infty $.
+	Mit $ \mathbb{V}[X_1] $ bezeichnen wir die Varianz der Zufallsvariable $ X_1 $:
+	\[
+		\mathbb{V}[X_1] = \mathbb{E}[X_1^2]-\mathbb{E}[X_1]^2 = \mathbb{E}[(X_1-\mathbb{E}[X_1])^2]
+	\]
+	Dann gilt für eine standardnormalverteilte Zufallsvariable N:
+	\[
+		\hat{S}_n \coloneqq\frac{\sum_{j=1}^{n}X_j-n\mathbb{E}[X_1]}{\sqrt{nV[X_1]}} \stackrel{\mathcal{D}}{\to} N
+	\]
+	Dabei bezeichnet $ \stackrel{\mathcal{D}}{\to} $ die Konvergenz in Verteilung und ist genau dann erfüllt, wenn 
+	\[ \lim\limits_{n \to \infty} \mathbb{P}^{\hat{S}_n}((-\infty,x]) = \mathbb{P}^N((-\infty,x])
+	\]
+	für alle Stetigkeitsstellen der Verteilungsfunktion $ \mathbb{P}^N((-\infty,\cdot]) $ von N erfüllt ist.
+\end{Satz}
+\begin{Definition}(Zufallsfelder) \\
+	
+\end{Definition}
+
