@@ -231,32 +231,30 @@ Mit der numerischen Analyse des Discontinuous Galerkin Verfahrens an sich befass
 Runge-Kutta DG verfahren für der linearen Transportgleichung ähnliche Problemstellungen betrachteten Cockburn und Shu in einer 5 teiligen Serie von Arbeiten. Besonders zu nennen sind dabei in unserem Kontext \cite{cockburn1989tvb} und \cite{cockburn1990runge}.
 
 
-%\subsubsection{Eigenschaften des Verfahren}
-%Nachdem wir nun das Discontinuous Galerkin Verfahren für die lineare Transportgleichung eingeführt und erklärt haben, sollen nun noch einige Eigenschaften des Verfahrens beleuchtet werden. Dabei wollen wir uns aber beschränken einige grundlegende Resultate zu nennen und so eher einen groben Überblick mit Referenzen zur Literatur zu geben. Mehr zur numerischen Analyse des Discontinuous Galerkin Verfahren findet sich zum einen in Standardwerken, wie \cite{ern2004theory}, eine schöne Zusammenstellung bietet aber auch \cite{Har08b}.
-%Ebenfalls findet sich in \cite{Har08b} eine grundlegende numerische Analyse des Discontinuous Galerkin Verfahrens auf die stationäre (stimmt das? fehlende Zeitabhängigkeit) lineare Transportgleichung.
+\subsection{Eigenschaften des Verfahren}
+Nachdem wir nun das Discontinuous Galerkin Verfahren für die lineare Transportgleichung eingeführt und erklärt haben, sollen nun noch einige Eigenschaften des Verfahrens beleuchtet werden. Dabei wollen wir uns aber beschränken einige grundlegende Resultate zu nennen und so eher einen groben Überblick mit Referenzen zur Literatur zu geben. Mehr zur numerischen Analyse des Discontinuous Galerkin Verfahren findet sich zum einen in Standardwerken, wie \cite{ern2004theory}, eine schöne Zusammenstellung bietet aber auch \cite{Har08b}.
+Ebenfalls findet sich in \cite{Har08b} eine grundlegende numerische Analyse des Discontinuous Galerkin Verfahrens auf die stationäre (stimmt das? fehlende Zeitabhängigkeit) lineare Transportgleichung.
 
 
-%\begin{itemize}
-%	\item \textbf{Konsistenz} \\
-%	 Der letzte Abschnitt hat sich damit beschäftigt, aus dem ursprünglich unendlich dimensionalen Problem letztendlich eine volldiskretisierte Verfahrensvorschrift in einem endlichen Ansatzraum herzuleiten. Fragen wir nun nach der Konsistenz des Verfahren, stellen wir damit zugleich die Frage, ob wir immer noch die richtige Gleichung lösen. Genauer heißt das Verfahren genau dann konsistent, wenn eine analytische Lösung $ \rho $ des ursprünglichen Problems (dTP) auch die hergeleitete Verfahrensvorschrift erfüllt. 
-%	 Wir betrachten zunächst etwas abstrakter den formalen Prozess der Diskretisierung einer abstrakten Gleichung $ T \rho=0 $:
-%	 \begin{figure}[H]
-%	 	\centering
-%	 	\captionabove{Diskretisierungsprozess}
-%	 	\includegraphics[width=0.45\textwidth]{abstraktkonsistenz.png} \\
-%	 	Abbildung aus \cite{brokate2016grundwissen} Seite 392
-%	 \end{figure}
-%	 Das diskretisierte Problem $ T_h \rho_h = 0  $ heißt genau dann konsistent, wenn für eine analytische Lösung $ \rho^{\star} \in E $ gilt, dass $ \lim\limits_{h \to 0}\lVert \Phi_h(T)L_1\rho - L_2T\rho \rVert_{F_h} = 0 $.
-%	 Betrachten wir zunächst in einem Zwischenschritt die Semidiskretisierung (5.3).
-%	 Die gewählte Herleitung dieser Formulierung soll dabei nahelegen, dass für eine exakte (und glatte) Lösung $ \rho $ die Konsistenz für die Semidiskretisierung erfüllt ist. Wichtig ist dabei unter anderem auch die Wahl der numerischen Flussfunktion, der upwind flux erhält aber gerade gewünschten Eigenschaften. 
-%	 Mehr dazu findet sich in \cite{Har08b}.
-%	 Für die Zeitdiskretisierung in Form der impliziten Mittelpunktsregel gilt als einstufige Gauß-Quadratur $ \lVert \Phi_h(T)L_1\rho - L_2T\rho \rVert_{F_h} = O(h^2)$, womit sie insbesondere konsistent ist. \\
-%	 Auf eine nähergehende Konsistenzanalyse soll an dieser Stelle verzichtet werden
-%	 
-%	 
-%	 
-%	 
-%	\item \textbf{Galerkin Orthogonalität}
-%	\item \textbf{Koerzivität und Stabilität}
-%	\item \textbf{Konvergenz}
-%\end{itemize}
+\begin{itemize}
+	\item \textbf{Konsistenz} \\
+	 Der letzte Abschnitt hat sich damit beschäftigt, aus dem ursprünglich unendlich dimensionalen Problem letztendlich eine volldiskretisierte Verfahrensvorschrift in einem endlichen Ansatzraum herzuleiten. Fragen wir nun nach der Konsistenz des Verfahren, stellen wir damit zugleich die Frage, ob wir immer noch die richtige Gleichung lösen. Genauer heißt das Verfahren genau dann konsistent, wenn eine analytische Lösung $ \rho $ des ursprünglichen Problems (dTP) auch die hergeleitete Verfahrensvorschrift erfüllt. 
+	 Wir betrachten zunächst etwas abstrakter den formalen Prozess der Diskretisierung einer abstrakten Gleichung $ T \rho=0 $:
+	 \begin{figure}[H]
+	 	\centering
+	 	\captionabove{Diskretisierungsprozess}
+	 	\includegraphics[width=0.45\textwidth]{abstraktkonsistenz.png} \\
+	 	Abbildung aus \cite{brokate2016grundwissen} Seite 392
+	 \end{figure}
+	 Das diskretisierte Problem $ T_h \rho_h = 0  $ heißt genau dann konsistent, wenn für eine analytische Lösung $ \rho^{\star} \in E $ gilt, dass $ \lim\limits_{h \to 0}\lVert \Phi_h(T)L_1\rho^{\star} - L_2T\rho^{\star} \rVert_{F_h} = 0 $.
+	 Betrachten wir zunächst in einem Zwischenschritt die Semidiskretisierung (5.3).
+	 Die gewählte Herleitung dieser Formulierung soll dabei nahelegen, dass für eine exakte (und glatte) Lösung $ \rho $ die Konsistenz für die Semidiskretisierung erfüllt ist. Wichtig ist dabei unter anderem auch die Wahl der numerischen Flussfunktion, der upwind flux erhält aber gerade gewünschten Eigenschaften. 
+	 Mehr dazu findet sich in \cite{Har08b}.
+	 Für die Zeitdiskretisierung in Form der impliziten Mittelpunktsregel gilt als einstufige Gauß-Quadratur $ \lVert \Phi_h(T)L_1\rho^{\star} - L_2T\rho^{\star} \rVert_{F_h} = O(h^2)$, womit sie insbesondere konsistent ist. \\
+	 Daher gilt so für das kombinierte Verfahren, dass eine klassische Lösung $ \rho^{\star} $ somit auch die Volldiskretisierung in obigem Sinne erfüllt. 
+	  
+	 
+	\item \textbf{Galerkin Orthogonalität}
+	\item \textbf{Koerzivität und Stabilität}
+	\item \textbf{Konvergenz}
+\end{itemize}

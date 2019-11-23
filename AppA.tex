@@ -1,0 +1,52 @@
+% !TeX root = bachelorarbeit.tex
+\begin{Satz}
+	Sei $ (\Omega,\mathcal{A},\mathbb{P}) $ ein Wahrscheinlichkeitsraum und $ X = (X_1,\dots,X_n) $ ein Zufallsvektor mit (nicht entarteter) multivariater Normalverteilung mit Parametern $ \mu = (\mu_1,\dots,\mu_n) \in \R^n $ und $ C = (\sigma_{ij})_{1 \leq i,j \leq n} \in \R^{n \times n} $.\\
+	Dann ist $ \mathbb{E}[X] = \mu $ und für alle $ i,j \in {1,\dots,n}  $ gelten:
+	\[
+		 X_j \sim N(\mu_j,\sigma_{jj}) \text{ und } \sigma_{ij} = \text{Cov}(X_i,X_j)
+	\]
+\end{Satz}
+\begin{proof}(fasst mehrere Resultate aus \cite{brokate2016grundwissen} zusammen)
+	
+	Da $ C $ symmetrisch positiv definit ist, existiert ein invertierbares $ A \in \R^{n \times n} $ mit $ C = AA^{\top} $ (Cholesky-Zerlegung).
+	Weiter sei $ Y = (Y_1,\dots,Y_n)^{\top} $ ein Zufallsvektor, wobei die einzelnen $ Y_1,\dots,Y_n $ unabhängige und je $ N(0,1) $-verteilte Zufallsvariablen sind. 
+	Durch $ T(x) \coloneqq Ax + \mu $ erhalten wir somit für $ x \in \R^k $ eine stetig differenzierbare Abbildung die den $ \R^k $ auf sich selbst abbildet und die Funktionaldeterminante $ \det A$ besitzt.
+	Ist $ Y $ nun ein $ n $-dimensionaler Zufallsvektor mit Dichte $ f $, so besitzt der Zufallsvektor $ Z \coloneqq  AY + \mu$ nach dem Transformationssatz die Dichte
+	\[
+		g(y) = \frac{f(A^{-1}(y-\mu))}{\abs{\det A}}, \quad y \in \R^k .
+	\]
+	Wir erhalten also mit 
+	\begin{align*}
+		f(x) = \prod_{j=1}^n \left( \frac{1}{\sqrt{2\pi}}\exp\left(-\frac{x_j^2}{2}\right) \right) = \frac{1}{(2\pi)^{\frac{n}{2}}} \exp \left( - \frac{x^{\top}x}{2}\right), \text{ für } x \in \R^n \\
+		g(y) = \frac{1}{(2\pi)^{\frac{n}{2}}\abs{\det A}} \exp \left( - \frac{1}{2} \left( A^{-1}(y-\mu)\right)^{\top}\left( A^{-1}(y-\mu)\right)\right), \text{ für }y \in \R^n .
+	\end{align*}
+	Wegen $ C = A A^{\top} $, $ (A^{-1})^{\top} = (A^{\top})^{-1} $ und $ \abs{\det A} = \sqrt{\det C} $ ist somit 
+	\[
+		g(y) = \frac{1}{(2\pi)^{\frac{n}{2}}\sqrt{\det C}} \exp \left( - \frac{1}{2} (y-\mu)^{\top}C^{-1} (y-\mu)\right), \text{ für }y \in \R^n.
+	\]. 
+	Insbesondere ist also $ Z \sim X \sim N_n(\mu,C) $.\\
+	Seien nun $ A = (a_{ij})_{1 \leq i,j \leq n} $, dann folgt
+	\[
+		X_j \sim \sum_{l=1}^n a_{jl} Y_l + \mu_j \ .
+	\]
+	Wegen $ K_l \coloneqq a_{ij} Y_l  \sim N(0,a_{jl}^2) $ und der Unabhängigkeit der $ Y_l $ (mit dem sogennanten Blockungslemma folgt somit Unabhängigkeit der $ K_l $) gilt nach dem Additionsgesetz für die Normalverteilung 
+	\[
+		X_j\sim N \left( \mu_j,\sum_{l=1}^{n}a_{jl}^2 \right).
+	\]
+	Aus $ C = A A^{\top}  $ folgt schließlich $ \sigma_{jj} = \sum_{l=1}^{n} a_{jl}^2 $.
+	Es bleibt nun also noch zu zeigen, dass $ \mathbb{E}[X] = \mu $ und $ \sigma_{ij} = \text{Cov}(X_i,X_j) $.
+	Wir bezeichnen mit $ \text{Cov}(X) \coloneqq (\text{Cov}(X_i,X_j))_{1 \leq i,j \leq n} $
+	die Kovarianzmatrix.
+	Es ist $ \mathbb{E}[Y] = 0 $ und  $\text{Cov}(Y) = I_n $.
+	Es gilt also:
+	\begin{align*}
+		\mathbb{E}[X] = \mathbb{E}[AY + \mu] = (\mathbb{E}[\sum_{l=1}^{n}K_l+\mu_j]) =(\mathbb{E}[\sum_{l=1}^{n}a_{jl}Y_l+\mu_j])= A \mathbb{E}[Y] + \mu = \mu \\
+		\text{Cov}(X) = \text{Cov}(AY + \mu) =  \text{Cov}(AY) = A \text{Cov}(Y) A^{\top} = AA^{\top} = C
+	\end{align*}
+	
+	
+	
+	
+	
+	
+\end{proof}

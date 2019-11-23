@@ -1,13 +1,14 @@
 % !TeX root = bachelorarbeit.tex
-An dieser Stelle wollen wir an einige grundlegende Resultate der Wahrscheinlichkeitstheorie erinnern. Außerdem führen wir dabei auch Teile der Notation ein, die wir an späterer Stelle noch brauchen werden. Als Referenzen sind vor allem \cite{brokate2016grundwissen} und die Vorlesung Wahrscheinlichkeitstheorie von Herrn Prof. Dr. Henze (SS18) 
+An dieser Stelle wollen wir an einige grundlegende Resultate der Wahrscheinlichkeitstheorie erinnern. Außerdem führen wir dabei auch Teile der Notation ein, die wir an späterer Stelle noch brauchen werden. Als Referenzen sind vor allem \cite{brokate2016grundwissen}, die Vorlesung Wahrscheinlichkeitstheorie von Herrn Prof. Dr. Henze (SS18) sowie \cite{klenke2006wahrscheinlichkeitstheorie}
 %sowie die gleichnamige Vorlesung von Herrn Prof. Dr. Hug (SS19) 
 zu nennen.\\ Sei $ \Omega \not = \emptyset $ eine beliebige nichtleere Teilmenge.
-Einige grundlegende Begriffe der Maßtheorie wollen wir an dieser Stelle voraussetzen, sie sind aber ebenfalls in \cite{brokate2016grundwissen} und zum Teil in \cite{lapeyre2003introduction} zu finden. Dazu zählen:
+Einige grundlegende Begriffe der Maßtheorie wollen wir an dieser Stelle voraussetzen, sie sind aber ebenfalls in \cite{klenke2006wahrscheinlichkeitstheorie} und zum Teil in \cite{lapeyre2003introduction} zu finden. Dazu zählen:
 \begin{itemize}
 	\item eine $ \sigma $-Algebra $ \mathcal{A} \subset \mathcal{P}(\Omega) $
 	\item die von einem Mengensystem $ \mathcal{M} \subset \mathcal{P}(\Omega)  $ erzeugte $ \sigma $-Algebra $ \sigma(\mathcal{M}) $
 	\item ein Maß $ \mu $ auf einer $ \sigma $-Algebra $ \mathcal{A} $
 	\item das Maß-Integral einer messbaren Funktion $ f:\Omega \to \overline{\R} $ über einem Maßraum $ (\Omega, \mathcal{A},\mu) $
+	\item die Borel'sche $ \sigma $-Algebra $ \mathcal{B} $, sowie die Begriffe 'Borelmenge' und 'Borel-messbar'.
 \end{itemize}
 
 \begin{Definition}(Wahrscheinlichkeitsraum)\\
@@ -40,7 +41,19 @@ Jede Menge $ A \in \mathcal{A} $ heißt dann auch Ereignis, zu $ \mathbb{P} $ sa
 	\end{enumerate}
 \end{Definition}
 $ \newline $
-Sei ab nun $ (\Omega,\mathcal{A},\mathbb{P}) $ stets ein Wahrscheinlichkeitsraum.
+Sei ab nun $ (\Omega,\mathcal{A},\mathbb{P}) $ stets ein Wahrscheinlichkeitsraum und $ \mathcal{B}^n $ die Borelsche $ \sigma $-Algebra über $ \R^n $.
+
+\begin{Definition}(stetig verteilte Zufallsvariablen und Zufallsvektoren)\\
+%	Eine Zufallsvariable $ X :\Omega  \to \R $ heißt stetig verteilt, wenn eine nichtnegative (Borel-)messbare Funktion $ f : \R \to \R $ mit $ \int_{\R} f(t) \dt =1  $ existiert, sodass 
+%	In diesem Fall heißt $ f $ Dichte von $ X $ (bzw. von $ \mathbb{P}^X $).\\
+	Ein Zufallsvektor $ X = (X_1,\dots,X_n) $ heißt stetig verteilt, wenn eine nichtnegative (Borel-)messbare Funktion $ f : \R^n \to \R $ mit $ \int_{\R^n} f(x) \dx =1  $ existiert, sodass 
+	\[
+		\mathbb{P}^X(B) = \mathbb{P}(X \in B) =  \int_{B} f(x) \dx, \quad B \in \mathcal{B}^n
+	\]
+	In diesem Fall heißt $ f $ Dichte von $ X $ (bzw. von $ \mathbb{P}^X $).\\
+	Ist $ n=1 $ spricht man einfach von einer stetig verteilten Zufallsvariable mit Dichte $ f $.
+	
+\end{Definition}
 
 \begin{Definition}(Unabhängigkeit)\\
 	Sei $ \mathcal{J} $ eine Menge mit mindestens zwei Elementen.
@@ -63,7 +76,26 @@ Sei ab nun $ (\Omega,\mathcal{A},\mathbb{P}) $ stets ein Wahrscheinlichkeitsraum
 	\end{align*}
 	der Erwartungswert von X
 \end{Definition}
-\begin{Satz}(schwaches Gesetz großer Zahlen) \\
+
+\begin{Definition}(Normalverteilung und multivariate Normalverteilung)
+	\label{normalvert}
+	\begin{enumerate}[label=(\alph*)]
+		\item Eine Zufallsvariable $ X $ heißt normalverteilt mit Parametern $ \mu $ und $ \sigma^2 $, falls $ X $ die Dichte 
+		\[
+			f(x) = \frac{1}{\sigma \sqrt{2 \pi}} \exp\left(-\frac{(x-\mu)^2}{2\sigma^2}\right), \quad x \in \R 
+		\]
+		besitzt. In diesem Fall schreiben wir oft auch $ X \sim N(\mu,\sigma^2) $. Ist spezieller $ \mu = 0 $ und $ \sigma^2 =1$ so heißt $ X $ standardnormalverteilt.
+		\item Sei nun $ X = (X_1,\dots,X_n) $ ein Zufallsvektor, $ \mu =(\mu_1,\dots,\mu_n) \in \R^n $ und $ C = (\sigma_{ij})_{1 \leq i,j \leq n} \in \R^{n \times n} $ eine symmetrische positiv-definite Matrix.
+		$ X $ bestitzt eine (nicht ausgeartete) multivariate Normalverteilung mit Parametern $ \mu $ und $ C $, falls die Dichte von $ X $ durch 
+		\[
+			f(x) = \frac{1}{(2\pi)^{\frac{k}{2}}\sqrt{\det C}}\exp\left(-\frac{1}{2}(x-\mu)^{\top}C^{-1}(x-\mu)  \right), \quad x\in \R^n
+		\]
+		gegeben ist. Wir schreiben auch $ X \sim N_n(\mu,C)  $.
+		Insbesondere kann man mit recht elementaren Methoden einsehen, dass dann auch für jedes $ j \in \{ 1,\dots,n\} $ $ X_j \sim N(\mu_j,\sigma_{jj}) $ und außerdem die Einträge $ \sigma_{ij} $ der Matrix $ C $ gerade die Kovarianzen $ \text{Cov}(X_i,X_j) $ darstellen. Ein Beweis hierfür findet sich im Appendix.
+		
+	\end{enumerate}
+\end{Definition}
+\begin{Satz}(schwaches Gesetz großer Zahlen - wird eventuell gekürzt) \\
 	Sei $ (X_n)_{n \in \N } $ eine Folge unabhängiger reellwertiger Zufallsvariablen auf $ (\Omega,\mathcal{A},\mathbb{P}) $ mit identischer Verteilung $ \mathbb{P}^{X_1} = \mathbb{P}^{X_n} \; \forall n \in \N$. Wir nennen $ (X_n) $ dann auch eine u.i.v-Folge, dabei steht u.i.v. für 'unabhängig identisch verteilt'.
 	Ist zudem $ \mathbb{E}[X_1^2] < \infty $ so gilt:
 	\[
@@ -76,7 +108,7 @@ Sei ab nun $ (\Omega,\mathcal{A},\mathbb{P}) $ stets ein Wahrscheinlichkeitsraum
 \begin{Satz}(starkes Gesetz großer Zahlen)\\
 	Es sei $ (X_n)_{n \in \N} $ eine u.i.v.-Folge und es gelte $ \mathbb{E}[|X_1|] < \infty$. Dann gilt für fast alle $ \omega  \in \Omega$ 
 	\[
-		\mathbb{E}[X] = \lim_{n \to \infty} \sum_{i=1}^n X_i(\omega)
+		\mathbb{E}[X_1] = \lim_{n \to \infty} \sum_{i=1}^n X_i(\omega)
 	\]
 	das heißt es existiert eine Menge $ N \subset \Omega $ mit $ \mathbb{P}(N)=0 $ und obige Aussage gilt für alle $ \omega \not \in N $. Eine solche Menge $ N $ heißt auch Nullmenge. In der Literatur findet man diese Art der Konvergenz oft auch unter dem Namen der ($\mathbb{P}$)-fast sicheren Konvergenz.
 \end{Satz} 
@@ -99,7 +131,32 @@ Sei ab nun $ (\Omega,\mathcal{A},\mathbb{P}) $ stets ein Wahrscheinlichkeitsraum
 	\]
 	für alle Stetigkeitsstellen der Verteilungsfunktion $ \mathbb{P}^N((-\infty,\cdot]) $ von N erfüllt ist.
 \end{Satz}
-\begin{Definition}(Zufallsfelder) \\
-	
+\begin{Definition}(Zufallsfelder) 
+	\label{randomFields}
+	\begin{enumerate}[label=(\alph*)]
+		\item Sei $ \mathcal{D} \subset \R^d  $ eine nichtleere Menge und $ d \geq 1$. Wir nennen $ X : \Omega \times \mathcal{D} \to \R$ ein Zufallsfeld, wenn für jedes feste $ x \in \mathcal{D} $ die Funktion $ X(x) \coloneqq X(\cdot,x) $ eine Zufallsvariable ist. \\
+		Ist spezieller $ d=1 $ so wird die Parametermenge auch oft mit $ T $ bezeichnet und man spricht von einem stochastischen Prozess.
+		In der Literatur findet man Zufallsfelder vor allem unter der englischen Bezeichnung 'random fields'. \\
+		Außerdem definieren wir die Erwartung eines Zufallsfeldes durch
+		\[
+			\mu(x) \coloneqq \mathbb{E}[X(x)] = \int_{\Omega} X(w,x) \dP(\omega)  \quad \text{für } x \in \mathcal{D}
+		\]
+		und die zu einem Zufallsfeld gehörige Kovarianzfunktion $ C: \mathcal{D} \times \mathcal{D} \to \R $ durch 
+		\[
+			C(x,y) \coloneqq \text{Cov}[X(x),X(y)] = \mathbb{E}\left[ \left(X(x)-\mathbb{E}[X(x)] \right) \left(X(y)-\mathbb{E}[X(y)]\right) \right]
+		\]
+		\item Ein Zufallsfeld $ X $ heißt weiter Gauß'sches Zufallsfeld falls für jede Wahl $ n \in \N $ und $ x = (x_1,\dots,x_n) \in \mathcal{D}$
+		der Zufallsvektor $ \hat{X} = (\hat{X}_1,\dots,\hat{X}_n)^{\top} = (X(x_1),\dots,X(x_n)) $ eine (nicht ausgeartete) multivariate Normalverteilung mit Parametern $ \mu(x) $ und $ C(x,y) $ besitzt.
+		Wir haben in \ref{normalvert} bereits gesehen, dass wir so gerade den Erwartungswertvektor $ \mu $ und die Kovarianzmatrix $ C $ festlegen.
+		\item Ein Zufallsfeld $ Y: \Omega \times \mathcal{D} \to \R $ heißt hingegen log-normal verteilt oder kurz lognormal-Feld
+		falls das durch 
+		\begin{align*}
+			X: \Omega \times \mathcal{D} &\to \R  \\ (\omega,x) &\mapsto \log(Y(\omega,x)) 
+		\end{align*}
+		 definierte Feld ein Gauß'sches Zufallsfeld ist.
+%		Umgekehrt ist dann $ \tilde{Y}:\Omega \times \mathcal{D} \to \R  , (\omega,x) \mapsto \exp(X(\omega,x)) $ auch ein lognormal-Feld.
+		
+	\end{enumerate}
 \end{Definition}
+
 
