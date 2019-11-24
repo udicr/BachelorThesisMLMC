@@ -25,6 +25,7 @@
 \usepackage{mathtools}
 \usepackage{enumitem}
 \usepackage{float}
+\usepackage{dsfont}
 
 
 % Abstand obere Blattkante zur Kopfzeile ist 2.54cm - 15mm
@@ -38,7 +39,8 @@
 \newtheorem{Satz}{Satz}[section]
 \newtheorem{Folgerung}[Satz]{Folgerung} 
 \newtheorem{Definition}[Satz]{Definition} 
-\newtheorem{Lemma}[Satz]{Lemma}		   
+\newtheorem{Lemma}[Satz]{Lemma}	
+\newtheorem{Beispiel}[Satz]{Beispiel}	   
                   
 \numberwithin{equation}{section} 
 
@@ -57,7 +59,9 @@
 \newcommand{\da}{\, \mathrm{d} a}
 \newcommand{\dt}{\, \mathrm{d} t}
 \newcommand{\ds}{\, \mathrm{d} s}
+\newcommand{\du}{\, \mathrm{d} u}
 \newcommand{\dP}{\, \mathrm{d} \mathbb{P}}
+
 \newcommand{\icol}[1]{%inline row vector
 		\left(	\begin{smallmatrix}#1\end{smallmatrix} \right) %
 	}

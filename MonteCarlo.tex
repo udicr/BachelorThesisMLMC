@@ -1,2 +1,78 @@
 % !TeX root = bachelorarbeit.tex
-\cite{lapeyre2003introduction} \cite{sullivan2015introduction}
+%\cite{lapeyre2003introduction} \cite{sullivan2015introduction}
+
+Wie in \cite{lapeyre2003introduction} wollen wir um die Monte Carlo Methode von Grund auf einzuführen uns zunächst mit der numerischen Integration beschäftigen. Grundsätzlich handelt es sich bei der Monte Carlo Methode um einen sogenannten Erwartungswertschätzer. Bevor wir also ein Problem mithilfe der Monte Carlo Methode lösen können, müssen wir die Größe, welche wir berechnen wollen, zunächst in der Form eines Erwartungswertes ausdrücken.
+Wir suchen dann also einen Erwartungswert $ \mathbb{E}[X] $ wobei $ X $ eine Zufallsvariable, einen Zufallsvektor oder gar ein Zufallsfeld beschreiben kann.
+Mithilfe der Monte-Carlo-Methode können wir dann versuchen eben diesen Erwartungswert zu schätzen. Dazu müssen wir $ X $ simulieren können. Damit ist gemeint, dass wir in der Lage sein müssen eine Realisierung $ (x_1,\dots,x_n) $ von $ (X_1,\dots,X_n) $ zu generieren (oft sagt man auch in Anlehnung an das Bernoulli'sche Urnenmodell 'zu ziehen'). Dabei sollen die Zufallsgrößen $ X_1,\dots,X_n $ unabhängig sein und die gleiche Verteilung besitzen wie die Zufallsgröße $ X $. Außerdem sei vorausgesetzt dass der Erwartungswert $ \mathbb{E}[X] < \infty $ existiert.
+Anschließend wird der gesuchte Erwartungswert durch
+\[
+	\mathbb{E}[X] \approx \frac{1}{n}(x_1 + \dots x_n)
+\]
+approximiert.
+
+\begin{Beispiel}(Integral über $ [0,1]^d $ - aus \cite{lapeyre2003introduction})\\
+	Angenommen wir wollen für $ d \geq 1 $ folgendes Integral berechnen:
+	\[
+		I = \int_{[0,1]^d} f(u_1,\dots,u_d) \du_1\dots\du_d
+	\]
+	Wir können das Integral dann wie folgt als Erwartungswert ausdrücken:
+	Sei $ X = f(U_1,\dots,U_d) $ ein 
+	Zufallsvektor, wobei $ U_1,\dots,U_d $ unabhängig und auf $ [0,1] $ gleichverteilt sind, d.h. jedes $ U_i $ besitzt als Dichte $ f_i(x) = \mathds{1}_{[0,1]}(x) $.
+	Dann ergibt sich so 
+	\[
+		I = \int_{[0,1]^d} f(u_1,\dots,u_d) \du_1\dots\du_d = \mathbb{E}[f(U_1,\dots,U_d)] = \mathbb{E}[X]
+	\]
+	Wir haben also das Integral, welches wir berechnen wollen als Erwartungswert ausgedrückt. Nun müssen wir die Zufallsvariable $ X = f(U_1,\dots,U_d) $ simulieren.
+	Dazu nehmen wir an, gleichverteilte Zufallsvariablen simulieren zu können. Die Simulation solcher Zufallsvariablen spielt in der numerischen Stochastik eine ganz besondere Rolle, denn oft werden andere Verteilungen durch Transformationen auf den Fall einer Gleichverteilung auf $ [0,1] $ reduziert.
+	Sei also $ (U_i)_{i \geq 1} $ eine Folge unabhängiger Zufallsvariablen mit Gleichverteilung auf $ [0,1] $. Wir können dann mithilfe der simulierten Realisierungen $ (u_i)_{i \geq 1} $  von $ (U_i)_{i \geq 1} $ die Zufallsvariable $ X $ wie folgt definieren: Wir setzen
+	\begin{align*}
+		&X_1 = f(U_1,\dots,U_d), & &x_1 = f(u_1,\dots,u_d) \\
+		&X_2 = f(U_{d+1},\dots,U_{2d}), & &x_2 = f(u_{d+1},\dots,u_{2d}) \\
+		&X_i = f(U_{(i-1)d+1},\dots,U_{id}), & &x_2 = f(u_{(i-1)d+1},\dots,u_{id})
+	\end{align*}
+	Da $ (U_i)_{i \geq 1} $ eine Folge unabhängiger Zufallsvariablen ist, erhalten wir so unter der einzigen echten Voraussetzung, dass $ f $ messbar ist, nach Blockungslemma ebenfalls eine Folge unabhängiger Zufallsvariablen $ (X_i)_{i \geq 1} $.
+	Außerdem erhalten wir so für ein großes $ n \in \N $ eine gute Approximation von $ I $ durch:
+	\[
+		I = \mathbb{E}[X] \approx \frac{1}{n}(x_1+\dots+x_n) = \frac{1}{n} (f(u_1,\dots,u_d)+\dots+f(u_{(n-1)d+1},\dots,u_{nd}))
+	\]	
+	Inbesondere haben wir keinerlei Regularität an $ f $ vorausgesetzt, es genügt bereits die bloße Messbarkeit von $ f $
+\end{Beispiel}
+
+
+
+ 	Oft wollen wir über eine andere Grundmenge als $ [0,1]^d $ integrieren. 
+ 	Bei endlichen Mengen, etwa einer beschränkten Borelmenge $ B \subset \R^d $ mit $ 0 < \abs{B} \coloneqq \lambda^d(B) $ (hierbei ist $ \lambda^d(\cdot) $ das Borel-Lebesgue-Maß) lässt sich $ I = \int_{B} f(x) \dx $ ähnlich wie in obigem Beispiel berechnen.
+	Für einen Zufallsvektor $ U $ mit Gleichverteilung $ U(B) $ auf $ B $ existiert nämlich der Erwartungswert $ f(U) $ und es gilt:
+	\[
+		\mathbb{E}[f(U)] = \int_{B} f(x) \frac{1}{\abs{B}} \dx = \frac{I}{\abs{B}}
+	\]
+	Wieder simulieren wir $ (U_i)_{i \geq 1} $ als Folge unabhängiger Zufallsvariablen mit identischer Verteilung zu $ U $. Dann erhalten wir:
+	\[
+		I = \abs{B} \cdot \mathbb{E}[f(U)] \approx \frac{\abs{B}}{n} \sum_{j=1}^{n}f(u_j)
+	\]
+	 Wollen wir hingegen ein Integral über $ \R^d $ auswerten, muss es uns in der Form 
+	\[
+	I = \int_{\R^d} g(x)f(x) \dx = \int_{\R^d} g(x_1,\dots,x_d)f(x_1,\dots,x_d)
+	\] 
+	vorliegen. Dabei sei $ f(x) $ nichtnegativ und $ \int_{\R^d} f(x) \dx = 1 $.
+	Dann lässt sich $ I $ schreiben als $ I = \mathbb{E}[g(X)] $ für eine Zufallsvariable $ X $ mit Werten in $ \R^d $ und Verteilung $ f(x) \dx $.
+	Wir können also $ I $ approximieren durch
+	\[
+		I \approx \frac{1}{n}\sum_{i=1}^{n} g(x_i) 
+	\]
+	wobei $ (x_i)_{i \geq 1} $ Realisierungen der Zufallsvariablen $ (X_i)_{i \geq 1} $ sind, welche unabhängig und identisch zu $ X $ verteilt seien.
+	
+	Betrachten wir nun wieder die Monte Carlo Methode in einem etwas abstrakteren Sinne ganz allgmein.
+	An der Stelle, an der wir letztlich die Realisierungen einer Zufallsvariable eingesetzt haben, also einen Erwartungswert durch $
+	\mathbb{E}[X] \approx \frac{1}{n}(x_1 + \dots x_n)
+	$ approximiert haben, haben wir stet gefordert, dass $ n $ groß ist. 
+	Es stellt sich nun die Frage, wann $ n $ groß genug ist.
+	Wir wollen uns deshalb noch abschließend zwei zentrale Fragen stellen: 
+	\begin{itemize}
+		\item Wie und wann konvergiert die Methode?
+		\item Was können wir über die Genauigkeit der Approximation aussagen?
+	\end{itemize}
+	
+	
+
+

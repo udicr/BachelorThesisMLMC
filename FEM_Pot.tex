@@ -9,7 +9,7 @@ Ein Überblick über alle möglichen Verfahren, welche zur Lösung der beiden Pr
 Da wir in diesen beiden Abschnitte $\omega \in \Omega$ ohnehin fest halten, genügt es zudem das deterministische Problem zu betrachten. \newline
 Sowohl das hybride Finite Elemente Verfahren, welches wir zur Lösung des Potentialströmungsproblem nutzen wollen, als auch das Discontinuous Galerkin Vefahren, mit dessen Hilfe wir das Transportproblem lösen wollen, bauen auf der Finite Elemente Theorie auf. 
 Diese ist im Wesentlichen in der zweiten Hälfte des 20. Jahrhunderts entstanden, ist aber bis heute in praktischer wie auch in theoretischer Sicht aktuell.
-Die Grundidee ist hierbei die vorliegenden Rand-Anfangswertaufgaben in einem passenden endlichen Unterraum zu lösen. Dabei löst man sich auf analytischer Seite zunächst oft von einzelnen Regularitäts- und Differenzierbarkeitsbedingungen und führt einen sogenannten schwachen Lösungsbegriff ein (vergleiche Abschnitt 2.1). Statt nun aber solch eine schwache Lösung in einem unendlich dimensionalen Funktionenraum, wie beispielsweise in den Sobolevräumen $W^{1,2}(\mathbb{D})$ oder $W_0^{1,2}(\mathbb{D})$ zu bestimmen, zieht man sich auf endliche Unterräume zurück. \newline
+Die Grundidee ist hierbei die vorliegenden Rand-Anfangswertaufgaben in einem passenden endlichen Unterraum zu lösen. Dabei löst man sich auf analytischer Seite zunächst oft von einzelnen Regularitäts- und Differenzierbarkeitsbedingungen und führt einen sogenannten schwachen Lösungsbegriff ein (vergleiche Abschnitt 2.1). Statt nun aber solch eine schwache Lösung in einem unendlich dimensionalen Funktionenraum, wie beispielsweise in den Sobolevräumen $H^1(\mathbb{D})$ oder $H_0^1(\mathbb{D})$ zu bestimmen, zieht man sich auf endliche Unterräume zurück. \newline
 Die folgende Definition entstammt \cite{brenner2007mathematical} und geht ursprünglich (1978) auf Ciarlet zurück.
 \begin{Definition}\
 	Sei
@@ -130,7 +130,7 @@ Als Nächstes soll es nun Ziel sein, eine Lösung der im letzten Abschnitt erkl�
 			\end{align*} 
 		\item $ \{ \mu_i \}_{m=1}^{|\mathcal{K}|} $ heißt Zellenbasis und ist gegeben durch
 			\begin{align*}
-				\forall m \in \{1, \dots , M \} : \mu_m \coloneqq  \chi_{K_m}.
+				\forall m \in \{1, \dots , M \} : \mu_m \coloneqq  \mathds{1}_{K_m}.
 			\end{align*}
 	\end{enumerate}
 \end{Definition} 
