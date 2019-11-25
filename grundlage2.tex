@@ -96,6 +96,7 @@ Sei ab nun $ (\Omega,\mathcal{A},\mathbb{P}) $ stets ein Wahrscheinlichkeitsraum
 	\end{enumerate}
 \end{Definition}
 \begin{Satz}(schwaches Gesetz großer Zahlen - wird eventuell gekürzt) \\
+	\label{schwacheGgZ}
 	Sei $ (X_n)_{n \in \N } $ eine Folge unabhängiger reellwertiger Zufallsvariablen auf $ (\Omega,\mathcal{A},\mathbb{P}) $ mit identischer Verteilung $ \mathbb{P}^{X_1} = \mathbb{P}^{X_n} \; \forall n \in \N$. Wir nennen $ (X_n) $ dann auch eine u.i.v-Folge, dabei steht u.i.v. für 'unabhängig identisch verteilt'.
 	Ist zudem $ \mathbb{E}[X_1^2] < \infty $ so gilt:
 	\[
@@ -106,6 +107,7 @@ Sei ab nun $ (\Omega,\mathcal{A},\mathbb{P}) $ stets ein Wahrscheinlichkeitsraum
 \end{Satz}
 
 \begin{Satz}(starkes Gesetz großer Zahlen)\\
+	\label{starkesGgZ}
 	Es sei $ (X_n)_{n \in \N} $ eine u.i.v.-Folge und es gelte $ \mathbb{E}[|X_1|] < \infty$. Dann gilt für fast alle $ \omega  \in \Omega$ 
 	\[
 		\mathbb{E}[X_1] = \lim_{n \to \infty} \sum_{i=1}^n X_i(\omega)
@@ -116,7 +118,15 @@ Sei ab nun $ (\Omega,\mathcal{A},\mathbb{P}) $ stets ein Wahrscheinlichkeitsraum
 	Aus Konvergenz für fast alle $ \omega \in \Omega $ folgt insbesondere Konvergenz bezüglich des Wahrscheinlichkeitsmaßes $ \mathbb{P} $.\\
 	 Denn falls $ \mathbb{E}[X] = \lim\limits_{n \to \infty} \sum_{i=1}^n X_i(\omega) $ für fast alle $ \omega \in \Omega $, dann ist das gleichbedeutend mit $ \mathbb{P}(\{ \omega \in \Omega:  \lim\limits_{n \to \infty} \sum_{i=1}^n X_i(\omega) \not = \mathbb{E}[X] \}) = 0 $ und somit insbesondere $ \frac{1}{n} \sum_{j=1}^n X_j \stackrel{\mathbb{P}}{\to} \mathbb{E}[X_1] $.
 \end{Bemerkung}
+\begin{Satz}(Chebyshev Ungleichung)\\
+	\label{ChebCheb}
+	Sei $ X  $ eine Zufallsvariable mit $ \mathbb{E}[X^2] < \infty $, dann gilt für jedes $ \epsilon > 0 $:
+	\[
+	\mathbb{P}\left( \abs{X-\mathbb{E}[X]} \geq \epsilon \right) \leq \frac{\mathbb{V}[X]}{\epsilon^2}
+	\]
+\end{Satz}
 \begin{Satz}(Zentraler Grenzwertsatz)\\
+	\label{ZGWS}
 	Sei $ (X_n)_{n \in \N} $ eine u.i.v.-Folge und es gelte $ \mathbb{E}[X_1^2] < \infty $.
 	Mit $ \mathbb{V}[X_1] $ bezeichnen wir die Varianz der Zufallsvariable $ X_1 $:
 	\[
@@ -124,13 +134,15 @@ Sei ab nun $ (\Omega,\mathcal{A},\mathbb{P}) $ stets ein Wahrscheinlichkeitsraum
 	\]
 	Dann gilt für eine standardnormalverteilte Zufallsvariable N:
 	\[
-		\hat{S}_n \coloneqq\frac{\sum_{j=1}^{n}X_j-n\mathbb{E}[X_1]}{\sqrt{nV[X_1]}} \stackrel{\mathcal{D}}{\to} N
+		\hat{S}_n \coloneqq\frac{\sum_{j=1}^{n}X_j-n\mathbb{E}[X_1]}{\sqrt{n\mathbb{V}[X_1]}} \stackrel{\mathcal{D}}{\to} N
 	\]
 	Dabei bezeichnet $ \stackrel{\mathcal{D}}{\to} $ die Konvergenz in Verteilung und ist genau dann erfüllt, wenn 
 	\[ \lim\limits_{n \to \infty} \mathbb{P}^{\hat{S}_n}((-\infty,x]) = \mathbb{P}^N((-\infty,x])
 	\]
 	für alle Stetigkeitsstellen der Verteilungsfunktion $ \mathbb{P}^N((-\infty,\cdot]) $ von N erfüllt ist.
 \end{Satz}
+
+
 \begin{Definition}(Zufallsfelder) 
 	\label{randomFields}
 	\begin{enumerate}[label=(\alph*)]

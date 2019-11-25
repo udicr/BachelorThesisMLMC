@@ -1,4 +1,5 @@
 % !TeX root = bachelorarbeit.tex
+\subsection{Zusammenhang zwischen multivariater Normalverteilung und Normalverteilung}
 \begin{Satz}
 	Sei $ (\Omega,\mathcal{A},\mathbb{P}) $ ein Wahrscheinlichkeitsraum und $ X = (X_1,\dots,X_n) $ ein Zufallsvektor mit (nicht entarteter) multivariater Normalverteilung mit Parametern $ \mu = (\mu_1,\dots,\mu_n) \in \R^n $ und $ C = (\sigma_{ij})_{1 \leq i,j \leq n} \in \R^{n \times n} $.\\
 	Dann ist $ \mathbb{E}[X] = \mu $ und für alle $ i,j \in {1,\dots,n}  $ gelten:
@@ -42,11 +43,6 @@
 	\begin{align*}
 		\mathbb{E}[X] = \mathbb{E}[AY + \mu] = (\mathbb{E}[\sum_{l=1}^{n}K_l+\mu_j]) =(\mathbb{E}[\sum_{l=1}^{n}a_{jl}Y_l+\mu_j])= A \mathbb{E}[Y] + \mu = \mu \\
 		\text{Cov}(X) = \text{Cov}(AY + \mu) =  \text{Cov}(AY) = A \text{Cov}(Y) A^{\top} = AA^{\top} = C
-	\end{align*}
-	
-	
-	
-	
-	
+	\end{align*}	
 	
 \end{proof}
