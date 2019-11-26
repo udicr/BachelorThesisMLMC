@@ -1,9 +1,28 @@
 % !TeX root = bachelorarbeit.tex
 Nachdem wir im letzten Abschnitt die Monte Carlo Methode betrachtet haben, wollen wir uns nun einer Weiterentwicklung der Monte Carlo Methode, der sogenannten Multi Level Monte Carlo Methode zuwenden. Grundsätzlich liegt dieselbe Situation vor wie bei der Monte Carlo Methode:
-Wir wollen wieder eine Größe bestimmen, welche sich nach geeigneter Modellierung in der Form eines Erwartungswertes $ \mathbb{E}[X] $ einer Zufallsvariablen $ X $ schreiben lässt. Besonders wenn diese Größe mit der Lösung von gewöhnlichen oder partiellen Differentialgleichungen, wie wir sie später betrachten wollen, hat man nun jedoch die Wahl, wie genau die numerische Lösung des zugrunde liegenden Problems, z.B. der Differentialgleichung, erfolgen soll. Beispielsweise können wir im Falle der numerischen Lösung von Differentialgleichung Zeitschrittweiten und/oder Gitterweiten der Ortsdiskretisierung festlegen. An dieser Stelle tritt stets ein typischer Zwiespalt auf:
+Wir wollen wieder eine Größe bestimmen, welche sich nach geeigneter Modellierung in der Form eines Erwartungswertes $ \mathbb{E}[X] $ einer Zufallsvariablen $ X $ schreiben lässt. Besonders wenn diese Größe mit der Lösung von gewöhnlichen oder partiellen Differentialgleichungen, wie wir sie später betrachten wollen, hat man nun jedoch die Wahl, wie genau die numerische Lösung des zugrunde liegenden Problems, z.B. der Differentialgleichung, erfolgen soll. Beispielsweise können wir im Falle der numerischen Lösung von Differentialgleichung Zeitschrittweiten und/oder Gitterweiten der Ortsdiskretisierung festlegen. Wir werden dann in diesem Zusammenhang auch von verschiedenen (Genauigkeits-)Leveln sprechen. An dieser Stelle tritt stets ein typischer Zwiespalt auf:
 \begin{itemize}
 	\item Zu Einen wollen wir möglichst genau rechnen. Dies legt die Wahl von besonders kleinen Zeitschrittweiten bzw. feinen Gittern zur Ortsdiskretisierung nahe.
 	\item Zum Anderen wollen wir die Anzahl der Rechenschritte bzw. die Rechenzeit möglichst gering halten. Dies spricht hingegen für große Zeitschritte bzw. grobe Gitter.
 \end{itemize}
 Zusätzlich zu der oft bereits alleine anspruchsvollen Aufgabe solche Probleme numerisch zu lösen, müssen wir also stets einen für unsere Bedürfnisse passenden Kompromiss aus möglichst genauer numerischer Approximation und geringem (oder zumindest machbarem) Rechenaufwand eingehen. Obwohl dies zunächst wie eine zusätzliche Hürde erscheint und Mehraufwand vermuten lässt, stellt sich heraus, dass solche eine Wahl der Genauigkeit im Kontext von Monte Carlo Methode sich durchaus als Nützlich erweisen kann. 
-Die Multi Level Monte Carlo Methode, wir werden im folgenden auch oft vom sogenannten Multi Level Monte Carlo Schätzer sprechen, ist der Prototyp einer Familie sogenannter Varianz-reduzierender Methoden, welche das Ziel haben die naive Monte Carlo Methode in Sachen Konvergenzrate und Effizienz zu schlagen.
+Die Multi Level Monte Carlo Methode, wir werden im folgenden auch oft vom sogenannten Multi Level Monte Carlo Schätzer sprechen, ist der Prototyp einer Familie sogenannter Varianz-reduzierender Methoden, welche das Ziel haben die naive Monte Carlo Methode in Sachen Konvergenzrate und Effizienz zu schlagen. Bevor wir erklären wie genau die Multilevel Monte Carlo Methode im Allgemeinen dabei vorgeht, möchten wir die Funktionsweise wieder anhand eines Beispiels erklären, welches in \cite{heinrich2001multilevel} ausführlich erklärt wird.
+
+\begin{Beispiel}(Wieder ein Integral über $[0,1]^d$)\\
+	Wie bereits im letzten Abschnitt setzen wir uns die Aufgabe das Integral einer Funktion $ f $ zunächst über $ [0,1]^d $ zu bestimmen. Damit wir aber überhaupt in oben erklärte Situation kommen und von verschiedenen 'Leveln' sprechen können, sei $ f $ nun zusätzlich abhängig von einem Parameter $ \lambda \in \Lambda \subseteq \R^{d_2}$, also $f : \Lambda \times [0,1]^d \to \R $. Um bei den folgenden Überlegungen die Notation so schlank wie möglich zu halten, betrachten wir an dieser Stelle nur einen konkreten Spezialfall: \\
+	Sei $ d = d_2 = 1 $ und $ f \in C([0,1],\R)^2 $, d.h. wir wollen das Integral 
+	\[
+		I(\lambda) = \int_{0}^{1} f(\lambda,u) \du
+	\]
+	für alle $ \lambda \in \Lambda = [0,1] $ bestimmen, wir suchen also nach einer Funktion in Abhängigkeit von $ \lambda $.\\
+	\textbf{Monte Carlo Schätzer für $I(\lambda)$}\\
+	Wollen wir an dieser Stelle einen normalen Monte Carlo Schätzer nutzen, stellt sich die Frage, wie wir mit dem zusätzlichen Parameter umsetzen sollen. Die wohl naheliegendste und einfachste Idee ist, zunächst für ein festes $ h \in \N $ ein Gitter $ \{ \lambda_i = \frac{i}{h}, i=0,\dots,h\} $ festzulegen und für jedes $ \lambda_i $ wie im letzten Abschnitt vorzugehen und für ein $ n \in \N $
+	\[
+		I(\lambda_i) \approx \frac{1}{n} \sum_{k=1}^{n} f(\lambda_i,x_k)
+	\]
+	zu schätzen. Dabei seien wieder $ (x_k)_{k=1,\dots,n} $ Realisierungen von unabhängigen auf $ [0,1] $ gleichverteilten Zufallsvariablen $ (X_k)_{k=1,\dots,n} $.
+	Anschließend lässt sich aus den so ermittelten Werten durch Interpolation einen Schätzer für die gesamte Funktion $ I(\lambda) $ bestimmen. Grundsätzlich sind verschiedene Interpolationsansätze möglich. 
+		
+
+	
+\end{Beispiel}
