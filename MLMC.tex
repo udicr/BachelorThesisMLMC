@@ -1,5 +1,6 @@
 % !TeX root = bachelorarbeit.tex
-Nachdem wir im letzten Abschnitt die Monte Carlo Methode betrachtet haben, wollen wir uns nun einer Weiterentwicklung der Monte Carlo Methode, der sogenannten Multi Level Monte Carlo Methode zuwenden. Grundsätzlich liegt dieselbe Situation vor wie bei der Monte Carlo Methode:
+
+Nachdem wir im dritten Abschnitt die Monte Carlo Methode betrachtet haben, wollen wir uns nun einer Weiterentwicklung der Monte Carlo Methode, der sogenannten Multi Level Monte Carlo Methode zuwenden. Grundsätzlich liegt dieselbe Situation vor wie bei der Monte Carlo Methode:
 Wir wollen wieder eine Größe bestimmen, welche sich nach geeigneter Modellierung in der Form eines Erwartungswertes $ \mathbb{E}[X] $ einer Zufallsvariablen $ X $ schreiben lässt. Besonders wenn diese Größe mit der Lösung von gewöhnlichen oder partiellen Differentialgleichungen, wie wir sie später betrachten wollen, hat man nun jedoch die Wahl, wie genau die numerische Lösung des zugrunde liegenden Problems, z.B. der Differentialgleichung, erfolgen soll. Beispielsweise können wir im Falle der numerischen Lösung von Differentialgleichung Zeitschrittweiten und/oder Gitterweiten der Ortsdiskretisierung festlegen. Wir werden dann in diesem Zusammenhang auch von verschiedenen (Genauigkeits-)Leveln sprechen. An dieser Stelle tritt stets ein typischer Zwiespalt auf:
 \begin{itemize}
 	\item Zu Einen wollen wir möglichst genau rechnen. Dies legt die Wahl von besonders kleinen Zeitschrittweiten bzw. feinen Gittern zur Ortsdiskretisierung nahe.
@@ -10,19 +11,69 @@ Die Multi Level Monte Carlo Methode, wir werden im folgenden auch oft vom sogena
 
 \begin{Beispiel}(Wieder ein Integral über $[0,1]^d$)\\
 	Wie bereits im letzten Abschnitt setzen wir uns die Aufgabe das Integral einer Funktion $ f $ zunächst über $ [0,1]^d $ zu bestimmen. Damit wir aber überhaupt in oben erklärte Situation kommen und von verschiedenen 'Leveln' sprechen können, sei $ f $ nun zusätzlich abhängig von einem Parameter $ \lambda \in \Lambda \subseteq \R^{d_2}$, also $f : \Lambda \times [0,1]^d \to \R $. Um bei den folgenden Überlegungen die Notation so schlank wie möglich zu halten, betrachten wir an dieser Stelle nur einen konkreten Spezialfall: \\
-	Sei $ d = d_2 = 1 $ und $ f \in C([0,1],\R)^2 $, d.h. wir wollen das Integral 
+	Sei $ d = d_2 = 1 $ und $ f \in C([0,1]^2,\R) $, d.h. wir wollen das Integral 
 	\[
 		I(\lambda) = \int_{0}^{1} f(\lambda,u) \du
 	\]
 	für alle $ \lambda \in \Lambda = [0,1] $ bestimmen, wir suchen also nach einer Funktion in Abhängigkeit von $ \lambda $.\\
+	
 	\textbf{Monte Carlo Schätzer für $I(\lambda)$}\\
 	Wollen wir an dieser Stelle einen normalen Monte Carlo Schätzer nutzen, stellt sich die Frage, wie wir mit dem zusätzlichen Parameter umsetzen sollen. Die wohl naheliegendste und einfachste Idee ist, zunächst für ein festes $ h \in \N $ ein Gitter $ \{ \lambda_i = \frac{i}{h}, i=0,\dots,h\} $ festzulegen und für jedes $ \lambda_i $ wie im letzten Abschnitt vorzugehen und für ein $ n \in \N $
 	\[
-		I(\lambda_i) \approx \frac{1}{n} \sum_{k=1}^{n} f(\lambda_i,x_k)
+		I(\lambda_i) \approx \hat{I}(\lambda_i) \coloneqq \frac{1}{n} \sum_{k=1}^{n} f(\lambda_i,x_k)
 	\]
 	zu schätzen. Dabei seien wieder $ (x_k)_{k=1,\dots,n} $ Realisierungen von unabhängigen auf $ [0,1] $ gleichverteilten Zufallsvariablen $ (X_k)_{k=1,\dots,n} $.
-	Anschließend lässt sich aus den so ermittelten Werten durch Interpolation einen Schätzer für die gesamte Funktion $ I(\lambda) $ bestimmen. Grundsätzlich sind verschiedene Interpolationsansätze möglich. 
-		
-
+	Anschließend lässt sich aus den so ermittelten Werten durch Interpolation einen Schätzer für die gesamte Funktion $ I(\lambda) $ bestimmen. Grundsätzlich sind verschiedene Interpolationsansätze möglich. Für dieses grundlegende Beispiel wählen wir stückweise lineare Interpolation. Wir erhalten so für alle $ \lambda \in \Lambda $:
+	\[
+		I(\lambda) \approx (PI)(\lambda) = \sum_{i=0}^{h} \hat{I}(\lambda_i) \varphi_i(\lambda)
+	\]
+	mit $ \varphi_i \coloneqq \mathds{1}_{ \{\abs{\lambda - \lambda_i} \leq h \} }(1-h\abs{\lambda-\lambda_i})$. Ein solcher Interpolationsansatz lässt sich insbesondere auf mehrdimensionale Gitter übertragen.
+%	Alternativ $ \alpha_i \coloneqq \frac{I(\lambda_{i+1}) - I(\lambda_i)}{\lambda_{i+1}-\lambda_i} $ und $ \varphi_i(\lambda) \coloneqq \mathds{1}_{\lambda \in [\lambda_i,\lambda_{i+1}]} \left(  \alpha_i\lambda + (I(\lambda_i) - \alpha_i \lambda_i) \right)$.
+	Somit erhalten wir für $ I(\lambda) $:
+	\[
+		I(\lambda) \approx \mathcal{I}_{MC}(\lambda) \coloneqq \sum_{i=0}^{h} \left( \frac{1}{n}\sum_{k=1}^{n} f(\lambda_i, x_k)\right) \varphi_i (\lambda) = \frac{1}{n} \sum_{k=1}^{n} (Pf(\cdot,x_k))(\lambda)
+	\]
+	Als Fehler dieser Methode können wir den sogenannten 'root mean square error' verbunden mit einer beliebigen Norm betrachten, wir wählen hierbei die $ L^2 $-Norm.
+	Wir erhalten so 
+	\[ 
+	\epsilon(\mathcal{I}_{MC})  = \left( \mathbb{E} [\lVert I -  \mathcal{I}_{MC} \rVert_{L^2([0,1])}^2] \right)^{\frac{1}{2}} = \left( \mathbb{E} \left[ \int\limits_{0}^{1} \abs{I(\lambda) - \mathcal{I}_{MC}(\lambda)}^2 \dlam \right] \right)^{\frac{1}{2}}
+	\]
+	Ist $ f $ zusätzlich stetig differenzierbar im Parameter $ \lambda $, kann gezeigt werden, dass 
+	\[
+		\epsilon(\mathcal{I}_{MC}) = \mathcal{O}(n^{-\frac{1}{2}}+h^{-1}) \ .
+	\].
+	Gleichzeitig ist die Anzahl der arithmetischen Operationen, Funktionsaufrufe und generierter Zufallszahlen in $ \mathcal{O}(hn) $.
+	Wir sehen also, dass wir an dieser Stelle genau diesen Zwiespalt antreffen, welchen wir zuvor abstrakt beschrieben haben. Aus diesem Grund wollen wir nun einen Multilevel Monte Carlo Schätzer für $ I(\lambda) $ einführen.\\	
 	
+	\textbf{Multilevel Monte Carlo Schätzer für $ I(\lambda) $}\\
+	Wir betrachten nun eine Familie von Gittern $ \{ \lambda_{li} = \frac{i}{h_l} : h_l = 2^l \ , i=0,1,\dots h_l \} $ für $ l = 0,\dots,m $.
+	Analog zu oben führen wir zugehörige Interpolationsoperatoren 
+	\[
+	 (P_l I)(\lambda) = \sum_{i=0}^{h_l} \hat{I}(\lambda_{li}) \varphi_{li} \quad (l = 0,\dots,m)
+	 \]
+	 ein. Wir können nun also insbesondere $ P \coloneqq P_m $ also Teleskopsumme darstellen. Es gilt nämlich:
+	 \[
+	 	P = P_m = P_0 + \sum_{l=1}^{m} (P_l-P_{l-1}) \ .
+	 \]
+	 Der Monte Carlo Schätzer von oben lässt sich (mit $ P_{-1} \coloneqq 0 $)dann durch 
+	 \[	
+	 \mathcal{I}_{MC} = \sum\limits_{l=0}^{m} \frac{1}{n} \sum\limits_{k=1}^{n} (P_l-P_{l-1})f(\cdot,x_k)	
+	 \]
+	  umschreiben. Um nun tatsächlich einen Nutzen aus der Aufteilung in verschiedene Level zu ziehen und einen guten Kompromiss zwischen Kosten und Fehler herzustellen erlauben wir nun zusätzlich die Anzahl der Zufallsauswertungen $ n $ von Level zu Level zu variieren. 
+	  Wir wählen also $ (n_l)_{l=0,\dots,m} \in \N^{m+1}  $.  Außerdem seien $ \{ X_{lj} , l=0,\dots,m \ , j= 0,\dots,n_l\} $ unabhängige auf $ [0,1] $ gleichverteilte Zufallsvariablen und $ (x_{lj})_{l=0,\dots,m \ ,j=0,\dots,n_l} $ zugehörige Realisierungen.
+	  Dann erhalten wir den Multilevel Monte Carlo Schätzer 
+	  \[
+	   I(\lambda) \approx \mathcal{I}_{MLMC}(\lambda) = \sum_{l=0}^{m} \frac{1}{n_l} \sum_{k=1}^{n_l} ((P_l - P_{l-1}) f(\cdot,x_{lj}))(\lambda) \ .
+	  \]
+	  Der bedeutendste Schritt ist an dieser Stelle eine passende Wahl der $ n_l $. Bei diesem Beispiel wollen wir uns darauf beschränken eine passende Wahl anzugeben und den Nutzen hervorzuheben, welchen wir durch diese Wahl erlangen. So zeigt sich, dass eine passende Wahl beispielsweise durch $ n_l = \Theta(2^{-\frac{3l}{2}n})$ für ein $ n \in \N $ groß genug gegeben ist. 
+	  Dann kann für den analog wie für den MC-Schätzer definierten (RMSE-)Fehler gezeigt werden, dass 
+	  \[
+	  	\epsilon(\mathcal{I}_{MLMC}) = \mathcal{O}(n^{-\frac{1}{2}} + n^{-\frac{1}{2}}) = \mathcal{O}(n^{-\frac{1}{2}})
+	  \].
+	  Zugleich ist die Anzahl der benötigten Rechenoperationen inklusive Funktions- und Zufallszahlauswertungen diesmal in $ \mathcal{O}(n) $.
+	  Verglichen mit der Standard (Ein-Level) Monte Carlo Methode können wir nun also eine Approximation für die gesamte Familie von Integralen $ I(\lambda) $ mit einem Fehler von $ \mathcal{O}(n^{-\frac{1}{2}}) $, aber den Kosten von $ \mathcal{O}(n) $  berechnen. Das ist durchaus erstaunlich, denn bereits die Kosten der Auswertung eines einzigen Integrals $ I(\lambda) $ für ein festes $ \lambda \in \Lambda $ liegen in $ \mathcal{O}(n) $. 
 \end{Beispiel}
+
+Wir sehen also, dass die Multilevel Monte Carlo Methode in Situationen, in denen wir bei der Wahl von Zeitschrittweiten und/oder feinen Gittern zur Ortsdiskretisierung zwischen Anzahl an Rechenoperationen und Genauigkeit einen Kompromiss finden müssen, einen Ein-Level Ansatz, wie die Standard Monte Carlo Methode, durchaus übertreffen kann.
+Der Kern dieser Methode bildet dabei eine geschickte Wahl der Anzahl $ n_l $ der Zufallssamples, welche wir auf je einem Level auswerten. Wie wir in unserem Fall diese Wahl durchführen soll im nächsten Abschnitt ausführlich erläutert werden, in welchem wir die nun zunächst beispielhaft an der Integration motivierte Multilevel Monte Carlo Methode auf das probabilistische Transportproblem, welches wir in Abschnitt \ref{TP} bereits näher beleuchtet haben, übertragen werden.
+Mehr zu Monte Carlo und Multilevel Monte Carlo Methoden für Parameterintegrale findet sich neben \cite{heinrich2001multilevel} auch in \cite{heinrich1992random}.
