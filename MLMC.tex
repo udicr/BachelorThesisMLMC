@@ -75,5 +75,8 @@ Die Multi Level Monte Carlo Methode, wir werden im folgenden auch oft vom sogena
 \end{Beispiel}
 
 Wir sehen also, dass die Multilevel Monte Carlo Methode in Situationen, in denen wir bei der Wahl von Zeitschrittweiten und/oder feinen Gittern zur Ortsdiskretisierung zwischen Anzahl an Rechenoperationen und Genauigkeit einen Kompromiss finden müssen, einen Ein-Level Ansatz, wie die Standard Monte Carlo Methode, durchaus übertreffen kann.
-Der Kern dieser Methode bildet dabei eine geschickte Wahl der Anzahl $ n_l $ der Zufallssamples, welche wir auf je einem Level auswerten. Wie wir in unserem Fall diese Wahl durchführen soll im nächsten Abschnitt ausführlich erläutert werden, in welchem wir die nun zunächst beispielhaft an der Integration motivierte Multilevel Monte Carlo Methode auf das probabilistische Transportproblem, welches wir in Abschnitt \ref{TP} bereits näher beleuchtet haben, übertragen werden.
+Der Kern dieser Methode bildet dabei eine geschickte Wahl der Anzahl $ n_l $ der Zufallssamples, welche wir auf je einem Level auswerten. Wie wir in unserem Fall diese Wahl durchführen soll an anderer Stelle in Abschnitt \ref{MLMCTP} ausführlich erläutert werden, in welchem wir die bisher zunächst beispielhaft anhand der Integration eingeführte Multilevel Monte Carlo Methode auf das probabilistische Transportproblem, welches wir in Abschnitt \ref{TP} bereits näher beleuchtet haben, übertragen werden.
 Mehr zu Monte Carlo und Multilevel Monte Carlo Methoden für Parameterintegrale findet sich neben \cite{heinrich2001multilevel} auch in \cite{heinrich1992random}.
+
+\subsection{Konvergenz und Genauigkeit}
+Da wir in Abschnitt \ref{MLMCTP} noch einmal ausführlich auf die Eigenschaften des Verfahrens für unsere konkrete Anwendung eingehen werden, soll dieser Unterabschnitt eher noch einmal etwas allgemeiner auf die stochastischen Hintergünde eingehen.
