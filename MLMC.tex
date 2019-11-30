@@ -80,3 +80,28 @@ Mehr zu Monte Carlo und Multilevel Monte Carlo Methoden für Parameterintegrale 
 
 \subsection{Konvergenz und Genauigkeit}
 Da wir in Abschnitt \ref{MLMCTP} noch einmal ausführlich auf die Eigenschaften des Verfahrens für unsere konkrete Anwendung eingehen werden, soll dieser Unterabschnitt eher noch einmal etwas allgemeiner auf die stochastischen Hintergünde eingehen.
+Betrachten wir also wieder etwas allgemeiner eine Folge unabhängig Zufallsvariablen $ Y_{1},Y_{2}\dots$ mit zugehörigen Realisierungen $ y_{1}, y_{2},\dots $. Diese sollen dabei alle die identische Verteilung wie eine weitere Zufallsvariable $ Y $ mit zugehöriger Dichte $ g_Y $ besitzen.
+Wir wollen diesmal den Erwartungswert einer Zufallsvariablen $ X $ berechnen, wobei wir $ X $ mithilfe einer messbaren Funktion $ f $, die alle (unten aufgeführten) Voraussetzungen des Transformationssatzes erfülle, folgendermaßen ausgedrückt werden kann:
+\[
+	X = f(Y)
+\]
+Wir fordern nun wieder, dass der Erwartungswert $ \mathbb{E}[|X|] < \infty $ existiert, und diese Forderung ist für die Konvergenz der Methode ebenso wichtig wie scharf. Wollen wir uns überlegen, was das maßtheoretisch bedeutet, erhalten wir:
+Ist für  $  \{ g_Y > 0 \} \subseteq O $ die Menge $ O $ offen und $ f:\R \to \R $ eine Borel-messbare Abbildung, deren Restriktion auf $ O $ stetig differenzierbar ist, eine nirgends verschwindende Funktionaldeterminante besitze und $ O $ bijektiv auf eine Menge $ V \subset \R $ abbilde.
+Dann muss die Dichte $ g_X $ der Zufallsvariable $ X $ auf $ V $ integrierbar sein. Dabei gilt für die Dichte von $ X $ nach dem Transformationssatz:
+\[
+ 	g_X(t) \coloneqq 
+ 	\begin{cases}
+ 	\frac{g_y(f^-1(t))}{\abs{\det f'(f^-1(t))}} \ \quad ,\text{falls }t\in V\\
+ 	0 \qquad \qquad \qquad, \text{sonst} 	
+ 	\end{cases}
+\]
+Wir nehmen nun außerdem an, dass wir über eine Hierarchie 
+$ (f_l)_{l \in \{ 0,\dots,L \} } $ verfügen. Dabei sei $ f = f_L $ und wir bezeichnen $ l $ als Level-Parameter.
+Aufgrund der Linearität des Erwartungswertes kann der Erwartungswert von $ X $ dann folgendermaßen ausgedrückt werden:
+\[
+	\mathbb{E}[X] = \mathbb{E}[f(Y)] = \mathbb{E}[f_0[Y]] + \sum_{l=1}^{L} \mathbb{E}[f_l(Y) - f_{l-1}(Y)]
+\]
+Wir können nun jeden Summanden einzeln durch einen Monte Carlo Ansatz schätzen. Dazu seien $ (Y_{l,i})_{l\in\{0,\dots,L\},i \in \{1,\dots,n_l \} }  $ unabhängige Zufallsvariablen aus der Folge $ (Y_i)_{i \in \N} $. Dann gilt:
+\[
+ \mathbb{E}[X] \approx \frac{1}{n_0} \sum_{i=1}^{n_0}f_0(Y_{0,i})  todo uncert 185
+\]
