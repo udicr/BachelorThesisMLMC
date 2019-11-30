@@ -5,11 +5,11 @@
 	\cite{braess2013finite} und \cite{hanke2002grundlagen} vor allem die Mitschriebe zu den oben genannten Vorlesungen, sowie die Berichte zum Rechnerpraktikum mit M++ \cite{siteM++} zu nennen.
 \end{Bemerkung}
 Wie bereits in obigem Abschnitt erwähnt, sollen sich die nächsten beiden Abschnitte damit beschäftigen, wie wir die oben beschriebenen Probleme für ein festes $\omega \in \Omega$ numerisch lösen können. 
-Ein Überblick über alle möglichen Verfahren, welche zur Lösung der beiden Probleme geeignet sind, würde den Rahmen dieser Thesis sprengen. Wir wollen deshalb im Folgenden auf eine Möglichkeit eingehen diese Berechnung numerisch durchzuführen. Insbesondere werden dabei jene Verfahren beschrieben, welche wir auch später innerhalb der MLMC Methode in M++ nutzen wollen.
+Wir wollen dabei im Folgenden auf eine Möglichkeit eingehen diese Berechnung numerisch durchzuführen. Insbesondere werden dabei jene Verfahren beschrieben, welche wir auch später innerhalb der MLMC Methode in M++ nutzen wollen.
 Da wir in diesen beiden Abschnitte $\omega \in \Omega$ ohnehin fest halten, genügt es zudem das deterministische Problem zu betrachten. \newline
 Sowohl das hybride Finite Elemente Verfahren, welches wir zur Lösung des Potentialströmungsproblem nutzen wollen, als auch das Discontinuous Galerkin Vefahren, mit dessen Hilfe wir das Transportproblem lösen wollen, bauen auf der Finite Elemente Theorie auf. 
 Diese ist im Wesentlichen in der zweiten Hälfte des 20. Jahrhunderts entstanden, ist aber bis heute in praktischer wie auch in theoretischer Sicht aktuell.
-Die Grundidee ist hierbei die vorliegenden Rand-Anfangswertaufgaben in einem passenden endlichen Unterraum zu lösen. Dabei löst man sich auf analytischer Seite zunächst oft von einzelnen Regularitäts- und Differenzierbarkeitsbedingungen und führt einen sogenannten schwachen Lösungsbegriff ein (vergleiche Abschnitt 2.1). Statt nun aber solch eine schwache Lösung in einem unendlich dimensionalen Funktionenraum, wie beispielsweise in den Sobolevräumen $H^1(\mathbb{D})$ oder $H_0^1(\mathbb{D})$ zu bestimmen, zieht man sich auf endliche Unterräume zurück. \newline
+Die Grundidee ist hierbei die vorliegenden Rand-Anfangswertaufgaben in einem passenden endlichen Unterraum zu lösen. Dabei löst man sich auf analytischer Seite zunächst oft von einzelnen Regularitäts- und Differenzierbarkeitsbedingungen und führt einen sogenannten schwachen Lösungsbegriff ein (vergleiche Abschnitt 2.1). Statt nun aber solch eine schwache Lösung in einem unendlich dimensionalen Funktionenraum, wie beispielsweise in den Sobolevräumen $H^1(\mathbb{D})$ oder $H_0^1(\mathbb{D})$ zu bestimmen, zieht man sich auf endlich dimensionale Unterräume zurück. \newline
 Die folgende Definition entstammt \cite{brenner2007mathematical} und geht ursprünglich (1978) auf Ciarlet zurück.
 \begin{Definition}\
 	Sei
@@ -41,8 +41,8 @@ Sei nun $\mathbb{D} \subseteq \R ^2$ zudem ein polygonales Gebiet, um eine einfa
 			\end{enumerate}
 			
 		\end{itemize}
-		\item Wir schreiben oft $\mathcal{T}_h$ anstatt $\mathcal{T}$, wenn jedes Element einen Durchmesser von höchstens $h$ besitzt 
-		\item Eine Familie von Zerlegungen $ \{ \mathcal{T}_h \} $ heißt \underline{uniform}, wenn ein $ \delta > 0  $ existiert, sodass jedes $ K \in \mathcal{T}_h $ einen Kreis mit Radius $ r_K $ enthält mit $ r_K \geq \frac{h}{\delta} $
+		\item Wir schreiben oft $\mathcal{T}_h$ anstatt $\mathcal{T}$, wenn jedes Element einen Durchmesser von höchstens $h$ besitzt .
+		\item Eine Familie von Zerlegungen $ \{ \mathcal{T}_h \} $ heißt \underline{uniform}, wenn ein $ \delta > 0  $ existiert, sodass jedes $ K \in \mathcal{T}_h $ einen Kreis mit Radius $ r_K $ enthält mit $ r_K \geq \frac{h}{\delta} $ .
 	\end{enumerate}
 \end{Definition}
 
@@ -52,8 +52,8 @@ Sei nun $\mathbb{D} \subseteq \R ^2$ zudem ein polygonales Gebiet, um eine einfa
 	\includegraphics[width=0.8\textwidth]{triangulierung.png} \\
 	Abbildung aus \cite{braess2013finite} Seite 58
 \end{figure}
-Wir werden außerdem im Laufe der Thesis dazu übergehen, von 'Leveln' zu sprechen. Dabei betrachten wir eine uniforme Familie zulässiger Zerlegungen $ \{\mathcal{T}_h\}_{h \in \mathcal{H}} $ und fordern dabei, dass die Indexmenge $ \mathcal{H} $ eine ganz bestimmte Form hat. Genauer soll \[ \mathcal{H} = \{ h_0 , h_1 \coloneqq \frac{h_0}{2},h_2 \coloneqq \frac{h_1}{2} = \frac{h_0}{4}, \dots \}  \text{ für ein }  h_0 > 0  \] gelten. Insbesondere gelte also $ \overline{\mathcal{H}} \ni 0 $. Sprechen wir dann von Level $ i $ meinen wir damit die Zerlegung $\mathcal{T}_{h_i} \in \{\mathcal{T}_h\}$.
-Zudem führen wir folgende Bezeichnungen ein:
+Wir werden außerdem im Laufe der Thesis dazu übergehen, ähnlich wie bereits im Abschnitt über die Multilevel Monte Carlo Methode auch bei Zerlegungen von 'Leveln' zu sprechen. Dabei betrachten wir stets eine uniforme Familie zulässiger Zerlegungen $ \{\mathcal{T}_h\}_{h \in \mathcal{H}} $ und fordern dabei, dass die Indexmenge $ \mathcal{H} $ eine ganz bestimmte Form hat. Genauer soll \[ \mathcal{H} = \{ h_0 , h_1 \coloneqq \frac{h_0}{2},h_2 \coloneqq \frac{h_1}{2} = \frac{h_0}{4}, \dots \}  \text{ für ein }  h_0 > 0  \] gelten. Insbesondere gelte also $ \overline{\mathcal{H}} \ni 0 $. Sprechen wir dann von Level $ i $ meinen wir damit die Zerlegung $\mathcal{T}_{h_i} \in \{\mathcal{T}_h\}$.
+Zudem führen wir für alle Zerlegungen folgende Bezeichnungen ein:
 \begin{itemize}
 	\item ein $ K \in \mathcal{T} $ nennen wir Zelle
 %	\item $ \mathbb{D}_h \coloneqq \bigcup_{K \in \mathcal{T}} K $ sei die Menge der Zellen
@@ -135,7 +135,7 @@ Als Nächstes soll es nun Ziel sein, eine Lösung der im letzten Abschnitt erkl�
 	\end{enumerate}
 \end{Definition} 
 
-Anschließend wählen wir als Testräume bzw. Finite Elemente Räume:
+Anschließend können wir mithilfe dieser Basisfunktionen die Testräume bzw. Finite Elemente Räume definieren:
 \begin{Definition}(Ansatzräume)
 	\begin{enumerate}[label=(\alph*)]
 		\item $ W_h \coloneqq \spann \{ \psi_1,\dots,\psi_{N}\}$ (Seitenansatzraum/ Raum für $ \psi $ und $ q_h $)

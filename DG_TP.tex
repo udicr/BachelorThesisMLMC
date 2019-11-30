@@ -90,10 +90,11 @@ Wie bereits weiter oben beschrieben werden wir im Folgenden zunächst den Raum d
 		 \rho &\mapsto \rho q
 	\end{align*}
 \end{Definition}
+$\newline$
 Für eine klassische Lösung $ \rho  $ von (dTP) gilt dann insbesondere $ \partial_t \rho = - \dive (\Upsilon(\rho)) $ auf $ \mathbb{D} \times (0,T] $.	\\
-Halten wir also zunächst $ t \in \mathbb{T} $ und leiten so zunächst die Semidiskretisierung her.\\
+Halten wir also zunächst $ t \in \mathbb{T} $ und leiten so die Semidiskretisierung her.\\
 Sei nun $ \mathcal{T} $ eine zulässige Triangulierung von $ \mathbb{D} $ aus Dreiecken wie in \ref{num_pot} und  $ (\cdot , \cdot)_A $ das $ L^2(A)-$Skalarprodukt.
-Wir wählen als Lösungs-/Testraum $Q_h = \prod_{K \in \mathcal{T}} \mathbb{P}_p(K,\R) $ für ein festes $p \geq 1 $. Anders als zuvor fordern wir für unsere Lösungs- und Testfunktionen diesmal aber explizit nicht die Stetigkeit auf $\mathbb{D}$. Da so $Q_h$ nicht im betrachteten analytischen Lösungs- und Testraum liegt, etwa  $Q_h \nsubseteq H^1(\mathbb{D})$, nennt man $Q_h$ auch einen nicht-konformen Ansatzraum.
+Wir wählen als Lösungs-/Testraum $Q_h = \prod_{K \in \mathcal{T}} \mathbb{P}_p(K,\R) $ für ein festes $p \geq 1 $. Anders als zuvor fordern wir für unsere Lösungs- und Testfunktionen diesmal aber \underline{nicht} die Stetigkeit auf $\mathbb{D}$. Da so $Q_h$ nicht im betrachteten analytischen Lösungs- und Testraum liegt, etwa  $Q_h \nsubseteq H^1(\mathbb{D})$, nennt man $Q_h$ auch einen nicht-konformen Ansatzraum.
 Außerdem lässt sich im Allgemeinen auch die später bestimmt Lösung $ \rho_h \in Q_h $ (definiert auf $\mathbb{D}_h = \bigcup_{K \in \mathcal{T}} K$ ) nicht stetig auf $ \mathbb{D} $ fortsetzen, denn für eine beliebige innere Kante $ F $ kann der Grenzwert von $ \rho_h $ auf den anliegenden Zellen $ K,K' $ ($ \overline{F} = \partial K \cap \partial K' $) unterschiedlich sein. \\
 Trotzdem müssen wir auch auf den inneren Kanten $ \mathcal{F}^0 \subset \mathcal{F} $ festlegen, welcher Grenzwert in einem solchen Falle gewählt wird. \\
 dazu führen wir als Pendant zur analytischen Flussfunktion (vgl. \ref{Flussfunktion})
@@ -132,7 +133,7 @@ Durch Umstellen und das Zusammenfassen der obigen Resultate erhalten wir so:
 Dabei wurde zusätzlich ausgenutzt, dass es sich bei den Kanten um Nullmengen handelt und wir so das Integral über $ \mathbb{D} $ als Summe der Integrale über alle Zellen auffassen können. Nutzen wir nun noch aus, dass für den Fluss  $\rho(x,t) = \rho_{\text{in}}(x,t)$ für $ x \in \Gamma_{\text{in}} $ gilt, kommen wir so auf 
 \begin{align}
 	\label{fastfertigsemi}
-	\sum_{K \in \mathcal{T}} \int_K \partial_t \rho  \phi \dx = \sum_{K \in \mathcal{T}} \int_K \Upsilon(\rho ) \cdot \nabla \phi \dx - 	\sum_{K\in \mathcal{T}} \big( \sum_{\substack{F \in \mathcal{F}_K \\ F \not\subseteq \Gamma_{\text{in}}}} \int_F \Upsilon^{\star}(\rho) \cdot n^K \phi \da - \sum_{\substack{F \in \mathcal{F}_K \\ F \subseteq \Gamma_{\text{in}}}} \rho_{\text{in}} q \cdot n^K \phi \da \big)
+	\sum_{K \in \mathcal{T}} \int_K \partial_t \rho  \phi \dx = \sum_{K \in \mathcal{T}} \int_K \Upsilon(\rho ) \cdot \nabla \phi \dx - 	\sum_{K\in \mathcal{T}} \left( \sum_{\substack{F \in \mathcal{F}_K \\ F \not\subseteq \Gamma_{\text{in}}}} \int_F \Upsilon^{\star}(\rho) \cdot n^K \phi \da - \sum_{\substack{F \in \mathcal{F}_K \\ F \subseteq \Gamma_{\text{in}}}} \rho_{\text{in}} q \cdot n^K \phi \da \right)
 \end{align}
 Sei nun $ \mathcal{T} = \{ K_1,\dots , K_N\} , N \coloneqq |\mathcal{T}| $. Die Semidiskretisierung ist motiviert durch (\ref{fastfertigsemi}) und lautet: Bestimme  $\rho_h \in Q_h$, sodass für alle $ \phi_h \in Q_h $ gilt:
 \begin{align}
@@ -143,46 +144,56 @@ Sei nun $ \mathcal{T} = \{ K_1,\dots , K_N\} , N \coloneqq |\mathcal{T}| $. Die 
 
 Durch Einsetzen der Zellenbasis $ \{\mu_i\}_{i=1}^N $ mit $ \mu_i = \mathds{1}_{K_i} $  und mit $ \supp(\mu_i) \subseteq \overline{K_i} (\ i \in \{1, \dots , N\})$ ergibt sich für alle $\ i \in \{1, \dots , N\}$ 
 \begin{align*}
-\left(\partial_t \rho_h, \mu_i  \right)_{K_i}  &= \bigg( \underbrace{(\Psi(\rho_h), \nabla\mu_i)_{K_i}}_{=0 \text{, da } \nabla \mu_i = 0} - \sum_{\substack{F \in \mathcal{F}_{K_i} \\ F \not\subseteq \Gamma_{\text{in}}}} \left(\Psi^*(\rho_h) \cdot n^{K_i}, \mu_i \right)_{F} - \left(\rho_{\text{in}} q \cdot n^{K_i}, \mu_i \right)_{\partial K_i \cap \Gamma_{\text{in}}} \bigg) \\
+\left(\partial_t \rho_h, \mu_i  \right)_{K_i}  &= \bigg( \underbrace{(\Upsilon(\rho_h), \nabla\mu_i)_{K_i}}_{=0 \text{, da } \nabla \mu_i = 0} - \sum_{\substack{F \in \mathcal{F}_{K_i} \\ F \not\subseteq \Gamma_{\text{in}}}} \left(\Upsilon^*(\rho_h) \cdot n^{K_i}, \mu_i \right)_{F} - \left(\rho_{\text{in}} q \cdot n^{K_i}, \mu_i \right)_{\partial K_i \cap \Gamma_{\text{in}}} \bigg) \\
 \end{align*}
-Teilen wir nun noch die Kanten gemäß der Definition des numerischen Flusses auf erhalten wir so: 
-\begin{align*}
-\left(\partial_t \rho_h, \mu_i  \right)_{K_i} = \bigg( - \sum_{\substack{F \in \mathcal{F}_{K_i}, F \not\subseteq \Gamma_{\text{in}}\\ F \text{ mit }q \cdot n^K_{|F} > 0} } \left(\underbrace{\Psi^*(\rho_h)}_{= \rho_{h|K}\, q} \cdot n^{K_i}, \mu_i \right)_{F} - \sum_{\substack{F \in \mathcal{F}_{K_i}, F \not\subseteq \Gamma_{\text{in}}\\ F \text{ mit }q \cdot n^K_{|F} < 0} } \left(\underbrace{\Psi^*(\rho_h)}_{= \rho_{h|K'} \, q} \cdot n^{K_i}, \mu_i \right)_{F}\\
- - \left(\rho_{\text{in}} q \cdot n^{K_i}, \mu_i \right)_{\partial K_i \cap \Gamma_{\text{in}}} \bigg)
-\end{align*} 
+Wir erhalten so folgende Darstellung:
+%\begin{align*}
+%\left(\partial_t \rho_h, \mu_i  \right)_{K_i} = \bigg( - \sum_{\substack{F \in \mathcal{F}_{K_i}, F \not\subseteq \Gamma_{\text{in}}\\ F \text{ mit }q \cdot n^K_{|F} > 0} } \left(\underbrace{\Upsilon^*(\rho_h)}_{= \rho_{h|K}\, q} \cdot n^{K_i}, \mu_i \right)_{F} - \sum_{\substack{F \in \mathcal{F}_{K_i}, F \not\subseteq \Gamma_{\text{in}}\\ F \text{ mit }q \cdot n^K_{|F} < 0} } \left(\underbrace{\Upsilon^*(\rho_h)}_{= \rho_{h|K'} \, q} \cdot n^{K_i}, \mu_i \right)_{F}\\
+% - \left(\rho_{\text{in}} q \cdot n^{K_i}, \mu_i \right)_{\partial K_i \cap \Gamma_{\text{in}}} \bigg)
+%\end{align*} 
 
-Zusammen mit der Basisdarstellung von $ \rho_h $ in $\{\mu_i  \}_{i=1}^N$, $ \rho_h = \sum_{i=1}^{N} \underline{\rho}[i] \; \mu_i$, und 
+\begin{align}
+\label{DarstellungvorLGS}
+\underbrace{\left(\partial_t \rho_h, \mu_i  \right)_{K_i}}_{(\ref{DarstellungvorLGS}.1)} = 
+\underbrace{-  \sum_{F \in \mathcal{F}_{K_i} , F \not \subseteq \Gamma_{\text{in}}}\left(\Upsilon^{\star}(\rho_h)\cdot n^{K_i},\mu_i\big)_F \right)}_{(\ref{DarstellungvorLGS}.2)} \underbrace{- \left(\rho_{\text{in}}q\cdot n^{K_i},\mu_i \right)_{\partial K_i \cap \Gamma_{\text{in}}}}_{(\ref{DarstellungvorLGS}.3)}
+\end{align}
+
+Zusammen mit der Basisdarstellung von $ \rho_h $ in $\{\mu_i  \}_{i=1}^N$, $ \rho_h = \sum_{i=1}^{N} 
+\underline{\rho}[i] \; \mu_i$, und \\
+$ \Upsilon^{\star}(\rho_h) = 
+\begin{cases} 
+\rho_h|_K \ ,\text{falls } q\cdot n^K|_F \geq 0\\
+\rho_{h}|_{K'} \ , \text{falls } q\cdot n^K|_F < 0
+\end{cases} $ können wir \ref{DarstellungvorLGS} in eine gewöhnliche Differentialgleichung erster Ordnung umformulieren. 
+Dazu klammern wir jeweils $ \underline{\rho} $ aus und definieren 
 \begin{align*}
-&\text{Massenmatrix } \underline{M}\in \R^{N \times N} \\  &\qquad \qquad \underline{M}[K,K'] \coloneqq \begin{dcases}
+&\text{mithilfe von (\ref{DarstellungvorLGS}.1) die Massenmatrix } \underline{M}\in \R^{N \times N} \\  &\qquad \qquad \underline{M}[K,K'] \coloneqq \begin{dcases}
 \int_K \abs{\mu_K}^2 \dx & \text{, für } K = K' \\
 0 &\text{, sonst}
 \end{dcases} \\
-&\text{Flussmatrix } \underline{A}\in \R^{N \times N} \\ &\qquad \qquad \underline{A}[K,K'] \coloneqq \begin{dcases}
+&\text{mit (\ref{DarstellungvorLGS}.2) die Flussmatrix } \underline{A}\in \R^{N \times N} \\ &\qquad \qquad \underline{A}[K,K'] \coloneqq \begin{dcases}
 - \sum_{\substack{F\in \mathcal{F}_K \\ F \text{ mit } q\cdot n^K_{|F} > 0}} \int_F \mu_K^2 q \cdot n^K \da& \text{, für } K = K' \\
 - \int_F \mu_K \mu_{K'} q \cdot n^K \da &\text{, für } q \cdot n^K< 0 \text{ und } \overline{F} = \partial K \cap \partial K'\\
 0 &\text{, sonst}
 \end{dcases} \\
-&\text{Lastvektor } \underline{b}\in \R^{N} \\ &\qquad \qquad\underline{b}[K] \coloneqq \int_{\partial K \cap \Gamma_{\text{in}}} \rho_{\text{in}} q \cdot n \da
+&\text{und mit (\ref{DarstellungvorLGS}.3) den Lastvektor } \underline{b}\in \R^{N} \\ &\qquad \qquad\underline{b}[K] \coloneqq \int_{\partial K \cap \Gamma_{\text{in}}} \rho_{\text{in}} q \cdot n \da
 \end{align*}
-
-
-ergibt sich die dGL
+So ergibt sich die Differentialgleichung
 \begin{align*}
 \begin{cases}
 \underline{M} \partial_t \underline{\rho}(t) = \underline{A} \underline{\rho}(t) + \underline{b}(t) \\
 \underline{\rho}(0) = \underline{\rho_0}
 \end{cases}\\
 \end{align*}
-Da es sich hierbei nun um eine gewöhnliche differentialgleichung handelt können wir die Lösung 
+Da dies nun eine gewöhnliche Differentialgleichung ist, können wir die Lösung 
 \begin{align}
  \label{semidisklsg}
  \underline{\rho}(t) = \exp(t \underline{M}^{-1} \underline{A}) \left( \underline{\rho_0} + \int_{0}^{t} \exp(-s\underline{M}^{-1} \underline{A}) \underline{b}(s) \ds \right)
 \end{align}
-   explizit angeben.
+explizit angeben.
 Es handelt sich hierbei aber immer noch um eine semidiskrete Formulierung. 
-
-Wir wollen deshalb zuletzt noch auf die Herleitung der Zeitintegratoren eingehen. Diese nutzen wir um unter Verwendung der oben hergeleiteten Semidiskretisierung unsere numerische Lösung $ \underline{\rho} $ sowohl orts- al auch zeitdiskret zu berechnen. Der Ansatz leitet sich hierbei direkt aus dem  aus dem Resultat (\ref{semidisklsg}) ab und besteht aus der 
-Integration der differentialgleichung $\underline{M} \partial_t \underline{\rho} = \underline{A} \underline{\rho} + \underline{b}$ über die Zeit $t$ im Intervall $[t_i, t_{i+1}]$.
+Wir wollen deshalb zuletzt noch auf die Herleitung der Zeitintegratoren eingehen. Diese nutzen wir um unter Verwendung der oben hergeleiteten Semidiskretisierung die numerische Lösung $ \underline{\rho} $ sowohl orts- al auch zeitdiskret zu berechnen. Der Ansatz leitet sich hierbei direkt aus dem  aus dem Resultat (\ref{semidisklsg}) ab und besteht aus der 
+Integration der Differentialgleichung $\underline{M} \partial_t \underline{\rho} = \underline{A} \underline{\rho} + \underline{b}$ über die Zeit $t$ im Intervall $[t_i, t_{i+1}]$.
 Dabei ist $t_i = i \delta t$. Hiermit folgt:
 \begin{align*}
 \underline{M}\underline{\rho}(t_{i+1}) - \underline{M}\underline{\rho}(t_i) = \int_{t_i}^{t_{i+1}}
@@ -232,7 +243,7 @@ Runge-Kutta DG verfahren für der linearen Transportgleichung ähnliche Problems
 
 
 \subsection{Eigenschaften des Discontinuous Galerkin Verfahren}
-Nachdem wir nun das Discontinuous Galerkin Verfahren für die lineare Transportgleichung eingeführt und erklärt haben, sollen noch einige Eigenschaften des Verfahrens beleuchtet werden. Dabei wollen wir uns aber beschränken einige grundlegende Resultate zu nennen und so eher einen groben Überblick mit Referenzen zur Literatur zu geben. Mehr zur numerischen Analyse des Discontinuous Galerkin Verfahren findet sich zum einen in Standardwerken, wie \cite{ern2004theory}, eine schöne Zusammenstellung bietet aber auch \cite{Har08b}.
+Nachdem wir nun das Discontinuous Galerkin Verfahren für die lineare Transportgleichung eingeführt und erklärt haben, sollen noch einige Eigenschaften des Verfahrens beleuchtet werden. Dabei wollen wir uns aber darauf beschränken, einige grundlegende Resultate zu nennen und so eher einen groben Überblick mit Referenzen zur Literatur zu geben. Mehr zur numerischen Analyse des Discontinuous Galerkin Verfahren findet sich zum einen in Standardwerken, wie \cite{ern2004theory}, eine schöne Zusammenstellung bietet aber auch \cite{Har08b}.
 Ebenfalls findet sich in \cite{Har08b} eine grundlegende numerische Analyse des Discontinuous Galerkin Verfahrens auf die stationäre (stimmt das? fehlende Zeitabhängigkeit) lineare Transportgleichung.
 
 
