@@ -3,7 +3,7 @@
 \label{Referenzzelle&Hyb}
 \subsubsection{Referenzzelle}
 Bevor wie uns an dieser Stelle der Hybridisierung widmen können, wollen wir noch kurz auf einen wichtigen Aspekt der Implementierung finiter Elemente eingehen.
-An dieser Stelle hat es sich nämlich bereits oft als nützlich erwiesen eine sogenannte Referenzzelle einzuführen. Statt sich die Daten jeder Zelle statisch zu speichern und dann darauf zuzugreifen, gehen wir dabei stets von der Referenzzelle aus und können über je eine linear affine Abbildung in den tatsächlichen Zellen operieren.
+An dieser Stelle hat es sich nämlich bereits oft als nützlich erwiesen, eine sogenannte Referenzzelle einzuführen. Statt sich die Daten jeder Zelle statisch zu speichern und dann darauf zuzugreifen, gehen wir dabei stets von der Referenzzelle aus und können über je eine linear affine Abbildung in den tatsächlichen Zellen operieren.
 
 \begin{Definition}
 	
@@ -100,15 +100,12 @@ J_K \coloneqq \det(B_K) > 0.
 	\includegraphics[width=0.55\textwidth]{affinlinearetransf.png} \\
 	Abbildung aus \cite{knabner2013numerik} Seite 53
 \end{figure} 
-
 \begin{Lemma}
 	Es gilt: $\tilde{n}^K = \frac{1}{\abs{B_K^{-T} \hat{n}}} B_K^{-T} \hat{n} $ ist Normale zu $ \partial K $.
-\end{Lemma}
-
+\end{Lemma} $\newline$
 Die Seitenbasis auf $ K $ ist dann gegeben durch 
 \[ \psi_i^K = J_K^{-1}B_K \hat{\psi}_i \circ \varphi_K \ (i\in \{1,2,3\}) \]
-
-Die globale Seitenbasis $\{\psi_j\}_{j = 1}^{\abs{\mathcal{F}}}$ auf $ \mathbb{D}  $ erhalten wir dann mithilfe einer weiteren Abbildung $l$ die zwischen der Seitennummerierung in einer Zelle $ K $ und der globalen Seitennummerierung vermittelt. Es ist dabei
+Die globale Seitenbasis $\{\psi_j\}_{j = 1}^{\abs{\mathcal{F}}}$ auf $ \mathbb{D}  $ erhalten wir dann mithilfe einer weiteren Abbildung $l$, die zwischen der Seitennummerierung in einer Zelle $ K $ und der globalen Seitennummerierung vermittelt. Es ist dabei
 \[ l:\mathcal{K}\times \{1,2,3\} \to \{1, \dots , \abs{\mathcal{F}} \}, (K,i) \mapsto l(K,i). \]
 Wir setzen nun also $ \psi_j (j \in \{1,\dots , \abs{\mathcal{F}}\})$ durch
 \[ \psi_j(x) = 
@@ -171,7 +168,7 @@ Für ein festes $ K \in \mathcal{K} $ ergibt sich mit der Wahl einer Basis von $
 %	\end{cases}  
 %\end{align*}
 
-eine Formulierung als LGS mit Nebenbedingung, wobei $ \ubar{q}_K \coloneqq \ubar{R}_K \ubar{q}, \ \ubar{u}_K \coloneqq \ubar{R}_K \ubar{u} $
+eine Formulierung als LGS mit Nebenbedingung, wobei $ \ubar{q}_K \coloneqq \ubar{R}_K \ubar{q}, \ \ubar{u}_K \coloneqq \ubar{R}_K \ubar{u} $ .
 \begin{align*}
 \text{Bestimme } \ubar{q}, \ubar{u} \text{ und } \ubar{\lambda} \text{ mit}\\
 \begin{dcases}
