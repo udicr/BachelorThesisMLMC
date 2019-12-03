@@ -79,7 +79,7 @@ Der Kern dieser Methode bildet dabei eine geschickte Wahl der Anzahl $ n_l $ der
 Mehr zu Monte Carlo und Multilevel Monte Carlo Methoden für Parameterintegrale findet sich neben \cite{heinrich2001multilevel} auch in \cite{heinrich1992random}.
 
 \subsection{Konvergenz und Genauigkeit}
-Da wir in Abschnitt \ref{MLMCTP} noch einmal ausführlich auf die Eigenschaften des Verfahrens für unsere konkrete Anwendung eingehen werden, soll dieser Unterabschnitt eher noch einmal etwas allgemeiner auf die stochastischen Hintergünde eingehen.
+Da wir in Abschnitt \ref{MLMCTP} noch einmal ausführlich auf die Eigenschaften des Verfahrens für unsere konkrete Anwendung eingehen werden, soll dieser Unterabschnitt eher noch einmal etwas allgemeiner auf die stochastischen Hintergründe eingehen. Als Referenz ist hierbei das Kapitel 9.5 über Monte-Carlo Funktionen in \cite{sullivan2015introduction} zu nennen. 
 Betrachten wir also wieder etwas allgemeiner eine Folge unabhängig Zufallsvariablen $ Y_{1},Y_{2}\dots$ mit zugehörigen Realisierungen $ y_{1}, y_{2},\dots $. Diese sollen dabei alle die identische Verteilung wie eine weitere Zufallsvariable $ Y $ mit zugehöriger Dichte $ g_Y $ besitzen.
 Wir wollen diesmal den Erwartungswert einer Zufallsvariablen $ X $ berechnen, wobei wir $ X $ mithilfe einer messbaren Funktion $ f $, die alle (unten aufgeführten) Voraussetzungen des Transformationssatzes erfülle, folgendermaßen ausgedrückt werden kann:
 \[
@@ -103,5 +103,7 @@ Aufgrund der Linearität des Erwartungswertes kann der Erwartungswert von $ X $ 
 \]
 Wir können nun jeden Summanden einzeln durch einen Monte Carlo Ansatz schätzen. Dazu seien $ (Y_{l,i})_{l\in\{0,\dots,L\},i \in \{1,\dots,n_l \} }  $ unabhängige Zufallsvariablen aus der Folge $ (Y_i)_{i \in \N} $. Dann gilt:
 \[
- \mathbb{E}[X] \approx \frac{1}{n_0} \sum_{i=1}^{n_0}f_0(Y_{0,i})  todo uncert 185
+ \mathbb{E}[X] \approx \frac{1}{n_0} \sum_{i=1}^{n_0}f_0(Y_{0,i}) + \sum_{l=1}^{L} \frac{1}{n_l}\sum_{i=1}^{n_l} \left( f_l(Y_{l,i}) - f_{l-1}(Y_{l,i})\right)
 \]
+An dieser Stelle scheint obige Darstellung keinen wirklichen Vorteil gegenüber dem Standard Monte Carlo Schätzer zu besitzen, wir müssen aber nun beachten, dass zum Einen die Anzahl der benötigten Rechenoperation zur Berechnung von $ f_l(Y_{l,i}) $ unter Umständen für niedrige Werte $ l $ deutlich geringer ausfällt, als dies für größere $ l $ der Fall ist.
+Zum Anderen gilt für den Fehler der Monte Carlo Schätzung (vgl. Abschnitt \ref{MC}), dass der Fehler des $l$-ten Summanden wie $ \sqrt{\frac{\mathbb{V}[f_l(Y) - f_{l-1}(Y)]}{n_l}} $ konvergiert. Das heißt insbesondere, dass falls $ \mathbb{V}[f_l(Y)-f_{l-1}(Y)] $ klein ausfällt, auch kleinere $ n_l $ gewählt werden können, als bei der Standard Monte Carlo Methode, für welche bei einer großen Varianz $ \mathbb{V}[f(Y)] = \mathbb{V}[f_L(Y)] $ ein sehr großes $ n=n_L $ für eine gute Approximation benötigt werden. Diese Grundidee, die Varianz klein zu halten, damit die benötigte Anzahl der auszuwertenden Zufallssamples gering gehalten werden kann, ist namensgebend für die sogenannten 'Varianz reduzierenden Methoden' zur Verbesserung der Monte Carlo Methode. 
