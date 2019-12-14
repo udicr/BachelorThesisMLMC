@@ -1,3 +1,33 @@
 % !TeX root = bachelorarbeit.tex
-\subsection{Noch einmal Monte Carlo}
-\subsection{Multilevel Monte Carlo}
+Nachdem wir in Abschnitt 2 an einige Grundlagen erinnert, in Abschnitt 3 und 4 sowohl die Monte Carlo Methode, als auch die Multilevel Monte Carlo Methode eingeführt und in Abschnitt 5 das Transportproblem, sowie das Potentialströmungsproblem inklusive numerischer Verfahren, welche zur Lösung dergleichen genutzt werden können, erklärt haben, soll nun dieser Abschnitt dazu dienen, die bisherigen Ergebnisse zu bündeln und die Anwendung der Multilevel Monte Carlo Methode auf partielle Differentialgleichungen am Beispiel des Transportproblem nahe zu legen. Dabei nimmt dieser Abschnitt einen zentralen Platz in dieser Thesis ein, weswegen wir noch einmal darlegen wollen, was genau unser Ziel ist und wie wir die uns an dieser Stelle zu Verfügung stehenden Mittel einsetzen, um das Gewünschte zu erreichen.
+\begin{align*}
+&\text{Für ein stochastisches Flussvektorfeld } q: \Omega \times \overline{\mathbb{D}} \to \R^2 \text{, bestimme }\rho: \Omega \times \overline{\mathbb{D}} \times \mathbb{T} \to \R_{\geq 0} \text{ mit} \\
+&\text{(pTP)} 
+\begin{cases}
+\begin{array}{rlll}
+\partial_t \rho (\omega, x, t) + \dive(\rho(\omega,x,t)q(\omega,x)) &= 0 &\text{, für } (x,t) \in \mathbb{D} \times (0,T] \\
+\rho(\omega,x,t) &= \rho_{\text{in}}(x,t) &\text{, für } (x,t) \in \Gamma_{\text{in}} \times \mathbb{T} \\
+\rho(\omega,x,0)  &= \rho_0(x) &\text{, für } x \in  \mathbb{D}
+\end{array}
+\end{cases} \\
+&\text{ für die Anfangs- und Randwerte: } \\ 
+&\begin{array}{llr}
+g_N&: \Gamma_{\text{N}} \to \R \\
+u_D&: \Gamma_{\text{D}} \to \R \\
+\rho_{\text{in}}&: \Gamma_{\text{in}} \times \mathbb{T} \to \R_{\geq0} \\
+\rho_0&: \mathbb{D} \to \R_{\geq0} \\
+\end{array} \newline \\
+&\text{ wobei } \partial \mathbb{D} = \Gamma_{\text{D}} \dot{\cup} \Gamma_{\text{N}}  \text{ und }  \Gamma_{\text{in}} \coloneqq  \{ z \in \partial \mathbb{D}: q(z)\cdot n(z) \leq 0 \} \subset  \partial \mathbb{D}
+\end{align*}
+Genauer sei $ J(\rho) $ ein gegebenes Zielfunktional, dann ist es unser Ziel den Erwartungswert $ \mathbb{E}[J(\rho)] $ möglichst genau zu bestimmen. 
+Wir erhalten also als Modellproblem:
+
+\begin{align}
+\text{(MP)}
+\begin{cases}
+\label{Modellproblem}
+&\text{Für ein stochastisches Flussvektorfeld } q: \Omega \times \overline{\mathbb{D}} \to \R^2 \\
+&\text{und ein Zielfunktional } J \text{ , bestimme }  \mathbb{E}[J(\rho)]  \\
+&\text{mit } \rho \text{ als Lösung von (pTP) inklusive Anfangs- und Randwerten}
+\end{cases}
+\end{align} 
