@@ -51,7 +51,7 @@ Sei ab nun $ (\Omega,\mathcal{A},\mathbb{P}) $ stets ein Wahrscheinlichkeitsraum
 %	In diesem Fall heißt $ f $ Dichte von $ X $ (bzw. von $ \mathbb{P}^X $).\\
 	Ein Zufallsvektor $ X = (X_1,\dots,X_n) $ heißt stetig verteilt, wenn eine nichtnegative (Borel-)messbare Funktion $ f : \R^n \to \R $ mit $ \int_{\R^n} f(x) \dx =1  $ existiert, sodass 
 	\[
-		\mathbb{P}^X(B) = \mathbb{P}(X \in B) =  \int_{B} f(x) \dx, \quad B \in \mathcal{B}^n
+		\mathbb{P}^X(B) \coloneqq \mathbb{P}(X \in B) =  \int_{B} f(x) \dx, \quad B \in \mathcal{B}^n
 	\]
 	In diesem Fall heißt $ f $ Dichte von $ X $ (bzw. von $ \mathbb{P}^X $).\\
 	Ist $ n=1 $ spricht man einfach von einer stetig verteilten Zufallsvariable mit Dichte $ f $.
@@ -98,7 +98,7 @@ Sei ab nun $ (\Omega,\mathcal{A},\mathbb{P}) $ stets ein Wahrscheinlichkeitsraum
 			f(x) = \frac{1}{(2\pi)^{\frac{k}{2}}\sqrt{\det C}}\exp\left(-\frac{1}{2}(x-\mu)^{\top}C^{-1}(x-\mu)  \right), \quad x\in \R^n
 		\]
 		gegeben ist. Wir schreiben auch $ X \sim N_n(\mu,C)  $.
-		Insbesondere kann man mit recht elementaren Methoden einsehen, dass dann auch für jedes $ j \in \{ 1,\dots,n\} $ $ X_j \sim N(\mu_j,\sigma_{jj}) $ und außerdem die Einträge $ \sigma_{ij} $ der Matrix $ C $ gerade die Kovarianzen $ \text{Cov}(X_i,X_j) $ darstellen. Ein Beweis hierfür findet sich im Appendix.
+		Insbesondere kann man mit recht elementaren Methoden einsehen, dass dann auch für jedes $ j \in \{ 1,\dots,n\} $ $ X_j \sim N(\mu_j,\sigma_{jj}) $ gilt und außerdem die Einträge $ \sigma_{ij} $ der Matrix $ C $ gerade die Kovarianzen $ \text{Cov}(X_i,X_j) $ darstellen. Ein Beweis hierfür findet sich im Appendix. Dieser fasst mehrere Resultate aus \cite{brokate2016grundwissen} zusammen.
 		
 	\end{enumerate}
 \end{Definition}
