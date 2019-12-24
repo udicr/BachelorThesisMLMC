@@ -49,7 +49,7 @@ Sei ab nun $ (\Omega,\mathcal{A},\mathbb{P}) $ stets ein Wahrscheinlichkeitsraum
 \begin{Definition}(stetig verteilte Zufallsvariablen und Zufallsvektoren)\\
 %	Eine Zufallsvariable $ X :\Omega  \to \R $ heißt stetig verteilt, wenn eine nichtnegative (Borel-)messbare Funktion $ f : \R \to \R $ mit $ \int_{\R} f(t) \dt =1  $ existiert, sodass 
 %	In diesem Fall heißt $ f $ Dichte von $ X $ (bzw. von $ \mathbb{P}^X $).\\
-	Ein Zufallsvektor $ X = (X_1,\dots,X_n) $ heißt stetig verteilt, wenn eine nichtnegative (Borel-)messbare Funktion $ f : \R^n \to \R $ mit $ \int_{\R^n} f(x) \dx =1  $ existiert, sodass 
+	Ein Zufallsvektor $ X = (X_1,\dots,X_n) $ heißt stetig verteilt, wenn eine nichtnegative \\ (Borel-)messbare Funktion $ f : \R^n \to \R $ mit $ \int_{\R^n} f(x) \dx =1  $ existiert, sodass 
 	\[
 		\mathbb{P}^X(B) \coloneqq \mathbb{P}(X \in B) =  \int_{B} f(x) \dx, \quad B \in \mathcal{B}^n
 	\]
@@ -164,10 +164,10 @@ Sei ab nun $ (\Omega,\mathcal{A},\mathbb{P}) $ stets ein Wahrscheinlichkeitsraum
 		\[
 			C(x,y) \coloneqq \text{Cov}[X(x),X(y)] = \mathbb{E}\left[ \left(X(x)-\mathbb{E}[X(x)] \right) \left(X(y)-\mathbb{E}[X(y)]\right) \right]
 		\]
-		\item Ein Zufallsfeld $ X $ heißt weiter Gauß'sches Zufallsfeld falls für jede Wahl $ n \in \N $ und $ x = (x_1,\dots,x_n) \in \mathcal{D}$
+		\item Ein Zufallsfeld $ X $ heißt weiter Gauß'sches Zufallsfeld, falls für jede Wahl $ n \in \N $ und $ x = (x_1,\dots,x_n) \in \mathcal{D}$
 		der Zufallsvektor $ \hat{X} = (\hat{X}_1,\dots,\hat{X}_n)^{\top} = (X(x_1),\dots,X(x_n)) $ eine (nicht ausgeartete) multivariate Normalverteilung mit Parametern $ \mu(x) $ und $ C(x,y) $ besitzt.
 		Wir haben in \ref{normalvert} bereits gesehen, dass wir so gerade den Erwartungswertvektor $ \mu $ und die Kovarianzmatrix $ C $ festlegen.
-		\item Ein Zufallsfeld $ Y: \Omega \times \mathcal{D} \to \R $ heißt hingegen log-normal verteilt oder kurz lognormal-Feld
+		\item Ein Zufallsfeld $ Y: \Omega \times \mathcal{D} \to \R $ heißt hingegen log-normal verteilt oder kurz lognormal-Feld,
 		falls das durch 
 		\begin{align*}
 			X: \Omega \times \mathcal{D} &\to \R  \\ (\omega,x) &\mapsto \log(Y(\omega,x)) 

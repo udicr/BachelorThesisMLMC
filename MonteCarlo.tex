@@ -2,8 +2,8 @@
 %\cite{lapeyre2003introduction} \cite{sullivan2015introduction}
 \subsection{Herleitung und Beispiel}
 Wie in \cite{lapeyre2003introduction} wollen wir uns, um die Monte Carlo Methode von Grund auf einzuführen, zunächst mit der numerischen Integration beschäftigen. Grundsätzlich handelt es sich bei der Monte Carlo Methode um einen sogenannten Erwartungswertschätzer. Bevor wir also ein Problem mithilfe der Monte Carlo Methode lösen können, müssen wir die Größe, welche wir berechnen wollen, zunächst in der Form eines Erwartungswertes ausdrücken.
-Wir suchen dann also einen Erwartungswert $ \mathbb{E}[X] $ wobei $ X $ eine Zufallsvariable, einen Zufallsvektor oder gar ein Zufallsfeld beschreiben kann.
-Mithilfe der Monte-Carlo-Methode können wir dann versuchen eben diesen Erwartungswert zu schätzen. Dazu müssen wir $ X $ simulieren können. Damit ist gemeint, dass wir in der Lage sein müssen eine Realisierung $ (x_1,\dots,x_n) $ von $ (X_1,\dots,X_n) $ zu generieren (oft sagt man auch in Anlehnung an das Bernoulli'sche Urnenmodell 'zu ziehen'). Dabei sollen die Zufallsgrößen $ X_1,\dots,X_n $ unabhängig sein und die gleiche Verteilung besitzen wie die Zufallsgröße $ X $. Außerdem sei vorausgesetzt dass der Erwartungswert $ \mathbb{E}[X] < \infty $ existiert.
+Wir suchen dann also einen Erwartungswert $ \mathbb{E}[X] $, wobei $ X $ eine Zufallsvariable, einen Zufallsvektor oder gar ein Zufallsfeld beschreiben kann.
+Mithilfe der Monte-Carlo-Methode können wir dann versuchen eben diesen Erwartungswert zu schätzen. Dazu müssen wir $ X $ simulieren können. Damit ist gemeint, dass wir in der Lage sein müssen eine Realisierung $ (x_1,\dots,x_n) $ von $ (X_1,\dots,X_n) $ zu generieren (oft sagt man auch in Anlehnung an das Bernoulli'sche Urnenmodell 'zu ziehen'). Dabei sollen die Zufallsgrößen $ X_1,\dots,X_n $ unabhängig sein und die gleiche Verteilung besitzen wie die Zufallsgröße $ X $. Außerdem sei vorausgesetzt, dass der Erwartungswert $ \mathbb{E}[X] < \infty $ existiert.
 Anschließend wird der gesuchte Erwartungswert durch
 \[
 	\mathbb{E}[X] \approx \frac{1}{n}(x_1 + \dots x_n)
@@ -23,7 +23,7 @@ approximiert.
 	\[
 		I = \int_{[0,1]^d} f(u_1,\dots,u_d) \du_1\dots\du_d = \mathbb{E}[f(U_1,\dots,U_d)] = \mathbb{E}[X]
 	\]
-	Wir haben also das Integral, welches wir berechnen wollen als Erwartungswert ausgedrückt. Nun müssen wir die Zufallsvariable $ X = f(U_1,\dots,U_d) $ simulieren.
+	Wir haben also das Integral, welches wir berechnen wollen, als Erwartungswert ausgedrückt. Nun müssen wir die Zufallsvariable $ X = f(U_1,\dots,U_d) $ simulieren.
 	Dazu nehmen wir an, gleichverteilte Zufallsvariablen simulieren zu können. Die Simulation solcher Zufallsvariablen spielt in der numerischen Stochastik eine ganz besondere Rolle, denn oft werden andere Verteilungen durch Transformationen auf den Fall einer Gleichverteilung auf $ [0,1] $ reduziert.
 	Sei also $ (U_i)_{i \geq 1} $ eine Folge unabhängiger Zufallsvariablen mit Gleichverteilung auf $ [0,1] $. Wir können dann mithilfe der simulierten Realisierungen $ (u_i)_{i \geq 1} $  von $ (U_i)_{i \geq 1} $ die Zufallsvariable $ X $ wie folgt definieren: Wir setzen
 	\begin{align*}
@@ -59,23 +59,23 @@ approximiert.
 	Dann lässt sich $ I $ schreiben als $ I = \mathbb{E}[g(X)] $ für eine Zufallsvariable $ X $ mit Werten in $ \R^d $ und Verteilung $ f(x) \dx $.
 	Wir können also $ I $ approximieren durch
 	\[
-		I \approx \frac{1}{n}\sum_{i=1}^{n} g(x_i) 
+		I \approx \frac{1}{n}\sum_{i=1}^{n} g(x_i) \quad ,
 	\]
 	wobei $ (x_i)_{i \geq 1} $ Realisierungen der Zufallsvariablen $ (X_i)_{i \geq 1} $ sind, welche unabhängig und identisch zu $ X $ verteilt seien.
 	
 	Betrachten wir nun wieder die Monte Carlo Methode in einem etwas abstrakteren Sinne ganz allgmein.
 	An der Stelle, an der wir letztlich die Realisierungen einer Zufallsvariable eingesetzt haben, also einen Erwartungswert durch $
 	\mathbb{E}[X] \approx \frac{1}{n}(x_1 + \dots x_n)
-	$ approximiert haben, haben wir stet gefordert, dass $ n $ groß ist. 
+	$ approximiert haben, haben wir stets gefordert, dass $ n $ groß ist. 
 	Es stellt sich nun die Frage, wann $ n $ groß genug ist.
 	Wir wollen uns deshalb noch abschließend damit beschäftigen, wann und wie die Methode konvergiert und was wir über die Genauigkeit der Approximation aussagen können.
 	\subsection{Konvergenz und Genauigkeit}
-	Damit die Methode überhaupt in irgendeiner Weise als nützlich zu erachten ist, bedarf es Möglichkeiten den Fehler \[
+	Damit die Methode überhaupt in irgendeiner Weise als nützlich zu erachten ist, bedarf es Möglichkeiten, den Fehler \[
 	 \epsilon_n = \frac{1}{n}\sum_{i=1}^{n}X_i -  \mathbb{E}[X]
 	\]
-	abzuschätzen. Um diesem Problem beizukommen, bedienen wir uns zweier zentraler Aussagen der Wahrscheinlichkeitstheorie. Zum einen sagt uns das starke Gesetzt großer Zahlen \ref{starkesGgZ}, dass unter der Voraussetzung $ \mathbb{E}[\abs{X}]<\infty $ der Fehler $ \epsilon_n $ für $ n \to \infty $ für fast alle $ \omega \in \Omega $ gegen $ 0 $ konvergiert. Wir erhalten also zunächst Konvergenz der Methode in einem sehr grundlegendem Sinn. Aus dem zentralen Grenzwertsatz \ref{ZGWS} lassen sich zum anderen Aussagen über die Genauigkeit der Methode und letztlich somit auch der Art der Konvergenz ableiten. Nach \ref{ZGWS} erhalten wir nämlich für eine u.i.v.-Folge $ (X_i)_{i \in \N} $ mit gleicher Verteilung wie $ X $ und $ \mathbb{E}[X^2] < \infty $, dass
+	abzuschätzen. Um diesem Problem beizukommen, bedienen wir uns zweier zentraler Aussagen der Wahrscheinlichkeitstheorie. Zum einen sagt uns das starke Gesetz großer Zahlen \ref{starkesGgZ}, dass unter der Voraussetzung $ \mathbb{E}[\abs{X}]<\infty $ der Fehler $ \epsilon_n $ für $ n \to \infty $ für fast alle $ \omega \in \Omega $ gegen $ 0 $ konvergiert. Wir erhalten also zunächst Konvergenz der Methode in einem sehr grundlegendem Sinn. Aus dem zentralen Grenzwertsatz \ref{ZGWS} lassen sich zum anderen Aussagen über die Genauigkeit der Methode und letztlich somit auch der Art der Konvergenz ableiten. Nach \ref{ZGWS} erhalten wir nämlich für eine u.i.v.-Folge $ (X_i)_{i \in \N} $ mit gleicher Verteilung wie $ X $ und $ \mathbb{E}[X^2] < \infty $, dass
 	 \[ 
-	 \frac{\sqrt{n}}{\sqrt{\mathbb{V}[X]}} \epsilon_n =  \frac{\frac{1}{\sqrt{n}}\sum_{i=1}^{n}X_i-\sqrt{n}\mathbb{E}[X]}{\sqrt{\mathbb{V}[X]}} = \frac{\sum_{i=1}^{n}X_i-n\mathbb{E}[X]}{\sqrt{n\mathbb{V}[X]}} \eqqcolon \hat{S}_n \stackrel{\mathcal{D}}{\to} N \text{ für } n \to \infty 
+	 \frac{\sqrt{n}}{\sqrt{\mathbb{V}[X]}} \epsilon_n =  \frac{\frac{1}{\sqrt{n}}\sum_{i=1}^{n}X_i-\sqrt{n}\mathbb{E}[X]}{\sqrt{\mathbb{V}[X]}} = \frac{\sum_{i=1}^{n}X_i-n\mathbb{E}[X]}{\sqrt{n\mathbb{V}[X]}} \eqqcolon \hat{S}_n \stackrel{\mathcal{D}}{\to} N \text{ für } n \to \infty \ ,
 	 \]
 	 wobei $N$ eine standardnormalverteilte Zufallsvariable ist. Die Wurzel der Varianz wird im Folgenden noch des Öfteren auftauchen, weswegen wir an dieser Stelle die sogenannte Standardabweichung $ \sigma \coloneqq \sqrt{\mathbb{V}[X]} $ einführen.
 	 Da also 
@@ -85,7 +85,7 @@ approximiert.
 	 \[
 	 	\lim\limits_{n \to \infty} \mathbb{P}(\frac{\sigma}{\sqrt{n}}a \leq \epsilon_n \leq \frac{\sigma}{\sqrt{n}}) = \lim\limits_{n \to \infty} \mathbb{P}(a \leq \hat{S}_n \leq b) = \int\limits_a^b \frac{1}{\sqrt{2\pi}}e^{-\frac{x^2}{2}} \dx \ .
 	 \]
-	 An dieser Stellen wollen wir kurz innehalten und uns überlegen was obiges Resultat für den Fehler der Monte Carlo Methode denn praktisch gesehen bedeutet. 
+	 An dieser Stellen wollen wir kurz innehalten und uns überlegen, was obiges Resultat für den Fehler der Monte Carlo Methode denn praktisch gesehen bedeutet. 
 	 \begin{itemize}
 	 	\item Der zentrale Grenzwertsatz liefert uns kein zu der Folgerung aus dem starken Gesetz großer Zahlen vergleichbares Resultat, denn es ist  $ \lim_{n \to \infty} \mathbb{P}(\epsilon_n = 0) = 0 $ nach obiger Überlegung.
 	 	\item Der zentrale Grenzwertsatz erlaubt uns ebenso \underline{nicht} eine für andere Verfahren typische Fehlerschranke der Form $ \epsilon_n \leq M_n $ für eine von n und möglicherweise anderen Faktoren, wie z.B. Ausgangsdaten, abhängigen Schranke $ M $ aufzustellen. Grund dafür ist, dass der Träger von $\frac{1}{\sqrt{2\pi}}e^{-\frac{x^2}{2}}$ ganz $ \R $ ist.
@@ -101,7 +101,7 @@ approximiert.
 	 	\[
 	 		[m-1.96\frac{\sigma}{\sqrt{n}},m+1.96\frac{\sigma}{\sqrt{n}}]
 	 	\]
-	 	angeben. In der Praxis nehmen wir näherungsweise an, dass $ (\star) $ auch für ein festes $ n \in \N $ erfüllt ist und entledigen uns so des Grenzwertes. Somit wird dann insbesondere die Wahl $ m = \frac{1}{n}\sum_{i=1}^{n}(x_1,\dots,x_n) $ gerechtfertigt.
+	 	angeben. In der Praxis nehmen wir näherungsweise an, dass $ (\star) $ auch für ein festes $ n \in \N $ erfüllt ist, und entledigen uns so des Grenzwertes. Somit wird dann insbesondere die Wahl $ m = \frac{1}{n}\sum_{i=1}^{n}(x_1,\dots,x_n) $ gerechtfertigt.
 	 \end{itemize}
  	Wir erhalten also (unter den eben erklärten Annahmen) eine Konvergenzrate des (wahrscheinlichen) Fehlers von $ \frac{\sigma}{\sqrt{n}} $. Dieses Resultat mag auf den ersten Blick relativ ernüchternd wirken, allerdings existieren Fälle, in denen solch eine langsame Methode die bestmögliche ist. \cite{lapeyre2003introduction} nennt hierzu zum Beispiel Integrale in mehr als $ 100 $ Dimensionen oder besonders schwere parabolische Differentialgleichungen. Außerdem lohnt es sich zu erwähnen, dass wir im Falle der numerischen Integration - bis auf Integrierbarkeit und Messbarkeit - keine Voraussetzungen an die Regularität der zu Funktion $ f $ gestellt haben.\\
  	Obiges Resultat legt außerdem nahe, dass es entscheidend für eine Aussage über die Konvergenz und Güte der Methode ist, die Standardabweichung $ \sigma $ zu kennen, oder zumindest über einen guten Schätzer für $ \sigma $ zu verfügen.

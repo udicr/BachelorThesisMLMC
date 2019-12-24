@@ -1,13 +1,13 @@
 % !TeX root = bachelorarbeit.tex
 
 Nachdem wir im dritten Abschnitt die Monte Carlo Methode betrachtet haben, wollen wir uns nun einer Weiterentwicklung der Monte Carlo Methode, der sogenannten Multi Level Monte Carlo Methode zuwenden. Grundsätzlich liegt dieselbe Situation vor wie bei der Monte Carlo Methode:
-Wir wollen wieder eine Größe bestimmen, welche sich nach geeigneter Modellierung in der Form eines Erwartungswertes $ \mathbb{E}[X] $ einer Zufallsvariablen $ X $ schreiben lässt. Besonders wenn diese Größe mit der Lösung von gewöhnlichen oder partiellen Differentialgleichungen, wie wir sie später betrachten wollen, hat man nun jedoch die Wahl, wie genau die numerische Lösung des zugrunde liegenden Problems, z.B. der Differentialgleichung, erfolgen soll. Beispielsweise können wir im Falle der numerischen Lösung von Differentialgleichung Zeitschrittweiten und/oder Gitterweiten der Ortsdiskretisierung festlegen. Wir werden dann in diesem Zusammenhang auch von verschiedenen (Genauigkeits-)Leveln sprechen. An dieser Stelle tritt stets ein typischer Zwiespalt auf:
+Wir wollen wieder eine Größe bestimmen, welche sich nach geeigneter Modellierung in der Form eines Erwartungswertes $ \mathbb{E}[X] $ einer Zufallsvariablen $ X $ schreiben lässt. Besonders, wenn diese Größe mit der Lösung von gewöhnlichen oder partiellen Differentialgleichungen zusammenhängen, wie wir sie später betrachten wollen, hat man nun jedoch die Wahl, mit welcher Genauigkeit die numerische Lösung des zugrunde liegenden Problems, z.B. der Differentialgleichung, erfolgen soll. Beispielsweise können wir im Falle der numerischen Lösung von Differentialgleichung Zeitschrittweiten und/oder Gitterweiten der Ortsdiskretisierung festlegen. Wir werden dann in diesem Zusammenhang auch von verschiedenen (Genauigkeits-)Leveln sprechen. An dieser Stelle tritt stets ein typischer Zwiespalt auf:
 \begin{itemize}
 	\item Zu Einen wollen wir möglichst genau rechnen. Dies legt die Wahl von besonders kleinen Zeitschrittweiten bzw. feinen Gittern zur Ortsdiskretisierung nahe.
 	\item Zum Anderen wollen wir die Anzahl der Rechenschritte bzw. die Rechenzeit möglichst gering halten. Dies spricht hingegen für große Zeitschritte bzw. grobe Gitter.
 \end{itemize}
-Zusätzlich zu der oft bereits alleine anspruchsvollen Aufgabe solche Probleme numerisch zu lösen, müssen wir also stets einen für unsere Bedürfnisse passenden Kompromiss aus möglichst genauer numerischer Approximation und geringem (oder zumindest machbarem) Rechenaufwand eingehen. Obwohl dies zunächst wie eine zusätzliche Hürde erscheint und Mehraufwand vermuten lässt, stellt sich heraus, dass solche eine Wahl der Genauigkeit im Kontext von Monte Carlo Methode sich durchaus als Nützlich erweisen kann. 
-Die Multi Level Monte Carlo Methode, wir werden im folgenden auch oft vom sogenannten Multi Level Monte Carlo Schätzer sprechen, ist der Prototyp einer Familie sogenannter Varianz-reduzierender Methoden, welche das Ziel haben die naive Monte Carlo Methode in Sachen Konvergenzrate und Effizienz zu schlagen. Bevor wir erklären wie genau die Multilevel Monte Carlo Methode im Allgemeinen dabei vorgeht, möchten wir die Funktionsweise wieder anhand eines Beispiels erklären, welches in \cite{heinrich2001multilevel} ausführlich erklärt wird.
+Zusätzlich zu der oft bereits alleine anspruchsvollen Aufgabe, solche Probleme numerisch zu lösen, müssen wir also stets einen für unsere Bedürfnisse passenden Kompromiss aus möglichst genauer numerischer Approximation und geringem (oder zumindest machbarem) Rechenaufwand eingehen. Obwohl dies zunächst wie eine zusätzliche Hürde erscheint und Mehraufwand vermuten lässt, stellt sich heraus, dass eine solche Wahl der Genauigkeit im Kontext von Monte Carlo Methode sich durchaus als nützlich erweisen kann. 
+Die Multi Level Monte Carlo Methode, wir werden im Folgenden auch oft vom sogenannten Multi Level Monte Carlo Schätzer sprechen, ist der Prototyp einer Familie sogenannter Varianz-reduzierender Methoden, welche das Ziel haben, die naive Monte Carlo Methode in Sachen Konvergenzrate und Effizienz zu schlagen. Bevor wir erklären wie genau die Multilevel Monte Carlo Methode im Allgemeinen dabei vorgeht, möchten wir die Funktionsweise wieder anhand eines Beispiels erklären, welches in \cite{heinrich2001multilevel} ausführlich beleuchtet wird.
 
 \begin{Beispiel}(Wieder ein Integral über $[0,1]^d$)\\
 	Wie bereits im letzten Abschnitt setzen wir uns die Aufgabe das Integral einer Funktion $ f $ zunächst über $ [0,1]^d $ zu bestimmen. Damit wir aber überhaupt in oben erklärte Situation kommen und von verschiedenen 'Leveln' sprechen können, sei $ f $ nun zusätzlich abhängig von einem Parameter $ \lambda \in \Lambda \subseteq \R^{d_2}$, also $f : \Lambda \times [0,1]^d \to \R $. Um bei den folgenden Überlegungen die Notation so schlank wie möglich zu halten, betrachten wir an dieser Stelle nur einen konkreten Spezialfall: \\
@@ -18,7 +18,7 @@ Die Multi Level Monte Carlo Methode, wir werden im folgenden auch oft vom sogena
 	für alle $ \lambda \in \Lambda = [0,1] $ bestimmen, wir suchen also nach einer Funktion in Abhängigkeit von $ \lambda $.\\
 	
 	\textbf{Monte Carlo Schätzer für $I(\lambda)$}\\
-	Wollen wir an dieser Stelle einen normalen Monte Carlo Schätzer nutzen, stellt sich die Frage, wie wir mit dem zusätzlichen Parameter umsetzen sollen. Die wohl naheliegendste und einfachste Idee ist, zunächst für ein festes $ h \in \N $ ein Gitter $ \{ \lambda_i = \frac{i}{h}, i=0,\dots,h\} $ festzulegen und für jedes $ \lambda_i $ wie im letzten Abschnitt vorzugehen und für ein $ n \in \N $
+	Wollen wir an dieser Stelle einen normalen Monte Carlo Schätzer nutzen, stellt sich die Frage, wie wir mit dem zusätzlichen Parameter umgehen sollen. Die wohl naheliegendste und einfachste Idee ist, zunächst für ein festes $ h \in \N $ ein Gitter $ \{ \lambda_i = \frac{i}{h}, i=0,\dots,h\} $ festzulegen und für jedes $ \lambda_i $ wie im letzten Abschnitt vorzugehen und für ein $ n \in \N $
 	\[
 		I(\lambda_i) \approx \hat{I}(\lambda_i) \coloneqq \frac{1}{n} \sum_{k=1}^{n} f(\lambda_i,x_k)
 	\]
@@ -33,7 +33,7 @@ Die Multi Level Monte Carlo Methode, wir werden im folgenden auch oft vom sogena
 	\[
 		I(\lambda) \approx \mathcal{I}_{MC}(\lambda) \coloneqq \sum_{i=0}^{h} \left( \frac{1}{n}\sum_{k=1}^{n} f(\lambda_i, x_k)\right) \varphi_i (\lambda) = \frac{1}{n} \sum_{k=1}^{n} (Pf(\cdot,x_k))(\lambda)
 	\]
-	Als Fehler dieser Methode können wir den sogenannten 'root mean square error' verbunden mit einer beliebigen Norm betrachten, wir wählen hierbei die $ L^2 $-Norm.
+	Als Fehler dieser Methode können wir den sogenannten 'root mean square error', verbunden mit einer beliebigen Norm, betrachten, wir wählen hierbei die $ L^2 $-Norm.
 	Wir erhalten so 
 	\[ 
 	\epsilon(\mathcal{I}_{MC})  = \left( \mathbb{E} [\lVert I -  \mathcal{I}_{MC} \rVert_{L^2([0,1])}^2] \right)^{\frac{1}{2}} = \left( \mathbb{E} \left[ \int\limits_{0}^{1} \abs{I(\lambda) - \mathcal{I}_{MC}(\lambda)}^2 \dlam \right] \right)^{\frac{1}{2}}
@@ -41,7 +41,7 @@ Die Multi Level Monte Carlo Methode, wir werden im folgenden auch oft vom sogena
 	Ist $ f $ zusätzlich stetig differenzierbar im Parameter $ \lambda $, kann gezeigt werden, dass 
 	\[
 		\epsilon(\mathcal{I}_{MC}) = \mathcal{O}(n^{-\frac{1}{2}}+h^{-1}) \ .
-	\].
+	\]
 	Gleichzeitig ist die Anzahl der arithmetischen Operationen, Funktionsaufrufe und generierter Zufallszahlen in $ \mathcal{O}(hn) $.
 	Wir sehen also, dass wir an dieser Stelle genau diesen Zwiespalt antreffen, welchen wir zuvor abstrakt beschrieben haben. Aus diesem Grund wollen wir nun einen Multilevel Monte Carlo Schätzer für $ I(\lambda) $ einführen.\\	
 	
@@ -59,29 +59,29 @@ Die Multi Level Monte Carlo Methode, wir werden im folgenden auch oft vom sogena
 	 \[	
 	 \mathcal{I}_{MC} = \sum\limits_{l=0}^{m} \frac{1}{n} \sum\limits_{k=1}^{n} (P_l-P_{l-1})f(\cdot,x_k)	
 	 \]
-	  umschreiben. Um nun tatsächlich einen Nutzen aus der Aufteilung in verschiedene Level zu ziehen und einen guten Kompromiss zwischen Kosten und Fehler herzustellen erlauben wir nun zusätzlich die Anzahl der Zufallsauswertungen $ n $ von Level zu Level zu variieren. 
+	  umschreiben. Um nun tatsächlich einen Nutzen aus der Aufteilung in verschiedene Level zu ziehen und einen guten Kompromiss zwischen Kosten und Fehler herzustellen, erlauben wir nun zusätzlich die Anzahl der Zufallsauswertungen $ n $ von Level zu Level zu variieren. 
 	  Wir wählen also $ (n_l)_{l=0,\dots,m} \in \N^{m+1}  $.  Außerdem seien $ \{ X_{lj} , l=0,\dots,m \ , j= 0,\dots,n_l\} $ unabhängige auf $ [0,1] $ gleichverteilte Zufallsvariablen und $ (x_{lj})_{l=0,\dots,m \ ,j=0,\dots,n_l} $ zugehörige Realisierungen.
 	  Dann erhalten wir den Multilevel Monte Carlo Schätzer 
 	  \[
 	   I(\lambda) \approx \mathcal{I}_{MLMC}(\lambda) = \sum_{l=0}^{m} \frac{1}{n_l} \sum_{k=1}^{n_l} ((P_l - P_{l-1}) f(\cdot,x_{lj}))(\lambda) \ .
 	  \]
-	  Der bedeutendste Schritt ist an dieser Stelle eine passende Wahl der $ n_l $. Bei diesem Beispiel wollen wir uns darauf beschränken eine passende Wahl anzugeben und den Nutzen hervorzuheben, welchen wir durch diese Wahl erlangen. So zeigt sich, dass eine passende Wahl beispielsweise durch $ n_l = \Theta(2^{-\frac{3l}{2}n})$ für ein $ n \in \N $ groß genug gegeben ist. 
+	  Der bedeutendste Schritt ist an dieser Stelle eine passende Wahl der $ n_l $. Bei diesem Beispiel wollen wir uns darauf beschränken, eine passende Wahl anzugeben und den Nutzen hervorzuheben, welchen wir durch diese Wahl erlangen. So zeigt sich, dass eine passende Wahl beispielsweise durch $ n_l = \Theta(2^{-\frac{3l}{2}n})$ für ein $ n \in \N $ groß genug gegeben ist. 
 	  Dann kann für den analog wie für den MC-Schätzer definierten (RMSE-)Fehler gezeigt werden, dass 
 	  \[
-	  	\epsilon(\mathcal{I}_{MLMC}) = \mathcal{O}(n^{-\frac{1}{2}} + n^{-\frac{1}{2}}) = \mathcal{O}(n^{-\frac{1}{2}})
-	  \].
+	  	\epsilon(\mathcal{I}_{MLMC}) = \mathcal{O}(n^{-\frac{1}{2}} + n^{-\frac{1}{2}}) = \mathcal{O}(n^{-\frac{1}{2}}) \ .
+	  \]
 	  Zugleich ist die Anzahl der benötigten Rechenoperationen inklusive Funktions- und Zufallszahlauswertungen diesmal in $ \mathcal{O}(n) $.
 	  Verglichen mit der Standard (Ein-Level) Monte Carlo Methode können wir nun also eine Approximation für die gesamte Familie von Integralen $ I(\lambda) $ mit einem Fehler von $ \mathcal{O}(n^{-\frac{1}{2}}) $, aber den Kosten von $ \mathcal{O}(n) $  berechnen. Das ist durchaus erstaunlich, denn bereits die Kosten der Auswertung eines einzigen Integrals $ I(\lambda) $ für ein festes $ \lambda \in \Lambda $ liegen in $ \mathcal{O}(n) $. 
 \end{Beispiel}
 
 Wir sehen also, dass die Multilevel Monte Carlo Methode in Situationen, in denen wir bei der Wahl von Zeitschrittweiten und/oder feinen Gittern zur Ortsdiskretisierung zwischen Anzahl an Rechenoperationen und Genauigkeit einen Kompromiss finden müssen, einen Ein-Level Ansatz, wie die Standard Monte Carlo Methode, durchaus übertreffen kann.
-Der Kern dieser Methode bildet dabei eine geschickte Wahl der Anzahl $ n_l $ der Zufallssamples, welche wir auf je einem Level auswerten. Wie wir in unserem Fall diese Wahl durchführen soll an anderer Stelle in Abschnitt \ref{MLMCTP} ausführlich erläutert werden, in welchem wir die bisher zunächst beispielhaft anhand der Integration eingeführte Multilevel Monte Carlo Methode auf das probabilistische Transportproblem, welches wir in Abschnitt \ref{TP} bereits näher beleuchtet haben, übertragen werden.
+Der Kern dieser Methode bildet dabei eine geschickte Wahl der Anzahl $ n_l $ der Zufallssamples, welche wir auf je einem Level auswerten. Wie wir in unserem Fall diese Wahl durchführen, soll an anderer Stelle in Abschnitt \ref{MLMCTP} ausführlich erläutert werden, in welchem wir die bisher zunächst beispielhaft anhand der Integration eingeführte Multilevel Monte Carlo Methode auf das probabilistische Transportproblem, welches wir in Abschnitt \ref{TP} bereits näher beleuchtet haben, übertragen werden.
 Mehr zu Monte Carlo und Multilevel Monte Carlo Methoden für Parameterintegrale findet sich neben \cite{heinrich2001multilevel} auch in \cite{heinrich1992random}.
 
 \subsection{Konvergenz und Genauigkeit}
 Da wir in Abschnitt \ref{MLMCTP} noch einmal ausführlich auf die Eigenschaften des Verfahrens für unsere konkrete Anwendung eingehen werden, soll dieser Unterabschnitt eher noch einmal etwas allgemeiner auf die stochastischen Hintergründe eingehen. Als Referenz ist hierbei das Kapitel 9.5 über Monte-Carlo Funktionen in \cite{sullivan2015introduction} zu nennen. 
-Betrachten wir also wieder etwas allgemeiner eine Folge unabhängig Zufallsvariablen $ Y_{1},Y_{2}\dots$ mit zugehörigen Realisierungen $ y_{1}, y_{2},\dots $. Diese sollen dabei alle die identische Verteilung wie eine weitere Zufallsvariable $ Y $ mit zugehöriger Dichte $ g_Y $ besitzen.
-Wir wollen diesmal den Erwartungswert einer Zufallsvariablen $ X $ berechnen, wobei wir $ X $ mithilfe einer messbaren Funktion $ f $, die alle (unten aufgeführten) Voraussetzungen des Transformationssatzes erfülle, folgendermaßen ausgedrückt werden kann:
+Betrachten wir also wieder etwas allgemeiner eine Folge unabhängiger Zufallsvariablen $ Y_{1},Y_{2}\dots$ mit zugehörigen Realisierungen $ y_{1}, y_{2},\dots $. Diese sollen dabei alle die identische Verteilung wie eine weitere Zufallsvariable $ Y $ mit zugehöriger Dichte $ g_Y $ besitzen.
+Wir wollen diesmal den Erwartungswert einer Zufallsvariablen $ X $ berechnen, wobei $ X $ mithilfe einer messbaren Funktion $ f $, die alle (unten aufgeführten) Voraussetzungen des Transformationssatzes erfülle, folgendermaßen ausgedrückt werden kann:
 \[
 	X = f(Y)
 \]
@@ -106,5 +106,5 @@ Wir können nun jeden Summanden einzeln durch einen Monte Carlo Ansatz schätzen
  \mathbb{E}[X] \approx \frac{1}{n_0} \sum_{i=1}^{n_0}f_0(Y_{0,i}) + \sum_{l=1}^{L} \frac{1}{n_l}\sum_{i=1}^{n_l} \left( f_l(Y_{l,i}) - f_{l-1}(Y_{l,i})\right)
 \]
 An dieser Stelle scheint obige Darstellung keinen wirklichen Vorteil gegenüber dem Standard Monte Carlo Schätzer zu besitzen, wir müssen aber nun beachten, dass zum Einen die Anzahl der benötigten Rechenoperation zur Berechnung von $ f_l(Y_{l,i}) $ unter Umständen für niedrige Werte $ l $ deutlich geringer ausfällt, als dies für größere $ l $ der Fall ist.
-Zum Anderen gilt für den Fehler der Monte Carlo Schätzung (vgl. Abschnitt \ref{MC}), dass der Fehler des $l$-ten Summanden wie $ \sqrt{\frac{\mathbb{V}[f_l(Y) - f_{l-1}(Y)]}{n_l}} $ konvergiert. Das heißt insbesondere, dass falls $ \mathbb{V}[f_l(Y)-f_{l-1}(Y)] $ klein ausfällt, auch kleinere $ n_l $ gewählt werden können, als bei der Standard Monte Carlo Methode, für welche bei einer großen Varianz $ \mathbb{V}[f(Y)] = \mathbb{V}[f_L(Y)] $ ein sehr großes $ n=n_L $ für eine gute Approximation benötigt werden. Andererseits müssen wir aber auch beachten, dass wir uns damit zusätzlich zum Schätzfehler, durch die Approximation von $ f $, auch einen Approximationsfehler einhandeln. In der Praxis, wie z.B. beim partiellen Differentialgleichungen, verfügen wir aber auch oft nicht über $ f $ selbst, sondern nur verschieden gute Approximationen. Wir müssen also in der späteren Anwendung ganz genau prüfen, wie und ob wir aus der Multilevel Monte Carlo Methode tatsächlich einen Nutzen ziehen können. Diese Grundidee, die Varianz klein zu halten, damit die benötigte Anzahl der auszuwertenden Zufallssamples gering gehalten werden kann, ist namensgebend für die sogenannten 'Varianz reduzierenden Methoden' zur Verbesserung der Monte Carlo Methode. Weitere Details der Konvergenzanalyse finden sich in für unser Problem angepasster Form in Abschnitt \ref{MLMCTP}.
-Bevor wir dazu kommen können, müssen wir aber im Folgenden Abschnitt zunächst das zu betrachtende Problem sowie zugehörige Löser einführen, welche später die Rolle der Approximationen $ f_l $ übernehmen werden.
+Zum Anderen gilt für den Fehler der Monte Carlo Schätzung (vgl. Abschnitt \ref{MC}), dass der Fehler des $l$-ten Summanden wie $ \sqrt{\frac{\mathbb{V}[f_l(Y) - f_{l-1}(Y)]}{n_l}} $ konvergiert. Das heißt insbesondere, dass falls $ \mathbb{V}[f_l(Y)-f_{l-1}(Y)] $ klein ausfällt, auch kleinere $ n_l $ gewählt werden können, als bei der Standard Monte Carlo Methode, für welche bei einer großen Varianz $ \mathbb{V}[f(Y)] = \mathbb{V}[f_L(Y)] $ ein sehr großes $ n=n_L $ für eine gute Approximation benötigt werden. Andererseits müssen wir aber auch beachten, dass wir uns damit zusätzlich zum Schätzfehler, durch die Approximation von $ f $, auch einen Approximationsfehler einhandeln. In der Praxis, wie z.B. bei partiellen Differentialgleichungen, verfügen wir aber auch oft nicht über $ f $ selbst, sondern nur über verschieden gute Approximationen. Wir müssen also in der späteren Anwendung ganz genau prüfen, wie und ob wir aus der Multilevel Monte Carlo Methode tatsächlich einen Nutzen ziehen können. Diese Grundidee, die Varianz klein zu halten, damit die benötigte Anzahl der auszuwertenden Zufallssamples gering gehalten werden kann, ist namensgebend für die sogenannten 'Varianz reduzierenden Methoden' zur Verbesserung der Monte Carlo Methode. Weitere Details der Konvergenzanalyse finden sich in für unser Problem angepasster Form in Abschnitt \ref{MLMCTP}.
+Bevor wir dazu kommen können, müssen wir aber im folgenden Abschnitt zunächst das zu betrachtende Problem sowie zugehörige Löser einführen, welche später die Rolle der Approximationen $ f_l $ übernehmen werden.
