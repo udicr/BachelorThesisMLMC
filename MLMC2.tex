@@ -19,8 +19,8 @@ u_D&: \Gamma_{\text{D}} \to \R \\
 \end{array} \newline \\
 &\text{ wobei } \partial \mathbb{D} = \Gamma_{\text{D}} \dot{\cup} \Gamma_{\text{N}}  \text{ und }  \Gamma_{\text{in}} \coloneqq  \{ z \in \partial \mathbb{D}: q(z)\cdot n(z) \leq 0 \} \subset  \partial \mathbb{D}
 \end{align*}
-Genauer sei $ J(\rho) $ ein gegebenes Zielfunktional, dann ist es unser Ziel den Erwartungswert $ \mathbb{E}[J(\rho)] $ möglichst genau zu bestimmen. 
-Wir erhalten also als Modellproblem:
+Genauer sei $ Q(\omega) = J(\rho(\omega)) $ ein gegebenes Zielfunktional, dann ist es unser Ziel den Erwartungswert $ \mathbb{E}[Q(\omega)] $ möglichst genau zu bestimmen. Beispielsweise kann eine beliebige Norm von $ \rho(\omega) $ als Zielfunktional betrachtet werden.
+Unser Modellproblem lautet also:
 
 \begin{align}
 \text{(MP)}
@@ -32,11 +32,89 @@ Wir erhalten also als Modellproblem:
 \end{cases}
 \end{align} 
 Dabei erhalten wir das stochastische Flussvektorfeld $ q $, wie bereits in \ref{Probabilistisches Problem} erklärt selbst als Lösung des Potentialströmungsproblem.
+Da wir an der numerischen Lösung partieller Differentialgleichungen interessiert sind und wir die im Allgemeinen unendlich dimensionale Lösung $ \rho $ durch eine endlich dimensionale Lösung $ \rho_{h,\Delta t} $ approximieren, betrachten wir $ Q_{h,\Delta t}(\omega) \coloneqq J(\rho_{h,\Delta t}(\omega )) $.
+Wir nutzen dabei das in Abschnitt \ref{DG} behandelte Discontinuous Galerkin Verfahren zur Lösung des linearen Transportproblems. Außerdem werden wir im Folgenden eine uniforme Familie $ \{ \mathcal{T}_h \} $ von Zerlegungen von $ \mathcal{D} $ (vgl. Abschnitt \ref{num_pot} Definition \ref{FEMDISC}) als Diskretisierungsgitter für die Ortsdiskretisierung, sowie $ \mathbb{T}_{\Delta t} $ als Zerlegung von $ \mathbb{T} $ betrachten.
+Insbesondere wählen wir später $ \Delta t $ in Abhängigkeit von $ h $, etwa $ \Delta t = c  h $ für ein $ c>0 $ und betrachten dann
+$ Q_h(\omega) \coloneqq Q_{h,ch}(\omega) = J(\rho_h(\omega )) \coloneqq J(\rho_{h,ch}(\omega )) $.
+An dieser Stelle sei betont, dass es sich in diesem Abschnitt bei $ \rho_h $ um eine volldiskrtisierte Approximation an $ \rho $ handelt und nicht die Semidiskretisierung aus Abschnitt \ref{DG} gemeint ist.
+\begin{Annahme}(Konvergenz im Erwartungswert des Zielfunktionals)\\
+	In obiger Situation gelte 
+	\[ 
+	\mathbb{E}[Q_h] \to \mathbb{E}[Q] \text{ für } h \to 0   
+	\]
+\end{Annahme}
 
 
-TODO - dieser Abschnitt muss noch geschrieben werden.
+\subsection{Die Monte Carlo Methode}
+Wie bereits im Kontext der numerischen Integration wollen wir die Monte Carlo Methode als Ausgangspunkt nutzen und anschließend bei der Betrachtung der Multilevel Monte Carlo Methode auch auf entscheidende Unterschiede zu und Vorteile gegenüber der Monte Carlo Methode eingehen.
+Sowohl bei der Monte Carlo Methode, als auch bei der Multilevel Variante approximieren wir den Erwartungswert $ \mathbb{E}[Q_h] $ durch einen Schätzwert $ \widehat{Q}_h $. Um die Genauigkeit und die Kosten zu bemessen betrachten wir zum einen den sogenannten 'root mean square error' (RMSE) 
+\begin{align}
+	\label{RMSE}
+	e( \widehat{Q}_h) \coloneqq \left(  \mathbb{E} \left[ (\widehat{Q}_h - \mathbb{E}[Q] )^2 \right] \right)^{\frac{1}{2}}
+\end{align}
+zum anderen die Anzahl an floating-point-Rechenoperationen $ C_{\epsilon}(\widehat{Q}_h) $, die benötigt werden um einen RMSE mit $ e( \widehat{Q}_h) \leq \epsilon $ zu erhalten.
+Zu beachten ist hierbei, dass in dem RMSE einige Fehlerquellen gemeinsam betrachtet werden. So gehen sowohl der Finite Elemente Fehler des Potentialströmungsproblems (Approximation von $ q $ durch $ q_h $), der Discontinuous Galerkin Fehler des Transportproblems (Approximation von $ \rho $ durch $ \rho_h $), der Approximationsfehler der Approximation von $ Q $ durch $ Q_h $, als auch der statistische Fehler des Schätzers $\widehat{Q}_h$ in den RMSE mit ein. Insbesondere bedeutet also $ e( \widehat{Q}_h) \leq \epsilon $, dass alle oben genannten Fehlerquellen kleiner als $ \epsilon $ ausfallen. Betrachten wir also, wie bei der Monte Carlo Methode, welche wir gleich noch einmal kurz behandeln wollen, nur eine einzige Zerlegung $ \mathcal{T} $ der Familie $ \mathcal{T}_h $, so kann es sein, dass es gar nicht möglich ist den RMSE durch ein bestimmtes $ \epsilon $ zu beschränken, da einer der Approximationsfehler für das gewählte feste Level bereits alleine größer als $ \epsilon $ ist. Wir wollen diesen Sachverhalt im Hinterkopf behalten, denn auch bei der Multilevel Monte Carlo  Methode werden wir später initiale Level wählen, in der konkreten Anwendung geben wir aus praktischen Gründen sogar ein maximales Level an, welches wiederum unter Umständen einen RMSE $ e( \widehat{Q}_h) \leq \epsilon $ verhindern kann.\\
+Bei der Standard Monte Carlo Methode schätzen wir $ \mathbb{E}[Q] $ durch den Mittelwert  $ n $ unabhängiger gleichverteilter Zufallssamples und erhalten so 
+\begin{align}
+	\label{MC-Schätzer}
+	\widehat{Q}_{h,n}^{\text{MC}} \coloneqq \frac{1}{n} \sum_{i=1}^{n} Q_h(\omega_i) = \sum_{i=1}^{n} J(\rho_h(\omega_i))
+\end{align}
+
+
+
+
+
+
 \begin{itemize}
 	\item Theorie Konvergenzannahmen
 	\item Resultate Giles + parrallelFEM Paper
 	\item Algorithmus
 \end{itemize}
+
+\begin{algorithm}[H]
+	\DontPrintSemicolon
+	\SetAlgoLined
+	%\KwResult{}
+	\SetKwInOut{Input}{Input}\SetKwInOut{Output}{Output}
+	\Input{$h,n$}
+	\Output{$\widehat{Q}_{h,n}^{\text{MC}}$}
+	\BlankLine
+	Initialisiere: $ \Sigma =0, i=0 $\;
+	\While{$i<n$}{
+		Erzeuge ein Zufallssample: $ q(\omega_i,x)  \leftarrow $ RndVecField\;
+		Löse das Transportproblem: $ \rho_{h}(\omega_i,x)  \leftarrow$ Solve\;
+		Berechne das zugehörige Zielfuinktional: $ Q_h(\omega_i) \leftarrow$ CalcFunc\;
+		Setze: $ \Sigma = \Sigma + Q_h(\omega_i) $, i = i+1\;
+	}
+	\BlankLine
+	\KwResult{$\widehat{Q}_{h,n}^{\text{MC}} = \Sigma /n$}
+	\caption{Monte Carlo Methode angewandt auf das Transportproblem}
+\end{algorithm}
+
+\bigskip % add 12pt space in-between
+
+\begin{algorithm}[H]
+	\DontPrintSemicolon
+	\SetAlgoLined
+	%\KwResult{}
+	\SetKwInOut{Input}{Input}\SetKwInOut{Output}{Output}
+	\Input{h,n}
+	\Output{$\widehat{Q}_{h,n}^{\text{MC}}$}
+	\BlankLine
+	
+	\While{While condition}{
+		instructions\;
+		\eIf{condition}{
+			instructions1\;
+			instructions2\;  
+		}{
+			instructions3\;
+		}
+	}
+	\BlankLine
+	\KwResult{$\widehat{Q}_{h,n}^{\text{MC}} = \sum/n$}
+	\caption{While loop with If/Else condition}
+\end{algorithm}
+
+\bigskip % add 12pt space in-between
+
