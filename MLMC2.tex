@@ -59,17 +59,26 @@ Bei der Standard Monte Carlo Methode schätzen wir $ \mathbb{E}[Q] $ durch den M
 	\label{MC-Schätzer}
 	\widehat{Q}_{h,n}^{\text{MC}} \coloneqq \frac{1}{n} \sum_{i=1}^{n} Q_h(\omega_i) = \sum_{i=1}^{n} J(\rho_h(\omega_i))
 \end{align}
-
-
-
-
-
-
-\begin{itemize}
-	\item Theorie Konvergenzannahmen
-	\item Resultate Giles + parrallelFEM Paper
-	\item Algorithmus
-\end{itemize}
+Dabei modellieren wir das zufällige Flussvektorfeld $ q(\omega_i)  : \mathbb{D} \to \R^2 $, indem wir zunächst für $ \kappa(\omega_i) : \mathbb{D} \rightarrow (\R_{\text{sym}})^{d \times d} $ ein lognormal-verteiltes unabhängiges Zufallsfeld erzeugen und anschließend das Potentialströmungsproblem
+\begin{align*}
+\setlength\arraycolsep{1pt}
+&\text{Für } \kappa(\omega_i) : \mathbb{D} \rightarrow (\R_{\text{sym}})^{d \times d} \text{, bestimme } u(\omega_i,\cdot):\overline{\mathbb{D}} \to \R \text{ und } q(\omega_i, \cdot): \overline{\mathbb{D}} \to \R^2 \text{ mit } \\
+&\text{(PS)}
+\begin{cases}
+\begin{array}{rlll}
+\dive (q(\omega_i,x)) &= 0  &\text{, für } x \in \mathbb{ D}\\  
+q(\omega_i,x) &= - \kappa(\omega_i) \nabla u(\omega_i,x)  &\text{, für } x \in \mathbb{D}\\
+-q(\omega_i,x) \cdot n &= g_N(x)  &\text{, für } x \in \Gamma_N \\
+u(\omega_i,x) &= u_D(x)  &\text{, für } x \in \Gamma_D \\
+\end{array}
+\end{cases} \\
+\end{align*}
+lösen. Zur Erzeugung des lognormal-verteilten Zufallsfeldes können wir auf entsprechende Algorithmen zurückgreifen, in unserem Fall etwa dem sogenannten Circulant Embedding.
+Der Algorithmus wurde 1997 erstmals in \cite{dietrich1997fast} vorgestellt und 
+erzeugt Gauß'sche Zufallsfelder auf regulären Gittern und basiert auf der Fast Fourier Transformation, welche in der Literatur auch oft unter der Abkürzung FFT zu finden ist.
+Dabei werden spezielle Strukturen der Kovarianzmatrix ausgenutzt. Anschließend kann das Gauß'sche Zufallsfeld über eine einfache Transformation in ein lognormal Feld überführt werden. Mehr zu Circulant Embedding findet sich z.B. in \cite{schmidt2014stochastic} Abschnitt 12.
+Auch die grundsätzliche Idee Circulant Embedding für die Modellierung der Ausgangsdaten in stochastischen partiellen Differentialgleichungen zu nutzen ist keineswegs neu und findet sich z.B. in \cite{charrier2012strong} oder \cite{cliffe2011multilevel}.
+Wir haben nun alle Mittel in der Hand um die Monte Carlo Methode angewandt auf das Transportproblem als Algorithmus zu formulieren. Dabei fassen wir die eben erklärte Erzeugung des zufälligen Vektorfeldes in der Funktion 'RndVecField' zusammen:
 
 \begin{algorithm}[H]
 	\DontPrintSemicolon
@@ -82,8 +91,8 @@ Bei der Standard Monte Carlo Methode schätzen wir $ \mathbb{E}[Q] $ durch den M
 	Initialisiere: $ \Sigma =0, i=0 $\;
 	\While{$i<n$}{
 		Erzeuge ein Zufallssample: $ q(\omega_i,x)  \leftarrow $ RndVecField\;
-		Löse das Transportproblem: $ \rho_{h}(\omega_i,x)  \leftarrow$ Solve\;
-		Berechne das zugehörige Zielfuinktional: $ Q_h(\omega_i) \leftarrow$ CalcFunc\;
+		Löse das Transportproblem: $ \rho_{h}(\omega_i,x)  \leftarrow$ Löse mit Discontinuous Galerkin\;
+		Berechne das zugehörige Zielfuinktional: $ Q_h(\omega_i) \leftarrow$ Berechne Zielfunktional\;
 		Setze: $ \Sigma = \Sigma + Q_h(\omega_i) $, i = i+1\;
 	}
 	\BlankLine
@@ -92,6 +101,13 @@ Bei der Standard Monte Carlo Methode schätzen wir $ \mathbb{E}[Q] $ durch den M
 \end{algorithm}
 
 \bigskip % add 12pt space in-between
+
+
+\begin{itemize}
+	\item Theorie Konvergenzannahmen
+	\item Resultate Giles + parrallelFEM Paper
+	\item Algorithmus
+\end{itemize}
 
 \begin{algorithm}[H]
 	\DontPrintSemicolon
