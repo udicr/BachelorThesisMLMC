@@ -99,38 +99,54 @@ Wir haben nun alle Mittel in der Hand um die Monte Carlo Methode angewandt auf d
 	\KwResult{$\widehat{Q}_{h,n}^{\text{MC}} = \Sigma /n$}
 	\caption{Monte Carlo Methode angewandt auf das Transportproblem}
 \end{algorithm}
-
 \bigskip % add 12pt space in-between
-
-
-\begin{itemize}
-	\item Theorie Konvergenzannahmen
-	\item Resultate Giles + parrallelFEM Paper
-	\item Algorithmus
-\end{itemize}
-
-\begin{algorithm}[H]
-	\DontPrintSemicolon
-	\SetAlgoLined
-	%\KwResult{}
-	\SetKwInOut{Input}{Input}\SetKwInOut{Output}{Output}
-	\Input{h,n}
-	\Output{$\widehat{Q}_{h,n}^{\text{MC}}$}
-	\BlankLine
-	
-	\While{While condition}{
-		instructions\;
-		\eIf{condition}{
-			instructions1\;
-			instructions2\;  
-		}{
-			instructions3\;
-		}
-	}
-	\BlankLine
-	\KwResult{$\widehat{Q}_{h,n}^{\text{MC}} = \sum/n$}
-	\caption{While loop with If/Else condition}
-\end{algorithm}
-
+ Wir nehmen an dieser Stelle an, dass für die Gesamtkosten an Rechenoperationen, welche für die Berechnung eines $ Q_h(\omega_i) $ sich durch
+ \[
+ 	C(Q_h(\omega_i))  \lesssim h^{- \lambda}
+ \]
+ Wir können den 'mean square error' $ e(\widehat{Q}_{h,n}^{\text{MC}})^2 $ auch folgendermaßen betrachten:
+ \begin{align}
+ 	e(\widehat{Q}_{h,n}^{\text{MC}})^2 &= \mathbb{E} \left[ \left( \widehat{Q}_{h,n}^{\text{MC}} -  \mathbb{E}[\widehat{Q}_{h,n}^{\text{MC}}] + \mathbb{E}[\widehat{Q}_{h,n}^{\text{MC}}] - \mathbb{E}[Q] \right) \right] \nonumber \\
+ 	&= \mathbb{E} \left[ ( \widehat{Q}_{h,n}^{\text{MC}} -    \mathbb{E}[\widehat{Q}_{h,n}^{\text{MC}}]])^2 \right] + \left( \mathbb{E}[\widehat{Q}_{h,n}^{\text{MC}}] - \mathbb{E}[Q] \right)^2 \nonumber \\
+ 	&= \mathbb{V}[\widehat{Q}_{h,n}^{\text{MC}}] + \left( \mathbb{E}[\widehat{Q}_{h,n}^{\text{MC}}] - \mathbb{E}[Q] \right)^2
+ \end{align}
+ Da weiter $ \mathbb{E}[\widehat{Q}_{h,n}^{\text{MC}}] = \mathbb{E}[Q_h] $ und $ \mathbb{V}[\widehat{Q}_{h,n}^{\text{MC}}] = \frac{1}{n^2} n \mathbb{V}[Q_h] $ gilt, erhalten wir so 
+ 
+ 
+ 
+ 
 \bigskip % add 12pt space in-between
-
+ 
+ 
+ 
+%\begin{itemize}
+%	\item Theorie Konvergenzannahmen
+%	\item Resultate Giles + parrallelFEM Paper
+%	\item Algorithmus
+%\end{itemize}
+%
+%\begin{algorithm}[H]
+%	\DontPrintSemicolon
+%	\SetAlgoLined
+%	%\KwResult{}
+%	\SetKwInOut{Input}{Input}\SetKwInOut{Output}{Output}
+%	\Input{h,n}
+%	\Output{$\widehat{Q}_{h,n}^{\text{MC}}$}
+%	\BlankLine
+%	
+%	\While{While condition}{
+%		instructions\;
+%		\eIf{condition}{
+%			instructions1\;
+%			instructions2\;  
+%		}{
+%			instructions3\;
+%		}
+%	}
+%	\BlankLine
+%	\KwResult{$\widehat{Q}_{h,n}^{\text{MC}} = \sum/n$}
+%	\caption{While loop with If/Else condition}
+%\end{algorithm}
+%
+%\bigskip % add 12pt space in-between
+%
