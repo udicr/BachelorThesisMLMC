@@ -36,12 +36,18 @@ Da wir an der numerischen Lösung partieller Differentialgleichungen interessier
 Wir nutzen dabei das in Abschnitt \ref{DG} behandelte Discontinuous Galerkin Verfahren zur Lösung des linearen Transportproblems. Außerdem werden wir im Folgenden eine uniforme Familie $ \{ \mathcal{T}_h \} $ von Zerlegungen von $ \mathcal{D} $ (vgl. Abschnitt \ref{num_pot} Definition \ref{FEMDISC}) als Diskretisierungsgitter für die Ortsdiskretisierung, sowie $ \mathbb{T}_{\Delta t} $ als Zerlegung von $ \mathbb{T} $ betrachten.
 Insbesondere wählen wir später $ \Delta t $ in Abhängigkeit von $ h $, etwa $ \Delta t = c  h $ für ein $ c>0 $ und betrachten dann
 $ Q_h(\omega) \coloneqq Q_{h,ch}(\omega) = J(\rho_h(\omega )) \coloneqq J(\rho_{h,ch}(\omega )) $.
-An dieser Stelle sei betont, dass es sich in diesem Abschnitt bei $ \rho_h $ um eine volldiskrtisierte Approximation an $ \rho $ handelt und nicht die Semidiskretisierung aus Abschnitt \ref{DG} gemeint ist.
+An dieser Stelle sei betont, dass es sich in diesem Abschnitt bei $ \rho_h $ um eine volldiskrtisierte Approximation an $ \rho $ handelt und nicht die Semidiskretisierung aus Abschnitt \ref{DG} gemeint ist. Um die Notation im Folgenden zu erleichtern schreiben wir für $ a,b \in \R_{> 0} $ $ a \lesssim b $, falls $\frac{a}{b}$ gleichmäßig beschränkt und insbesondere unabhängig von den Parametern $ h $ und $ n $ ist.
 \begin{Annahme}(Konvergenz im Erwartungswert des Zielfunktionals)\\
+	\label{Annahme1}
 	In obiger Situation gelte 
 	\[ 
 	\mathbb{E}[Q_h] \to \mathbb{E}[Q] \text{ für } h \to 0   
 	\]
+	Genauer existiere ein $ \alpha > 0 $, sodass
+	\[
+		\abs{\mathbb{E}[Q_h-Q]} \lesssim h^{\alpha}
+	\]
+	Wir nennen $ \alpha $ dann auch die Konvergenzrate von $ Q_h $.
 \end{Annahme}
 
 
@@ -78,8 +84,8 @@ Der Algorithmus wurde 1997 erstmals in \cite{dietrich1997fast} vorgestellt und
 erzeugt Gauß'sche Zufallsfelder auf regulären Gittern und basiert auf der Fast Fourier Transformation, welche in der Literatur auch oft unter der Abkürzung FFT zu finden ist.
 Dabei werden spezielle Strukturen der Kovarianzmatrix ausgenutzt. Anschließend kann das Gauß'sche Zufallsfeld über eine einfache Transformation in ein lognormal Feld überführt werden. Mehr zu Circulant Embedding findet sich z.B. in \cite{schmidt2014stochastic} Abschnitt 12.
 Auch die grundsätzliche Idee Circulant Embedding für die Modellierung der Ausgangsdaten in stochastischen partiellen Differentialgleichungen zu nutzen ist keineswegs neu und findet sich z.B. in \cite{charrier2012strong} oder \cite{cliffe2011multilevel}.
-Wir haben nun alle Mittel in der Hand um die Monte Carlo Methode angewandt auf das Transportproblem als Algorithmus zu formulieren. Dabei fassen wir die eben erklärte Erzeugung des zufälligen Vektorfeldes in der Funktion 'RndVecField' zusammen:
-
+Wir haben nun alle Mittel in der Hand um die Monte Carlo Methode angewandt auf das Transportproblem als Algorithmus zu formulieren. Dabei fassen wir die eben erklärte Erzeugung des zufälligen Vektorfeldes in der Funktion 'RndVecField' zusammen.
+Außerdem gehen wir davon aus, dass bereits alle übrigen freien Parameter, sowie die Rand- und Anfangswerte fest gewählt sind.
 \begin{algorithm}[H]
 	\DontPrintSemicolon
 	\SetAlgoLined
@@ -98,22 +104,39 @@ Wir haben nun alle Mittel in der Hand um die Monte Carlo Methode angewandt auf d
 	\BlankLine
 	\KwResult{$\widehat{Q}_{h,n}^{\text{MC}} = \Sigma /n$}
 	\caption{Monte Carlo Methode angewandt auf das Transportproblem}
-\end{algorithm}
-\bigskip % add 12pt space in-between
- Wir nehmen an dieser Stelle an, dass für die Gesamtkosten an Rechenoperationen, welche für die Berechnung eines $ Q_h(\omega_i) $ sich durch
+\end{algorithm}\bigskip % add 12pt space in-between
+
+Wir nehmen an dieser Stelle an, dass für die Gesamtkosten an Rechenoperationen, welche für die Berechnung eines $ Q_h(\omega_i) $ sich durch
  \[
- 	C(Q_h(\omega_i))  \lesssim h^{- \lambda}
+ 	C(Q_h(\omega_i))  \lesssim h^{- \gamma}
  \]
- Wir können den 'mean square error' $ e(\widehat{Q}_{h,n}^{\text{MC}})^2 $ auch folgendermaßen betrachten:
+ Im Folgenden wollen uns überlegen, wie wir unter dieser Annahme die Kosten für $ C_{\epsilon} $ abschätzen können. Diese Überlegungen finden sich auch in \cite{cliffe2011multilevel}.
+ Der 'mean square error' $ e(\widehat{Q}_{h,n}^{\text{MC}})^2 $, also das Quadrat des RMSE, lässt sich nämlich auch folgendermaßen betrachten:
  \begin{align}
  	e(\widehat{Q}_{h,n}^{\text{MC}})^2 &= \mathbb{E} \left[ \left( \widehat{Q}_{h,n}^{\text{MC}} -  \mathbb{E}[\widehat{Q}_{h,n}^{\text{MC}}] + \mathbb{E}[\widehat{Q}_{h,n}^{\text{MC}}] - \mathbb{E}[Q] \right) \right] \nonumber \\
  	&= \mathbb{E} \left[ ( \widehat{Q}_{h,n}^{\text{MC}} -    \mathbb{E}[\widehat{Q}_{h,n}^{\text{MC}}]])^2 \right] + \left( \mathbb{E}[\widehat{Q}_{h,n}^{\text{MC}}] - \mathbb{E}[Q] \right)^2 \nonumber \\
  	&= \mathbb{V}[\widehat{Q}_{h,n}^{\text{MC}}] + \left( \mathbb{E}[\widehat{Q}_{h,n}^{\text{MC}}] - \mathbb{E}[Q] \right)^2
  \end{align}
- Da weiter $ \mathbb{E}[\widehat{Q}_{h,n}^{\text{MC}}] = \mathbb{E}[Q_h] $ und $ \mathbb{V}[\widehat{Q}_{h,n}^{\text{MC}}] = \frac{1}{n^2} n \mathbb{V}[Q_h] $ gilt, erhalten wir so 
+ Da weiter $ \mathbb{E}[\widehat{Q}_{h,n}^{\text{MC}}] = \mathbb{E}[Q_h] $ und $ \mathbb{V}[\widehat{Q}_{h,n}^{\text{MC}}] = \frac{1}{n^2} n \mathbb{V}[Q_h] = \frac{1}{n}  \mathbb{V}[Q_h] $ gilt, erhalten wir so 
+ \begin{align}
+ \label{mseMC}
+	 e(\widehat{Q}_{h,n}^{\text{MC}})^2 = \underbrace{\frac{1}{n}  \mathbb{V}[Q_h]}_{(1)} + \underbrace{(\mathbb{E}[Q_h - Q])^2}_{(2)} \ .
+ \end{align}
+ Dabei ist (1), wie wir eben bereits gesehen haben, die Varianz des Monte Carlo Schätzers und spiegelt daher den Schätzfehler wider. Unter der zusätzlichen Annahme, dass Erwartungswert und Varianz des Schätzers existieren, konvergiert dieser Fehler nach dem starken Gesetz großer Zahlen für $ n \to \infty $ gegen $ 0 $.
+ (2) hingegen hängt als Quadrat über den Gesamtapproximationsfehler zwischen $ Q_h $
+ und $ Q $ nur von der Diskretisierungsschrittweite $ h $ ab. Ist das verwendete Lösungsverfahren konvergent, so geht (2) gegen $ 0 $ für $ h \to 0 $.
+ Wollen wir den RMSE also durch ein $ \epsilon > 0 $ beschränken, ist es hinreichend dafür zu sorgen, dass sowohl (1) also auch (2) kleiner als $ \frac{\epsilon^2}{2} $ ausfallen. Wir müssen also $ h $ klein genug und zugleich $ n $ groß genug wählen.
+ Genauer kann dies, unter der Annahme, dass $ \mathbb{V}[Q_h] $ annäherend konstant ist und somit nicht von $ h $ abhängt, erreicht werden, indem wir $ n \gtrsim \epsilon^{-2} $ und $ h \lesssim \epsilon^{\frac{1}{\alpha}}  $ (vgl. Annahme \ref{Annahme1}).
+ Da wir weiter angenommen hatten, dass $ C(Q_h(\omega_i))  \lesssim h^{- \gamma} $ gilt, erhalten wir 
+ \[ 
+ 	C(\widehat{Q}_{h,n}^{\text{MC}}) \lesssim n h^{-\gamma}
+ \]
+ und somit Gesamtkosten für einen erwarteten Schätzfehler kleiner als $ \epsilon $ von
+ \begin{align}
+	 C_{\epsilon}(\widehat{Q}_{h,n}^{\text{MC}}) \lesssim \epsilon^{-2-\frac{\gamma}{\alpha}}
+ \end{align}
  
- 
- 
+\subsection{Die Multilevel Monte Carlo Methode}
  
 \bigskip % add 12pt space in-between
  
