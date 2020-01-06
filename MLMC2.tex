@@ -137,7 +137,58 @@ Wir nehmen an dieser Stelle an, dass für die Gesamtkosten an Rechenoperationen,
  \end{align}
  
 \subsection{Die Multilevel Monte Carlo Methode}
- 
+
+Wie wir bereits in Abschnitt \ref{MLMC} dargelegt haben ist die entscheidende Idee der Multilevel Monte Carlo Methode Zufallssamples auf mehreren verschiedenen Leveln $ \{ h_l : l = 0,\dots,L \} $ mit $ h_0 > h_1 > \cdots > h_L $ zu betrachten. Wir erinnern an dieser Stelle daran, dass wir für die Menge aller betrachtbaren Level $ \mathcal{H} = \{ h_0 , h_1 \coloneqq \frac{h_0}{2},h_2 \coloneqq \frac{h_1}{2} = \frac{h_0}{4}, \dots \} $ gefordert hatten, insbesondere war hier $0 \in \overline{\mathcal{H}}$. Theoretisch gesehen berechnet der Algorithmus, welchen wir an späterer Stelle noch formulieren wollen, für ein gegebenes $ \epsilon $ nur Samples auf den für diese Genauigkeit benötigten Leveln, also einer endlichen Untermenge von $ \mathcal{H} $. Die Menge der tatsächlich betrachteten Samples $ \tilde{\mathcal{H}} = \{ h_l : l = 0,\dots,L \} \subset \mathcal{H} $ ist also stets endlich.
+Wie bereits in \ref{MLMC} erhalten wir 
+\[
+\mathbb{E}[Q_{h_L}] = \mathbb{E}[Q_{h_0}] + \sum_ {l=0}^L \mathbb{E}[Q_{h_l}-Q_{h_{l-1}}]  
+\]
+Um uns an dieser Stelle die Notation zu vereinfachen führen wir an dieser Stelle für $ l=0,\dots,L $ die Zufallsvariable $ Y_l $ ein mit $ Y_0(\omega) \coloneqq Q_{h_0}(\omega) = J(\rho_{h_0}(\omega)) $ und $ Y_l \coloneqq Q_{h_l}(\omega) - Q_{h_{l-1}}(\omega) =  J(\rho_{h_l}(\omega)) - J(\rho_{h_{l-1}}(\omega))  $ für $ l=1,\dots,L $. Man beachte hierbei, dass wie bereits an früher Stelle erwähnt, beim Vergleich zweier verschiedener Level das gleiche Sample zugrunde gelegt wird. 
+So folgt:
+\[
+	\mathbb{E}[Q_{h_L}] = \sum_{l=0}^L \mathbb{E}[Y_l]
+\]
+Dann ist der Multilevel Monte Carlo Schätzer gegeben durch die Summe der Monte Carlo Schätzer $ \widehat{Y}_{h,n_l}^{\text{MC}} $ für die einzelnen Erwartungswerte $ \mathbb{E}[Y_l] $:
+\begin{align}
+	\widehat{Q}_{\tilde{\mathcal{H}},\{ n_l \}_{l=l_0}^L }^{\text{MLMC}} = \sum_{l=0}^{L} \widehat{Y}_{h,n_l}^{\text{MC}} =  \sum_{l=0}^{L} \frac{1}{n_l} \sum_{i=1}^{n_l} \left( Q_{h_l}(\omega_i) - Q_{h_{l-1}}(\omega_i)\right)
+\end{align}
+Da für jedes $ l $ $ \widehat{Y}_{h,n_l}^{\text{MC}} $ getrennt berechnet und somit jeder Erwartungswert $ \mathbb{E}[Y_l] $ unabhängig geschätzt wird, ist die Varianz des MLMC-Schätzers gegeben durch $\mathbb{V}[ \widehat{Q}_{\tilde{\mathcal{H}},\{ n_l \}_{l=l_0}^L }^{\text{MLMC}} ]$
+
+
+
+
+ \begin{algorithm}[H]
+ 	\DontPrintSemicolon
+ 	\SetAlgoLined
+ 	%\KwResult{}
+ 	\SetKwInOut{Input}{Input}\SetKwInOut{Output}{Output}
+ 	\Input{$ l_0,L_0 \in \N $ und $ N_0 = \{ n_{l_0},\dots,n_{L_0} \}$}
+ 	\Output{$\widehat{Q}_{\mathcal{H},\{ n_l \}_{l=l_0}^L }^{\text{MLMC}} $}
+ 	\BlankLine
+ 	
+ 	Setze $ \mathcal{R} = \{ l_0,\dots,L_0 \} $ und die Anzahl der benötigten Samples $ \Delta N = \{ \Delta n_l \}_{l=l_0}^{L_0} = N_0$ und $ i = 0 $\;
+ 	\While{$\Delta n_l > 0$ für mindestens ein $ l \in \mathcal{R} $ }{
+ 		\For{alle $ l \in \mathcal{R} $ mit $\Delta n_l > 0$ }{
+ 			Berechne Zielfunktional und benötigte Kosten: $ Y_l,C_l \leftarrow $ SubroutineEstimator$(\Delta n_l,l)$\;
+ 			Update $ C_l,\abs{\mathbb{E}[Y_l]},\mathbb{V}[Y_l] $ und setze $n_l = \Delta n_l, \Delta n_l=0$\;
+ 		}
+ 		Schätze die Exponenten $ \alpha,\beta,\gamma $ mit den Annahmen von Satz TODO\;
+ 		Schätze optimales $ N_i = \{ n_{l_i},\dots,n_{L_i} \} $ mit Formel TODO und berechne $\Delta N$\;
+ 		Teste auf schwache Konvergenz TODO\;
+ 		\eIf{nicht konvergiert}{
+ 			Setze $\mathcal{R} = \{ l_0,\dots,L_i,L_{i+1} \coloneqq L_i+1 \} $\;
+ 			i = i+1 \;
+ 			
+ 		} {
+ 		 $ \Delta N = \{0,\dots,0\}$\;
+ 		}
+ 	
+ 	}
+ 	\BlankLine
+ 	\KwResult{$\widehat{Q}_{\mathcal{H},\{ n_l \}_{l=l_0}^L }^{\text{MLMC}} $}
+ 	\caption{While loop with If/Else condition}
+ \end{algorithm}
+
 \bigskip % add 12pt space in-between
  
  
@@ -148,28 +199,4 @@ Wir nehmen an dieser Stelle an, dass für die Gesamtkosten an Rechenoperationen,
 %	\item Algorithmus
 %\end{itemize}
 %
-%\begin{algorithm}[H]
-%	\DontPrintSemicolon
-%	\SetAlgoLined
-%	%\KwResult{}
-%	\SetKwInOut{Input}{Input}\SetKwInOut{Output}{Output}
-%	\Input{h,n}
-%	\Output{$\widehat{Q}_{h,n}^{\text{MC}}$}
-%	\BlankLine
-%	
-%	\While{While condition}{
-%		instructions\;
-%		\eIf{condition}{
-%			instructions1\;
-%			instructions2\;  
-%		}{
-%			instructions3\;
-%		}
-%	}
-%	\BlankLine
-%	\KwResult{$\widehat{Q}_{h,n}^{\text{MC}} = \sum/n$}
-%	\caption{While loop with If/Else condition}
-%\end{algorithm}
-%
-%\bigskip % add 12pt space in-between
-%
+
