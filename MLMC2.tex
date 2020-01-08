@@ -151,23 +151,55 @@ So folgt:
 \]
 Dann ist der Multilevel Monte Carlo Schätzer gegeben durch die Summe der Monte Carlo Schätzer $ \widehat{Y}_{h,n_l}^{\text{MC}} $ für die einzelnen Erwartungswerte $ \mathbb{E}[Y_l] $:
 \begin{align}
-	\widehat{Q}_{\tilde{\mathcal{H}},\{ n_l \}_{l=0}^L }^{\text{MLMC}} = \sum_{l=0}^{L} \widehat{Y}_{h,n_l}^{\text{MC}} =  \sum_{l=0}^{L} \frac{1}{n_l} \sum_{i=1}^{n_l} \left( Q_{h_l}(\omega_i) - Q_{h_{l-1}}(\omega_i)\right)
+	\widehat{Q}_{\tilde{\mathcal{H}},\{ n_l \}_{l=0}^L }^{\text{MLMC}} = \sum_{l=0}^{L} \widehat{Y}_{l,n_l}^{\text{MC}} =  \sum_{l=0}^{L} \frac{1}{n_l} \sum_{i=1}^{n_l} \left( Q_{h_l}(\omega_i) - Q_{h_{l-1}}(\omega_i)\right)
 \end{align}
-Da für jedes $ l $ $ \widehat{Y}_{h,n_l}^{\text{MC}} $ getrennt berechnet und somit jeder Erwartungswert $ \mathbb{E}[Y_l] $ unabhängig geschätzt wird, erhalten wir die Varianz des MLMC-Schätzers durch $\mathbb{V}[ \widehat{Q}_{\tilde{\mathcal{H}},\{ n_l \}_{l=0}^L }^{\text{MLMC}} ] = \sum_{l=0}^{L} \frac{1}{n_l} \mathbb{V}[Y_l]$. Wie in \ref{badumts} lässt sich dann der mean square error dann ausdrücken durch:
+Da für jedes $ l \ $ $ \widehat{Y}_{l,n_l}^{\text{MC}} $ getrennt berechnet und somit jeder Erwartungswert $ \mathbb{E}[Y_l] $ unabhängig geschätzt wird, erhalten wir die Varianz des MLMC-Schätzers durch $\mathbb{V}[ \widehat{Q}_{\tilde{\mathcal{H}},\{ n_l \}_{l=0}^L }^{\text{MLMC}} ] = \sum_{l=0}^{L} \frac{1}{n_l} \mathbb{V}[Y_l]$. Wie in \ref{badumts} lässt sich dann der mean square error dann ausdrücken durch:
 \begin{align}
 e(\widehat{Q}_{\tilde{\mathcal{H}},\{ n_l \}_{l=0}^L }^{\text{MLMC}})^2 &= \mathbb{E}  \left[ (\widehat{Q}_{\tilde{\mathcal{H}},\{ n_l \}_{l=0}^L }^{\text{MLMC}}- \mathbb{E}[Q])^2 \right] \nonumber \\
 &= \mathbb{E}  \left[ (\widehat{Q}_{\tilde{\mathcal{H}},\{ n_l \}_{l=0}^L }^{\text{MLMC}} - \mathbb{E}[\widehat{Q}_{\tilde{\mathcal{H}},\{ n_l \}_{l=0}^L }^{\text{MLMC}}]+\mathbb{E}[\widehat{Q}_{\tilde{\mathcal{H}},\{ n_l \}_{l=0}^L }^{\text{MLMC}}]- \mathbb{E}[Q])^2 \right] \nonumber \\
 &= \mathbb{E} \left[  (\widehat{Q}_{\tilde{\mathcal{H}},\{ n_l \}_{l=0}^L }^{\text{MLMC}}-\mathbb{E}[\widehat{Q}_{\tilde{\mathcal{H}},\{ n_l \}_{l=0}^L }^{\text{MLMC}}])^2 \right] +  \left(  \mathbb{E}[\widehat{Q}_{\tilde{\mathcal{H}},\{ n_l \}_{l=0}^L }^{\text{MLMC}}] - \mathbb{E}[Q] \right)^2 \nonumber \\
 &= \underbrace{\sum_{l=0}^L \frac{1}{n_l} \mathbb{V}[Y_l]}_{(1)} + \underbrace{\left( \mathbb{E}[Q_{h_L}-Q] \right)^2}_{(2)}
 \end{align}
-\begin{Bemerkung}(Was lässt sich hieraus ablesen?)
+\begin{Bemerkung}Was lässt sich hieraus ablesen?
 	\begin{itemize}
 		\item $ (2) $ stimmt mit $ (2) $ aus \ref{mseMC} überein. Insbesondere ist also wieder  $ h \lesssim \epsilon^{\frac{1}{\alpha}}  $ dafür hinreichend, dass der Diskretisierungs- und Lösungsfehler kleiner als $ \frac{\epsilon^2}{2} $  ausfällt.
 		\item Um also einen kleineren RMSE als $ \epsilon $ zu erhalten, muss auch $ (1) \leq  \frac{\epsilon^2}{2} $ gelten.
 		\item Unter Annahme \ref{Annahme1} gilt $ \mathbb{V}[Y_l] = \mathbb{V}[Q_{h_l}-Q_{h_{l-1}}] \stackrel{l \to \infty}{\to} 0  $, das bedeutet für uns: Je größer $ l $ und damit je feiner die Gitterweite $ h_l $ ist, desto weniger Samples werden benötigt um $ \mathbb{E}[Y_l] $ zu schätzen.
-		\item Das gröbste
+		\item Das niedrigste betrachtete Level $ l = 0 $ kann unabhängig von $ \epsilon $ fest gewählt werden. So bleibt insbesondere die benötigte Anzahl an Rechenoperationen pro Sample auf dem niedrigsten Level konstant, auch wenn $ \epsilon \to 0 $ geht. Bei der tatsächlichen Anwendung muss allerdings $ h_0 $ so gewählt werden, dass zumindest ein Mindestmaß an Auflösung des Problems gegeben ist.
 	\end{itemize}
-\end{Bemerkung}
+\end{Bemerkung} 
+Wir sind nun in der Lage folgendes zentrale Resultat aus \cite{cliffe2011multilevel} nachzuvollziehen:
+\begin{Satz}$ \newline $
+	\label{MLMCTheorem}
+	Sei in obiger Situation $ \widehat{Y}_l \coloneqq  \widehat{Y}_{l,n_l}^{\text{MC}}$ der Monte Carlo Schätzer für $ Y_l  $ und $ C_l \coloneqq C(Y_l^{(i)}) $ die Anzahl der Rechenoperationen, welche für die Berechnung eines Samples von $ Y_l $ benötigt werden.
+	Es seien $ \alpha,\beta,\gamma,c_1,c_2,c_3 > 0 $ Konstanten mit $ \alpha \geq \frac{1}{2} \min(\beta,\gamma) $ und
+	\begin{enumerate}[label=(\alph*)]
+		\item $\abs{\mathbb{E}[Q_{h_l}-Q]} \leq c_1 h^{\alpha}_l $ (vgl. Annahme \ref{Annahme1})
+		\item $ \mathbb{V}[Y_l] = \mathbb{V}[Q_{h_l}-Q_{h_{l-1}}] \leq c_2 h_l^{\beta} $
+		\item $ C_l \leq c_3 h_l^{-\gamma} $ \ .
+	\end{enumerate}
+	Dann existiert für jedes $ 0 < \epsilon < \frac{1}{e} $ ein $ L \in \N $ und ein zugehöriges $ h_L \in \mathcal{H} $, sodass für $ \tilde{\mathcal{H}} = \{ h_l \}_{l=0}^L \subset \mathcal{H } $ gelten:
+	\[
+	e(\widehat{Q}_{\tilde{\mathcal{H}},\{ n_l \}_{l=0}^L }^{\text{MLMC}})^2 = \mathbb{E} \left[ \left( \widehat{Q}_{\tilde{\mathcal{H}},\{ n_l \}_{l=0}^L }^{\text{MLMC}} - \mathbb{E}[Q] \right)^2 \right] < \epsilon^2 \ ,
+	\]
+	
+	\[
+	C(\widehat{Q}_{\tilde{\mathcal{H}},\{ n_l \}_{l=0}^L }^{\text{MLMC}}) \leq \tilde{c} 
+	\begin{cases}
+		\begin{array}{llr}
+		&\epsilon^{-2} , &\text{falls } \beta > \gamma \\
+		&\epsilon^{-2} \log(\epsilon)^2 , &\text{falls } \beta = \gamma\\
+		&\epsilon^{-2-(\gamma-\beta)/\alpha} , &\text{falls } \beta < \gamma
+		\end{array}
+	\end{cases}
+	\]
+	Dabei darf $ \tilde{c}$  von $ c_1,c_2 $ und $ c_3 $ abhängen.
+\end{Satz}
+\begin{proof}
+	todo
+\end{proof}
+
+
 
 
 
