@@ -106,14 +106,15 @@ Außerdem gehen wir davon aus, dass bereits alle übrigen freien Parameter, sowi
 	\caption{Monte Carlo Methode angewandt auf das Transportproblem}
 \end{algorithm}\bigskip % add 12pt space in-between
 
-Wir nehmen an dieser Stelle an, dass für die Gesamtkosten an Rechenoperationen, welche für die Berechnung eines $ Q_h(\omega_i) $ sich durch
+Wir nehmen an dieser Stelle an, dass sich die Gesamtkosten an Rechenoperationen, welche für die Berechnung eines $ Q_h(\omega_i) $ benötigt werden, durch
  \[
  	C(Q_h(\omega_i))  \lesssim h^{- \gamma}
- \]
+ \] beschränken lassen.
  Im Folgenden wollen uns überlegen, wie wir unter dieser Annahme die Kosten für $ C_{\epsilon} $ abschätzen können. Diese Überlegungen finden sich auch in \cite{cliffe2011multilevel}.
  Der 'mean square error' $ e(\widehat{Q}_{h,n}^{\text{MC}})^2 $, also das Quadrat des RMSE, lässt sich nämlich auch folgendermaßen betrachten:
  \begin{align}
- 	e(\widehat{Q}_{h,n}^{\text{MC}})^2 &= \mathbb{E} \left[ \left( \widehat{Q}_{h,n}^{\text{MC}} -  \mathbb{E}[\widehat{Q}_{h,n}^{\text{MC}}] + \mathbb{E}[\widehat{Q}_{h,n}^{\text{MC}}] - \mathbb{E}[Q] \right) \right] \nonumber \\
+ \label{badumts}
+ 	e(\widehat{Q}_{h,n}^{\text{MC}})^2 &= \mathbb{E} \left[ \left( \widehat{Q}_{h,n}^{\text{MC}} -  \mathbb{E}[\widehat{Q}_{h,n}^{\text{MC}}] + \mathbb{E}[\widehat{Q}_{h,n}^{\text{MC}}] - \mathbb{E}[Q] \right)^2 \right] \nonumber \\
  	&= \mathbb{E} \left[ ( \widehat{Q}_{h,n}^{\text{MC}} -    \mathbb{E}[\widehat{Q}_{h,n}^{\text{MC}}]])^2 \right] + \left( \mathbb{E}[\widehat{Q}_{h,n}^{\text{MC}}] - \mathbb{E}[Q] \right)^2 \nonumber \\
  	&= \mathbb{V}[\widehat{Q}_{h,n}^{\text{MC}}] + \left( \mathbb{E}[\widehat{Q}_{h,n}^{\text{MC}}] - \mathbb{E}[Q] \right)^2
  \end{align}
@@ -138,7 +139,7 @@ Wir nehmen an dieser Stelle an, dass für die Gesamtkosten an Rechenoperationen,
  
 \subsection{Die Multilevel Monte Carlo Methode}
 
-Wie wir bereits in Abschnitt \ref{MLMC} dargelegt haben ist die entscheidende Idee der Multilevel Monte Carlo Methode Zufallssamples auf mehreren verschiedenen Leveln $ \{ h_l : l = 0,\dots,L \} $ mit $ h_0 > h_1 > \cdots > h_L $ zu betrachten. Wir erinnern an dieser Stelle daran, dass wir für die Menge aller betrachtbaren Level $ \mathcal{H} = \{ h_0 , h_1 \coloneqq \frac{h_0}{2},h_2 \coloneqq \frac{h_1}{2} = \frac{h_0}{4}, \dots \} $ gefordert hatten, insbesondere war hier $0 \in \overline{\mathcal{H}}$. Theoretisch gesehen berechnet der Algorithmus, welchen wir an späterer Stelle noch formulieren wollen, für ein gegebenes $ \epsilon $ nur Samples auf den für diese Genauigkeit benötigten Leveln, also einer endlichen Untermenge von $ \mathcal{H} $. Die Menge der tatsächlich betrachteten Samples $ \tilde{\mathcal{H}} = \{ h_l : l = 0,\dots,L \} \subset \mathcal{H} $ ist also stets endlich.
+Wie wir bereits in Abschnitt \ref{MLMC} dargelegt haben, ist die entscheidende Idee der Multilevel Monte Carlo Methode Zufallssamples auf mehreren verschiedenen Leveln $ \{ h_l : l = 0,\dots,L \} $ mit $ h_0 > h_1 > \cdots > h_L $ zu betrachten. Wir erinnern an dieser Stelle daran, dass wir für die Menge aller betrachtbaren Level $ \mathcal{H} = \{ h_0 , h_1 \coloneqq \frac{h_0}{2},h_2 \coloneqq \frac{h_1}{2} = \frac{h_0}{4}, \dots \} $ gefordert hatten, insbesondere war hier $0 \in \overline{\mathcal{H}}$. Theoretisch gesehen berechnet der Algorithmus, welchen wir an späterer Stelle noch formulieren wollen, für ein gegebenes $ \epsilon $ nur Samples auf den für diese Genauigkeit benötigten Leveln, einer endlichen Untermenge von $ \mathcal{H} $. Die Menge der tatsächlich betrachteten Samples $ \tilde{\mathcal{H}} = \{ h_l : l = 0,\dots,L \} \subset \mathcal{H} $ ist also stets endlich.
 Wie bereits in \ref{MLMC} erhalten wir 
 \[
 \mathbb{E}[Q_{h_L}] = \mathbb{E}[Q_{h_0}] + \sum_ {l=0}^L \mathbb{E}[Q_{h_l}-Q_{h_{l-1}}]  
@@ -150,10 +151,23 @@ So folgt:
 \]
 Dann ist der Multilevel Monte Carlo Schätzer gegeben durch die Summe der Monte Carlo Schätzer $ \widehat{Y}_{h,n_l}^{\text{MC}} $ für die einzelnen Erwartungswerte $ \mathbb{E}[Y_l] $:
 \begin{align}
-	\widehat{Q}_{\tilde{\mathcal{H}},\{ n_l \}_{l=l_0}^L }^{\text{MLMC}} = \sum_{l=0}^{L} \widehat{Y}_{h,n_l}^{\text{MC}} =  \sum_{l=0}^{L} \frac{1}{n_l} \sum_{i=1}^{n_l} \left( Q_{h_l}(\omega_i) - Q_{h_{l-1}}(\omega_i)\right)
+	\widehat{Q}_{\tilde{\mathcal{H}},\{ n_l \}_{l=0}^L }^{\text{MLMC}} = \sum_{l=0}^{L} \widehat{Y}_{h,n_l}^{\text{MC}} =  \sum_{l=0}^{L} \frac{1}{n_l} \sum_{i=1}^{n_l} \left( Q_{h_l}(\omega_i) - Q_{h_{l-1}}(\omega_i)\right)
 \end{align}
-Da für jedes $ l $ $ \widehat{Y}_{h,n_l}^{\text{MC}} $ getrennt berechnet und somit jeder Erwartungswert $ \mathbb{E}[Y_l] $ unabhängig geschätzt wird, ist die Varianz des MLMC-Schätzers gegeben durch $\mathbb{V}[ \widehat{Q}_{\tilde{\mathcal{H}},\{ n_l \}_{l=l_0}^L }^{\text{MLMC}} ]$
-
+Da für jedes $ l $ $ \widehat{Y}_{h,n_l}^{\text{MC}} $ getrennt berechnet und somit jeder Erwartungswert $ \mathbb{E}[Y_l] $ unabhängig geschätzt wird, erhalten wir die Varianz des MLMC-Schätzers durch $\mathbb{V}[ \widehat{Q}_{\tilde{\mathcal{H}},\{ n_l \}_{l=0}^L }^{\text{MLMC}} ] = \sum_{l=0}^{L} \frac{1}{n_l} \mathbb{V}[Y_l]$. Wie in \ref{badumts} lässt sich dann der mean square error dann ausdrücken durch:
+\begin{align}
+e(\widehat{Q}_{\tilde{\mathcal{H}},\{ n_l \}_{l=0}^L }^{\text{MLMC}})^2 &= \mathbb{E}  \left[ (\widehat{Q}_{\tilde{\mathcal{H}},\{ n_l \}_{l=0}^L }^{\text{MLMC}}- \mathbb{E}[Q])^2 \right] \nonumber \\
+&= \mathbb{E}  \left[ (\widehat{Q}_{\tilde{\mathcal{H}},\{ n_l \}_{l=0}^L }^{\text{MLMC}} - \mathbb{E}[\widehat{Q}_{\tilde{\mathcal{H}},\{ n_l \}_{l=0}^L }^{\text{MLMC}}]+\mathbb{E}[\widehat{Q}_{\tilde{\mathcal{H}},\{ n_l \}_{l=0}^L }^{\text{MLMC}}]- \mathbb{E}[Q])^2 \right] \nonumber \\
+&= \mathbb{E} \left[  (\widehat{Q}_{\tilde{\mathcal{H}},\{ n_l \}_{l=0}^L }^{\text{MLMC}}-\mathbb{E}[\widehat{Q}_{\tilde{\mathcal{H}},\{ n_l \}_{l=0}^L }^{\text{MLMC}}])^2 \right] +  \left(  \mathbb{E}[\widehat{Q}_{\tilde{\mathcal{H}},\{ n_l \}_{l=0}^L }^{\text{MLMC}}] - \mathbb{E}[Q] \right)^2 \nonumber \\
+&= \underbrace{\sum_{l=0}^L \frac{1}{n_l} \mathbb{V}[Y_l]}_{(1)} + \underbrace{\left( \mathbb{E}[Q_{h_L}-Q] \right)^2}_{(2)}
+\end{align}
+\begin{Bemerkung}(Was lässt sich hieraus ablesen?)
+	\begin{itemize}
+		\item $ (2) $ stimmt mit $ (2) $ aus \ref{mseMC} überein. Insbesondere ist also wieder  $ h \lesssim \epsilon^{\frac{1}{\alpha}}  $ dafür hinreichend, dass der Diskretisierungs- und Lösungsfehler kleiner als $ \frac{\epsilon^2}{2} $  ausfällt.
+		\item Um also einen kleineren RMSE als $ \epsilon $ zu erhalten, muss auch $ (1) \leq  \frac{\epsilon^2}{2} $ gelten.
+		\item Unter Annahme \ref{Annahme1} gilt $ \mathbb{V}[Y_l] = \mathbb{V}[Q_{h_l}-Q_{h_{l-1}}] \stackrel{l \to \infty}{\to} 0  $, das bedeutet für uns: Je größer $ l $ und damit je feiner die Gitterweite $ h_l $ ist, desto weniger Samples werden benötigt um $ \mathbb{E}[Y_l] $ zu schätzen.
+		\item Das gröbste
+	\end{itemize}
+\end{Bemerkung}
 
 
 
@@ -186,7 +200,7 @@ Da für jedes $ l $ $ \widehat{Y}_{h,n_l}^{\text{MC}} $ getrennt berechnet und s
  	}
  	\BlankLine
  	\KwResult{$\widehat{Q}_{\mathcal{H},\{ n_l \}_{l=l_0}^L }^{\text{MLMC}} $}
- 	\caption{While loop with If/Else condition}
+ 	\caption{MLMC angewandt auf das Transportproblem}
  \end{algorithm}
 
 \bigskip % add 12pt space in-between
