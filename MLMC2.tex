@@ -118,6 +118,7 @@ Wir nehmen an dieser Stelle an, dass sich die Gesamtkosten an Rechenoperationen,
  	&= \mathbb{E} \left[ ( \widehat{Q}_{h,n}^{\text{MC}} -    \mathbb{E}[\widehat{Q}_{h,n}^{\text{MC}}]])^2 \right] + \left( \mathbb{E}[\widehat{Q}_{h,n}^{\text{MC}}] - \mathbb{E}[Q] \right)^2 \nonumber \\
  	&= \mathbb{V}[\widehat{Q}_{h,n}^{\text{MC}}] + \left( \mathbb{E}[\widehat{Q}_{h,n}^{\text{MC}}] - \mathbb{E}[Q] \right)^2
  \end{align}
+ Dabei nutzen wir, dass für zwei unabhängige Zufallsvariablen $ a $ und $ b $ mit Erwartungswert $ \mathbb{E}[a] = 0 = \mathbb{E}[b] $ stets $ \mathbb{E}[(a+b)^2] = \mathbb{E}[a^2]+\mathbb{E}[b^2] $ gilt.
  Da weiter $ \mathbb{E}[\widehat{Q}_{h,n}^{\text{MC}}] = \mathbb{E}[Q_h] $ und $ \mathbb{V}[\widehat{Q}_{h,n}^{\text{MC}}] = \frac{1}{n^2} n \mathbb{V}[Q_h] = \frac{1}{n}  \mathbb{V}[Q_h] $ gilt, erhalten wir so 
  \begin{align}
  \label{mseMC}
@@ -162,12 +163,13 @@ e(\widehat{Q}_{\tilde{\mathcal{H}},\{ n_l \}_{l=0}^L }^{\text{MLMC}})^2 &= \math
 \end{align}
 \begin{Bemerkung}Was lässt sich hieraus ablesen?
 	\begin{itemize}
-		\item $ (2) $ stimmt mit $ (2) $ aus \ref{mseMC} überein. Insbesondere ist also wieder  $ h \lesssim \epsilon^{\frac{1}{\alpha}}  $ dafür hinreichend, dass der Diskretisierungs- und Lösungsfehler kleiner als $ \frac{\epsilon^2}{2} $  ausfällt.
-		\item Um also einen kleineren RMSE als $ \epsilon $ zu erhalten, muss auch $ (1) \leq  \frac{\epsilon^2}{2} $ gelten.
+%		\item $ (2) $ stimmt mit $ (2) $ aus \ref{mseMC} überein. Insbesondere ist also wieder  $ h \lesssim \epsilon^{\frac{1}{\alpha}}  $ dafür hinreichend, dass der Diskretisierungs- und Lösungsfehler kleiner als $ \frac{\epsilon^2}{2} $  ausfällt.
+%		\item Um also einen kleineren RMSE als $ \epsilon $ zu erhalten, muss auch $ (1) \leq  \frac{\epsilon^2}{2} $ gelten.
 		\item Unter Annahme \ref{Annahme1} gilt $ \mathbb{V}[Y_l] = \mathbb{V}[Q_{h_l}-Q_{h_{l-1}}] \stackrel{l \to \infty}{\to} 0  $, das bedeutet für uns: Je größer $ l $ und damit je feiner die Gitterweite $ h_l $ ist, desto weniger Samples werden benötigt um $ \mathbb{E}[Y_l] $ zu schätzen.
 		\item Das niedrigste betrachtete Level $ l = 0 $ kann unabhängig von $ \epsilon $ fest gewählt werden. So bleibt insbesondere die benötigte Anzahl an Rechenoperationen pro Sample auf dem niedrigsten Level konstant, auch wenn $ \epsilon \to 0 $ geht. Bei der tatsächlichen Anwendung muss allerdings $ h_0 $ so gewählt werden, dass zumindest ein Mindestmaß an Auflösung des Problems gegeben ist.
 	\end{itemize}
 \end{Bemerkung} 
+\newpage
 Wir sind nun in der Lage folgendes zentrale Resultat aus \cite{cliffe2011multilevel} nachzuvollziehen:
 \begin{Satz}$ \newline $
 	\label{MLMCTheorem}
@@ -184,7 +186,7 @@ Wir sind nun in der Lage folgendes zentrale Resultat aus \cite{cliffe2011multile
 	\]
 	
 	\[
-	C(\widehat{Q}_{\tilde{\mathcal{H}},\{ n_l \}_{l=0}^L }^{\text{MLMC}}) \leq \tilde{c} 
+	C_{\epsilon}(\widehat{Q}_{\tilde{\mathcal{H}},\{ n_l \}_{l=0}^L }^{\text{MLMC}}) \leq \tilde{c} 
 	\begin{cases}
 		\begin{array}{llr}
 		&\epsilon^{-2} , &\text{falls } \beta > \gamma \\
@@ -196,12 +198,97 @@ Wir sind nun in der Lage folgendes zentrale Resultat aus \cite{cliffe2011multile
 	Dabei darf $ \tilde{c}$  von $ c_1,c_2 $ und $ c_3 $ abhängen.
 \end{Satz}
 \begin{proof}
-	todo
+	Betrachten wir zunächst den Monte Carlo Schätzer $ \widehat{Y}_l $, so gilt nach den Rechenregeln für Erwartungswerte 
+	\[
+		\mathbb{E}[\widehat{Y}_l] = 
+			\begin{cases}
+				\begin{array}{llr}
+						&\mathbb{E}[Q_{h_l}] , &l=0 \\
+						&\mathbb{E}[Q_{h_l}-Q_{h_{l-1}}] , &l>0
+				\end{array} \qquad (\star)
+			\end{cases}
+	\]
+	Wir nehmen o.B.d.A an, dass $ h_0 = 1 $. Ist dies nicht der Fall, lassen sich die Konstanten $ c_1,c_2,c_3 $ und $ \tilde{c} $ entsprechend skalieren.
+	Wir wählen nun $ L \coloneqq \lceil \alpha^{-1} \log_2 (\sqrt{2}c_1\epsilon^{-1}) \rceil < \alpha^{-1} \log_2 (\sqrt{2}c_1\epsilon^{-1}) +1 $ . 
+	Dann gilt:
+	\[
+	2^{-\alpha} \frac{\epsilon}{\sqrt{2}} < c_1 2^{-\alpha  L} \leq \frac{\epsilon}{\sqrt{2}}  \qquad (\star \star)
+	\]
+	Mit $ (\star) $ und (a) gilt dann mit $ \tilde{\mathcal{H}} = \{0,\dots,L\} $
+	\[
+	\left( \mathbb{E}[\widehat{Q}_{\tilde{\mathcal{H}},\{ n_l \}_{l=0}^L }^{\text{MLMC}} - \mathbb{E}[Q]] \right)^2 = \left( \mathbb{E}[Q_{h_L}] - \mathbb{E}[Q] \right)^2  \leq c_1 h_L^{\alpha} = c_1 2^{-\alpha L} \leq \frac{1}{2} \epsilon^2 \ .
+	\]
+	Nach (6.8) ist
+	\[ 
+	 	e(\widehat{Q}_{\tilde{\mathcal{H}},\{ n_l \}_{l=0}^L }^{\text{MLMC}})^2 	= \underbrace{	\mathbb{V}[\widehat{Q}_{\tilde{\mathcal{H}},\{ n_l \}_{l=0}^L }^{\text{MLMC}}]}_{(1)} + \underbrace{\left( \mathbb{E}[Q_{h_L}-Q] \right)^2}_{(2)}	
+	\].
+	Für das gewählte $ L $ ist also bereits $ (2) \leq \frac{1}{2}\epsilon^2 $.
+	Um also $ e(\widehat{Q}_{\tilde{\mathcal{H}},\{ n_l \}_{l=0}^L }^{\text{MLMC}})^2 < \epsilon^2 $ zu gewährleisten, müssen wir nachweisen, dass für entsprechend gewählte $ \{n_l\}_{l=0}^L $ auch (1) kleiner als $ \frac{1}{2}\epsilon^2 $ ausfällt.
+	Wir nutzen dazu die linke Ungleichung aus $ (\star \star) $ und erhalten 
+	\begin{align}
+		\sum_{l=0}^{L} 2^{\gamma l} < \frac{2^{\gamma L}}{1 - 2^{- \gamma}} < \frac{2^{\gamma}(\sqrt{2}c_1)^{ \frac{\gamma }{\alpha} }}{1-2^{-\gamma}} \epsilon^{-\frac{\gamma}{\alpha}}
+	\end{align}
+	Wir führen nun eine Fallunterscheidung für das Verhältnis zwischen $ \beta $ und $ \gamma $ durch.
+	\begin{enumerate}[label=(\roman*)]
+		\item $ \beta = \gamma: $\\
+		Wir setzen $ n_l = \lceil 2\epsilon^-2(L+1)c_2 2^{-\beta l} \rceil $ für $ l= 0,\dots,L $, dann gilt mit (b):
+		\[
+		\mathbb{V}[\widehat{Q}_{\tilde{\mathcal{H}},\{ n_l \}_{l=0}^L }^{\text{MLMC}}] = \sum_{l=0}^{L}\mathbb{V}[\widehat{Y}_l] \leq \sum_{l=0}^{L} c_2 n_l^{-1} 2^{- \beta l} \leq \frac{1}{2} \epsilon^2
+		\] \.
+		Somit gilt also $ e(\widehat{Q}_{\tilde{\mathcal{H}},\{ n_l \}_{l=0}^L }^{\text{MLMC}}) < \epsilon $.
+		Für die Anzahl an insgesamt benötigten Rechenoperationen gilt dann mit (c):
+		\begin{align*}
+			C_{\epsilon}(\widehat{Q}_{\tilde{\mathcal{H}},\{ n_l \}_{l=0}^L }^{\text{MLMC}})  &\leq c_3 \sum_{l=0}^{L} n_l 2^{\gamma l} 
+			\leq c_3 \left( 2 \epsilon^{-2}(L+1)^2 c_2 + \sum_{l=0}^{L} 2^{\gamma l} \right)
+		\end{align*}
+		Für $ \epsilon < e^{-1} < 1 $ ist $ 1 < \log \epsilon^{-1} $ und $ \epsilon^{- \frac{\gamma}{\alpha}} \leq \epsilon^{-2} \leq \epsilon^{-2}(\log \epsilon)^2$, da $ \alpha \geq \frac{1}{2} \gamma $.
+		Nutzen wir nun $ L = \lceil \alpha^{-1} \log_2 (\sqrt{2}c_1\epsilon^{-1}) \rceil < \alpha^{-1} \log_2 (\sqrt{2}c_1\epsilon^{-1}) +1 $  erhalten wir 
+		\[
+			C_{\epsilon}(\widehat{Q}_{\tilde{\mathcal{H}},\{ n_l \}_{l=0}^L }^{\text{MLMC}}) \leq \tilde{c}_1 \epsilon^{-2} (\log \epsilon )^2 , \quad \text{ für ein }\tilde{c}_1>0
+		\]
+		\item $ \beta > \gamma: $\\
+		Wir setzen $ n_l = \lceil 2\epsilon^{-2} c_2 (1-2^{-(\beta-\gamma)/2})^{-1} 2^{-(\beta-\gamma)l/2} \rceil $, dann ist
+		\[
+		\sum_{l=0}^{L} \mathbb{V}[\widehat{Y}_l] \leq \frac{1}{2}\epsilon^2\left( 1-2^{-(\beta - \gamma)/2} \right) \sum_{l=0}^{L} 2^{-(\beta - \gamma)l/2} < \frac{1}{2} \epsilon^2
+		\].
+		Mit $ n_l <  2\epsilon^{-2} c_2 (1-2^{-(\beta-\gamma)/2})^{-1} 2^{-(\beta-\gamma)l/2} +1 $ ist so 
+		\[
+			C_{\epsilon}(\widehat{Q}_{\tilde{\mathcal{H}},\{ n_l \}_{l=0}^L }^{\text{MLMC}}) \leq c_3 \left( 2\epsilon^{-2}c_2 \left( 1 - 2^{-(\beta-\gamma)/2}\right)^{-2} + \sum_{l=0}^{L}2^{\gamma l} \right) \ .
+		\] 
+		Wiederum folgt mit (6.9), $ \epsilon < e^{-1} <1 $ und $ \epsilon^{-\frac{\gamma}{\alpha}} \leq \epsilon^{-2} $, dass
+		\[
+			C_{\epsilon}(\widehat{Q}_{\tilde{\mathcal{H}},\{ n_l \}_{l=0}^L }^{\text{MLMC}}) \leq \tilde{c}_2 \epsilon^{-2}, \quad \text{  für ein }\tilde{c}_2>0
+		\]
+		\item $ \beta < \gamma $\\
+		Wir setzen $ n_l =  \lceil  \epsilon^{-2} c_2 2^{(\gamma-\beta)L/2+1} \left( 1-2^{-(\gamma - \beta)/2} \right)^{-1} 2^{-(\beta+\gamma)l/2} \rceil $.
+		Dann ist 
+		\[
+		\sum\limits_{l=0}^{L} \mathbb{V}[\widehat{Y}_l] < \epsilon^2 2^{-(\gamma-\beta)L/2 -1}\left( 1- 2^{-(\gamma-\beta)/2} \right) \sum_{l=0}^{L} 2^{(\gamma-\beta)l/2} < \frac{1}{2} \epsilon^2 . 
+		\]
+		Durch obige Wahl von $ n_l $ erhalten wir dann 
+		\begin{align*}
+			C_{\epsilon}(\widehat{Q}_{\tilde{\mathcal{H}},\{ n_l \}_{l=0}^L }^{\text{MLMC}}) &\leq c_3 \left( 2\epsilon^{-2} c_2 2^{(\gamma-\beta)L/2}(1-2^{-(\gamma-\beta)/2})^{-1} \sum_{l=0}^L 2^{(\gamma -\beta)l/2} + \sum_{l=0}^L 2^{\gamma l} \right) \\
+			&\leq c_3 \left( 2\epsilon^{-2} c_2 2^{(\gamma-\beta)L}(1-2^{-(\gamma-\beta)/2})^{-2}  + \sum_{l=0}^L 2^{\gamma l} \right) \ .
+		\end{align*}
+		Nutzen wir nun ein letztes Mal $ (\star \star) $, so ist $ 2^{(\gamma-\beta)L} < \left( \sqrt{2}c_1 \right)^{\frac{\gamma-\beta}{\alpha}} 2^{\gamma-\beta} \epsilon^{-(\gamma-\beta)/\alpha} $ und mit $ \epsilon < e^{-1} < 1 $ gilt wegen $ \alpha \geq \frac{1}{2}\beta $ auch $ \epsilon^{-\frac{\gamma}{\alpha}} \leq \epsilon^{-2 -(\gamma - \beta)/\alpha} $.
+		Mit (6.9) folgt dann 
+		\[
+		C_{\epsilon}(\widehat{Q}_{\tilde{\mathcal{H}},\{ n_l \}_{l=0}^L }^{\text{MLMC}}) \leq \tilde{c}_3 \epsilon^{-2-(\gamma-\beta)\alpha} , \quad \text{  für ein } \tilde{c}_3>0
+		\]
+	\end{enumerate}
+	Mit $ \tilde{c} \coloneqq \max\{\tilde{c}_1,\tilde{c}_2,\tilde{c}_3\} $ folgt also die Behauptung.\\
 \end{proof}
-
-
-
-
+Wir haben also gezeigt, dass für ein gegebenes $ 0 < \epsilon < e^{-1} $ stets ein maximales Level $ L $ und zugehörige Anzahlen an Zufallssamples $ \{n_l\}_{l=0}^L $
+existieren, sodass der Multilevel Monte Carlo Schätzer $ \widehat{Q}_{\tilde{\mathcal{H}},\{ n_l \}_{l=0}^L }^{\text{MLMC}} $ im RMSE höchstens $ \epsilon $ vom tatsächlichen Erwartungswert $ \mathbb{E}[Q] $ entfernt ist. Außerdem haben wir unter entsprechenden Voraussetzungen an $ \{n_l\}_{l=0}^L $ obere Schranken für die Anzahl der benötigten Rechenoperationen bewiesen.
+Verglichen mit den Kosten für die Monte Carlo Methode erhalten wir so für alle zulässigen $ \alpha,\beta,\gamma $ einen theoretischen Kostenvorteil. 
+Durch eine geschickte, konkrete Wahl von $ \{n_l\}_{l=0}^L $ lässt sich zudem für feste Kosten $ C(\widehat{Q}_{\tilde{\mathcal{H}},\{ n_l \}_{l=0}^L }^{\text{MLMC}} ) = \sum_{l=0}^{L} n_l C_l$ die Varianz des Schätzers minimieren.
+Wie in \cite{giles_2015} näher erklärt kann hierfür 
+\begin{align}
+	\label{OptimalN}
+	n_l = \left\lceil 2 \epsilon^{-2} \sqrt{\frac{V[Y_l]}{C_l}} \left( \sum_{l=0}^{L}\sqrt{V[Y_l]C_l} \right) \right\rceil
+\end{align}
+gewählt werden. Dabei ist $ V[Y_l] $ die geschätzte Varianz und $ C_l $ die Anzahl der benötigten Rechenoperationen für ein einzelnes Sample auf Level $ l $.
+Davon ausgehend können wir nun den Algorithmus formulieren:
 
  \begin{algorithm}[H]
  	\DontPrintSemicolon
@@ -209,20 +296,20 @@ Wir sind nun in der Lage folgendes zentrale Resultat aus \cite{cliffe2011multile
  	%\KwResult{}
  	\SetKwInOut{Input}{Input}\SetKwInOut{Output}{Output}
  	\Input{$ l_0,L_0 \in \N $ und $ N_0 = \{ n_{l_0},\dots,n_{L_0} \}$}
- 	\Output{$\widehat{Q}_{\mathcal{H},\{ n_l \}_{l=l_0}^L }^{\text{MLMC}} $}
+ 	\Output{$\widehat{Q}_{\tilde{\mathcal{H}},\{ n_l \}_{l=l_0}^L }^{\text{MLMC}} $}
  	\BlankLine
  	
- 	Setze $ \mathcal{R} = \{ l_0,\dots,L_0 \} $ und die Anzahl der benötigten Samples $ \Delta N = \{ \Delta n_l \}_{l=l_0}^{L_0} = N_0$ und $ i = 0 $\;
+ 	Setze $ \tilde{\mathcal{H}} = \{ l_0,\dots,L_0 \} $ und die Anzahl der benötigten Samples $ \Delta N = \{ \Delta n_l \}_{l=l_0}^{L_0} = N_0$ und $ i = 0 $\;
  	\While{$\Delta n_l > 0$ für mindestens ein $ l \in \mathcal{R} $ }{
  		\For{alle $ l \in \mathcal{R} $ mit $\Delta n_l > 0$ }{
- 			Berechne Zielfunktional und benötigte Kosten: $ Y_l,C_l \leftarrow $ SubroutineEstimator$(\Delta n_l,l)$\;
+ 			Berechne Zielfunktional und benötigte Kosten: $ Y_l,C_l \leftarrow $ MonteCarloEstimator$(h_l,\Delta n_l)$\;
  			Update $ C_l,\abs{\mathbb{E}[Y_l]},\mathbb{V}[Y_l] $ und setze $n_l = \Delta n_l, \Delta n_l=0$\;
  		}
- 		Schätze die Exponenten $ \alpha,\beta,\gamma $ mit den Annahmen von Satz TODO\;
- 		Schätze optimales $ N_i = \{ n_{l_i},\dots,n_{L_i} \} $ mit Formel TODO und berechne $\Delta N$\;
- 		Teste auf schwache Konvergenz TODO\;
+ 		Schätze die Exponenten $ \alpha,\beta,\gamma $ mit den Annahmen von Satz \ref{MLMCTheorem} \;
+ 		Schätze optimales $ N_i = \{ n_{l_i},\dots,n_{L_i} \} $ mit (\ref{OptimalN}) und berechne $\Delta N = N_i - N_{i-1}$\;
+ 		Teste auf schwache Konvergenz $ \abs{\mathbb{E}[Q_{h_{L_{i}}}-Q_{h_{L_{i}-1}}]} < (2^{\alpha}-1)\frac{\epsilon}{\sqrt{2}} $\;
  		\eIf{nicht konvergiert}{
- 			Setze $\mathcal{R} = \{ l_0,\dots,L_i,L_{i+1} \coloneqq L_i+1 \} $\;
+ 			Setze $\tilde{\mathcal{H}} = \{ l_0,\dots,L_i,L_{i+1} \coloneqq L_i+1 \} $\;
  			i = i+1 \;
  			
  		} {
@@ -231,11 +318,15 @@ Wir sind nun in der Lage folgendes zentrale Resultat aus \cite{cliffe2011multile
  	
  	}
  	\BlankLine
- 	\KwResult{$\widehat{Q}_{\mathcal{H},\{ n_l \}_{l=l_0}^L }^{\text{MLMC}} $}
+ 	\KwResult{$\widehat{Q}_{\tilde{\mathcal{H}},\{ n_l \}_{l=l_0}^L }^{\text{MLMC}} $}
  	\caption{MLMC angewandt auf das Transportproblem}
  \end{algorithm}
-
 \bigskip % add 12pt space in-between
+Dabei überprüfen wir beim Test auf schwache Konvergenz ob $ \abs{\mathbb{E}[Q-Q_{h_{L_i}}]} < \frac{\epsilon}{\sqrt{2}}$ (vgl. (6.8)).
+Unter der Annahme \ref{Annahme1} testen wir also ob
+\[
+	\abs{\mathbb{E}[Q_{h_{L_{i}}}-Q_{h_{L_{i}-1}}]} < (2^{\alpha}-1)\frac{\epsilon}{\sqrt{2}}
+\]
  
  
  
