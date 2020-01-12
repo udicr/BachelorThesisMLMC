@@ -9,7 +9,7 @@ Wir wollen dabei im Folgenden auf eine Möglichkeit eingehen, diese Berechnung n
 Da wir in diesen beiden Abschnitten $\omega \in \Omega$ ohnehin festhalten, genügt es zudem das deterministische Problem zu betrachten. \newline
 Sowohl das hybride Finite Elemente Verfahren, welches wir zur Lösung des Potentialströmungsproblem nutzen wollen, als auch das Discontinuous Galerkin Vefahren, mit dessen Hilfe wir das Transportproblem lösen wollen, bauen auf der Finite Elemente Theorie auf. 
 Diese ist im Wesentlichen in der zweiten Hälfte des 20. Jahrhunderts entstanden, ist aber bis heute in praktischer wie auch in theoretischer Sicht aktuell.
-Die Grundidee ist hierbei, die vorliegenden Rand-Anfangswertaufgaben in einem passenden endlichen Unterraum zu lösen. Dabei löst man sich auf analytischer Seite zunächst oft von einzelnen Regularitäts- und Differenzierbarkeitsbedingungen und führt einen sogenannten schwachen Lösungsbegriff ein (vergleiche Abschnitt 2.1). Statt nun aber solch eine schwache Lösung in einem unendlich dimensionalen Funktionenraum, wie beispielsweise in den Sobolevräumen $H^1(\mathbb{D})$ oder $H_0^1(\mathbb{D})$ zu bestimmen, zieht man sich auf endlich dimensionale Unterräume zurück. \newline
+Die Grundidee ist hierbei, die vorliegenden Rand-Anfangswertaufgaben in einem passenden endlichen Unterraum zu lösen. Dabei löst man sich auf analytischer Seite zunächst oft von einzelnen Regularitäts- und Differenzierbarkeitsbedingungen und führt einen sogenannten schwachen Lösungsbegriff ein (vergleiche Abschnitt 2.1). Statt nun aber solch eine schwache Lösung in einem unendlich dimensionalen Funktionenraum, wie beispielsweise in den Sobolevräumen $H^1(\mathcal{D})$ oder $H_0^1(\mathcal{D})$ zu bestimmen, zieht man sich auf endlich dimensionale Unterräume zurück. \newline
 Die folgende Definition entstammt \cite{brenner2007mathematical} und geht ursprünglich (1978) auf Ciarlet zurück.
 \begin{Definition}\
 	Sei
@@ -22,18 +22,18 @@ Die folgende Definition entstammt \cite{brenner2007mathematical} und geht urspr�
 \end{Definition}
 
 Wir wollen im Folgenden diese theoretische Definition zwar im Hinterkopf behalten, aber wie in \cite{braess2013finite} meist nur mit den sogenannten Finite-Elemente-Räumen arbeiten. 
-Dabei wird eine geeignete Zerlegung $\mathcal{T} = \{K_1,K_2,\dots, K_M \}$ von $\mathbb{D}$ in endlich viele Teilgebiete gewählt. 
+Dabei wird eine geeignete Zerlegung $\mathcal{T} = \{K_1,K_2,\dots, K_M \}$ von $\mathcal{D}$ in endlich viele Teilgebiete gewählt. 
 Anschließend betrachten wir einen endlichen Raum von Funktionen, die eingeschränkt auf diese Teilgebiete von einfacher Gestalt sind, beispielsweise bieten sich oft polynomielle Darstellungen niedrigen Grades an. 
 Ein solches Teilgebiet $K \in \mathcal{T}$ nennen wir Finites Element oder auch Zelle und fordern implizit, verbunden mit dem betrachteten Funktionenraum, die Erfüllung der obigen Definition. \newline
-Im Falle $\mathbb{D} \subseteq \R^2$ kommen so z.B. Dreiecke oder Vierecke in Frage, in $\mathbb{D} \subseteq \R^3$ können Tetraeder, Würfel, Quader und andere genutzt werden. \newline
-Sei nun $\mathbb{D} \subseteq \R ^2$ zudem ein polygonales Gebiet, um eine einfache Zerlegung in Dreiecke oder Vierecke zu gewährleisten.
+Im Falle $\mathcal{D} \subseteq \R^2$ kommen so z.B. Dreiecke oder Vierecke in Frage, in $\mathcal{D} \subseteq \R^3$ können Tetraeder, Würfel, Quader und andere genutzt werden. \newline
+Sei nun $\mathcal{D} \subseteq \R ^2$ zudem ein polygonales Gebiet, um eine einfache Zerlegung in Dreiecke oder Vierecke zu gewährleisten.
 
 \begin{Definition}
 	\label{FEMDISC}
 	\begin{enumerate}
-		\item Eine Zerlegung $\mathcal{T} = \{ K_1,K_2,\dots,K_M\}$ von $\mathbb{D}$ in Dreiecks- oder Viereckselemente heißt zulässig, wenn folgende Eigenschaften erfüllt sind:
+		\item Eine Zerlegung $\mathcal{T} = \{ K_1,K_2,\dots,K_M\}$ von $\mathcal{D}$ in Dreiecks- oder Viereckselemente heißt zulässig, wenn folgende Eigenschaften erfüllt sind:
 		\begin{itemize}
-			\item $\overline{\mathbb{D}} = \bigcup_{i=1}^M K_i$
+			\item $\overline{\mathcal{D}} = \bigcup_{i=1}^M K_i$
 			\item Für $i \neq j$ ist $K_i\cap K_j$
 			\begin{enumerate}
 				\item ein gemeinsamer Eckpunkt von $K_i$ und $K_j$
@@ -57,36 +57,36 @@ Wir werden außerdem im Laufe der Thesis dazu übergehen, ähnlich wie bereits i
 Zudem führen wir für alle Zerlegungen folgende Bezeichnungen ein:
 \begin{itemize}
 	\item ein $ K \in \mathcal{T} $ nennen wir Zelle
-%	\item $ \mathbb{D}_h \coloneqq \bigcup_{K \in \mathcal{T}} K $ sei die Menge der Zellen
+%	\item $ \mathcal{D}_h \coloneqq \bigcup_{K \in \mathcal{T}} K $ sei die Menge der Zellen
 	\item ein $ z \in \mathcal{V}_K \coloneqq \{ z_{K,0} , z_{K,1} , z_{K,2}\} \subset \R^2 $ nennen wir Knoten und $\mathcal{V}_K$ die Menge der Knoten von K
 	\item $ \mathcal{V}_{\mathcal{T}} \coloneqq \bigcup_{K \in \mathcal{T}} \mathcal{V}_K $ sei die Menge aller Knoten
-	\item $\mathcal{F}  \coloneqq (\{ \partial K_1 \cap \partial K_2 : K_1,K_2 \in \mathcal{T} \} \cup \{ \partial K_1 \cap \partial \mathbb{D} : K_1 \in \mathcal{T} \}) \setminus \{\emptyset\} $ sei die Menge aller Seiten
-	\item $ \mathcal{F}_K \coloneqq (\{ \partial K \cap \partial K' : K' \in \mathcal{T} \} \cup \{ \partial K \cap \partial \mathbb{D} \}) \setminus \{ \emptyset \} $ sei die Menge aller Seiten von K 
-	\item $ \partial \mathbb{D}_h \coloneqq \bigcup_{F \in \mathcal{F}} F $ sei der Rand von $ \mathbb{D}_h $.
+	\item $\mathcal{F}  \coloneqq (\{ \partial K_1 \cap \partial K_2 : K_1,K_2 \in \mathcal{T} \} \cup \{ \partial K_1 \cap \partial \mathcal{D} : K_1 \in \mathcal{T} \}) \setminus \{\emptyset\} $ sei die Menge aller Seiten
+	\item $ \mathcal{F}_K \coloneqq (\{ \partial K \cap \partial K' : K' \in \mathcal{T} \} \cup \{ \partial K \cap \partial \mathcal{D} \}) \setminus \{ \emptyset \} $ sei die Menge aller Seiten von K 
+	\item $ \partial \mathcal{D}_h \coloneqq \bigcup_{F \in \mathcal{F}} F $ sei der Rand von $ \mathcal{D}_h $.
 \end{itemize}
 
 \subsubsection{Schwache Formulierung}
 Betrachten wir also die deterministische Version des Potentialströmungsproblem:
-\[ \text{Bestimme } u:\overline{\mathbb{D}} \to \R \text{ und } q: \overline{\mathbb{D}} \to \R^2 \text{ mit } \newline \]
+\[ \text{Bestimme } u:\overline{\mathcal{D}} \to \R \text{ und } q: \overline{\mathcal{D}} \to \R^2 \text{ mit } \newline \]
 \[\setlength\arraycolsep{1pt}
 \text{(PS)}\begin{cases} 
 \begin{array}{rlcr}
-\dive q     &= 0                 &\text{ ,} \text{in } \mathbb{D} &(1)\\
-q           &= - \kappa \nabla u &\text{ ,} \text{in }\mathbb{D} &(2)\\
+\dive q     &= 0                 &\text{ ,} \text{in } \mathcal{D} &(1)\\
+q           &= - \kappa \nabla u &\text{ ,} \text{in }\mathcal{D} &(2)\\
 u           &= u_D               &\text{ ,} \text{auf } \Gamma_D \\
 -q \cdot n  &= g_N               &\text{ ,} \text{auf } \Gamma_N 
 \end{array}
 \end{cases} 
 \]
-Satz \ref{testfunktionen} sagt uns , dass wir in obiger Formulierung Gleichung (1) mit Testfunktionen $\phi \in H^1(\mathbb{D})$ und Gleichung (2) mit Testfunktionen $\psi \in H^1(\dive,\mathbb{D})$ multiplizieren und anschließend über $\mathbb{D}$ integrieren können und so eine äquivalente schwache Formulierung herleiten:
+Satz \ref{testfunktionen} sagt uns , dass wir in obiger Formulierung Gleichung (1) mit Testfunktionen $\phi \in H^1(\mathcal{D})$ und Gleichung (2) mit Testfunktionen $\psi \in H^1(\dive,\mathcal{D})$ multiplizieren und anschließend über $\mathcal{D}$ integrieren können und so eine äquivalente schwache Formulierung herleiten:
 \begin{align*}
-	\int_{\mathbb{D}} \dive(q) \phi \dx &= 0 \text{ für alle Testfunktionen } \phi : \mathbb{D} \to \R \\
-	\int_{\mathbb{D}} (q + \kappa \nabla u) \cdot \psi \dx &= 0 \text{ für alle Testfunktionen } \psi : \mathbb{D} \to \R^2
+	\int_{\mathcal{D}} \dive(q) \phi \dx &= 0 \text{ für alle Testfunktionen } \phi : \mathcal{D} \to \R \\
+	\int_{\mathcal{D}} (q + \kappa \nabla u) \cdot \psi \dx &= 0 \text{ für alle Testfunktionen } \psi : \mathcal{D} \to \R^2
 \end{align*}
 Da $\kappa$ weiter symmetrisch positiv definit ist, lässt sich letztere Gleichung zu 
 \begin{align*}
-	&\int_{\mathbb{D}} \kappa^{-1} (q + \kappa \nabla u) \cdot \psi \dx = 0 \\
-	\Leftrightarrow \qquad &\int_{\mathbb{D}} \nabla u \cdot \psi \dx = - \int_{\mathbb{D}} (\kappa^{-1}q)\cdot \psi \dx \qquad (\star) 
+	&\int_{\mathcal{D}} \kappa^{-1} (q + \kappa \nabla u) \cdot \psi \dx = 0 \\
+	\Leftrightarrow \qquad &\int_{\mathcal{D}} \nabla u \cdot \psi \dx = - \int_{\mathcal{D}} (\kappa^{-1}q)\cdot \psi \dx \qquad (\star) 
 \end{align*}
 umformen. Außerdem wollen wir nun noch die Dirichlet-Randbedingungen $u = u_D \text{ auf } \Gamma_{\text{D}}$ einfließen lassen. Dazu verwenden wir den Satz von Gauß:
 
@@ -106,15 +106,15 @@ Wir erhalten so folgende schwache Formulierung:
 &\text{Bestimme } (q,u) \text{ mit } q\cdot n = -g_N \text{ auf } \Gamma_N \text{ und}\\
 &\text{(sPS)}\begin{cases}
 \begin{array}{llll}
-\int_{\mathbb{D}} \kappa^{-1} q \cdot \psi \dx \, - \mkern-15mu &\int_{\mathbb{D}} u \, \dive(\psi) \dx &= - \int_{\Gamma_D} (u_D \psi) \cdot n \da\\
-&\int_{\mathbb{D}} \dive(q) \, \phi \dx &= 0
+\int_{\mathcal{D}} \kappa^{-1} q \cdot \psi \dx \, - \mkern-15mu &\int_{\mathcal{D}} u \, \dive(\psi) \dx &= - \int_{\Gamma_D} (u_D \psi) \cdot n \da\\
+&\int_{\mathcal{D}} \dive(q) \, \phi \dx &= 0
 \end{array}
 \end{cases}	\\
 &\text{ für alle } (\psi, \phi) \text{ in einem geeigneten Testraum mit } \psi \cdot n = 0 \text{ auf } \Gamma_N 
 \end{align*}
 
 \subsubsection{Diskretisierung}
-Sei $ \mathcal{T}  $ eine zulässige Zerlegung von $ \mathbb{D} $ und alle Bezeichnungen wie oben.
+Sei $ \mathcal{T}  $ eine zulässige Zerlegung von $ \mathcal{D} $ und alle Bezeichnungen wie oben.
 Wir nummerieren zunächst die Zellen und die Seiten durch:
 \begin{align*}
 	\mathcal{F} &= \{ F_1,\dots,F_{|\mathcal{F}|}\} \qquad \text{globale Seitennummerierung} \\
@@ -127,7 +127,7 @@ Als Nächstes soll es nun Ziel sein, eine Lösung der im letzten Abschnitt erkl�
 	\begin{enumerate}[label=(\alph*)]
 		\item $ \{ \psi_i \}_{i=1}^{N} $ heißt Seitenbasis und ist definiert durch
 			\begin{align*}
-					\forall i,j \in \{1, \dots , N \} : \int_{F_j} \psi_i \cdot n^K \da = \pm \delta_{i,j} \text{ und }  \psi_i|_K \in \mathbb{P}_1(K,\R^2) \cap C(\overline{\mathbb{D}}) \ (K \in \mathcal{T}) 
+					\forall i,j \in \{1, \dots , N \} : \int_{F_j} \psi_i \cdot n^K \da = \pm \delta_{i,j} \text{ und }  \psi_i|_K \in \mathbb{P}_1(K,\R^2) \cap C(\overline{\mathcal{D}}) \ (K \in \mathcal{T}) 
 			\end{align*} 
 		\item $ \{ \mu_i \}_{m=1}^{|\mathcal{K}|} $ heißt Zellenbasis und ist gegeben durch
 			\begin{align*}

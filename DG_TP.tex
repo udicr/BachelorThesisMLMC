@@ -2,25 +2,25 @@
  \label{DG}
 In diesem Abchnitt soll nun, nachdem wir $q(\omega,\cdot)$ als Finite-Elemente-Lösung des Potentialströmungsproblems erhalten haben, die numerische Lösung des linearen Transportproblems behandelt werden:
 \begin{align*}
-	&\text{Für } \omega \in \Omega \text{ und }q(\omega,\cdot): \overline{\mathbb{D}} \to \R^2 \text{, bestimme }\rho(\omega,\cdot): \overline{\mathbb{D}} \times \mathbb{T} \to \R_{\geq 0} \text{ mit} \\
+	&\text{Für } \omega \in \Omega \text{ und }q(\omega,\cdot): \overline{\mathcal{D}} \to \R^2 \text{, bestimme }\rho(\omega,\cdot): \overline{\mathcal{D}} \times \mathbb{T} \to \R_{\geq 0} \text{ mit} \\
 	&\text{(pTP)} 
 	\begin{cases}
 	\begin{array}{rlll}
-	\partial_t \rho (\omega, x, t) + \dive(\rho(\omega,x,t)q(\omega,x)) &= 0 &\text{, für } (x,t) \in \mathbb{D} \times (0,T] \\
+	\partial_t \rho (\omega, x, t) + \dive(\rho(\omega,x,t)q(\omega,x)) &= 0 &\text{, für } (x,t) \in \mathcal{D} \times (0,T] \\
 	\rho(\omega,x,t) &= \rho_{\text{in}}(x,t) &\text{, für } (x,t) \in \Gamma_{\text{in}} \times \mathbb{T} \\
-	\rho(\omega,x,0)  &= \rho_0(x) &\text{, für } x \in  \mathbb{D}
+	\rho(\omega,x,0)  &= \rho_0(x) &\text{, für } x \in  \mathcal{D}
 	\end{array}
 	\end{cases} \\
 \end{align*}
 Insbesondere wollen wir an dieser Stelle wieder $\omega \in \Omega$ festhalten und betrachten deshalb zunächst nur das deterministische Problem wie in \ref{det_prob}:
 \[ 
-\text{Bestimme } \rho: \overline{\mathbb{D}} \times \mathbb{T} \to \R_{\geq 0} \text{, sodass} \newline \]
+\text{Bestimme } \rho: \overline{\mathcal{D}} \times \mathbb{T} \to \R_{\geq 0} \text{, sodass} \newline \]
 \[\setlength\arraycolsep{1pt}
 \text{(dTP)}\begin{cases} 
 \begin{array}{rlll}
-\partial_t \rho(x,t) + \dive(\rho(x,t) q(x)) &= 0 &\text{ ,in } &\mathbb{D} \times (0,T)\\
+\partial_t \rho(x,t) + \dive(\rho(x,t) q(x)) &= 0 &\text{ ,in } &\mathcal{D} \times (0,T)\\
 \rho(x,t) &= \rho_{\text{in}}(x,t) &\text{ ,auf } &\Gamma_{\text{in}} \times (0,T)\\
-\rho(x,0) &= \rho_0(x) &\text{ ,auf } &\mathbb{D} \\
+\rho(x,0) &= \rho_0(x) &\text{ ,auf } &\mathcal{D} \\
 \end{array}
 \end{cases} \\
 \]
@@ -33,51 +33,51 @@ Anders als zuvor das Potentialströmungsproblem ist die lineare Transportgleichu
  
 
 %\subsubsection{Schwache Formulierung}
-%Wie im letzten Abschnitt führen wir nun einen schwachen Lösungsbegriff ein. Sei dazu $ \phi : \mathbb{D} \times \mathbb{T} \to \R $ eine beliebige Testfunktion, etwa aus  $W_0^{1,2}(\mathbb{D} \times \mathbb{T}) $, für die $ \phi(\cdot,T) = 0 $ gelte. 
-%Wir beginnen mit der differentialgleichung $ \partial_t \rho(x,t) + \dive(\rho(x,t) q(x)) = 0  $, multiplizieren zunächst mit der Testfunktion $ \phi $ und integrieren anschließend über den Raum-Zeitzylinder $ \mathbb{D} \times \mathbb{T} $:
+%Wie im letzten Abschnitt führen wir nun einen schwachen Lösungsbegriff ein. Sei dazu $ \phi : \mathcal{D} \times \mathbb{T} \to \R $ eine beliebige Testfunktion, etwa aus  $W_0^{1,2}(\mathcal{D} \times \mathbb{T}) $, für die $ \phi(\cdot,T) = 0 $ gelte. 
+%Wir beginnen mit der differentialgleichung $ \partial_t \rho(x,t) + \dive(\rho(x,t) q(x)) = 0  $, multiplizieren zunächst mit der Testfunktion $ \phi $ und integrieren anschließend über den Raum-Zeitzylinder $ \mathcal{D} \times \mathbb{T} $:
 %\begin{align*}
-%	\int_{\mathbb{D} \times \mathbb{T}} \big(\partial_t \rho(x,t) &+ \dive(\rho(x,t) q(x) ) \big) \phi(x,t) \; \mathrm{d} (x,t) =  \\
-%	&\underbrace{\int_{\mathbb{D} \times \mathbb{T}}  \partial_t \rho(x,t) \phi(x,t) \; \mathrm{d} (x,t)}_{(1)} +\underbrace{\int_{\mathbb{D} \times \mathbb{T}}  
+%	\int_{\mathcal{D} \times \mathbb{T}} \big(\partial_t \rho(x,t) &+ \dive(\rho(x,t) q(x) ) \big) \phi(x,t) \; \mathrm{d} (x,t) =  \\
+%	&\underbrace{\int_{\mathcal{D} \times \mathbb{T}}  \partial_t \rho(x,t) \phi(x,t) \; \mathrm{d} (x,t)}_{(1)} +\underbrace{\int_{\mathcal{D} \times \mathbb{T}}  
 %    \dive(\rho(x,t) q(x) ) \phi(x,t)\; \mathrm{d} (x,t)}_{(2)}
 %\end{align*}
 %Betrachten wir nun zunächst Integral (1), so folgt mit partieller Integration:
 %\begin{align*}
-%	\int_{\mathbb{D} \times \mathbb{T}}  \partial_t \rho(x,t) &\phi(x,t) \; \mathrm{d} (x,t) = \int_{\mathbb{D}} \int_{\mathbb{T}} \partial_t \rho(x,t) \phi(x,t) \dt \dx \\&= \int_{\mathbb{D}} \big( - \int_{\mathbb{T}} \rho(x,t) \partial_t \phi(x,t) \dt + \big[ \rho(x,t) \phi(x,t) \big]_0^T  \big) \dx \\
-%	&= - \int_{\mathbb{D} \times \mathbb{T}} \rho(x,t) \partial_t \phi(x,t) \; \mathrm{d} (x,t) + \int_{\mathbb{D}} \underbrace{\rho(x,T) \phi(x,T)}_{ = 0 } - \underbrace{\rho(x,0)}_{ = \rho_0(x) \text{ auf } \mathbb{D}} \phi(x,0)  \dx\\
-%	&= - \int_{\mathbb{D} \times \mathbb{T}} \rho(x,t) \partial_t \phi(x,t) \; \mathrm{d} (x,t) - \int_{\mathbb{D}} \rho_0(x) \phi(x,0) \dx 
+%	\int_{\mathcal{D} \times \mathbb{T}}  \partial_t \rho(x,t) &\phi(x,t) \; \mathrm{d} (x,t) = \int_{\mathcal{D}} \int_{\mathbb{T}} \partial_t \rho(x,t) \phi(x,t) \dt \dx \\&= \int_{\mathcal{D}} \big( - \int_{\mathbb{T}} \rho(x,t) \partial_t \phi(x,t) \dt + \big[ \rho(x,t) \phi(x,t) \big]_0^T  \big) \dx \\
+%	&= - \int_{\mathcal{D} \times \mathbb{T}} \rho(x,t) \partial_t \phi(x,t) \; \mathrm{d} (x,t) + \int_{\mathcal{D}} \underbrace{\rho(x,T) \phi(x,T)}_{ = 0 } - \underbrace{\rho(x,0)}_{ = \rho_0(x) \text{ auf } \mathcal{D}} \phi(x,0)  \dx\\
+%	&= - \int_{\mathcal{D} \times \mathbb{T}} \rho(x,t) \partial_t \phi(x,t) \; \mathrm{d} (x,t) - \int_{\mathcal{D}} \rho_0(x) \phi(x,0) \dx 
 %\end{align*}
 %Außerdem können wir Integral (2) mit  \ref{n_pI} wie folgt ausdrücken:
 %\begin{align*}
-%	\int_{\mathbb{D} \times \mathbb{T}}  
-%	\dive(\rho(x,t) &q(x) ) \phi(x,t)\; \mathrm{d} (x,t) = \int_{\mathbb{T}} \int_{\mathbb{D}} \dive(\rho(x,t) q(x) ) \phi(x,t) \dx \dt \\
-%	&= \int_{\mathbb{T}} \big( - \int_{\mathbb{D}} \rho(x,t) q(x) \nabla \phi(x,t) \dx + \int_{\partial \mathbb{D}} \rho(x,t) q(x) \cdot n \ \phi(x,t) \da \big)  \dt \\
-%	&= - \int_{\mathbb{D} \times \mathbb{T}} \rho(x,t) q(x) \nabla \phi(x,t)) \; \mathrm{d} (x,t) + \int_{\mathbb{T}} \int_{\partial \mathbb{D}} \rho(x,t) q(x) \cdot n \phi(x,t) \da \dt 
+%	\int_{\mathcal{D} \times \mathbb{T}}  
+%	\dive(\rho(x,t) &q(x) ) \phi(x,t)\; \mathrm{d} (x,t) = \int_{\mathbb{T}} \int_{\mathcal{D}} \dive(\rho(x,t) q(x) ) \phi(x,t) \dx \dt \\
+%	&= \int_{\mathbb{T}} \big( - \int_{\mathcal{D}} \rho(x,t) q(x) \nabla \phi(x,t) \dx + \int_{\partial \mathcal{D}} \rho(x,t) q(x) \cdot n \ \phi(x,t) \da \big)  \dt \\
+%	&= - \int_{\mathcal{D} \times \mathbb{T}} \rho(x,t) q(x) \nabla \phi(x,t)) \; \mathrm{d} (x,t) + \int_{\mathbb{T}} \int_{\partial \mathcal{D}} \rho(x,t) q(x) \cdot n \phi(x,t) \da \dt 
 %\end{align*}
-%Mit $ \partial \mathbb{D} = \Gamma_{\text{in}} \dot{\cup} \Gamma_{\text{out}} $ und 
+%Mit $ \partial \mathcal{D} = \Gamma_{\text{in}} \dot{\cup} \Gamma_{\text{out}} $ und 
 %$\rho(x,t) = \rho_{\text{in}}(x,t) \text{ für } (x,t) \in \Gamma_{\text{in}} \times (0,T)$ erhalten wir so die folgende Formulierung:
 %\begin{definition} 
-%$ \rho \in L_1 (\mathbb{D} \times (0,T)) $ heißt schwache Lösung des linearen Transportproblems, falls es für ein gegebenes $ q : \overline{\mathbb{D}} \to \R^2 $ folgende Bedingungen erfüllt:
+%$ \rho \in L_1 (\mathcal{D} \times (0,T)) $ heißt schwache Lösung des linearen Transportproblems, falls es für ein gegebenes $ q : \overline{\mathcal{D}} \to \R^2 $ folgende Bedingungen erfüllt:
 %\begin{align*}
 %\text{(swTP)}
 %\begin{cases}
 %\begin{array}{rlll}
 %\displaystyle
-%\int_{\mathbb{D}} \rho_0 \phi(0) \dx = \mkern-16mu &- \displaystyle \int_{0}^{T} \int_{\mathbb{D}} \rho (\partial_t \phi + q \nabla \phi ) \dx \dt \\
+%\int_{\mathcal{D}} \rho_0 \phi(0) \dx = \mkern-16mu &- \displaystyle \int_{0}^{T} \int_{\mathcal{D}} \rho (\partial_t \phi + q \nabla \phi ) \dx \dt \\
 %&+\displaystyle\int_{0}^{T}  \int_{\Gamma_{\text{in}}} \rho_{\text{in}} q \cdot n \phi \da  \dt \\
 %&+\displaystyle\int_{0}^{T}  \int_{\Gamma_{\text{out}}} \rho q \cdot n \phi \da  \dt
 %\end{array}
 %\end{cases}	
 %\end{align*}
-%für alle Testfunktionen $ \phi: \mathbb{D} \times (0,T) \to \R $ mit $ \phi(\cdot,T) = 0 $ auf $ \mathbb{D}  $ und $ \phi|_{\Gamma_{\text{out}}} = 0 $.
+%für alle Testfunktionen $ \phi: \mathcal{D} \times (0,T) \to \R $ mit $ \phi(\cdot,T) = 0 $ auf $ \mathcal{D}  $ und $ \phi|_{\Gamma_{\text{out}}} = 0 $.
 %\end{definition}
-%dabei ist $  \Gamma_{\text{out}} \coloneqq  \{ z \in \partial \mathbb{D}: q(z)\cdot n(z) > 0 \}$ 
-%und $  \Gamma_{\text{in}} \coloneqq  \{ z \in \partial \mathbb{D}: q(z)\cdot n(z) \leq 0 \} $. \\
+%dabei ist $  \Gamma_{\text{out}} \coloneqq  \{ z \in \partial \mathcal{D}: q(z)\cdot n(z) > 0 \}$ 
+%und $  \Gamma_{\text{in}} \coloneqq  \{ z \in \partial \mathcal{D}: q(z)\cdot n(z) \leq 0 \} $. \\
 %Obige Herleitung zeigt zusammen mit \ref{testfunktionen} insbesondere die Gültigkeit des folgenden Zusammenhangs zwischen klassischen Lösungen der linearen Transportgleichung und schwachen Lösungen von (swTP):
 %
 %\begin{Lemma}(Zusammenhang der Lösungsbegriffe)
 %	\begin{enumerate}
 %		\item Ist $ \rho $ eine klassische Lösung, so ist $ \rho $ auch eine schwache Lösung.
-%		\item Ist $ \rho \in C^2(\mathbb{D} \times \mathbb{T} , \R )$ und eine schwache Lösung, so ist $ \rho $ auch eine klassische Lösung. 
+%		\item Ist $ \rho \in C^2(\mathcal{D} \times \mathbb{T} , \R )$ und eine schwache Lösung, so ist $ \rho $ auch eine klassische Lösung. 
 %	\end{enumerate}
 %\end{Lemma}
 \subsubsection{Diskretisierung}
@@ -85,18 +85,18 @@ Anders als zuvor das Potentialströmungsproblem ist die lineare Transportgleichu
 Wie bereits weiter oben beschrieben, werden wir im Folgenden zunächst den Raum diskretisieren und anschließend die so entstandene Semidiskretisierung in eine Volldiskretisierung auflösen. Insgesamt wollen wir das discontinuous Galerkin Verfahren mit einem Zeitintegrator, wie der impliziten Mittelpunktsregel oder einem klassischen Runge-Kutta-Verfahren nutzen. Zunächst führen wir die analytische Flussfunktion ein. 
 \begin{Definition}(Flussfunkion) \\
 	\label{Flussfunktion}
-	Zu einem gegebenen Flussvektorfeld $ q : \mathbb{D} \to \R^2 $ ist die Flussfunktion $ \Upsilon$ definiert als:\\
+	Zu einem gegebenen Flussvektorfeld $ q : \mathcal{D} \to \R^2 $ ist die Flussfunktion $ \Upsilon$ definiert als:\\
 	\begin{align*}
-		 \Upsilon : \text{Abb}(\mathbb{D}\times\mathbb{T},\R) &\to \text{Abb}(\mathbb{D}\times\mathbb{T},\R^2) \\
+		 \Upsilon : \text{Abb}(\mathcal{D}\times\mathbb{T},\R) &\to \text{Abb}(\mathcal{D}\times\mathbb{T},\R^2) \\
 		 \rho &\mapsto \rho q
 	\end{align*}
 \end{Definition}
 $\newline$
-Für eine klassische Lösung $ \rho  $ von (dTP) gilt dann insbesondere $ \partial_t \rho = - \dive (\Upsilon(\rho)) $ auf $ \mathbb{D} \times (0,T] $.	\\
+Für eine klassische Lösung $ \rho  $ von (dTP) gilt dann insbesondere $ \partial_t \rho = - \dive (\Upsilon(\rho)) $ auf $ \mathcal{D} \times (0,T] $.	\\
 Halten wir also zunächst $ t \in \mathbb{T} $ und leiten so die Semidiskretisierung her.\\
-Sei nun $ \mathcal{T} $ eine zulässige Triangulierung von $ \mathbb{D} $ aus Dreiecken wie in \ref{num_pot} und  $ (\cdot , \cdot)_A $ das $ L^2(A)-$Skalarprodukt.
-Wir wählen als Lösungs-/Testraum $Q_h = \prod_{K \in \mathcal{T}} \mathbb{P}_p(K,\R) $ für ein festes $p \geq 1 $. Anders als zuvor fordern wir für unsere Lösungs- und Testfunktionen diesmal aber \underline{nicht} die Stetigkeit auf $\mathbb{D}$. Da so $Q_h$ nicht im betrachteten analytischen Lösungs- und Testraum liegt, etwa  $Q_h \nsubseteq H^1(\mathbb{D})$, nennt man $Q_h$ auch einen nicht-konformen Ansatzraum.
-Außerdem lässt sich im Allgemeinen auch die später bestimmte Lösung $ \rho_h \in Q_h $ (definiert auf $\mathbb{D}_h = \bigcup_{K \in \mathcal{T}} K$ ) nicht stetig auf $ \mathbb{D} $ fortsetzen, denn für eine beliebige innere Kante $ F $ kann der Grenzwert von $ \rho_h $ auf den anliegenden Zellen $ K,K' $ ($ \overline{F} = \partial K \cap \partial K' $) unterschiedlich sein. \\
+Sei nun $ \mathcal{T} $ eine zulässige Triangulierung von $ \mathcal{D} $ aus Dreiecken wie in \ref{num_pot} und  $ (\cdot , \cdot)_A $ das $ L^2(A)-$Skalarprodukt.
+Wir wählen als Lösungs-/Testraum $Q_h = \prod_{K \in \mathcal{T}} \mathbb{P}_p(K,\R) $ für ein festes $p \geq 1 $. Anders als zuvor fordern wir für unsere Lösungs- und Testfunktionen diesmal aber \underline{nicht} die Stetigkeit auf $\mathcal{D}$. Da so $Q_h$ nicht im betrachteten analytischen Lösungs- und Testraum liegt, etwa  $Q_h \nsubseteq H^1(\mathcal{D})$, nennt man $Q_h$ auch einen nicht-konformen Ansatzraum.
+Außerdem lässt sich im Allgemeinen auch die später bestimmte Lösung $ \rho_h \in Q_h $ (definiert auf $\mathcal{D}_h = \bigcup_{K \in \mathcal{T}} K$ ) nicht stetig auf $ \mathcal{D} $ fortsetzen, denn für eine beliebige innere Kante $ F $ kann der Grenzwert von $ \rho_h $ auf den anliegenden Zellen $ K,K' $ ($ \overline{F} = \partial K \cap \partial K' $) unterschiedlich sein. \\
 Trotzdem müssen wir auch auf den inneren Kanten $ \mathcal{F}^0 \subset \mathcal{F} $ festlegen, welcher Grenzwert in einem solchen Falle gewählt wird. \\
 Dazu führen wir als Pendant zur analytischen Flussfunktion (vgl. \ref{Flussfunktion})
 auch eine numerische Flussfunktion ein. Grundsätzlich kommen mehrere solche Flussfunktionen in Frage, welche direkten Einfluss auf Eigenschaften des entstehenden Verfahrens besitzen. Wir entscheiden uns an dieser Stelle für den weit verbreiteten 
@@ -104,7 +104,7 @@ sogenannten upwind flux:
 \begin{Definition}(upwind flux)\\
 	Sei $K \in \mathcal{T}$ eine beliebige Zelle und $ F \in \mathcal{F}_K$ eine Kante von $K$. Dann ist
 	\begin{align*}
-		\Upsilon^{\star} : \text{Abb}(\mathbb{D}\times\mathbb{T},\R) &\to \text{Abb}(\mathbb{D}\times\mathbb{T},\R^2) \\
+		\Upsilon^{\star} : \text{Abb}(\mathcal{D}\times\mathbb{T},\R) &\to \text{Abb}(\mathcal{D}\times\mathbb{T},\R^2) \\
 		\rho_h &\mapsto 
 		\begin{cases}
 			\Upsilon(\rho_h|_K) , \ \text{ für } q\cdot n_F^K \geq 0 \\  
@@ -112,26 +112,26 @@ sogenannten upwind flux:
 		\end{cases}
 	\end{align*}
 \end{Definition}
-Sei nun also $ \rho $ klassische Lösung von (dTP) mit $ \partial_t \rho = -\dive(\Upsilon(\rho)) $ auf $ \mathbb{D} $. Dann gilt nach Satz von Gauß:
+Sei nun also $ \rho $ klassische Lösung von (dTP) mit $ \partial_t \rho = -\dive(\Upsilon(\rho)) $ auf $ \mathcal{D} $. Dann gilt nach Satz von Gauß:
 \begin{align}
 		\label{gaus1}
-		\int_{\partial \mathbb{D}} \rho q \cdot n \phi \da  =\int_{\partial \mathbb{D}} \Upsilon(\rho) \cdot n \phi \da = \int_{\mathbb{D}} \dive (\Upsilon(\rho)\phi) \dx
+		\int_{\partial \mathcal{D}} \rho q \cdot n \phi \da  =\int_{\partial \mathcal{D}} \Upsilon(\rho) \cdot n \phi \da = \int_{\mathcal{D}} \dive (\Upsilon(\rho)\phi) \dx
 \end{align}
-Das Integral über den Rand von $ \mathbb{D} $ können wir nach der folgenden kleinen Vorüberlegung auch als Integral über alle Kanten der gewählten Zerlegung $ \mathcal{T} $ ausdrücken: \\
+Das Integral über den Rand von $ \mathcal{D} $ können wir nach der folgenden kleinen Vorüberlegung auch als Integral über alle Kanten der gewählten Zerlegung $ \mathcal{T} $ ausdrücken: \\
 Es gilt nämlich für alle inneren Kanten, also solche Kanten $ F $, für die zwei Zellen $ K $ und $ K' $ existieren, sodass $ \overline{F} = K \cap K' $ ist, dass $ \int_F \Upsilon^{\star}(\rho) \cdot n^K \phi \da = - \int_F \Upsilon^{\star}(\rho) \cdot n^{K'} \phi \da $ stets erhalten ist. \\
 Summieren wir also zunächst über alle Zellen, summieren anschließend die Integrale über alle Kanten und ersetzen dabei den analytischen durch den numerischen Fluss, erhalten wir gerade wieder obiges Randintegral. Es gilt also:
 \begin{align*}
-	\sum_{K\in \mathcal{T}} \sum_{F \in \mathcal{F}_K} \int_F \Upsilon^{\star}(\rho) \cdot n^K \phi \da = \int_{\partial \mathbb{D}} \Upsilon(\rho) \cdot n \phi \da \stackrel{\text{\ref{gaus1}}}{=} \int_{\mathbb{D}} \dive (\Upsilon(\rho)\phi) \dx
+	\sum_{K\in \mathcal{T}} \sum_{F \in \mathcal{F}_K} \int_F \Upsilon^{\star}(\rho) \cdot n^K \phi \da = \int_{\partial \mathcal{D}} \Upsilon(\rho) \cdot n \phi \da \stackrel{\text{\ref{gaus1}}}{=} \int_{\mathcal{D}} \dive (\Upsilon(\rho)\phi) \dx
 \end{align*}
 Nach der Produktregel der Divergenz lässt sich das letzte Integral auswerten zu:
 \begin{align*}
-	 \int_{\mathbb{D}} \dive (\Upsilon(\rho)\phi) \dx = \int_{\mathbb{D}} \phi \dive(\Upsilon(\rho)) + \Upsilon(\rho) \cdot \nabla \phi \dx \stackrel{\text{ Vor.}}{=} - \int_{\mathbb{D}} \partial_t \rho \phi \dx + \int_{\mathbb{D}} \Upsilon(\rho) \cdot \nabla \phi \dx
+	 \int_{\mathcal{D}} \dive (\Upsilon(\rho)\phi) \dx = \int_{\mathcal{D}} \phi \dive(\Upsilon(\rho)) + \Upsilon(\rho) \cdot \nabla \phi \dx \stackrel{\text{ Vor.}}{=} - \int_{\mathcal{D}} \partial_t \rho \phi \dx + \int_{\mathcal{D}} \Upsilon(\rho) \cdot \nabla \phi \dx
 \end{align*}
 Durch Umstellen und das Zusammenfassen der obigen Resultate erhalten wir so: 
 \begin{align*}
 	\sum_{K \in \mathcal{T}} \int_K \partial_t \rho  \phi \dx = \sum_{K \in \mathcal{T}} \int_K \Upsilon(\rho ) \cdot \nabla \phi \dx - 	\sum_{K\in \mathcal{T}} \sum_{F \in \mathcal{F}_K} \int_F \Upsilon^{\star}(\rho) \cdot n^K \phi \da
 \end{align*}
-Dabei wurde zusätzlich ausgenutzt, dass es sich bei den Kanten um Nullmengen handelt und wir so das Integral über $ \mathbb{D} $ als Summe der Integrale über alle Zellen auffassen können. Nutzen wir nun noch aus, dass für den Fluss  $\rho(x,t) = \rho_{\text{in}}(x,t)$ für $ x \in \Gamma_{\text{in}} $ gilt, kommen wir so auf 
+Dabei wurde zusätzlich ausgenutzt, dass es sich bei den Kanten um Nullmengen handelt und wir so das Integral über $ \mathcal{D} $ als Summe der Integrale über alle Zellen auffassen können. Nutzen wir nun noch aus, dass für den Fluss  $\rho(x,t) = \rho_{\text{in}}(x,t)$ für $ x \in \Gamma_{\text{in}} $ gilt, kommen wir so auf 
 \begin{align}
 	\label{fastfertigsemi}
 	\sum_{K \in \mathcal{T}} \int_K \partial_t \rho  \phi \dx = \sum_{K \in \mathcal{T}} \int_K \Upsilon(\rho ) \cdot \nabla \phi \dx - 	\sum_{K\in \mathcal{T}} \left( \sum_{\substack{F \in \mathcal{F}_K \\ F \not\subseteq \Gamma_{\text{in}}}} \int_F \Upsilon^{\star}(\rho) \cdot n^K \phi \da - \sum_{\substack{F \in \mathcal{F}_K \\ F \subseteq \Gamma_{\text{in}}}} \rho_{\text{in}} q \cdot n^K \phi \da \right)
@@ -247,33 +247,33 @@ Runge-Kutta DG Verfahren für der linearen Transportgleichung ähnliche Problems
 Nachdem wir nun das Discontinuous Galerkin Verfahren für die lineare Transportgleichung eingeführt und erklärt haben, sollen noch einige Eigenschaften des Verfahrens beleuchtet werden. Dabei wollen wir uns aber darauf beschränken, einige grundlegende Resultate zu nennen, und so eher einen groben Überblick mit Referenzen zur Literatur zu geben. Mehr zur numerischen Analyse des Discontinuous Galerkin Verfahren findet sich zum einen in Standardwerken, wie \cite{ern2004theory}, eine schöne Zusammenstellung bietet aber auch \cite{Har08b}.
 Ebenfalls findet sich in \cite{Har08b} eine grundlegende numerische Analyse des Discontinuous Galerkin Verfahrens auf die stationäre lineare Transportgleichung.
 \subsubsection{Lösungsbegriffe}
-	Wie zuvor bereits beim Potentialströmungsproblem können wir auch für das Transportproblem eine sogenannte schwache Formulierung bestimmen. Diese hängt im Fall des Transportproblems eng mit der Semidiskretisierung zusammen und lautet mit $ \partial \mathbb{D} = \Gamma_{\text{in}} \dot{\cup} \Gamma_{\text{out}} $ und 
+	Wie zuvor bereits beim Potentialströmungsproblem können wir auch für das Transportproblem eine sogenannte schwache Formulierung bestimmen. Diese hängt im Fall des Transportproblems eng mit der Semidiskretisierung zusammen und lautet mit $ \partial \mathcal{D} = \Gamma_{\text{in}} \dot{\cup} \Gamma_{\text{out}} $ und 
 $\rho(x,t) = \rho_{\text{in}}(x,t) \text{ für } (x,t) \in \Gamma_{\text{in}} \times (0,T)$ :
 \begin{Definition} 
-	$ \rho \in L_1 (\mathbb{D} \times (0,T)) $ heißt schwache Lösung des linearen Transportproblems, falls es für ein gegebenes $ q : \overline{\mathbb{D}} \to \R^2 $ folgende Bedingungen erfüllt:
+	$ \rho \in L_1 (\mathcal{D} \times (0,T)) $ heißt schwache Lösung des linearen Transportproblems, falls es für ein gegebenes $ q : \overline{\mathcal{D}} \to \R^2 $ folgende Bedingungen erfüllt:
 	\begin{align*}
 	\begin{array}{rllll}
-	&\text{(swTP)} \ &B(\rho,\phi) &= \langle l,\phi\rangle \quad \forall \phi \in H^1(\mathbb{D}\times\mathbb{T}) \text{ mit } &\phi(\cdot,T) = 0 \text{ und } \phi|_{\Gamma_{\text{out}}} = 0 \\
+	&\text{(swTP)} \ &B(\rho,\phi) &= \langle l,\phi\rangle \quad \forall \phi \in H^1(\mathcal{D}\times\mathbb{T}) \text{ mit } &\phi(\cdot,T) = 0 \text{ und } \phi|_{\Gamma_{\text{out}}} = 0 \\
 	&\text{Dabei sind :} & & &\\
-	& &B(\rho,\phi) &\coloneqq  \int_{0}^{T} \int_{\mathbb{D}} \rho (\partial_t \phi + q \nabla \phi ) \dx \dt &- \int_{\Gamma_{\text{out}}} \rho q \cdot n \phi \da  \dt \\
-	& &\langle l,\phi \rangle &\coloneqq \int_{\Gamma_{\text{in}}} \rho_{\text{in}} q \cdot n \phi \da  \dt &- \int_{\mathbb{D}} \rho_0 \phi(0) \dx \\
-	& & \Gamma_{\text{out}} &\coloneqq  \{ z \in \partial \mathbb{D}: q(z)\cdot n(z) > 0 \} & \\
-	& & \Gamma_{\text{in}} &\coloneqq  \{ z \in \partial \mathbb{D}: q(z)\cdot n(z) \leq 0 \} &
+	& &B(\rho,\phi) &\coloneqq  \int_{0}^{T} \int_{\mathcal{D}} \rho (\partial_t \phi + q \nabla \phi ) \dx \dt &- \int_{\Gamma_{\text{out}}} \rho q \cdot n \phi \da  \dt \\
+	& &\langle l,\phi \rangle &\coloneqq \int_{\Gamma_{\text{in}}} \rho_{\text{in}} q \cdot n \phi \da  \dt &- \int_{\mathcal{D}} \rho_0 \phi(0) \dx \\
+	& & \Gamma_{\text{out}} &\coloneqq  \{ z \in \partial \mathcal{D}: q(z)\cdot n(z) > 0 \} & \\
+	& & \Gamma_{\text{in}} &\coloneqq  \{ z \in \partial \mathcal{D}: q(z)\cdot n(z) \leq 0 \} &
 	\end{array}\\
 	%		\text{(swTP)}
 	%		\begin{cases}
 	%		\begin{array}{rlll}
 	%		\displaystyle
-	%		\int_{\mathbb{D}} \rho_0 \phi(0) \dx = \mkern-16mu &- \displaystyle \int_{0}^{T} \int_{\mathbb{D}} \rho (\partial_t \phi + q \nabla \phi ) \dx \dt \\
+	%		\int_{\mathcal{D}} \rho_0 \phi(0) \dx = \mkern-16mu &- \displaystyle \int_{0}^{T} \int_{\mathcal{D}} \rho (\partial_t \phi + q \nabla \phi ) \dx \dt \\
 	%		&+\displaystyle\int_{0}^{T}  \int_{\Gamma_{\text{in}}} \rho_{\text{in}} q \cdot n \phi \da  \dt \\
 	%		&+\displaystyle\int_{0}^{T}  \int_{\Gamma_{\text{out}}} \rho q \cdot n \phi \da  \dt
 	%		\end{array}
 	%		\end{cases}	
 	\end{align*}
-	%		für alle Testfunktionen $ \phi: \mathbb{D} \times (0,T) \to \R $ mit $ \phi(\cdot,T) = 0 $ auf $ \mathbb{D}  $ und $ \phi|_{\Gamma_{\text{out}}} = 0 $.
+	%		für alle Testfunktionen $ \phi: \mathcal{D} \times (0,T) \to \R $ mit $ \phi(\cdot,T) = 0 $ auf $ \mathcal{D}  $ und $ \phi|_{\Gamma_{\text{out}}} = 0 $.
 \end{Definition}
-%	dabei ist $  \Gamma_{\text{out}} \coloneqq  \{ z \in \partial \mathbb{D}: q(z)\cdot n(z) > 0 \}$ 
-%	und $  \Gamma_{\text{in}} \coloneqq  \{ z \in \partial \mathbb{D}: q(z)\cdot n(z) \leq 0 \} $. \\
+%	dabei ist $  \Gamma_{\text{out}} \coloneqq  \{ z \in \partial \mathcal{D}: q(z)\cdot n(z) > 0 \}$ 
+%	und $  \Gamma_{\text{in}} \coloneqq  \{ z \in \partial \mathcal{D}: q(z)\cdot n(z) \leq 0 \} $. \\
 %	
 
 Es gilt an dieser Stelle außerdem:
@@ -281,35 +281,35 @@ Es gilt an dieser Stelle außerdem:
 \begin{Lemma}(Zusammenhang der Lösungsbegriffe)
 	\begin{enumerate}
 		\item Ist $ \rho $ eine klassische Lösung, so ist $ \rho $ auch eine schwache Lösung.
-		\item Ist $ \rho \in C^2(\mathbb{D} \times \mathbb{T} , \R )$ und eine schwache Lösung, so ist $ \rho $ auch eine klassische Lösung. 
+		\item Ist $ \rho \in C^2(\mathcal{D} \times \mathbb{T} , \R )$ und eine schwache Lösung, so ist $ \rho $ auch eine klassische Lösung. 
 	\end{enumerate}
 \end{Lemma}
 
 \begin{proof}
-	Sei $ \phi : \mathbb{D} \times \mathbb{T} \to \R $ eine beliebige Testfunktion aus  $H^1(\mathbb{D} \times \mathbb{T}) $, für die $ \phi(\cdot,T) = 0 $ und $ \phi|_{\Gamma_{\text{out}}} = 0 $ gelte. Wir halten zunächst fest, dass der Raum $ H_0^1(\mathbb{D} \times \mathbb{T}) $ vollständig in dem so betrachteten Testraum enthalten ist.
-	Wir beginnen nun mit der Differentialgleichung $ \partial_t \rho(x,t) + \dive(\rho(x,t) q(x)) = 0  $, multiplizieren zunächst mit einer Testfunktion $ \phi $ aus dem Testraum und integrieren anschließend über den Raum-Zeitzylinder $ \mathbb{D} \times \mathbb{T} $:
+	Sei $ \phi : \mathcal{D} \times \mathbb{T} \to \R $ eine beliebige Testfunktion aus  $H^1(\mathcal{D} \times \mathbb{T}) $, für die $ \phi(\cdot,T) = 0 $ und $ \phi|_{\Gamma_{\text{out}}} = 0 $ gelte. Wir halten zunächst fest, dass der Raum $ H_0^1(\mathcal{D} \times \mathbb{T}) $ vollständig in dem so betrachteten Testraum enthalten ist.
+	Wir beginnen nun mit der Differentialgleichung $ \partial_t \rho(x,t) + \dive(\rho(x,t) q(x)) = 0  $, multiplizieren zunächst mit einer Testfunktion $ \phi $ aus dem Testraum und integrieren anschließend über den Raum-Zeitzylinder $ \mathcal{D} \times \mathbb{T} $:
 	\begin{align*}
-	\int_{\mathbb{D} \times \mathbb{T}} \big(\partial_t \rho(x,t) &+ \dive(\rho(x,t) q(x) ) \big) \phi(x,t) \; \mathrm{d} (x,t) =  \\
-	&\underbrace{\int_{\mathbb{D} \times \mathbb{T}}  \partial_t \rho(x,t) \phi(x,t) \; \mathrm{d} (x,t)}_{(1)} +\underbrace{\int_{\mathbb{D} \times \mathbb{T}}  
+	\int_{\mathcal{D} \times \mathbb{T}} \big(\partial_t \rho(x,t) &+ \dive(\rho(x,t) q(x) ) \big) \phi(x,t) \; \mathrm{d} (x,t) =  \\
+	&\underbrace{\int_{\mathcal{D} \times \mathbb{T}}  \partial_t \rho(x,t) \phi(x,t) \; \mathrm{d} (x,t)}_{(1)} +\underbrace{\int_{\mathcal{D} \times \mathbb{T}}  
 		\dive(\rho(x,t) q(x) ) \phi(x,t)\; \mathrm{d} (x,t)}_{(2)}
 	\end{align*}
 	Betrachten wir nun zunächst Integral (1), so folgt mit partieller Integration:
 	\begin{align*}
-	\int_{\mathbb{D} \times \mathbb{T}}  \partial_t \rho(x,t) &\phi(x,t) \; \mathrm{d} (x,t) = \int_{\mathbb{D}} \int_{\mathbb{T}} \partial_t \rho(x,t) \phi(x,t) \dt \dx \\&= \int_{\mathbb{D}} \big( - \int_{\mathbb{T}} \rho(x,t) \partial_t \phi(x,t) \dt + \big[ \rho(x,t) \phi(x,t) \big]_0^T  \big) \dx \\
-	&= - \int_{\mathbb{D} \times \mathbb{T}} \rho(x,t) \partial_t \phi(x,t) \; \mathrm{d} (x,t) + \int_{\mathbb{D}} \underbrace{\rho(x,T) \phi(x,T)}_{ = 0 } - \underbrace{\rho(x,0)}_{ = \rho_0(x) \text{ auf } \mathbb{D}} \phi(x,0)  \dx\\
-	&= - \int_{\mathbb{D} \times \mathbb{T}} \rho(x,t) \partial_t \phi(x,t) \; \mathrm{d} (x,t) - \int_{\mathbb{D}} \rho_0(x) \phi(x,0) \dx 
+	\int_{\mathcal{D} \times \mathbb{T}}  \partial_t \rho(x,t) &\phi(x,t) \; \mathrm{d} (x,t) = \int_{\mathcal{D}} \int_{\mathbb{T}} \partial_t \rho(x,t) \phi(x,t) \dt \dx \\&= \int_{\mathcal{D}} \big( - \int_{\mathbb{T}} \rho(x,t) \partial_t \phi(x,t) \dt + \big[ \rho(x,t) \phi(x,t) \big]_0^T  \big) \dx \\
+	&= - \int_{\mathcal{D} \times \mathbb{T}} \rho(x,t) \partial_t \phi(x,t) \; \mathrm{d} (x,t) + \int_{\mathcal{D}} \underbrace{\rho(x,T) \phi(x,T)}_{ = 0 } - \underbrace{\rho(x,0)}_{ = \rho_0(x) \text{ auf } \mathcal{D}} \phi(x,0)  \dx\\
+	&= - \int_{\mathcal{D} \times \mathbb{T}} \rho(x,t) \partial_t \phi(x,t) \; \mathrm{d} (x,t) - \int_{\mathcal{D}} \rho_0(x) \phi(x,0) \dx 
 	\end{align*}
 	Außerdem können wir Integral (2) mit  \ref{n_pI} wie folgt ausdrücken:
 	\begin{align*}
-	\int_{\mathbb{D} \times \mathbb{T}}  
-	\dive(\rho(x,t) &q(x) ) \phi(x,t)\; \mathrm{d} (x,t) = \int_{\mathbb{T}} \int_{\mathbb{D}} \dive(\rho(x,t) q(x) ) \phi(x,t) \dx \dt \\
-	&= \int_{\mathbb{T}} \big( - \int_{\mathbb{D}} \rho(x,t) q(x) \nabla \phi(x,t) \dx + \int_{\partial \mathbb{D}} \rho(x,t) q(x) \cdot n \ \phi(x,t) \da \big)  \dt \\
-	&= - \int_{\mathbb{D} \times \mathbb{T}} \rho(x,t) q(x) \nabla \phi(x,t)) \; \mathrm{d} (x,t) + \int_{\mathbb{T}} \int_{\partial \mathbb{D}} \rho(x,t) q(x) \cdot n \phi(x,t) \da \dt 
+	\int_{\mathcal{D} \times \mathbb{T}}  
+	\dive(\rho(x,t) &q(x) ) \phi(x,t)\; \mathrm{d} (x,t) = \int_{\mathbb{T}} \int_{\mathcal{D}} \dive(\rho(x,t) q(x) ) \phi(x,t) \dx \dt \\
+	&= \int_{\mathbb{T}} \big( - \int_{\mathcal{D}} \rho(x,t) q(x) \nabla \phi(x,t) \dx + \int_{\partial \mathcal{D}} \rho(x,t) q(x) \cdot n \ \phi(x,t) \da \big)  \dt \\
+	&= - \int_{\mathcal{D} \times \mathbb{T}} \rho(x,t) q(x) \nabla \phi(x,t)) \; \mathrm{d} (x,t) + \int_{\mathbb{T}} \int_{\partial \mathcal{D}} \rho(x,t) q(x) \cdot n \phi(x,t) \da \dt 
 	\end{align*}
 	Wenn $ \rho  $ eine klassische Lösung ist, dann existieren insbesondere $ \partial_t \rho  $ und $ \dive(\rho q) $ und obige Umformungen sind zulässig, d.h. $ \rho $ erfüllt auch die schwache Formulierung. \\
-	Ist $ \rho $ hingegen eine schwache Lösung die zusätzlich in $ C^2(\mathbb{D}\times\mathbb{T},\R) $ liegt, so lassen sich alle oben durchgeführten Umformungen auch in die andere Richtung durchführen und wir erhalten: 
+	Ist $ \rho $ hingegen eine schwache Lösung die zusätzlich in $ C^2(\mathcal{D}\times\mathbb{T},\R) $ liegt, so lassen sich alle oben durchgeführten Umformungen auch in die andere Richtung durchführen und wir erhalten: 
 	\[
-	\int_{\mathbb{D}\times\mathbb{T}} (\partial_t\rho + \dive(\rho q))\phi \; \mathrm{d} (x,t) = 0 \quad \forall \phi \in H_0^1(\mathbb{D}\times\mathbb{T}) 
+	\int_{\mathcal{D}\times\mathbb{T}} (\partial_t\rho + \dive(\rho q))\phi \; \mathrm{d} (x,t) = 0 \quad \forall \phi \in H_0^1(\mathcal{D}\times\mathbb{T}) 
 	\] 
 	Dann folgt mit \ref{testfunktionen}, dass $ \rho $ auch die ursprüngliche Differentialgleichung\\
 	$ \partial_t \rho(x,t) + \dive(\rho(x,t) q(x)) = 0  $ erfüllt. Somit ist $ \rho $ also auch klassische Lösung.\\

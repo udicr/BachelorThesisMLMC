@@ -1,13 +1,13 @@
 % !TeX root = bachelorarbeit.tex
 Nachdem wir in Abschnitt 2 an einige Grundlagen erinnert, in Abschnitt 3 und 4 sowohl die Monte Carlo Methode, als auch die Multilevel Monte Carlo Methode eingeführt und in Abschnitt 5 das Transportproblem, sowie das Potentialströmungsproblem inklusive numerischer Verfahren, welche zur Lösung dergleichen genutzt werden können, erklärt haben, soll nun dieser Abschnitt dazu dienen, die bisherigen Ergebnisse zu bündeln und die Anwendung der Multilevel Monte Carlo Methode auf partielle Differentialgleichungen am Beispiel des Transportproblem nahe zu legen. Dabei nimmt dieser Abschnitt einen zentralen Platz in dieser Thesis ein, weswegen wir noch einmal darlegen wollen, was genau unser Ziel ist und wie wir die uns an dieser Stelle zu Verfügung stehenden Mittel einsetzen, um das Gewünschte zu erreichen.
 \begin{align*}
-&\text{Für ein stochastisches Flussvektorfeld } q: \Omega \times \overline{\mathbb{D}} \to \R^2 \text{, bestimme }\rho: \Omega \times \overline{\mathbb{D}} \times \mathbb{T} \to \R_{\geq 0} \text{ mit} \\
+&\text{Für ein stochastisches Flussvektorfeld } q: \Omega \times \overline{\mathcal{D}} \to \R^2 \text{, bestimme }\rho: \Omega \times \overline{\mathcal{D}} \times \mathbb{T} \to \R_{\geq 0} \text{ mit} \\
 &\text{(pTP)} 
 \begin{cases}
 \begin{array}{rlll}
-\partial_t \rho (\omega, x, t) + \dive(\rho(\omega,x,t)q(\omega,x)) &= 0 &\text{, für } (x,t) \in \mathbb{D} \times (0,T] \\
+\partial_t \rho (\omega, x, t) + \dive(\rho(\omega,x,t)q(\omega,x)) &= 0 &\text{, für } (x,t) \in \mathcal{D} \times (0,T] \\
 \rho(\omega,x,t) &= \rho_{\text{in}}(x,t) &\text{, für } (x,t) \in \Gamma_{\text{in}} \times \mathbb{T} \\
-\rho(\omega,x,0)  &= \rho_0(x) &\text{, für } x \in  \mathbb{D}
+\rho(\omega,x,0)  &= \rho_0(x) &\text{, für } x \in  \mathcal{D}
 \end{array}
 \end{cases} \\
 &\text{ für die Anfangs- und Randwerte: } \\ 
@@ -15,9 +15,9 @@ Nachdem wir in Abschnitt 2 an einige Grundlagen erinnert, in Abschnitt 3 und 4 s
 g_N&: \Gamma_{\text{N}} \to \R \\
 u_D&: \Gamma_{\text{D}} \to \R \\
 \rho_{\text{in}}&: \Gamma_{\text{in}} \times \mathbb{T} \to \R_{\geq0} \\
-\rho_0&: \mathbb{D} \to \R_{\geq0} \\
+\rho_0&: \mathcal{D} \to \R_{\geq0} \\
 \end{array} \newline \\
-&\text{ wobei } \partial \mathbb{D} = \Gamma_{\text{D}} \dot{\cup} \Gamma_{\text{N}}  \text{ und }  \Gamma_{\text{in}} \coloneqq  \{ z \in \partial \mathbb{D}: q(z)\cdot n(z) \leq 0 \} \subset  \partial \mathbb{D}
+&\text{ wobei } \partial \mathcal{D} = \Gamma_{\text{D}} \dot{\cup} \Gamma_{\text{N}}  \text{ und }  \Gamma_{\text{in}} \coloneqq  \{ z \in \partial \mathcal{D}: q(z)\cdot n(z) \leq 0 \} \subset  \partial \mathcal{D}
 \end{align*}
 Genauer sei $ Q(\omega) = J(\rho(\omega)) $ ein gegebenes Zielfunktional, dann ist es unser Ziel den Erwartungswert $ \mathbb{E}[Q(\omega)] $ möglichst genau zu bestimmen. Beispielsweise kann eine beliebige Norm von $ \rho(\omega) $ als Zielfunktional betrachtet werden.
 Unser Modellproblem lautet also:
@@ -26,7 +26,7 @@ Unser Modellproblem lautet also:
 \text{(MP)}
 \begin{cases}
 \label{Modellproblem}
-&\text{Für ein stochastisches Flussvektorfeld } q: \Omega \times \overline{\mathbb{D}} \to \R^2 \\
+&\text{Für ein stochastisches Flussvektorfeld } q: \Omega \times \overline{\mathcal{D}} \to \R^2 \\
 &\text{und ein Zielfunktional } J \text{ , bestimme }  \mathbb{E}[J(\rho)]  \\
 &\text{mit } \rho \text{ als Lösung von (pTP) inklusive Anfangs- und Randwerten}
 \end{cases}
@@ -65,15 +65,15 @@ Bei der Standard Monte Carlo Methode schätzen wir $ \mathbb{E}[Q] $ durch den M
 	\label{MC-Schätzer}
 	\widehat{Q}_{h,n}^{\text{MC}} \coloneqq \frac{1}{n} \sum_{i=1}^{n} Q_h(\omega_i) = \sum_{i=1}^{n} J(\rho_h(\omega_i))
 \end{align}
-Dabei modellieren wir das zufällige Flussvektorfeld $ q(\omega_i)  : \mathbb{D} \to \R^2 $, indem wir zunächst für $ \kappa(\omega_i) : \mathbb{D} \rightarrow (\R_{\text{sym}})^{d \times d} $ ein lognormal-verteiltes unabhängiges Zufallsfeld erzeugen und anschließend das Potentialströmungsproblem
+Dabei modellieren wir das zufällige Flussvektorfeld $ q(\omega_i)  : \mathcal{D} \to \R^2 $, indem wir zunächst für $ \kappa(\omega_i) : \mathcal{D} \rightarrow (\R_{\text{sym}})^{d \times d} $ ein lognormal-verteiltes unabhängiges Zufallsfeld erzeugen und anschließend das Potentialströmungsproblem
 \begin{align*}
 \setlength\arraycolsep{1pt}
-&\text{Für } \kappa(\omega_i) : \mathbb{D} \rightarrow (\R_{\text{sym}})^{d \times d} \text{, bestimme } u(\omega_i,\cdot):\overline{\mathbb{D}} \to \R \text{ und } q(\omega_i, \cdot): \overline{\mathbb{D}} \to \R^2 \text{ mit } \\
+&\text{Für } \kappa(\omega_i) : \mathcal{D} \rightarrow (\R_{\text{sym}})^{d \times d} \text{, bestimme } u(\omega_i,\cdot):\overline{\mathcal{D}} \to \R \text{ und } q(\omega_i, \cdot): \overline{\mathcal{D}} \to \R^2 \text{ mit } \\
 &\text{(PS)}
 \begin{cases}
 \begin{array}{rlll}
-\dive (q(\omega_i,x)) &= 0  &\text{, für } x \in \mathbb{ D}\\  
-q(\omega_i,x) &= - \kappa(\omega_i) \nabla u(\omega_i,x)  &\text{, für } x \in \mathbb{D}\\
+\dive (q(\omega_i,x)) &= 0  &\text{, für } x \in \mathcal{ D}\\  
+q(\omega_i,x) &= - \kappa(\omega_i) \nabla u(\omega_i,x)  &\text{, für } x \in \mathcal{D}\\
 -q(\omega_i,x) \cdot n &= g_N(x)  &\text{, für } x \in \Gamma_N \\
 u(\omega_i,x) &= u_D(x)  &\text{, für } x \in \Gamma_D \\
 \end{array}
