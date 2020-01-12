@@ -295,13 +295,13 @@ Davon ausgehend können wir nun den Algorithmus formulieren:
  	\SetAlgoLined
  	%\KwResult{}
  	\SetKwInOut{Input}{Input}\SetKwInOut{Output}{Output}
- 	\Input{$ l_0,L_0 \in \N $ und $ N_0 = \{ n_{l_0},\dots,n_{L_0} \}$}
+ 	\Input{$ \epsilon > 0 $, $ l_0,L_0 \in \N $ und $ N_0 = \{ n_{l_0},\dots,n_{L_0} \}$}
  	\Output{$\widehat{Q}_{\tilde{\mathcal{H}},\{ n_l \}_{l=l_0}^L }^{\text{MLMC}} $}
  	\BlankLine
  	
  	Setze $ \tilde{\mathcal{H}} = \{ l_0,\dots,L_0 \} $ und die Anzahl der benötigten Samples $ \Delta N = \{ \Delta n_l \}_{l=l_0}^{L_0} = N_0$ und $ i = 0 $\;
  	\While{$\Delta n_l > 0$ für mindestens ein $ l \in \mathcal{R} $ }{
- 		\For{alle $ l \in \mathcal{R} $ mit $\Delta n_l > 0$ }{
+ 		\For{alle $ l \in \tilde{\mathcal{H}} $ mit $\Delta n_l > 0$ }{
  			Berechne Zielfunktional und benötigte Kosten: $ Y_l,C_l \leftarrow $ MonteCarloEstimator$(h_l,\Delta n_l)$\;
  			Update $ C_l,\abs{\mathbb{E}[Y_l]},\mathbb{V}[Y_l] $ und setze $n_l = \Delta n_l, \Delta n_l=0$\;
  		}
@@ -310,6 +310,7 @@ Davon ausgehend können wir nun den Algorithmus formulieren:
  		Teste auf schwache Konvergenz $ \abs{\mathbb{E}[Q_{h_{L_{i}}}-Q_{h_{L_{i}-1}}]} < (2^{\alpha}-1)\frac{\epsilon}{\sqrt{2}} $\;
  		\eIf{nicht konvergiert}{
  			Setze $\tilde{\mathcal{H}} = \{ l_0,\dots,L_i,L_{i+1} \coloneqq L_i+1 \} $\;
+ 			initialisiere $ \Delta n_{L_{i+1}} $ und setze $ \Delta N = \{\Delta n_l\}_{l \in \tilde{\mathcal{H}}} $ \;
  			i = i+1 \;
  			
  		} {
@@ -327,6 +328,11 @@ Unter der Annahme \ref{Annahme1} testen wir also ob
 \[
 	\abs{\mathbb{E}[Q_{h_{L_{i}}}-Q_{h_{L_{i}-1}}]} < (2^{\alpha}-1)\frac{\epsilon}{\sqrt{2}}
 \]
+Zu beachten ist, dass diese Version des Algorithmus, ebenso wie die in \cite{giles_2015} etwas allgemeinere Variante von heuristischer Natur ist. Es kann je nach Problemstellung nicht garantiert werden, dass mit diesem Verfahren stets ein RMSE kleiner $ \epsilon $ erreicht werden kann.
+Satz \ref{MLMCTheorem} liefert zwar gerade die Garantie, dass es einen Multilevel Monte Carlo Schätzer gibt, welcher einen kleineren RMSE als $ \epsilon $ besitzt, für die genaue Konstruktion brauchen wir allerdings a-priori Kenntnisse über die Konstanten $ c_1 $ und $ c_2 $. Obiger Algorithmus verzichtet hingegen auf diese a-priori Kenntnisse und schätzt diese Konstanten on-the-fly.
+Bei der tatsächlichen Implementierung, welche wir später verwenden werden, geben wir außerdem ein $ L_{\max} $ vor. Der Algorithmus bricht ab, wenn $ L_{\max} $ überschritten werden würde, und liefert dann kein Ergebnis zurück.
+Dies liegt aber weniger an obigem Algorithmus, sondern vielmehr an der Erzeugung des zufälligen Vektorfeldes $ q(\omega_i,x) \leftarrow \text{RndVecField} $. Hierbei werden für die Permeabilität $ \kappa(\omega_i) $ log-normal verteilte Zufallsfelder mithilfe des Circulant-Embedding Algorithmus erzeugt. Um diese Erzeugung möglichst effizient zu gestalten, werden dafür nötige komplexe Eigenwertberechnungen zu Beginn vor der eigentlichen Multilevel Monte Carlo Methode für alle möglichen Level $ \widehat{\mathcal{H}} = \{ l_0,\dots,L_{\max}\}$ durchgeführt.
+In zukünftigen Arbeiten könnte dies unter Umständen aber auch insofern verbessert werden, dass diese Berechnung ebenfalls in den MLMC Algorithmus integriert wird, aber ohne den Effizienzgewinn durch die einmalige Eigenwertberechnung für jedes Level aufzugeben.
  
  
  
