@@ -2,6 +2,39 @@
 
 In diesem Abschnitt wollen wir anhand des linearen Transportproblems auch tatsächliche praktische Resultate der Multilevel Monte Carlo Methode beleuchten.
 Wir setzen dazu
-\begin{enumerate}
-	\item 
-\end{enumerate} $ \mathcal{D} $
+\begin{itemize}
+	\item $ \mathcal{D} = (0,1)^2 \subset \R^2 $ (also insbesondere wie breits zuvor in der Theorie $ n=2 $)
+	\item $ \Gamma_{\text{in}} = \{ x = (x_1,x_2) \in \overline{\mathcal{D}} \ : \  x_2 = 1 \} $
+	\item $ \rho_{\text{in}} \equiv 0 $
+	\item $ \rho_0(x) = 
+	\begin{cases*}
+		\begin{array}{llll}
+			&c & , &\text{für }x \in B \coloneqq [0.2,0.8] \times [0.7 ,0.8]  \\
+			&c\exp(\frac{\abs{\frac{\text{dist}(x,B)}{0.15}}^2}{\abs{\frac{\text{dist}(x,B)}{0.15}}^2-1}) &, &\text{falls } \text{dist}(x,B)>0.15 \\
+			&0 &, & \text{sonst}
+		\end{array}
+	\end{cases*}$ \\
+	Dabei sei $ c $ so gewählt, dass 
+	\[
+		\int_{\mathcal{D}} \rho_0(x) \dx = 1 \ ,
+	\]
+	wir skalieren also die zur Beginn im Rechengebiet enthaltene Masse auf $ 1 $.
+\end{itemize}  
+Wie bereits an früherer Stelle erklärt, erhalten wir das stochastische Flussvektorfeld $ q : \Omega \times \overline{\mathcal{ D}} \to \R^2 $ als Lösung des zugehörigen Potentialströmungsproblems, wobei wir hierbei den Permeabilitätstensor $ \kappa : \Omega \times \mathcal{D} \to \R_{\geq0} $ als lognormal verteiltes Zufallsfeld modellieren. Wir identifizieren dabei die Verteilung von $ \kappa $ mit der zugehörigen Kovarianzfunktion:
+\[
+ C(x,y) = \sigma^2 \exp(- \frac{\lVert x-y \rVert_2^s}{\lambda^s} ) .
+\]
+Dabei ist $ 0 < \sigma^2 < \infty $ die Varianz des zugrundeliegenden Gauß'schen Zufallsfeldes, durch $ \lambda = (\lambda_1,\lambda_2) \in \R^2 $ werden die Korrelationslängen in die verschiedenen Koordinatenrichtungen gegeben und $ s \in (1,2) $ ist ein Glättungsparameter. \\
+
+Weiter setzen wir
+\begin{itemize}
+	\item $\Gamma_{\text{D}} = \{ x = (x_1,x_2) \in \overline{\mathcal{D}} : x_2 = 0 \} $
+	\item $ \Gamma_{\text{N}} = \partial \mathcal{D} \setminus \Gamma_{\text{D}} $
+	\item $ g_N = \begin{cases}
+						\begin{array}{llll}
+						    &0 &, &\text{falls } x \in \{ x \in \Gamma_{\text{N}} : x_1 \in \{ 0,1 \}  \} \\
+						    &1 &,& \text{sonst}
+						\end{array}
+				  \end{cases} $
+	\item $ u_D \equiv 0 \text{ auf } \Gamma_{\text{D}} $
+\end{itemize}
