@@ -152,7 +152,7 @@ So folgt:
 \]
 Dann ist der Multilevel Monte Carlo Schätzer gegeben durch die Summe der Monte Carlo Schätzer $ \widehat{Y}_{h,n_l}^{\text{MC}} $ für die einzelnen Erwartungswerte $ \mathbb{E}[Y_l] $:
 \begin{align}
-	\widehat{Q}_{\tilde{\mathcal{H}},\{ n_l \}_{l=0}^L }^{\text{MLMC}} = \sum_{l=0}^{L} \widehat{Y}_{l,n_l}^{\text{MC}} =  \sum_{l=0}^{L} \frac{1}{n_l} \sum_{i=1}^{n_l} \left( Q_{h_l}(\omega_i) - Q_{h_{l-1}}(\omega_i)\right)
+	\widehat{Q}_{\tilde{\mathcal{H}},\{ n_l \}_{l=0}^L }^{\text{MLMC}} = \sum_{l=0}^{L} \widehat{Y}_{l,n_l}^{\text{MC}} =  \frac{1}{n_0} \sum_{i_0=0}^{n_0} Q_{h_0}(\omega_{i_0}) + \sum_{l=1}^{L} \frac{1}{n_l} \sum_{i=1}^{n_l} \left( Q_{h_l}(\omega_{i_l}) - Q_{h_{l-1}}(\omega_{i_l})\right)
 \end{align}
 Da für jedes $ l \ $ $ \widehat{Y}_{l,n_l}^{\text{MC}} $ getrennt berechnet und somit jeder Erwartungswert $ \mathbb{E}[Y_l] $ unabhängig geschätzt wird, erhalten wir die Varianz des MLMC-Schätzers durch $\mathbb{V}[ \widehat{Q}_{\tilde{\mathcal{H}},\{ n_l \}_{l=0}^L }^{\text{MLMC}} ] = \sum_{l=0}^{L} \frac{1}{n_l} \mathbb{V}[Y_l]$. Wie in \ref{badumts} lässt sich dann der mean square error dann ausdrücken durch:
 \begin{align}
