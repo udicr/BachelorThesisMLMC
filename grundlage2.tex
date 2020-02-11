@@ -91,14 +91,14 @@ Sei ab nun $ (\Omega,\mathcal{A},\mathbb{P}) $ stets ein Wahrscheinlichkeitsraum
 		\[
 			f(x) = \frac{1}{\sigma \sqrt{2 \pi}} \exp\left(-\frac{(x-\mu)^2}{2\sigma^2}\right), \quad x \in \R 
 		\]
-		besitzt. In diesem Fall schreiben wir oft auch $ X \sim N(\mu,\sigma^2) $. Ist spezieller $ \mu = 0 $ und $ \sigma^2 =1$ so heißt $ X $ standardnormalverteilt.
+		besitzt. In diesem Fall schreiben wir oft auch $ X \sim \mathcal{N}(\mu,\sigma^2) $. Ist spezieller $ \mu = 0 $ und $ \sigma^2 =1$ so heißt $ X $ standardnormalverteilt.
 		\item Sei nun $ X = (X_1,\dots,X_n) $ ein Zufallsvektor, $ \mu =(\mu_1,\dots,\mu_n) \in \R^n $ und $ C = (\sigma_{ij})_{1 \leq i,j \leq n} \in \R^{n \times n} $ eine symmetrische positiv-definite Matrix.
 		$ X $ bestitzt eine (nicht ausgeartete) multivariate Normalverteilung mit Parametern $ \mu $ und $ C $, falls die Dichte von $ X $ durch 
 		\[
-			f(x) = \frac{1}{(2\pi)^{\frac{k}{2}}\sqrt{\det C}}\exp\left(-\frac{1}{2}(x-\mu)^{\top}C^{-1}(x-\mu)  \right), \quad x\in \R^n
+			f(x) = \frac{1}{\sqrt{(2\pi)^k \det C}}\exp\left(-\frac{1}{2}(x-\mu)^{\top}C^{-1}(x-\mu)  \right), \quad x\in \R^n
 		\]
-		gegeben ist. Wir schreiben auch $ X \sim N_n(\mu,C)  $.
-		Insbesondere kann man mit recht elementaren Methoden einsehen, dass dann auch für jedes $ j \in \{ 1,\dots,n\} $ $ X_j \sim N(\mu_j,\sigma_{jj}) $ gilt und außerdem die Einträge $ \sigma_{ij} $ der Matrix $ C $ gerade die Kovarianzen $ \text{Cov}(X_i,X_j) $ darstellen. Ein Beweis hierfür findet sich im Appendix. Dieser fasst mehrere Resultate aus \cite{brokate2016grundwissen} zusammen.
+		gegeben ist. Wir schreiben auch $ X \sim \mathcal{N}_n(\mu,C)  $.
+		Insbesondere kann man mit recht elementaren Methoden einsehen, dass dann auch für jedes $ j \in \{ 1,\dots,n\} $ $ X_j \sim \mathcal{N}(\mu_j,\sigma_{jj}) $ gilt und außerdem die Einträge $ \sigma_{ij} $ der Matrix $ C $ gerade die Kovarianzen $ \text{Cov}(X_i,X_j) $ darstellen. Ein Beweis hierfür findet sich im Appendix. Dieser fasst mehrere Resultate aus \cite{brokate2016grundwissen} zusammen.
 		
 	\end{enumerate}
 \end{Definition}
@@ -119,7 +119,7 @@ Sei ab nun $ (\Omega,\mathcal{A},\mathbb{P}) $ stets ein Wahrscheinlichkeitsraum
 	\[
 		\mathbb{E}[X_1] = \lim_{n \to \infty} \sum_{i=1}^n X_i(\omega)
 	\]
-	das heißt es existiert eine Menge $ N \subset \Omega $ mit $ \mathbb{P}(N)=0 $ und obige Aussage gilt für alle $ \omega \not \in N $. Eine solche Menge $ N $ heißt auch Nullmenge. In der Literatur findet man diese Art der Konvergenz oft auch unter dem Namen der ($\mathbb{P}$)-fast sicheren Konvergenz.
+	das heißt es existiert eine Menge $ \mathfrak{N} \subset \Omega $ mit $ \mathbb{P}(\mathfrak{N})=0 $ und obige Aussage gilt für alle $ \omega \not \in \mathfrak{N} $. Eine solche Menge $ \mathfrak{N} $ heißt auch Nullmenge. In der Literatur findet man diese Art der Konvergenz oft auch unter dem Namen der ($\mathbb{P}$)-fast sicheren Konvergenz.
 \end{Satz} 
 %\begin{Bemerkung}(wird gekürzt wenn schwaches Gesetz großer Zahlen gekürzt)\\
 %	Aus Konvergenz für fast alle $ \omega \in \Omega $ folgt insbesondere Konvergenz bezüglich des Wahrscheinlichkeitsmaßes $ \mathbb{P} $.\\
@@ -139,14 +139,14 @@ Sei ab nun $ (\Omega,\mathcal{A},\mathbb{P}) $ stets ein Wahrscheinlichkeitsraum
 	\[
 		\mathbb{V}[X_1] = \mathbb{E}[X_1^2]-\mathbb{E}[X_1]^2 = \mathbb{E}[(X_1-\mathbb{E}[X_1])^2]
 	\]
-	Dann gilt für eine standardnormalverteilte Zufallsvariable N:
+	Dann gilt für eine standardnormalverteilte Zufallsvariable $\widetilde{\mathcal{N}}$:
 	\[
-		\hat{S}_n \coloneqq\frac{\sum_{j=1}^{n}X_j-n\mathbb{E}[X_1]}{\sqrt{n\mathbb{V}[X_1]}} \stackrel{\mathcal{D}}{\to} N
+		\hat{S}_n \coloneqq\frac{\sum_{j=1}^{n}X_j-n\mathbb{E}[X_1]}{\sqrt{n\mathbb{V}[X_1]}} \stackrel{\mathcal{D}}{\to} \widetilde{\mathcal{N}}
 	\]
 	Dabei bezeichnet $ \stackrel{\mathcal{D}}{\to} $ die Konvergenz in Verteilung und ist genau dann erfüllt, wenn 
-	\[ \lim\limits_{n \to \infty} \mathbb{P}^{\hat{S}_n}((-\infty,x]) = \mathbb{P}^N((-\infty,x])
+	\[ \lim\limits_{n \to \infty} \mathbb{P}^{\hat{S}_n}((-\infty,x]) = \mathbb{P}^{\widetilde{\mathcal{N}}}((-\infty,x])
 	\]
-	für alle Stetigkeitsstellen der Verteilungsfunktion $ \mathbb{P}^N((-\infty,\cdot]) $ von N erfüllt ist.
+	für alle Stetigkeitsstellen der Verteilungsfunktion $ \mathbb{P}^{\widetilde{\mathcal{N}}}((-\infty,\cdot]) $ von $ \widetilde{\mathcal{N}} $ erfüllt ist.
 \end{Satz}
 
 

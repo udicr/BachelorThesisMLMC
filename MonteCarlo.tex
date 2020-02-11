@@ -12,6 +12,7 @@ approximiert.
 
 \begin{Beispiel}(Integral über $ [0,1]^d $ - aus \cite{lapeyre2003introduction})\\
 	\label{BeispielIntegral}
+	$ \mathcal{U} $
 	Angenommen wir wollen für $ d \geq 1 $ folgendes Integral berechnen:
 	\[
 		I = \int_{[0,1]^d} f(u_1,\dots,u_d) \du_1\dots\du_d
@@ -83,12 +84,12 @@ approximiert.
 	 \]
 	 gilt, ist insbesondere für $ a \leq b $
 	 \[
-	 	\lim\limits_{n \to \infty} \mathbb{P}(\frac{\sigma}{\sqrt{n}}a \leq \epsilon_n \leq \frac{\sigma}{\sqrt{n}}) = \lim\limits_{n \to \infty} \mathbb{P}(a \leq \hat{S}_n \leq b) = \int\limits_a^b \frac{1}{\sqrt{2\pi}}e^{-\frac{x^2}{2}} \dx \ .
+	 	\lim\limits_{n \to \infty} \mathbb{P}(\frac{\sigma}{\sqrt{n}}a \leq \epsilon_n \leq \frac{\sigma}{\sqrt{n}}b) = \lim\limits_{n \to \infty} \mathbb{P}(a \leq \hat{S}_n \leq b) = \int\limits_a^b \frac{1}{\sqrt{2\pi}}e^{-\frac{x^2}{2}} \dx \ .
 	 \]
 	 An dieser Stellen wollen wir kurz innehalten und uns überlegen, was obiges Resultat für den Fehler der Monte Carlo Methode denn praktisch gesehen bedeutet. 
 	 \begin{itemize}
 	 	\item Der zentrale Grenzwertsatz liefert uns kein zu der Folgerung aus dem starken Gesetz großer Zahlen vergleichbares Resultat, denn es ist  $ \lim_{n \to \infty} \mathbb{P}(\epsilon_n = 0) = 0 $ nach obiger Überlegung.
-	 	\item Der zentrale Grenzwertsatz erlaubt uns ebenso \underline{nicht} eine für andere Verfahren typische Fehlerschranke der Form $ \epsilon_n \leq M_n $ für eine von n und möglicherweise anderen Faktoren, wie z.B. Ausgangsdaten, abhängigen Schranke $ M $ aufzustellen. Grund dafür ist, dass der Träger von $\frac{1}{\sqrt{2\pi}}e^{-\frac{x^2}{2}}$ ganz $ \R $ ist.
+	 	\item Der zentrale Grenzwertsatz erlaubt uns ebenso \underline{nicht} eine für andere Verfahren typische Fehlerschranke der Form $ \epsilon_n \leq M_n $ für eine von n und möglicherweise anderen Faktoren, wie z.B. Ausgangsdaten, abhängigen Schranke $ M_n $ aufzustellen. Grund dafür ist, dass der Träger von $\frac{1}{\sqrt{2\pi}}e^{-\frac{x^2}{2}}$ ganz $ \R $ ist.
 	 	\item Was der zentrale Grenzwertsatz uns jedoch erlaubt, ist, ein sogenanntes $ 95\% $ Konfidenzintervall für $ \epsilon_n $ zu bestimmen. Das bedeutet, dass das tatsächliche Ergebnis mit einer Wahrscheinlichkeit von mindestens $ 95 \% $ im gegebenen Intervall enthalten ist. Denn, da 
 	 	\[
 	 		\mathbb{P}(\abs{N} \leq 1.96) \approx 0.95
