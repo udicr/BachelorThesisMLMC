@@ -4,18 +4,18 @@ Die folgenden Definitionen und Sätze sollen als Grundlagen für die weiteren Be
 Die analytischen Grundlagen bauen zum Teil auf der Vorlesung Rand- und Eigenwertprobleme aus dem Sommersemester 2019 von Herrn Prof. Dr. Reichel auf, sind aber auch  z.B. in \cite{dobrowolski2010angewandte} oder \cite{evans10} zu finden.
 \begin{Definition}(Einige Operatoren)
 	\begin{enumerate}[label=(\alph*)]
-		\item Für $U: \R^d \to \R^d$ ist die Divergenz von U definiert durch
+		\item Für $F: \R^d \to \R^d$ ist die Divergenz von F definiert durch
 			\begin{align*}
 				\dive  : \begin{cases}
 				\R^d  \to \R \\
-				U \mapsto \dive U= \nabla \cdot  U \coloneqq \sum_{i=1}^{d} \frac{\partial U_i}{ \partial x_i}
+				F \mapsto \dive F= \nabla \cdot  F \coloneqq \sum_{i=1}^{d} \frac{\partial F_i}{ \partial x_i}
 				\end{cases}
 			\end{align*}
-		\item Für $u: \R^d \to \R$ und $\alpha = (\alpha_1,\dots,\alpha_d) \in \N^d$ ist die partielle Ableitung von $u$ nach dem sogenannten Multiindex $\alpha$ definiert durch
+		\item Für $f: \R^d \to \R$ und $\alpha = (\alpha_1,\dots,\alpha_d) \in \N^d$ ist die partielle Ableitung von $f$ nach dem sogenannten Multiindex $\alpha$ definiert durch
 			\begin{align*}
-				\partial^{\alpha}u \coloneqq 
-				\frac{\partial^{|\alpha|} u}{\partial x_1 ^{\alpha_1} \cdots  \partial x_d^{\alpha_d} } 
-				=\frac{\partial^{\alpha_1+\dots +\alpha_d} u}{\partial x_1 ^{\alpha_1} \cdots  \partial x_d^{\alpha_d} } 
+				\partial^{\alpha}f \coloneqq 
+				\frac{\partial^{|\alpha|} f}{\partial x_1 ^{\alpha_1} \cdots  \partial x_d^{\alpha_d} } 
+				=\frac{\partial^{\alpha_1+\dots +\alpha_d} f}{\partial x_1 ^{\alpha_1} \cdots  \partial x_d^{\alpha_d} } 
 			\end{align*}
 	\end{enumerate}
 \end{Definition}
@@ -51,24 +51,24 @@ Die analytischen Grundlagen bauen zum Teil auf der Vorlesung Rand- und Eigenwert
 \begin{Satz} (Gaußscher Integralsatz für Lipschitz-Gebiete) \newline
  	Sei $\mathcal{D}  \subset \R^d$ ein beschränktes Lipschitz-Gebiet und sei $n$ der äußere Einheitsnormalenvektor an $\partial \mathcal{D}$. Dann gilt:
  		\begin{align*}
-	 		\int_{\mathcal{D}} \frac{\partial u}{\partial x_i} \dx  = \int_{\partial \mathcal{D}} u n_i \da
+	 		\int_{\mathcal{D}} \frac{\partial f}{\partial x_i} \dx  = \int_{\partial \mathcal{D}} f n_i \da
  		\end{align*}
- 		für jede Funktion $u \in C^1(\overline{\mathcal{D}})$. \\ 
+ 		für jede Funktion $f \in C^1(\overline{\mathcal{D}})$. \\ 
  		Oft erscheint der Gaußsche Integralsatz auch in folgender Form:
  		\begin{align*}
- 		\int_{\mathcal{D}} \dive U \dx =  \int_{\partial \mathcal{D}} U \cdot n \da
+ 		\int_{\mathcal{D}} \dive F \dx =  \int_{\partial \mathcal{D}} F \cdot n \da
  		\end{align*}
- 		wobei $U:\mathcal{D} \to \R^d$ ein Vektorfeld ist. Die Komponentenfunktionen von $U = (U_1,\dots,U_d)$ sollen dann $U_i \in C^1(\overline{\mathcal{D}})$ für $i=1,\dots,n$ erfüllen.
+ 		wobei $F:\mathcal{D} \to \R^d$ ein Vektorfeld ist. Die Komponentenfunktionen von $F = (f_1,\dots,f_d)$ sollen dann $f_i \in C^1(\overline{\mathcal{D}})$ für $i=1,\dots,n$ erfüllen.
 \end{Satz}
 
 \begin{Folgerung}(mehrdimensionale partielle Integration) \\
 	\label{n_pI}
-	Sei $ u \in C^1(\R^d, \R)$ und $ \vec v : \mathcal{D} \to \R^d $ ein stetig partiell differenzierbares Vektorfeld.
+	Sei $ f \in C^1(\R^d, \R)$ und $ F : \mathcal{D} \to \R^d $ ein stetig partiell differenzierbares Vektorfeld.
 	Dann gilt:
 	
 	\begin{align*}
-		\int_{\mathcal{D}} u \dive ( \vec v) \dx = \int_{\partial \mathcal{D}} u \vec v \cdot n \da
-		- \int_{\mathcal{D}} \vec v \cdot \nabla u \dx
+		\int_{\mathcal{D}} f \dive ( F) \dx = \int_{\partial \mathcal{D}} f F \cdot n \da
+		- \int_{\mathcal{D}}  F \cdot \nabla f \dx
 	\end{align*}
 \end{Folgerung}
 
@@ -80,41 +80,41 @@ Die analytischen Grundlagen bauen zum Teil auf der Vorlesung Rand- und Eigenwert
 
 
 \begin{Definition}(schwache Ableitung)\\
-	Sei $u \in L_{\text{loc}}^1(\mathcal{D})$. Dabei bezeichne $  L_{\text{loc}}^1(\mathcal{D}) $ den Raum der lokal integrierbaren Funktionen auf $ \mathcal{D} $. Wir sagen v besitzt eine schwache Ableitung zum Multiindex $\alpha$, falls eine Funktion $v \in L_{\text{loc}}^1$ existiert, mit 
+	Sei $f \in L_{\text{loc}}^1(\mathcal{D})$. Dabei bezeichne $  L_{\text{loc}}^1(\mathcal{D}) $ den Raum der lokal integrierbaren Funktionen auf $ \mathcal{D} $. Wir sagen v besitzt eine schwache Ableitung zum Multiindex $\alpha$, falls eine Funktion $v \in L_{\text{loc}}^1$ existiert, mit 
 		\begin{align*}
-			\int_{\mathcal{D}} u \partial^{\alpha} \phi \dx = (-1)^{|\alpha|} \int_{\mathcal{D}} v \phi \dx \qquad \forall \phi \in C_c^{\infty}(\mathcal{D})
+			\int_{\mathcal{D}} f \partial^{\alpha} \phi \dx = (-1)^{|\alpha|} \int_{\mathcal{D}} v \phi \dx \qquad \forall \phi \in C_c^{\infty}(\mathcal{D})
 		\end{align*}
-	In diesem Zusammenhang nennen wir $\Phi$ auch Testfunktion und wir definieren $D^{\alpha} u \coloneqq v$ als die schwache Ableitung von $u$ zum Multiindex $\alpha$. 
+	In diesem Zusammenhang nennen wir $\Phi$ auch Testfunktion und wir definieren $D^{\alpha} f \coloneqq v$ als die schwache Ableitung von $f$ zum Multiindex $\alpha$. 
 \end{Definition}
 \begin{Bemerkung}
-	Per Konvention ist für $ \alpha = (0,\dots, 0) \quad \partial^{\alpha}u = u $
+	Per Konvention ist für $ \alpha = (0,\dots, 0) \quad \partial^{\alpha}f = f $
 \end{Bemerkung}
 \begin{Definition}(Sobolevräume)\\
 	Sei $\mathcal{D} \subseteq \R^d $ offen, $ k \in \N $ und $ 1 \leq p \leq \infty $.  Weiter sei $ L : C^1(\mathcal{D},\R^m) \to L^{\infty}(\mathcal{D},\R^k) $ ein linearer Differentialoperator erster Ordnung und $ L^{\star} : C^1(\mathcal{D},\R^k) \to L^{\infty}(\mathcal{D},\R^m) $ der zugehörige adjungierte Operator. Es gelte also
 	\[
-	\int_{\mathcal{D}} Lu \cdot \phi \dx = \int_{\mathcal{D}} u \cdot L^{\star} \phi \dx \text{ für } u \in C^1_c(\mathcal{D},\R^m) \text{ , } \phi \in C^1_c (\mathcal{D},\R^k)
+	\int_{\mathcal{D}} Lf \cdot \phi \dx = \int_{\mathcal{D}} f \cdot L^{\star} \phi \dx \text{ für } f \in C^1_c(\mathcal{D},\R^m) \text{ , } \phi \in C^1_c (\mathcal{D},\R^k)
 	\]
 	Dann sind:
 	\begin{enumerate}[label=(\alph*)]
-		\item $ W^{k,p} (\mathcal{D}) \coloneqq \{ u \in L^p(\mathcal{D})$ und die schwachen Ableitungen $ \partial^{\alpha}u $ existieren, mit $ \partial^{\alpha}u \in L^p(\mathcal{D}) $ für alle $ \alpha \in \N_0^d , |\alpha| \leq k \} $	
-		\item $ \lVert u \rVert_{k,p} =  \lVert u \rVert_{W^{k,p}(\mathcal{D})} \coloneqq 
+		\item $ W^{k,p} (\mathcal{D}) \coloneqq \{ f \in L^p(\mathcal{D})$ und die schwachen Ableitungen $ \partial^{\alpha}f $ existieren, mit $ \partial^{\alpha}f \in L^p(\mathcal{D}) $ für alle $ \alpha \in \N_0^d , |\alpha| \leq k \} $	
+		\item $ \lVert f \rVert_{k,p} =  \lVert f \rVert_{W^{k,p}(\mathcal{D})} \coloneqq 
 				\begin{cases}
 					\begin{array}{lll}
-						(\sum\limits_{|\alpha|\leq k} \int_{\mathcal{D}} |\partial^{\alpha} u |^p \dx)^{\frac{1}{p}} &, 1 \leq p < \infty \\
-						\sum\limits_{|\alpha|\leq k}   \lVert \partial^{\alpha} u \rVert_{\infty}        &, p = \infty
+						(\sum\limits_{|\alpha|\leq k} \int_{\mathcal{D}} |\partial^{\alpha} f |^p \dx)^{\frac{1}{p}} &, 1 \leq p < \infty \\
+						\sum\limits_{|\alpha|\leq k}   \lVert \partial^{\alpha} f \rVert_{\infty}        &, p = \infty
 					\end{array}
 				\end{cases}  $
 		\item $ W_0^{k,p}(\mathcal{D}) \coloneqq \overline{ C_c^{\infty}(\mathcal{D}) }^{\lVert \cdot \rVert_{k,p}} $. Über den sogenannten Spursatz erhält man eine äquivalente Charakterisierung durch: 
-		$ W_0^{k,p}(\mathcal{D}) = \{ u \in W^{k,p}(\mathcal{D}) : u|_{\partial \mathcal{D}} = 0 \}$
+		$ W_0^{k,p}(\mathcal{D}) = \{ f \in W^{k,p}(\mathcal{D}) : f|_{\partial \mathcal{D}} = 0 \}$
 		\item Im Falle $ p = 2 $ schreibt man aufgrund der Tatsache, dass es sich dann bei $ W^{k,p}(\mathcal{D}) $ um einen Hilbertraum handelt, oft auch $ H^k(\mathcal{D}) \coloneqq W^{k,p}(\mathcal{D}) $
-		\item $ H(L,\mathcal{D}) \coloneqq \{ u \in L^2(\mathcal{D},\R^m) : \exists v \in L^2(\mathcal{D},R^k) \text{ mit } \int_{\mathcal{D}} v \cdot \phi \dx = \int_{\mathcal{D}} u \cdot L^{\star}\phi \dx \ \forall \phi \in C^1_c(\mathcal{D},\R^k) \}$
+		\item $ H(L,\mathcal{D}) \coloneqq \{ f \in L^2(\mathcal{D},\R^m) : \exists v \in L^2(\mathcal{D},R^k) \text{ mit } \int_{\mathcal{D}} v \cdot \phi \dx = \int_{\mathcal{D}} f \cdot L^{\star}\phi \dx \ \forall \phi \in C^1_c(\mathcal{D},\R^k) \}$
 	\end{enumerate}
 \end{Definition}
 
 \begin{Satz}(Multiplikation mit Testfunktionen und Integration) \\ 
 	\label{testfunktionen}
-	Sei $\mathcal{D} \subset \R^d$ offen und $u \in L_{\text{loc}}^1(\mathcal{D})$ und $\int_{\mathcal{D}} u \phi \dx = 0 \; \forall \phi \in C_c^{\infty}(\mathcal{D})$ ,\\
-	dann gilt $ u \equiv 0 $.
+	Sei $\mathcal{D} \subset \R^d$ offen und $f \in L_{\text{loc}}^1(\mathcal{D})$ und $\int_{\mathcal{D}} f \phi \dx = 0 \; \forall \phi \in C_c^{\infty}(\mathcal{D})$ ,\\
+	dann gilt $ f \equiv 0 $.
 \end{Satz}
 %\begin{Satz} (Rechnen mit Differentialoperatoren)
 %	todo FEM
