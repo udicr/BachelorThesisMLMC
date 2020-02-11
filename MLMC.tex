@@ -10,6 +10,7 @@ Zusätzlich zu der oft bereits alleine anspruchsvollen Aufgabe, solche Probleme 
 Die Multi Level Monte Carlo Methode, wir werden im Folgenden auch oft vom sogenannten Multi Level Monte Carlo Schätzer sprechen, ist der Prototyp einer Familie sogenannter Varianz-reduzierender Methoden, welche das Ziel haben, die naive Monte Carlo Methode in Sachen Konvergenzrate und Effizienz zu schlagen. Bevor wir erklären wie genau die Multilevel Monte Carlo Methode im Allgemeinen dabei vorgeht, möchten wir die Funktionsweise wieder anhand eines Beispiels erklären, welches in \cite{heinrich2001multilevel} ausführlich beleuchtet wird.
 
 \begin{Beispiel}(Wieder ein Integral über $[0,1]^d$)\\
+	\label{mlmcbeispiel}
 	Seien nun $ d_1,d_2  \in \N $.
 	Wie bereits im letzten Abschnitt setzen wir uns die Aufgabe das Integral einer Funktion $ f $ zunächst über $ [0,1]^{d_1} $ zu bestimmen. Damit wir aber überhaupt in oben erklärte Situation kommen und von verschiedenen 'Leveln' sprechen können, sei $ f $ nun zusätzlich abhängig von einem Parameter $ \lambda \in \Lambda \subseteq \R^{d_2}$, also $f : \Lambda \times [0,1]^{d_1} \to \R $. Um bei den folgenden Überlegungen die Notation so schlank wie möglich zu halten, betrachten wir an dieser Stelle nur einen konkreten Spezialfall: \\
 	Sei $ d_1 = d_2 = 1 $ und $ f \in C([0,1]\times[0,1],\R) $, d.h. wir wollen das Integral 
