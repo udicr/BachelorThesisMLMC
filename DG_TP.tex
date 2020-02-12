@@ -254,10 +254,10 @@ $\rho(x,t) = \rho_{\text{in}}(x,t) \text{ für } (x,t) \in \Gamma_{\text{in}} \t
 	$ \rho \in L_1 (\mathcal{D} \times (0,T)) $ heißt schwache Lösung des linearen Transportproblems, falls es für ein gegebenes $ q : \overline{\mathcal{D}} \to \R^2 $ folgende Bedingungen erfüllt:
 	\begin{align*}
 	\begin{array}{rllll}
-	&\text{(swTP)} \ &B(\rho,\phi) &= \langle l,\phi\rangle \quad \forall \phi \in H^1(\mathcal{D}\times\mathbb{T}) \text{ mit } &\phi(\cdot,T) = 0 \text{ und } \phi|_{\Gamma_{\text{out}}} = 0 \\
+	&\text{(swTP)} \ &B(\rho,\phi) &= \langle b,\phi\rangle \quad \forall \phi \in H^1(\mathcal{D}\times\mathbb{T}) \text{ mit } \phi(\cdot,T) = 0 \text{ und } \phi|_{\Gamma_{\text{out}}} = 0 \\
 	&\text{Dabei sind :} & & &\\
-	& &B(\rho,\phi) &\coloneqq  \int_{0}^{T} \int_{\mathcal{D}} \rho (\partial_t \phi + q \nabla \phi ) \dx \dt &- \int_{\Gamma_{\text{out}}} \rho q \cdot n \phi \da  \dt \\
-	& &\langle l,\phi \rangle &\coloneqq \int_{\Gamma_{\text{in}}} \rho_{\text{in}} q \cdot n \phi \da  \dt &- \int_{\mathcal{D}} \rho_0 \phi(0) \dx \\
+	& &B(\rho,\phi) &\coloneqq  \int_{0}^{T} \int_{\mathcal{D}} \rho (\partial_t \phi + q \nabla \phi ) \dx \dt - \int_{\Gamma_{\text{out}}} \rho q \cdot n \phi \da  \dt \\
+	& &\langle b,\phi \rangle &\coloneqq \int_{\Gamma_{\text{in}}} \rho_{\text{in}} q \cdot n \phi \da  \dt - \int_{\mathcal{D}} \rho_0 \phi(0) \dx \\
 	& & \Gamma_{\text{out}} &\coloneqq  \{ z \in \partial \mathcal{D}: q(z)\cdot n(z) > 0 \} & \\
 	& & \Gamma_{\text{in}} &\coloneqq  \{ z \in \partial \mathcal{D}: q(z)\cdot n(z) \leq 0 \} &
 	\end{array}\\
@@ -303,9 +303,9 @@ Es gilt an dieser Stelle außerdem:
 	Außerdem können wir Integral (2) mit  \ref{n_pI} wie folgt ausdrücken:
 	\begin{align*}
 	\int_{\mathcal{D} \times \mathbb{T}}  
-	\dive(\rho(x,t) &q(x) ) \phi(x,t)\; \mathrm{d} (x,t) = \int_{\mathbb{T}} \int_{\mathcal{D}} \dive(\rho(x,t) q(x) ) \phi(x,t) \dx \dt \\
-	&= \int_{\mathbb{T}} \big( - \int_{\mathcal{D}} \rho(x,t) q(x) \nabla \phi(x,t) \dx + \int_{\partial \mathcal{D}} \rho(x,t) q(x) \cdot n \ \phi(x,t) \da \big)  \dt \\
-	&= - \int_{\mathcal{D} \times \mathbb{T}} \rho(x,t) q(x) \nabla \phi(x,t)) \; \mathrm{d} (x,t) + \int_{\mathbb{T}} \int_{\partial \mathcal{D}} \rho(x,t) q(x) \cdot n \phi(x,t) \da \dt 
+	\dive(\rho &q ) \phi\; \mathrm{d} (x,t) = \int_{\mathbb{T}} \int_{\mathcal{D}} \dive(\rho q ) \phi \dx \dt \\
+	&= \int_{\mathbb{T}} \big( - \int_{\mathcal{D}} \rho q \nabla \phi \dx + \int_{\partial \mathcal{D}} \rho q \cdot n \ \phi \da \big)  \dt \\
+	&= - \int_{\mathcal{D} \times \mathbb{T}} \rho q \nabla \phi) \; \mathrm{d} (x,t) + \int_{\mathbb{T}} \int_{\partial \mathcal{D}} \rho q \cdot n \phi \da \dt 
 	\end{align*}
 	Wenn $ \rho  $ eine klassische Lösung ist, dann existieren insbesondere $ \partial_t \rho  $ und $ \dive(\rho q) $ und obige Umformungen sind zulässig, d.h. $ \rho $ erfüllt auch die schwache Formulierung. \\
 	Ist $ \rho $ hingegen eine schwache Lösung die zusätzlich in $ C^2(\mathcal{D}\times\mathbb{T},\R) $ liegt, so lassen sich alle oben durchgeführten Umformungen auch in die andere Richtung durchführen und wir erhalten: 
@@ -320,13 +320,14 @@ Es gilt an dieser Stelle außerdem:
 Auch die Semidiskretisierung können wir in ähnlicher Form, wie eben noch die schwache Formulierung, ausdrücken. Sei dazu
 \begin{align*}
 B_h(\rho_h,\phi) &\coloneqq \sum_{i=1}^{N} (\partial_t\rho_{h},\phi_h)_{K_i}  - \left( \sum_{i=1}^{N} (\Upsilon(\rho_h),\nabla \phi_h)_{K_i} - \sum_{\substack{F \in \mathcal{F}_{K_i} \\ F \not\subseteq \Gamma_{\text{in}}}} (\Upsilon^{\star}(\rho_h)\cdot n^K,\phi_h)_F\right) \\
-\langle l_h , \phi_h \rangle &\coloneqq (\rho_{\text{in}}q \cdot n^K,\phi_h)_{\partial K_i \cap \Gamma_{\text{in}}}
+\langle b_h , \phi_h \rangle &\coloneqq (\rho_{\text{in}}q \cdot n^K,\phi_h)_{\partial K_i \cap \Gamma_{\text{in}}}
 \end{align*}
 Dann löst $ \rho_h \in Q_h $ die Semidiskretisierung \ref{Semidiskretisierung}, wenn $ B_h(\rho_{h},\phi) = \langle l_h,\phi_h \rangle  $ für alle $ \phi_h \in Q_h$ erhalten ist.
 
 
 
 \subsubsection{Konsistenz}
+TODO Notation
 	 Abschnitt \ref{Diskretisierung} hat sich damit beschäftigt, aus dem ursprünglich unendlich dimensionalen Problem letztendlich eine volldiskretisierte Verfahrensvorschrift in einem endlichen Ansatzraum herzuleiten. Fragen wir nun nach der Konsistenz des Verfahrens, stellen wir damit zugleich die Frage, ob wir immer noch die richtige Gleichung lösen. Genauer heißt das Verfahren genau dann konsistent, wenn eine analytische Lösung $ \rho $ des ursprünglichen Problems (dTP) auch die hergeleitete Verfahrensvorschrift erfüllt. 
 	 Wir betrachten zunächst etwas abstrakter den formalen Prozess der Diskretisierung einer abstrakten Gleichung $ T \rho=0 $:
 	 \begin{figure}[H]
