@@ -62,10 +62,10 @@ Die Multi Level Monte Carlo Methode, wir werden im Folgenden auch oft vom sogena
 	 \mathcal{I}_{MC} = \sum\limits_{l=0}^{L} \frac{1}{n} \sum\limits_{k=1}^{n} (P_l-P_{l-1})f(\cdot,x_k)	
 	 \]
 	  umschreiben. Um nun tatsächlich einen Nutzen aus der Aufteilung in verschiedene Level zu ziehen und einen guten Kompromiss zwischen Kosten und Fehler herzustellen, erlauben wir nun zusätzlich die Anzahl der Zufallsauswertungen $ n $ von Level zu Level zu variieren. 
-	  Wir wählen also $ (n_l)_{l=0,\dots,L} \in \N^{L+1}  $.  Außerdem seien $ \{ X_{lj} , l=0,\dots,L \ , j= 0,\dots,n_l\} $ unabhängige auf $ [0,1] $ gleichverteilte Zufallsvariablen und $ (x_{lj})_{l=0,\dots,L \ ,j=0,\dots,n_l} $ zugehörige Realisierungen.
+	  Wir wählen also $ (n_l)_{l=0,\dots,L} \in \N^{L+1}  $.  Außerdem seien $ \{ X_{lj} , l=0,\dots,L \ , j= 1,\dots,n_l\} $ unabhängige auf $ [0,1] $ gleichverteilte Zufallsvariablen und $ (x_{lj})_{l=0,\dots,L \ ,j=1,\dots,n_l} $ zugehörige Realisierungen.
 	  Dann erhalten wir den Multilevel Monte Carlo Schätzer 
 	  \[
-	   I(\lambda) \approx \mathcal{I}_{MLMC}(\lambda) = \sum_{l=0}^{L} \frac{1}{n_l} \sum_{k=1}^{n_l} ((P_l - P_{l-1}) f(\cdot,x_{lj}))(\lambda) \ .
+	   I(\lambda) \approx \mathcal{I}_{MLMC}(\lambda) = \sum_{l=0}^{L} \frac{1}{n_l} \sum_{j=1}^{n_l} ((P_l - P_{l-1}) f(\cdot,x_{lj}))(\lambda) \ .
 	  \]
 	  Der bedeutendste Schritt ist an dieser Stelle eine passende Wahl der $ n_l $. Bei diesem Beispiel wollen wir uns darauf beschränken, eine passende Wahl anzugeben und den Nutzen hervorzuheben, welchen wir durch diese Wahl erlangen. So zeigt sich, dass, wie in \cite{heinrich2001multilevel} ausführlicher erklärt, eine passende Wahl beispielsweise durch $ n_l = \Theta(2^{-\frac{3l}{2}n})$ für ein $ n \in \N $ groß genug gegeben ist. 
 	  Dann kann für den analog wie für den MC-Schätzer definierten (RMSE-)Fehler gezeigt werden, dass 
@@ -93,7 +93,7 @@ Dann muss die Dichte $ g_X $ der Zufallsvariable $ X $ auf $ V $ integrierbar se
 \[
  	g_X(t) \coloneqq 
  	\begin{cases}
- 	\frac{g_y(f^-1(t))}{\abs{\det f'(f^-1(t))}} \ \quad ,\text{falls }t\in V\\
+ 	\frac{g_y\left(f^{-1}(t)\right)}{\abs{\det f'\left(f^{-1}(t)\right)}} \ \quad ,\text{falls }t\in V\\
  	0 \qquad \qquad \qquad, \text{sonst} 	
  	\end{cases}
 \]
