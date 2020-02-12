@@ -1,12 +1,12 @@
 % !TeX root = bachelorarbeit.tex
-Nachdem wir in Abschnitt 2 an einige Grundlagen erinnert, in Abschnitt 3 und 4 sowohl die Monte Carlo Methode, als auch die Multilevel Monte Carlo Methode eingeführt und in Abschnitt 5 das Transportproblem, sowie das Potentialströmungsproblem inklusive numerischer Verfahren, welche zur Lösung dergleichen genutzt werden können, erklärt haben, soll nun dieser Abschnitt dazu dienen, die bisherigen Ergebnisse zu bündeln und die Anwendung der Multilevel Monte Carlo Methode auf partielle Differentialgleichungen am Beispiel des Transportproblem nahe zu legen. Dabei nimmt dieser Abschnitt einen zentralen Platz in dieser Thesis ein, weswegen wir noch einmal darlegen wollen, was genau unser Ziel ist und wie wir die uns an dieser Stelle zu Verfügung stehenden Mittel einsetzen, um das Gewünschte zu erreichen.
+Nachdem wir in Abschnitt 2 an einige Grundlagen erinnert, in Abschnitt 3 und 4 sowohl die Monte Carlo Methode, als auch die Multilevel Monte Carlo Methode eingeführt und in Abschnitt 5 das Transportproblem, sowie das Potentialströmungsproblem inklusive numerischer Verfahren, welche zur Lösung dergleichen genutzt werden können, erklärt haben, soll nun dieser Abschnitt dazu dienen, die bisherigen Ergebnisse zu bündeln und die Anwendung der Multilevel Monte Carlo Methode auf partielle Differentialgleichungen am Beispiel des Transportproblem nahe zu legen. Dabei nimmt dieser Abschnitt einen zentralen Platz in dieser Thesis ein, weswegen wir noch einmal darlegen wollen, was genau unser Ziel ist und wie wir die uns an dieser Stelle zu Verfügung stehenden Mittel einsetzen, um das Gewünschte zu erreichen. Sei hierzu $ \mathbb{T} = (0,T] $ für ein $ T>0 $.
 \begin{align*}
 &\text{Für ein stochastisches Flussvektorfeld } q: \Omega \times \overline{\mathcal{D}} \to \R^2 \text{, bestimme }\rho: \Omega \times \overline{\mathcal{D}} \times \mathbb{T} \to \R_{\geq 0}\\ 
 &\text{ mit} \\
 &\text{(pTP)} 
 \begin{cases}
 \begin{array}{rlll}
-\partial_t \rho (\omega, x, t) + \dive(\rho(\omega,x,t)q(\omega,x)) &= 0 &\text{, für } (x,t) \in \mathcal{D} \times (0,T] \\
+\partial_t \rho (\omega, x, t) + \dive(\rho(\omega,x,t)q(\omega,x)) &= 0 &\text{, für } (x,t) \in \mathcal{D} \times \mathbb{T} \\
 \rho(\omega,x,t) &= \rho_{\text{in}}(x,t) &\text{, für } (x,t) \in \Gamma_{\text{in}} \times \mathbb{T} \\
 \rho(\omega,x,0)  &= \rho_0(x) &\text{, für } x \in  \mathcal{D}
 \end{array}
@@ -167,10 +167,9 @@ e(\widehat{Q}_{\tilde{\mathcal{H}},\{ n_l \}_{l=0}^L }^{\text{MLMC}})^2 &= \math
 %		\item $ (2) $ stimmt mit $ (2) $ aus \ref{mseMC} überein. Insbesondere ist also wieder  $ h \lesssim \epsilon^{\frac{1}{\alpha}}  $ dafür hinreichend, dass der Diskretisierungs- und Lösungsfehler kleiner als $ \frac{\epsilon^2}{2} $  ausfällt.
 %		\item Um also einen kleineren RMSE als $ \epsilon $ zu erhalten, muss auch $ (1) \leq  \frac{\epsilon^2}{2} $ gelten.
 		\item Unter Annahme \ref{Annahme1} gilt $ \mathbb{V}[Y_l] = \mathbb{V}[Q_{h_l}-Q_{h_{l-1}}] \stackrel{l \to \infty}{\to} 0  $, das bedeutet für uns: Je größer $ l $ und damit je feiner die Gitterweite $ h_l $ ist, desto weniger Samples werden benötigt um $ \mathbb{E}[Y_l] $ zu schätzen.
-		\item Das niedrigste betrachtete Level $ l = 0 $ kann unabhängig von $ \epsilon $ fest gewählt werden. So bleibt insbesondere die benötigte Anzahl an Rechenoperationen pro Sample auf dem niedrigsten Level konstant, auch wenn $ \epsilon \to 0 $ geht. Bei der tatsächlichen Anwendung muss allerdings $ h_0 $ so gewählt werden, dass zumindest ein Mindestmaß an Auflösung des Problems gegeben ist.
+		\item Das niedrigste betrachtete Level $ l = 0 $ kann unabhängig von $ \epsilon $ fest gewählt werden. So bleibt insbesondere die benötigte Anzahl an Rechenoperationen pro Sample auf dem niedrigsten Level konstant, auch wenn $ \epsilon \to 0 $ geht. Bei der tatsächlichen Anwendung muss allerdings $ h_0 $ so gewählt werden, dass zumindest ein Mindestmaß an Auflösung des Problems gegeben ist. Deswegen werden wir später beim Algorithmus die Level beginnend bei $ l_0 $ indizieren. Um in der Theorie aber die Notation so schlank wie möglich zu halten, haben wir uns bewusst dafür entschieden bei der Indizierung in der Theorie mit Level $ l=0 $ zu beginnen.
 	\end{itemize}
 \end{Bemerkung} 
-\newpage
 Wir sind nun in der Lage folgendes zentrale Resultat aus \cite{cliffe2011multilevel} nachzuvollziehen:
 \begin{Satz}$ \newline $
 	\label{MLMCTheorem}
@@ -286,9 +285,9 @@ Durch eine geschickte, konkrete Wahl von $ \{n_l\}_{l=0}^L $ lässt sich zudem f
 Wie in \cite{giles_2015} näher erklärt kann hierfür 
 \begin{align}
 	\label{OptimalN}
-	n_l = \left\lceil 2 \epsilon^{-2} \sqrt{\frac{V[Y_l]}{C_l}} \left( \sum_{l=0}^{L}\sqrt{V[Y_l]C_l} \right) \right\rceil
+	n_l = \left\lceil 2 \epsilon^{-2} \sqrt{\frac{\mathbb{V}[Y_l]}{C_l}} \left( \sum_{l=0}^{L}\sqrt{\mathbb{V}[Y_l]C_l} \right) \right\rceil
 \end{align}
-gewählt werden. Dabei ist $ V[Y_l] $ die geschätzte Varianz und $ C_l $ die Anzahl der benötigten Rechenoperationen für ein einzelnes Sample auf Level $ l $.
+gewählt werden. Dabei ist $ \mathbb{V}[Y_l] $ die geschätzte Varianz und $ C_l $ die Anzahl der benötigten Rechenoperationen für ein einzelnes Sample auf Level $ l $.
 Davon ausgehend können wir nun den Algorithmus formulieren:
 
  \begin{algorithm}[H]
@@ -301,7 +300,7 @@ Davon ausgehend können wir nun den Algorithmus formulieren:
  	\BlankLine
  	
  	Setze $ \tilde{\mathcal{H}} = \{ l_0,\dots,L_0 \} $ und die Anzahl der benötigten Samples $ \Delta N = \{ \Delta n_l \}_{l=l_0}^{L_0} = N_0$ und $ i = 0 $\;
- 	\While{$\Delta n_l > 0$ für mindestens ein $ l \in \mathcal{R} $ }{
+ 	\While{$\Delta n_l > 0$ für mindestens ein $ l \in \tilde{\mathcal{H}} $ }{
  		\For{alle $ l \in \tilde{\mathcal{H}} $ mit $\Delta n_l > 0$ }{
  			Berechne Zielfunktional und benötigte Kosten: $ Y_l,C_l \leftarrow $ MonteCarloEstimator$(h_l,\Delta n_l)$\;
  			Update $ C_l,\abs{\mathbb{E}[Y_l]},\mathbb{V}[Y_l] $ und setze $n_l = \Delta n_l, \Delta n_l=0$\;

@@ -95,7 +95,7 @@ $\newline$
 Für eine klassische Lösung $ \rho  $ von (dTP) gilt dann insbesondere $ \partial_t \rho = - \dive (\Upsilon(\rho)) $ auf $ \mathcal{D} \times (0,T] $.	\\
 Halten wir also zunächst $ t \in \mathbb{T} $ und leiten so die Semidiskretisierung her.\\
 Sei nun $ \mathcal{T} $ eine zulässige Triangulierung von $ \mathcal{D} $ aus Dreiecken wie in \ref{num_pot} und  $ (\cdot , \cdot)_A $ das $ L^2(A)-$Skalarprodukt.
-Wir wählen als Lösungs-/Testraum $\mathcal{Q}_h = \prod_{K \in \mathcal{T}} \mathbb{P}_p(K,\R) $ für ein festes $p \geq 1 $. Anders als zuvor fordern wir für unsere Lösungs- und Testfunktionen diesmal aber \underline{nicht} die Stetigkeit auf $\mathcal{D}$. Da so $\mathcal{Q}_h$ nicht im betrachteten analytischen Lösungs- und Testraum liegt, etwa  $\mathcal{Q}_h \nsubseteq H^1(\mathcal{D})$, nennt man $\mathcal{Q}_h$ auch einen nicht-konformen Ansatzraum.
+Wir wählen als Lösungs-/Testraum $\mathcal{Q}_h = \prod_{K \in \mathcal{T}} \mathbb{P}_p(K,\R) $ für ein festes $p \geq 0 $. Anders als zuvor fordern wir für unsere Lösungs- und Testfunktionen diesmal aber \underline{nicht} die Stetigkeit auf $\mathcal{D}$. Da so $\mathcal{Q}_h$ nicht im betrachteten analytischen Lösungs- und Testraum liegt, etwa  $\mathcal{Q}_h \nsubseteq H^1(\mathcal{D})$, nennt man $\mathcal{Q}_h$ auch einen nicht-konformen Ansatzraum.
 Außerdem lässt sich im Allgemeinen auch die später bestimmte Lösung $ \rho_h \in \mathcal{Q}_h $ (definiert auf $\mathcal{D}_h = \bigcup_{K \in \mathcal{T}} K$ ) nicht stetig auf $ \mathcal{D} $ fortsetzen, denn für eine beliebige innere Kante $ F $ kann der Grenzwert von $ \rho_h $ auf den anliegenden Zellen $ K,K' $ ($ \overline{F} = \partial K \cap \partial K' $) unterschiedlich sein. \\
 Trotzdem müssen wir auch auf den inneren Kanten $ \mathcal{F}^0 \subset \mathcal{F} $ festlegen, welcher Grenzwert in einem solchen Falle gewählt wird. \\
 Dazu führen wir als Pendant zur analytischen Flussfunktion (vgl. \ref{Flussfunktion})
@@ -139,14 +139,13 @@ Dabei wurde zusätzlich ausgenutzt, dass es sich bei den Kanten um Nullmengen ha
 Sei nun $ \mathcal{T} = \{ K_1,\dots , K_N\} , N \coloneqq |\mathcal{T}| $. Die Semidiskretisierung ist motiviert durch (\ref{fastfertigsemi}) und lautet: Bestimme  $\rho_h \in \mathcal{Q}_h$, sodass für alle $ \phi_h \in \mathcal{Q}_h $ gilt:
 \begin{align}
 	\label{Semidiskretisierung}
-	\sum_{i=1}^N (\partial_t \rho_h, \phi_h)_{K_i} &= \sum_{i=1}^{N} \big( (\Upsilon(\rho_h), \nabla \phi_h)_{K_i} - \sum_{\substack{F \in \mathcal{F}_K \\ F \not \subseteq \Gamma_{\text{in}}}}(\Upsilon^{\star}(\rho_h)\cdot n^K,\phi_h)_{F} - (\rho_{\text{in}}q \cdot n^K,\phi_h)_{\partial K_i \cap \Gamma_{\text{in}}} \big)
+	\sum_{K \in \mathcal{T}} (\partial_t \rho_h, \phi_h)_{K} &= \sum_{k \in \mathcal{T}} \big( (\Upsilon(\rho_h), \nabla \phi_h)_{K} - \sum_{\substack{F \in \mathcal{F}_K \\ F \not \subseteq \Gamma_{\text{in}}}}(\Upsilon^{\star}(\rho_h)\cdot n^K,\phi_h)_{F} - (\rho_{\text{in}}q \cdot n^K,\phi_h)_{\partial K \cap \Gamma_{\text{in}}} \big)
 \end{align}
 
 
-Durch Einsetzen der Zellenbasis $ \{\mu_i\}_{i=1}^N \subset \mathcal{Q}_h $  und mit $ \supp(\mu_i) \subseteq \overline{K_i} (\ i \in \{1, \dots , N\})$ ergibt sich für alle $\ i \in \{1, \dots , N\}$ : \\
-TODOOOOOOOOOOOOOOOO überarbeiten
+Durch Einsetzen der Zellenbasis $ \{\mu_i\}_{i=1}^N \subset \mathcal{Q}_h $  eingeschränkt mit $ \supp(\mu_i) \subseteq \overline{K} (\ i \in \{1, \dots , N\})$ ergibt sich für alle $\ i \in \{1, \dots , N\}$ : \\
 \begin{align*} 
-\left(\partial_t \rho_h, \mu_i  \right)_{K_i}  &= \bigg( \left(\Upsilon(\rho_h), \nabla\mu_i\right)_{K_i} - \sum_{\substack{F \in \mathcal{F}_{K_i} \\ F \not\subseteq \Gamma_{\text{in}}}} \left(\Upsilon^*(\rho_h) \cdot n^{K_i}, \mu_i \right)_{F} - \left(\rho_{\text{in}} q \cdot n^{K_i}, \mu_i \right)_{\partial K_i \cap \Gamma_{\text{in}}} \bigg) \\
+\left(\partial_t \rho_h, \mu_i  \right)_{K}  &= \bigg( \left(\Upsilon(\rho_h), \nabla\mu_i\right)_{K} - \sum_{\substack{F \in \mathcal{F}_{K} \\ F \not\subseteq \Gamma_{\text{in}}}} \left(\Upsilon^*(\rho_h) \cdot n^{K}, \mu_i \right)_{F} - \left(\rho_{\text{in}} q \cdot n^{K}, \mu_i \right)_{\partial K_i \cap \Gamma_{\text{in}}} \bigg) \\
 \end{align*}
 Wir erhalten so folgende Darstellung:
 %\begin{align*}
@@ -157,7 +156,7 @@ Wir erhalten so folgende Darstellung:
 \begin{align}
 \label{DarstellungvorLGS}
 \underbrace{\left(\partial_t \rho_h, \mu_i  \right)_{K_i}}_{(\ref{DarstellungvorLGS}.1)} = 
-\underbrace{-  \sum_{F \in \mathcal{F}_{K_i} , F \not \subseteq \Gamma_{\text{in}}}\left(\Upsilon^{\star}(\rho_h)\cdot n^{K_i},\mu_i\big)_F \right)}_{(\ref{DarstellungvorLGS}.2)} \underbrace{- \left(\rho_{\text{in}}q\cdot n^{K_i},\mu_i \right)_{\partial K_i \cap \Gamma_{\text{in}}}}_{(\ref{DarstellungvorLGS}.3)}
+\underbrace{ \left(\Upsilon(\rho_h), \nabla\mu_i\right)_{K} -  \sum_{F \in \mathcal{F}_{K_i} , F \not \subseteq \Gamma_{\text{in}}}\left(\Upsilon^{\star}(\rho_h)\cdot n^{K_i},\mu_i\big)_F \right)}_{(\ref{DarstellungvorLGS}.2)} \underbrace{- \left(\rho_{\text{in}}q\cdot n^{K_i},\mu_i \right)_{\partial K_i \cap \Gamma_{\text{in}}}}_{(\ref{DarstellungvorLGS}.3)}
 \end{align}
 
 Zusammen mit der Basisdarstellung von $ \rho_h $ in $\{\mu_i  \}_{i=1}^N$, $ \rho_h = \sum_{i=1}^{N} 
@@ -168,17 +167,19 @@ $ \Upsilon^{\star}(\rho_h) =
 \rho_{h}|_{K'} \ , \text{falls } q\cdot n^K|_F < 0
 \end{cases} $ können wir \ref{DarstellungvorLGS} in eine gewöhnliche Differentialgleichung erster Ordnung umformulieren. 
 Dazu klammern wir jeweils $ \underline{\rho} $ aus und definieren 
+$ \text{mithilfe von (\ref{DarstellungvorLGS}.1) die Massenmatrix } \underline{M}\in \R^{N \times N} $
 \begin{align*}
-&\text{mithilfe von (\ref{DarstellungvorLGS}.1) die Massenmatrix } \underline{M}\in \R^{N \times N} \\  &\qquad \qquad \underline{M}[K,K'] \coloneqq \begin{dcases}
+ &\underline{M}[K,K'] \coloneqq \begin{dcases}
 \int_K \abs{\mu_K}^2 \dx & \text{, für } K = K' \\
 0 &\text{, sonst}
 \end{dcases} \\
-&\text{mit (\ref{DarstellungvorLGS}.2) die Flussmatrix } \underline{A}\in \R^{N \times N} \\ &\qquad \qquad \underline{A}[K,K'] \coloneqq \begin{dcases}
-- \sum_{\substack{F\in \mathcal{F}_K \\ F \text{ mit } q\cdot n^K_{|F} > 0}} \int_F \mu_K^2 q \cdot n^K \da& \text{, für } K = K' \\
-- \int_F \mu_K \mu_{K'} q \cdot n^K \da &\text{, für } q \cdot n^K< 0 \text{ und } \overline{F} = \partial K \cap \partial K'\\
-0 &\text{, sonst}
+&\text{mit (\ref{DarstellungvorLGS}.2) die Flussmatrix } \underline{A}\in \R^{N \times N} \\ & \underline{A}[K,K'] \coloneqq \begin{dcases}
+\int_K \Upsilon(\rho_h), \nabla\mu_i \dx - \sum_{\substack{F\in \mathcal{F}_K \\ F \text{ mit } q\cdot n^K_{|F} > 0}} \int_F \mu_K^2 q \cdot n^K \da& \text{, für } K = K' \\
+\int_K \Upsilon(\rho_h), \nabla\mu_i \dx - \int_F \mu_K \mu_{K'} q \cdot n^K \da &\text{, für } q \cdot n^K< 0 \\
+& \text{ und } \overline{F} = \partial K \cap \partial K'\\
+\int_K \Upsilon(\rho_h), \nabla\mu_i \dx &\text{, sonst}
 \end{dcases} \\
-&\text{und mit (\ref{DarstellungvorLGS}.3) den Lastvektor } \underline{b}\in \R^{N} \\ &\qquad \qquad\underline{b}[K] \coloneqq \int_{\partial K \cap \Gamma_{\text{in}}} \rho_{\text{in}} q \cdot n \da
+&\text{und mit (\ref{DarstellungvorLGS}.3) den Lastvektor } \underline{b}\in \R^{N} \\ &\underline{b}[K] \coloneqq \int_{\partial K \cap \Gamma_{\text{in}}} \rho_{\text{in}} q \cdot n \da
 \end{align*}
 So ergibt sich die Differentialgleichung
 \begin{align*}
@@ -204,11 +205,11 @@ Dabei ist $t_i = i \delta t$. Hiermit folgt:
 Mithilfe der Anwendung verschiedener Quadraturformeln lässt sich daraus ein Runge-Kutta Verfahren herleiten. Über die Rechteckformel 
 \begin{align*}
 \int_{t_i}^{t_{i+1}}\underline{A} \underline{\rho}(t) + \underline{b} dt \approx (t_{i+1}-t_i)( 
-\underline{A} \underline{\rho}(t_{i+1}) + \underline{b}(t_{i+1})) = \delta t (\underline{A} \underline{\rho}(t_{i+1}) + \underline{b}(t_{i+1}))
+\underline{A} \underline{\rho}(t_{i+1}) + \underline{b}(t_{i+1})) = \Delta t (\underline{A} \underline{\rho}(t_{i+1}) + \underline{b}(t_{i+1}))
 \end{align*}
 ergibt sich z.B. das implizite Euler Verfahren
 \begin{align*}
-\underline{\rho}(t_{i+1}) = \underline{\rho}(t_{i}) + \delta t \underline{M}^{-1}(\underline{A} \underline{\rho}(t_{i+1}) + \underline{b}(t_{i+1})).
+\underline{\rho}(t_{i+1}) = \underline{\rho}(t_{i}) + \Delta t \underline{M}^{-1}(\underline{A} \underline{\rho}(t_{i+1}) + \underline{b}(t_{i+1})).
 \end{align*}
 %Weitere Verfahren, die wir verwenden werden, sind zum einen das
 %klassische Runge-Kutta Verfahren (der Übersicht wegen für $\underline{b} \equiv 0$)
@@ -327,20 +328,19 @@ Dann löst $ \rho_h \in Q_h $ die Semidiskretisierung \ref{Semidiskretisierung},
 
 
 \subsubsection{Konsistenz}
-TODO Notation
 	 Abschnitt \ref{Diskretisierung} hat sich damit beschäftigt, aus dem ursprünglich unendlich dimensionalen Problem letztendlich eine volldiskretisierte Verfahrensvorschrift in einem endlichen Ansatzraum herzuleiten. Fragen wir nun nach der Konsistenz des Verfahrens, stellen wir damit zugleich die Frage, ob wir immer noch die richtige Gleichung lösen. Genauer heißt das Verfahren genau dann konsistent, wenn eine analytische Lösung $ \rho $ des ursprünglichen Problems (dTP) auch die hergeleitete Verfahrensvorschrift erfüllt. 
-	 Wir betrachten zunächst etwas abstrakter den formalen Prozess der Diskretisierung einer abstrakten Gleichung $ T \rho=0 $:
+	 Wir betrachten zunächst etwas abstrakter den formalen Prozess der Diskretisierung einer Gleichung \[ B \rho=0 \  \]
 	 \begin{figure}[H]
 	 	\centering
 	 	\captionabove{Diskretisierungsprozess}
-	 	\includegraphics[width=0.45\textwidth]{abstraktkonsistenz.png} \\
-	 	Abbildung aus \cite{brokate2016grundwissen} Seite 392
+	 	\includegraphics[width=0.45\textwidth]{abstraktkonsistenz2.png} \\
+	 	Abbildung leicht abgeändert aus \cite{brokate2016grundwissen} Seite 392
 	 \end{figure}
-	 Das diskretisierte Problem $ T_h \rho_h = 0  $ heißt genau dann konsistent, wenn für eine analytische Lösung $ \rho^{\star} \in E $ gilt, dass $ \lim\limits_{h \to 0}\lVert \Phi_h(T)L_1\rho^{\star} - L_2T\rho^{\star} \rVert_{F_h} = 0 $.
+	 Das diskretisierte Problem $ T_h \rho_h = 0  $ heißt genau dann konsistent, wenn für eine analytische Lösung $ \rho^{\star} \in E $ gilt, dass $ \lim\limits_{h \to 0}\lVert \Phi_h(B)L_1\rho^{\star} - L_2B\rho^{\star} \rVert_{F_h} = 0 $.
 	 Betrachten wir zunächst in einem Zwischenschritt die Semidiskretisierung (5.3).
-	 Die gewählte Herleitung dieser Formulierung soll dabei nahelegen, dass für eine exakte (und glatte) Lösung $ \rho $ die Konsistenz für die Semidiskretisierung erfüllt ist. In oben eingeführter Notation gilt also gerade $ B_h(\rho^{\star},\phi) $ für alle Testfunktionen $ \phi $. Auch wenn es sich bei $ Q_h $ um einen nicht konformen Ansatzraum handelt, ist der Herleitung der Semidiskretisierung dennoch zu entnehmen, dass auch $ B_h(\rho^{\star},\phi_h) $ für alle $ \phi_h \in Q_h $ gilt $(\star)$.  Wichtig ist dabei unter anderem auch die Wahl der numerischen Flussfunktion, der upwind flux erhält aber gerade gewünschten Eigenschaften. 
+	 Die gewählte Herleitung dieser Formulierung soll dabei nahelegen, dass für eine exakte (und glatte) Lösung $ \rho $ die Konsistenz für die Semidiskretisierung erfüllt ist. In oben eingeführter Notation gilt also gerade $ B_h(\rho^{\star},\phi) $ für alle Testfunktionen $ \phi $. Auch wenn es sich bei $ \mathcal{Q}_h $ um einen nicht konformen Ansatzraum handelt, ist der Herleitung der Semidiskretisierung dennoch zu entnehmen, dass auch $ B_h(\rho^{\star},\phi_h) $ für alle $ \phi_h \in \mathcal{Q}_h $ gilt $(\star)$.  Wichtig ist dabei unter anderem auch die Wahl der numerischen Flussfunktion, der upwind flux erhält aber gerade gewünschten Eigenschaften. 
 	 Mehr dazu findet sich in \cite{Har08b}.
-	 Für die Zeitdiskretisierung in Form der impliziten Mittelpunktsregel gilt als einstufige Gauß-Quadratur $ \lVert \Phi_h(T)L_1\rho^{\star} - L_2T\rho^{\star} \rVert_{F_h} = O(h^2)$, womit sie insbesondere konsistent ist. \\
+	 Für die Zeitdiskretisierung in Form der impliziten Mittelpunktsregel gilt als einstufige Gauß-Quadratur $ \lVert \Phi_h(B)L_1\rho^{\star} - L_2B\rho^{\star} \rVert_{F_h} = O(h^2)$, womit sie insbesondere konsistent ist. \\
 	 Daher gilt so für das kombinierte Verfahren, dass eine klassische Lösung $ \rho^{\star} $ somit auch die Volldiskretisierung in obigem Sinne erfüllt. 
 \subsubsection{Galerkin Orthogonalität}
 Eine direkte Folgerung aus der Konsistenz und $ (\star) $ stellt die Galerkin Orthogonalität dar. Für eine Lösung der Semidiskretisierung $ \rho_h $ und eine analytische Lösung im klassischen Sinne $ \rho^{\star} $ gilt dann nämlich:
