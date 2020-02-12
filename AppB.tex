@@ -3,11 +3,11 @@
 \label{Referenzzelle&Hyb}
 \subsubsection{Referenzzelle}
 Bevor wie uns an dieser Stelle der Hybridisierung widmen können, wollen wir noch kurz auf einen wichtigen Aspekt der Implementierung finiter Elemente eingehen.
-An dieser Stelle hat es sich nämlich bereits oft als nützlich erwiesen, eine sogenannte Referenzzelle einzuführen. Statt sich die Daten jeder Zelle statisch zu speichern und dann darauf zuzugreifen, gehen wir dabei stets von der Referenzzelle aus und können über je eine linear affine Abbildung in den tatsächlichen Zellen operieren.
+An dieser Stelle hat es sich nämlich bereits oft als nützlich erwiesen, eine sogenannte Referenzzelle einzuführen. Statt sich die Daten jeder Zelle statisch zu speichern und dann darauf zuzugreifen, gehen wir dabei stets von der Referenzzelle aus und können über je eine linear affine Abbildung in den tatsächlichen Zellen operieren. Da wir ausschließlich Vierecke verwenden wollen wir uns dementsprechend an dieser Stelle auf Vierecke beschränken.
 
 \begin{Definition}
 	
-	Das Referenzdreieck $ \triangle $ ist definiert als
+	Das Referenzviereck $ \square $ ist definiert als
 	\[ \hat{K} \coloneqq \conv \{ \hat{\mathcal{V}} \} \text{, wobei } \hat{\mathcal{V}} \coloneqq \left\{ 
 	\begin{pmatrix}
 	0\\
@@ -19,6 +19,10 @@ An dieser Stelle hat es sich nämlich bereits oft als nützlich erwiesen, eine s
 	\end{pmatrix},
 	\begin{pmatrix}
 	0\\
+	1
+	\end{pmatrix},
+		\begin{pmatrix}
+	1\\
 	1
 	\end{pmatrix} \right\} \]
 	Die Seiten des Referenzdreiecks sind
@@ -38,57 +42,73 @@ An dieser Stelle hat es sich nämlich bereits oft als nützlich erwiesen, eine s
 	0
 	\end{pmatrix},
 	\begin{pmatrix}
-	0\\
+	1\\
 	1
 	\end{pmatrix} \right\}\\
 	\hat{F}_2 &\coloneqq \conv \left\{ 
 	\begin{pmatrix}
-	0\\
+	1\\
 	1
 	\end{pmatrix},
 	\begin{pmatrix}
 	0\\
-	0
-	\end{pmatrix} \right\}\\ 	
+	1
+	\end{pmatrix}
+	 \right\}\\ 
+	 \hat{F}_3 &\coloneqq \conv \left\{ 
+	 \begin{pmatrix}
+	 0\\
+	 1
+	 \end{pmatrix},
+	 \begin{pmatrix}
+	 0\\
+	 0	
+	 \end{pmatrix}
+	 \right\}\\ 	
 	\end{align*}
-	die Seitenbasis ist gegeben durch
-	\begin{align*}
-	\hat{\psi}_0:\hat{K} \to \R^2, \hat{\psi}_0(\xi) &\coloneqq 
-	\begin{pmatrix}
-	\xi_1\\
-	\xi_2-1
-	\end{pmatrix}\\
-	\hat{\psi}_1:\hat{K} \to \R^2, \hat{\psi}_1(\xi) &\coloneqq  
-	\begin{pmatrix}
-	\xi_1\\
-	\xi_2
-	\end{pmatrix}\\
-	\hat{\psi}_2:\hat{K} \to \R^2, \hat{\psi}_2(\xi) &\coloneqq 
-	\begin{pmatrix}
-	\xi_1-1\\
-	\xi_2
-	\end{pmatrix}.
-	\end{align*}
-	und $ \hat{n} $ sei der äußere Normalenvektor von $ \hat{K} $
+	Weiter sei $ \{ \hat{\psi}_i \}_{i=0}^3 $ die Seitenbasis aus Hütchenfunktionen
+%	\begin{align*}
+%	\hat{\psi}_0:\hat{K} \to \R^2, \hat{\psi}_0(\xi) &\coloneqq 
+%	\begin{pmatrix}
+%	\xi_1\\
+%	\xi_2-1
+%	\end{pmatrix}\\
+%	\hat{\psi}_1:\hat{K} \to \R^2, \hat{\psi}_1(\xi) &\coloneqq  
+%	\begin{pmatrix}
+%	\xi_1\\
+%	\xi_2
+%	\end{pmatrix}\\
+%	\hat{\psi}_2:\hat{K} \to \R^2, \hat{\psi}_2(\xi) &\coloneqq 
+%	\begin{pmatrix}
+%	\xi_1-1\\
+%	\xi_2
+%	\end{pmatrix}\\
+%	\hat{\psi}_3:\hat{K} \to \R^2, \hat{\psi}_3(\xi) &\coloneqq 
+%	\begin{pmatrix}
+%	\xi_1-1\\
+%	\xi_2
+%	\end{pmatrix}.
+%	\end{align*}
+	und $ \hat{n} $ sei der äußere Normalenvektor von $ \hat{K} $.
 \end{Definition}
 
 \begin{figure}[H]
 	\centering
 	\captionabove{Referenzzelle}
-	\includegraphics[width=0.33\textwidth]{referenzzelle.png} \\
+	\includegraphics[width=0.33\textwidth]{referenzzelle2.png} \\
 	Abbildung aus \cite{knabner2013numerik} Seite 51
 \end{figure}
 
 \begin{Bemerkung}
-	$\forall i,j\in\{1,2,3\}: \int_{F_j} \hat{\psi}_i \cdot \hat{n} \da = \delta_{i,j} \text{ und } \hat{\psi}_i \in \mathbb{P}_1(\hat{K}, \R^2).$
+	$\forall i,j\in\{0,1,2,3\}: \int_{F_j} \hat{\psi}_i \cdot \hat{n} \da = \delta_{i,j} \text{ und } \hat{\psi}_i \in \mathbb{P}_1(\hat{K}, \R^2).$
 \end{Bemerkung}
 
 Weiter setzen wir noch 
 \begin{align*}
-\text{ die Menge der Seiten }&& \hat{\mathcal{F}} &\coloneqq \left\{ \hat{F}_0, \hat{F}_1, \hat{F}_2 \right\} \\
-\text{und den Seitenansatzraum }&&  \hat{W} &\coloneqq \spann \left\{ \psi_0,\psi_1, \psi_2 \right\}.
+\text{ die Menge der Seiten }&& \hat{\mathcal{F}} &\coloneqq \left\{ \hat{F}_0, \hat{F}_1, \hat{F}_2,\hat{F}_3 \right\} \\
+\text{und den Seitenansatzraum }&&  \hat{W} &\coloneqq \spann \left\{ \psi_0,\psi_1, \psi_2, \psi_3 \right\}.
 \end{align*}
-\textbf{Transformation von $ \hat{K} $ zu $ K $:} Für ein beliebiges $ K \in \mathcal{K} $ wollen wir jetzt eine Seitenbasis $ \{ \psi_1^K, \psi_2^K, \psi_3^K \} $ berechnen (Wie bisher gegeben durch $ \forall i\in\{1,2,3\}: \psi_i^K\in\mathbb{P}_1(K,\R^2) \text{ und } \int_{F_j^K} \psi_i^K \cdot n^K \da = \delta_{i,j} $, wobei $ n^K $ äußere Normale von  $ K $ und $ F_j^K  $ beliebige Seite von $ K $). Dazu betrachten wir die affine Transformationsabbildung $ \varphi_K $ von $ \hat{K} $ zu $ K $:
+\textbf{Transformation von $ \hat{K} $ zu $ K $:} Für ein beliebiges $ K \in \mathcal{K} $ wollen wir jetzt eine Seitenbasis $ \{ \psi_0^K, \psi_1^K, \psi_2^K, \psi_3^K \} $ berechnen (Wie bisher gegeben durch $ \forall i\in\{0,1,2,3\}: \psi_i^K\in\mathbb{P}_1(K,\R^2) \text{ und } \int_{F_j^K} \psi_i^K \cdot n^K \da = \delta_{i,j} $, wobei $ n^K $ äußere Normale von  $ K $ und $ F_j^K  $ beliebige Seite von $ K $). Dazu betrachten wir die affine Transformationsabbildung $ \varphi_K $ von $ \hat{K} $ zu $ K $:
 \begin{align*}
 \varphi_K: \hat{K} \to K, \varphi_K(\xi) = z_{0,K} + B_K \xi \text{ mit passenden } B_K\in\R^{2 \times 2} \text{ und } \\
 J_K \coloneqq \det(B_K) > 0.
@@ -97,16 +117,16 @@ J_K \coloneqq \det(B_K) > 0.
 \begin{figure}[H]
 	\centering
 	\captionabove{Affine lineare Transformation von $\hat{K}$ nach $ K $}
-	\includegraphics[width=0.55\textwidth]{affinlinearetransf.png} \\
+	\includegraphics[width=0.55\textwidth]{affinlinearetransf2.png} \\
 	Abbildung aus \cite{knabner2013numerik} Seite 53
 \end{figure} 
 \begin{Lemma}
 	Es gilt: $\tilde{n}^K = \frac{1}{\abs{B_K^{-T} \hat{n}}} B_K^{-T} \hat{n} $ ist Normale zu $ \partial K $.
 \end{Lemma} $\newline$
 Die Seitenbasis auf $ K $ ist dann gegeben durch 
-\[ \psi_i^K = J_K^{-1}B_K \hat{\psi}_i \circ \varphi_K \ (i\in \{1,2,3\}) \]
+\[ \psi_i^K = J_K^{-1}B_K \hat{\psi}_i \circ \varphi_K \ (i\in \{0,1,2,3\}) \]
 Die globale Seitenbasis $\{\psi_j\}_{j = 1}^{\abs{\mathcal{F}}}$ auf $ \mathcal{D}  $ erhalten wir dann mithilfe einer weiteren Abbildung $l$, die zwischen der Seitennummerierung in einer Zelle $ K $ und der globalen Seitennummerierung vermittelt. Es ist dabei
-\[ l:\mathcal{K}\times \{1,2,3\} \to \{1, \dots , \abs{\mathcal{F}} \}, (K,i) \mapsto l(K,i). \]
+\[ l:\mathcal{K}\times \{0,1,2,3\} \to \{1, \dots , \abs{\mathcal{F}} \}, (K,i) \mapsto l(K,i). \]
 Wir setzen nun also $ \psi_j (j \in \{1,\dots , \abs{\mathcal{F}}\})$ durch
 \[ \psi_j(x) = 
 \begin{cases}
@@ -114,7 +134,7 @@ Wir setzen nun also $ \psi_j (j \in \{1,\dots , \abs{\mathcal{F}}\})$ durch
 0,			  &\text{sonst}.
 \end{cases} \]
 \begin{Bemerkung}
-	Für alle Zellen $ K \in \mathcal{K} $ von denen $ F_j $ eine anliegende Seite ($ \overline{K} \cap F_j \ne \emptyset $) und $ F_j $ lokal mit $ i \in \{1,2,3\} $ nummeriert ist, gilt:
+	Für alle Zellen $ K \in \mathcal{K} $ von denen $ F_j $ eine anliegende Seite ($ \overline{K} \cap F_j \ne \emptyset $) und $ F_j $ lokal mit $ i \in \{0,1,2,3\} $ nummeriert ist, gilt:
 	\[ \psi_j|_K = \psi_i^K. \]
 \end{Bemerkung}
 
@@ -132,26 +152,26 @@ An dieser Stelle nutzen wir die folgende Äquivalenz:\\
 
 Und untersuchen folgendes Problem:
 \begin{align*}
-\text{Bestimmme } (q_h,u_h, \lambda_h) \in W_\mathcal{K} \times Q_h \times M_h(u_D) \text{ mit}\\
+\text{Bestimmme } (q_h,u_h, \lambda_h) \in W_\mathcal{K} \times \mathcal{Q}_h \times M_h(u_D) \text{ mit}\\
 \begin{dcases}
 (1) \int_K \kappa^{-1} q_h \psi_K \dx - \int_K u_h \dive(\psi_K) \dx = - \int_{\partial K} \lambda_h \psi_K \cdot n^K \da \\
 (2) \int_K \dive(q_h) \phi_K \dx = 0\\
 (3) \sum_{K\in \mathcal{K}} \int_{\partial K} q_h \cdot n \mu_h \da = - \int_{\Gamma_N} g_N \mu_h \da
 \end{dcases}\\
-\text{für alle } K \in \mathcal{K}, \psi_K \in W_K, \phi_K \in Q_h  \text{ und } \mu_h \in M_h(0)
+\text{für alle } K \in \mathcal{K}, \psi_K \in W_K, \phi_K \in \mathcal{Q}_h  \text{ und } \mu_h \in M_h(0)
 \end{align*}
 
 Dieses Problem ist äquivalent zu dem diskreten gemischten FE-Problem, welches wir zuvor betrachtet haben:
 \begin{align*}
-\text{Bestimme } (q_h,u_h) \in W_h(-g_N) \times Q_h \text{ mit}\\
+\text{Bestimme } (q_h,u_h) \in W_h(-g_N) \times \mathcal{Q}_h \text{ mit}\\
 \begin{cases}
 \int_{\Omega} \kappa ^{-1} q_h \cdot \psi_h \dx \mkern-15mu &- \int_{\Omega} u_h \dive(\psi_h) \dx = - \int_{\Gamma_D} u_D \psi_h \cdot n \da\\
 &- \int_{\Omega} \dive(q_h) \phi_h \dx = 0
 \end{cases} \\
-\text{für alle } (\psi_h, \phi_h) \in W_h(0) \times Q_h
+\text{für alle } (\psi_h, \phi_h) \in W_h(0) \times \mathcal{Q}_h
 \end{align*}
 
-Für ein festes $ K \in \mathcal{K} $ ergibt sich mit der Wahl einer Basis von $ W_K $, $ Q_h $ und $ M_h $ 
+Für ein festes $ K \in \mathcal{K} $ ergibt sich mit der Wahl einer Basis von $ W_K $, $ \mathcal{Q}_h $ und $ M_h $ 
 %\begin{align*}
 %	&W_K = \spann\{\psi_F \mid F \in \mathcal{F}_K \}  &&(\psi_F \cdot n^F)_{|F'} = \begin{cases}
 %		1 &F = F'\\

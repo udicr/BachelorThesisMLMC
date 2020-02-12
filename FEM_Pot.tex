@@ -16,9 +16,9 @@ Die folgende Definition entstammt \cite{brenner2007mathematical} und geht urspr�
 	\begin{itemize}
 		\item $K \subseteq \R^d$ eine beschränkte abgeschlossene Menge mit einem nichtleeren Inneren und stückweise stetig differenzierbarem Rand 
 		\item $\mathcal{P}$ ein endlich dimensionaler Funktionenraum auf K
-		\item $\mathcal{N} = \{N_1,N_2,\dots,N_k \}$ eine Basis für $\mathcal{P}^{'}$
+		\item $\Xi = \{\eta_1,\eta_2,\dots,\eta_k \}$ eine Basis für $\mathcal{P}^{'}$
 	\end{itemize}
-	Dann heißt $(K,\mathcal{P},\mathcal{N})$ ein finites Element.
+	Dann heißt $(K,\mathcal{P},\Xi)$ ein finites Element.
 \end{Definition}
 
 Wir wollen im Folgenden diese theoretische Definition zwar im Hinterkopf behalten, aber wie in \cite{braess2013finite} meist nur mit den sogenannten Finite-Elemente-Räumen arbeiten. 
@@ -58,7 +58,7 @@ Zudem führen wir für alle Zerlegungen folgende Bezeichnungen ein:
 \begin{itemize}
 	\item ein $ K \in \mathcal{T} $ nennen wir Zelle
 %	\item $ \mathcal{D}_h \coloneqq \bigcup_{K \in \mathcal{T}} K $ sei die Menge der Zellen
-	\item ein $ z \in \mathcal{V}_K \coloneqq \{ z_{K,0} , z_{K,1} , z_{K,2}\} \subset \R^2 $ nennen wir Knoten und $\mathcal{V}_K$ die Menge der Knoten von K
+	\item ein $ z \in \mathcal{V}_K \coloneqq \{ z_{K,0} , z_{K,1} , z_{K,2}, z_{K,3}\} \subset \R^2 $ nennen wir Knoten und $\mathcal{V}_K$ die Menge der Knoten von K
 	\item $ \mathcal{V}_{\mathcal{T}} \coloneqq \bigcup_{K \in \mathcal{T}} \mathcal{V}_K $ sei die Menge aller Knoten
 	\item $\mathcal{F}  \coloneqq (\{ \partial K_1 \cap \partial K_2 : K_1,K_2 \in \mathcal{T} \} \cup \{ \partial K_1 \cap \partial \mathcal{D} : K_1 \in \mathcal{T} \}) \setminus \{\emptyset\} $ sei die Menge aller Seiten
 	\item $ \mathcal{F}_K \coloneqq (\{ \partial K \cap \partial K' : K' \in \mathcal{T} \} \cup \{ \partial K \cap \partial \mathcal{D} \}) \setminus \{ \emptyset \} $ sei die Menge aller Seiten von K 
@@ -114,11 +114,11 @@ Wir erhalten so folgende schwache Formulierung:
 \end{align*}
 
 \subsubsection{Diskretisierung}
-Sei $ \mathcal{T}  $ eine zulässige Zerlegung von $ \mathcal{D} $ und alle Bezeichnungen wie oben.
+Sei $ \widetilde{\mathcal{T}}  $ eine zulässige Zerlegung von $ \mathcal{D} $ und alle Bezeichnungen wie oben.
 Wir nummerieren zunächst die Zellen und die Seiten durch:
 \begin{align*}
 	\mathcal{F} &= \{ F_1,\dots,F_{|\mathcal{F}|}\} \qquad \text{globale Seitennummerierung} \\
-	\mathcal{T} &=  \{ K_1,\dots,K_{|\mathcal{T}|}\} \qquad \text{globale Zellennummerierung}
+	\mathcal{T} &=  \{ K_1,\dots,K_{|\widetilde{\mathcal{T}|}}\} \qquad \text{globale Zellennummerierung}
 \end{align*}
 Dabei sei im Weiteren $ N \coloneqq \abs{\mathcal{F}} $ die Anzahl der Seiten und $\abs{\mathcal{T}}$ die Anzahl der Zellen.
 Als Nächstes soll es nun Ziel sein, eine Lösung der im letzten Abschnitt erklärten schwachen Formulierung in einem endlich dimensionalen Finite Elemente Ansatzraum zu bestimmen. Um aber hierfür genau diese Räume definieren zu können, benötigen wir zuerst sogenannte Basisfunktionen, genauer die Seiten- und die Zellenbasis.\\
@@ -194,7 +194,7 @@ Wir können nun damit beginnen, das so entstandene endlich dimensionale Problem 
 Unser zu lösendes Problem lässt sich so mit $ q_h = \sum_{n=1}^{N} \underline{q}[n] \psi_n $ und $ u_h = \sum_{m=1}^{M} \underline{u}[m] \mu_m $ umformen zu 
 \begin{align*}
 \text{Bestimme} (\underline{q},\underline{u}) \in \underline{W}(-g_N)\times \R^{|\mathcal{T}|} \text{ mit }\\
-\text{(L gFE)}\begin{cases}
+\begin{cases}
 \underline{A} \underline{q} + \underline{B}^T \underline{u} &= \underline{b} \\
 \underline{B} \underline{q} &= 0
 \end{cases}
@@ -202,7 +202,7 @@ Unser zu lösendes Problem lässt sich so mit $ q_h = \sum_{n=1}^{N} \underline{
 oder anders geschrieben 
 \begin{align*}
 \text{Bestimme} (\underline{q},\underline{u}) \in \underline{W}(-g_N)\times \R^{|\mathcal{T}|} \text{ mit }\\
-\text{(dgPS)}\begin{cases}
+\text{(dPS)}\begin{cases}
 \begin{pmatrix}
 \underline{A} &\underline{B}^T\\
 \underline{B} &0

@@ -146,7 +146,7 @@ Sei nun $ \mathcal{T} = \{ K_1,\dots , K_N\} , N \coloneqq |\mathcal{T}| $. Die 
 Durch Einsetzen der Zellenbasis $ \{\mu_i\}_{i=1}^N \subset \mathcal{Q}_h $  und mit $ \supp(\mu_i) \subseteq \overline{K_i} (\ i \in \{1, \dots , N\})$ ergibt sich für alle $\ i \in \{1, \dots , N\}$ : \\
 TODOOOOOOOOOOOOOOOO überarbeiten
 \begin{align*} 
-\left(\partial_t \rho_h, \mu_i  \right)_{K_i}  &= \bigg( \underbrace{(\Upsilon(\rho_h), \nabla\mu_i)_{K_i}}_{=0 \text{, da } \nabla \mu_i = 0} - \sum_{\substack{F \in \mathcal{F}_{K_i} \\ F \not\subseteq \Gamma_{\text{in}}}} \left(\Upsilon^*(\rho_h) \cdot n^{K_i}, \mu_i \right)_{F} - \left(\rho_{\text{in}} q \cdot n^{K_i}, \mu_i \right)_{\partial K_i \cap \Gamma_{\text{in}}} \bigg) \\
+\left(\partial_t \rho_h, \mu_i  \right)_{K_i}  &= \bigg( \left(\Upsilon(\rho_h), \nabla\mu_i\right)_{K_i} - \sum_{\substack{F \in \mathcal{F}_{K_i} \\ F \not\subseteq \Gamma_{\text{in}}}} \left(\Upsilon^*(\rho_h) \cdot n^{K_i}, \mu_i \right)_{F} - \left(\rho_{\text{in}} q \cdot n^{K_i}, \mu_i \right)_{\partial K_i \cap \Gamma_{\text{in}}} \bigg) \\
 \end{align*}
 Wir erhalten so folgende Darstellung:
 %\begin{align*}
