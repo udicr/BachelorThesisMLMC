@@ -2,10 +2,12 @@
 Folgende Tabelle soll weder stichhaltige Definitionen festlegen, noch die gesamte Notation der Thesis bis auf den letzten Index ausarbeiten. Sie soll dem Leser eher als Orientierung dienen, welche Symbole für die verschiedenen Teilbereiche genutzt werden.
 Todo Alphabetisch sortieren
 
-\begin{tabular}[c]{ p{0.15\textwidth} p{0.84\textwidth}}
+\begin{longtable}[c]{ p{0.15\textwidth} p{0.84\textwidth}}
 	\hline
 	Symbol    & Beschreibung   \\
 	\hline
+	$ \dive $ & Divergenz \\
+	$ \nabla $ & Gradient \\
 	$ \mathcal{D} \subset \R^d$      & Rechengebiet       \\
 	$ d \in \N $      & Dimension des Rechengebietes        \\
 	$ d_1, d_2 \in \N $ & Dimensionen des Integrations- und Testraumes in Beispiel \ref{mlmcbeispiel}  \\
@@ -38,15 +40,17 @@ Todo Alphabetisch sortieren
 	$ h $ & Schrittweite Ortsdiskretisierung \\
 	$ \Delta t $ & Schrittweite Zeitdiskretisierung \\
 	$ \rho $ & Konzentration eines Stoffes im Rechengebiet \\
-	$ \alpha,\beta,\gamma $ & Konvergenzparameter aus \ref{MLMCTheorem} \\
+	$ \alpha,\beta,\gamma $ & Konvergenzparameter aus Satz \ref{MLMCTheorem} \\
 	$ e(\cdot) $ & Fehlerfunktion, z.B. RMSE \\
 	$ \Upsilon $ & Flussfunktion \\
 	$ \Upsilon^{\star} $ & numerische Flussfunktion \\
 	$ \mathcal{T} $ & Zerlegung von $ \mathcal{D} $ \\
 	$ \mathcal{F} $ & Menge aller Seiten der Zerlegung $ \mathcal{T} $ \\
-	$ \mathcal{V}_{\mathcal{T}} $ & Menge aller Knoten \\
+	$ \mathcal{V}_{\mathcal{T}} $ & Menge aller Knoten der Zerlegung $ \mathcal{T} $\\
+	$ {\psi_i} $ & Seitenbasis \\
+	$ {\mu_i} $ & Zellenbasis \\
 	$ C(\cdot) , C_l , \dots $ & Kosten oder Kostenfunktion \\
 	$ W,\mathcal{Q} $ & Ansatzräume TODO\\
 	\hline
-\end{tabular}
+\end{longtable}
 

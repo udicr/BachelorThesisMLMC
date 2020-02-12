@@ -129,9 +129,9 @@ Als Nächstes soll es nun Ziel sein, eine Lösung der im letzten Abschnitt erkl�
 			\begin{align*}
 					\forall i,j \in \{1, \dots , N \} : \int_{F_j} \psi_i \cdot n^K \da = \pm \delta_{i,j} \text{ und }  \psi_i|_K \in \mathbb{P}_1(K,\R^2) \cap C(\overline{\mathcal{D}}) \ (K \in \mathcal{T}) 
 			\end{align*} 
-		\item $ \{ \mu_i \}_{m=1}^{|\mathcal{T}|} $ heißt Zellenbasis und ist gegeben durch
+		\item $ \{ \mu_i \}_{i=1}^{|\mathcal{T}|} $ heißt Zellenbasis und ist gegeben durch
 			\begin{align*}
-				\forall m \in \{1, \dots , |\mathcal{T}| \} : \mu_m \coloneqq  \mathds{1}_{K_m}.
+				\forall i \in \{1, \dots , |\mathcal{T}| \} : \mu_i \coloneqq  \mathds{1}_{K_i}.
 			\end{align*}
 	\end{enumerate}
 \end{Definition} 
@@ -141,7 +141,7 @@ Anschließend können wir mithilfe dieser Basisfunktionen die Testräume bzw. Fi
 	\begin{enumerate}[label=(\alph*)]
 		\item $ W_h \coloneqq \spann \{ \psi_1,\dots,\psi_{N}\}$ (Seitenansatzraum/ Raum für $ \psi $ und $ q_h $)
 		\item $ W_h(g) \coloneqq \{ \psi_h \in W_h:  \int_F \psi_h \cdot n \da = \int_F g \da \; \text{ für alle } F \subseteq \Gamma_{\text{N}})  \}$
-		\item $ Q_h \coloneqq \spann \{ \mu_1, \dots, \mu_{|\mathcal{T}|} \} $ (Zellenansatzraum/ Raum für $\phi $ und $ u_h $)
+		\item $ \mathcal{Q}_h \coloneqq \spann \{ \mu_1, \dots, \mu_{|\mathcal{T}|} \} $ (Zellenansatzraum/ Raum für $\phi $ und $ u_h $)
 	\end{enumerate}
 \end{Definition}
 
@@ -157,14 +157,14 @@ Anschließend können wir mithilfe dieser Basisfunktionen die Testräume bzw. Fi
 
 Zusammen mit der schwachen Formulierung \eqref{sPS} erhalten wir so das nun diskretisierte Problem:
 \begin{align*}
-&\text{Bestimme } (q_h,u_h) \in W_h(-g_N) \times Q_h \text{ mit}\\
+&\text{Bestimme } (q_h,u_h) \in W_h(-g_N) \times \mathcal{Q}_h \text{ mit}\\
 &\begin{cases}
 \begin{array}{llll}
 \int_{\Omega} \kappa^{-1} q_h \cdot \psi_h \dx \, - \mkern-15mu &\int_{\Omega} u_h \, \dive(\psi_h) \dx &= - \int_{\Gamma_D} (u_D \psi_h) \cdot n \da\\
 &\int_{\Omega} \dive(q_h) \, \phi_h \dx &= 0
 \end{array}
 \end{cases}	\\
-&\text{ für alle } (\psi_h, \phi_h) \in W_h(0) \times Q_h
+&\text{ für alle } (\psi_h, \phi_h) \in W_h(0) \times \mathcal{Q}_h
 \end{align*} 
 
 
