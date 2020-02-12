@@ -345,7 +345,7 @@ TODO Notation
 \subsubsection{Galerkin Orthogonalität}
 Eine direkte Folgerung aus der Konsistenz und $ (\star) $ stellt die Galerkin Orthogonalität dar. Für eine Lösung der Semidiskretisierung $ \rho_h $ und eine analytische Lösung im klassischen Sinne $ \rho^{\star} $ gilt dann nämlich:
 \[
- B_h(\rho^{\star}-\rho_h,\phi_h = 0) \quad \forall \phi_h \in Q_h
+ B_h(\rho^{\star}-\rho_h,\phi_h = 0) \quad \forall \phi_h \in \mathcal{Q}_h
 \]
 \subsubsection{Stabilität und Konvergenz}
 Die Stabilität ist bei der numerischen Lösung der Transportgleichung einer der wesentlichen Gründe, weswegen wir das Discontinuous Galerkin Verfahren einem Standard-Finite-Elemente-Ansatz vorziehen. Es zeigt sich nämlich, dass ein normales Finite Elemente Verfahren, wie wir es zuvor bei der Lösung des Potentialströmungsproblems genutzt haben, beim Transportproblem instabil ist. Grund dafür ist, dass $ \lVert q \cdot \nabla \rho_h \rVert $ beliebig groß werden kann. Für die DG-Diskretisierung mit upwind flux kann hingegen gezeigt werden, dass die Lösung des Transportproblems stabil ist. Auf eine theoretische Stabilitätsanalyse möchten wir aber an dieser Stelle verzichten und verweisen z.B. auf \cite{Har08b}.

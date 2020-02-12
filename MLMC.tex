@@ -67,13 +67,13 @@ Die Multi Level Monte Carlo Methode, wir werden im Folgenden auch oft vom sogena
 	  \[
 	   I(\lambda) \approx \mathcal{I}_{MLMC}(\lambda) = \sum_{l=0}^{L} \frac{1}{n_l} \sum_{k=1}^{n_l} ((P_l - P_{l-1}) f(\cdot,x_{lj}))(\lambda) \ .
 	  \]
-	  Der bedeutendste Schritt ist an dieser Stelle eine passende Wahl der $ n_l $. Bei diesem Beispiel wollen wir uns darauf beschränken, eine passende Wahl anzugeben und den Nutzen hervorzuheben, welchen wir durch diese Wahl erlangen. So zeigt sich, dass eine passende Wahl beispielsweise durch $ n_l = \Theta(2^{-\frac{3l}{2}n})$ für ein $ n \in \N $ groß genug gegeben ist. 
+	  Der bedeutendste Schritt ist an dieser Stelle eine passende Wahl der $ n_l $. Bei diesem Beispiel wollen wir uns darauf beschränken, eine passende Wahl anzugeben und den Nutzen hervorzuheben, welchen wir durch diese Wahl erlangen. So zeigt sich, dass, wie in \cite{heinrich2001multilevel} ausführlicher erklärt, eine passende Wahl beispielsweise durch $ n_l = \Theta(2^{-\frac{3l}{2}n})$ für ein $ n \in \N $ groß genug gegeben ist. 
 	  Dann kann für den analog wie für den MC-Schätzer definierten (RMSE-)Fehler gezeigt werden, dass 
 	  \[
 	  	\epsilon(\mathcal{I}_{MLMC}) = \mathcal{O}(n^{-\frac{1}{2}} + n^{-\frac{1}{2}}) = \mathcal{O}(n^{-\frac{1}{2}}) \ .
 	  \]
-	  Zugleich ist die Anzahl der benötigten Rechenoperationen inklusive Funktions- und Zufallszahlauswertungen diesmal in $ \mathcal{O}(n) $.
-	  Verglichen mit der Standard (Ein-Level) Monte Carlo Methode können wir nun also eine Approximation für die gesamte Familie von Integralen $ I(\lambda) $ mit einem Fehler von $ \mathcal{O}(n^{-\frac{1}{2}}) $, aber den Kosten von $ \mathcal{O}(n) $  berechnen. Das ist durchaus erstaunlich, denn bereits die Kosten der Auswertung eines einzigen Integrals $ I(\lambda) $ für ein festes $ \lambda \in \Lambda $ liegen in $ \mathcal{O}(n) $. Die MLMC Methode ist so gesehen also von optimaler Ordnung.
+	  Zugleich zeigt sich, dass die Anzahl der benötigten Rechenoperationen inklusive Funktions- und Zufallszahlauswertungen diesmal in der Komplexitätsklasse $ \mathcal{O}(n) $ enthalten ist. Genaueres dazu findet sich ebenfalls in \cite{heinrich2001multilevel} (Abschnitt 2.3) .
+	  Verglichen mit der Standard (Ein-Level) Monte Carlo Methode können wir nun also eine Approximation für die gesamte Familie von Integralen $ I(\lambda) $ mit einem Fehler von $ \mathcal{O}(n^{-\frac{1}{2}}) $, aber den Kosten von $ \mathcal{O}(n) $  berechnen. Das ist durchaus erstaunlich, denn bereits die Kosten der Auswertung eines einzigen Integrals $ I(\lambda) $ für ein festes $ \lambda \in \Lambda $ liegen in $ \mathcal{O}(n) $. Die MLMC Methode ist so gesehen in gewisser Weise von optimaler Ordnung, denn auch die Berechnung eines einzigen Samples auf höchstem Level benötigt $ \mathcal{O}(n)  $ Operationen.
 \end{Beispiel}
 
 Wir sehen also, dass die Multilevel Monte Carlo Methode in Situationen, in denen wir bei der Wahl von Zeitschrittweiten und/oder feinen Gittern zur Ortsdiskretisierung zwischen Anzahl an Rechenoperationen und Genauigkeit einen Kompromiss finden müssen, einen Ein-Level Ansatz, wie die Standard Monte Carlo Methode, durchaus übertreffen kann.
@@ -81,7 +81,7 @@ Der Kern dieser Methode bildet dabei eine geschickte Wahl der Anzahl $ n_l $ der
 Mehr zu Monte Carlo und Multilevel Monte Carlo Methoden für Parameterintegrale findet sich neben \cite{heinrich2001multilevel} auch in \cite{heinrich1992random}.
 
 \subsection{Konvergenz und Genauigkeit}
-Da wir in Abschnitt \ref{MLMCTP} noch einmal ausführlich auf die Eigenschaften des Verfahrens für unsere konkrete Anwendung eingehen werden, soll dieser Unterabschnitt eher noch einmal etwas allgemeiner auf die stochastischen Hintergründe eingehen. Als Referenz ist hierbei das Kapitel 9.5 über Monte-Carlo Funktionen in \cite{sullivan2015introduction} zu nennen. 
+Da wir in Abschnitt \ref{MLMCTP} noch einmal ausführlich auf die Eigenschaften des Verfahrens für unsere konkrete Anwendung eingehen werden, soll dieser Unterabschnitt noch einmal etwas allgemeiner auf die stochastischen Hintergründe eingehen. Als Referenz ist hierbei das Kapitel 9.5 über Monte-Carlo Funktionen in \cite{sullivan2015introduction} zu nennen. 
 Betrachten wir also wieder etwas allgemeiner eine Folge unabhängiger Zufallsvariablen $ Y_{1},Y_{2}\dots$ mit zugehörigen Realisierungen $ y_{1}, y_{2},\dots $. Diese sollen dabei alle die identische Verteilung wie eine weitere Zufallsvariable $ Y $ mit zugehöriger Dichte $ g_Y $ besitzen.
 Wir wollen diesmal den Erwartungswert einer Zufallsvariablen $ X $ berechnen, wobei $ X $ mithilfe einer messbaren Funktion $ f $, die alle (unten aufgeführten) Voraussetzungen des Transformationssatzes erfülle, folgendermaßen ausgedrückt werden kann:
 \[
