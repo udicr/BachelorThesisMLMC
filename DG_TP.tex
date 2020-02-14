@@ -125,62 +125,63 @@ Summieren wir also zunächst über alle Zellen, summieren anschließend die Inte
 \end{align*}
 Nach der Produktregel der Divergenz lässt sich das letzte Integral auswerten zu:
 \begin{align*}
-	 \int_{\mathcal{D}} \dive (\Upsilon(\rho)\phi) \dx = \int_{\mathcal{D}} \phi \dive(\Upsilon(\rho)) + \Upsilon(\rho) \cdot \nabla \phi \dx \stackrel{\text{ Vor.}}{=} - \int_{\mathcal{D}} \partial_t \rho \phi \dx + \int_{\mathcal{D}} \Upsilon(\rho) \cdot \nabla \phi \dx
+	 \int_{\mathcal{D}} \dive (\Upsilon(\rho)\phi) \dx = \int_{\mathcal{D}} \phi \dive(\Upsilon(\rho)) + \Upsilon(\rho) \cdot \nabla \phi \dx \stackrel{\text{ Vor. an }\rho }{=} - \int_{\mathcal{D}} \partial_t \rho \phi \dx + \int_{\mathcal{D}} \Upsilon(\rho) \cdot \nabla \phi \dx
 \end{align*}
 Durch Umstellen und das Zusammenfassen der obigen Resultate erhalten wir so: 
 \begin{align*}
 	\sum_{K \in \mathcal{T}} \int_K \partial_t \rho  \phi \dx = \sum_{K \in \mathcal{T}} \int_K \Upsilon(\rho ) \cdot \nabla \phi \dx - 	\sum_{K\in \mathcal{T}} \sum_{F \in \mathcal{F}_K} \int_F \Upsilon^{\star}(\rho) \cdot n^K \phi \da
 \end{align*}
 Dabei wurde zusätzlich ausgenutzt, dass es sich bei den Kanten um Nullmengen handelt und wir so das Integral über $ \mathcal{D} $ als Summe der Integrale über alle Zellen auffassen können. Nutzen wir nun noch aus, dass für den Fluss  $\rho(x,t) = \rho_{\text{in}}(x,t)$ für $ x \in \Gamma_{\text{in}} $ gilt, kommen wir so auf 
-\begin{align}
-	\label{fastfertigsemi}
-	\sum_{K \in \mathcal{T}} \int_K \partial_t \rho  \phi \dx = \sum_{K \in \mathcal{T}} \int_K \Upsilon(\rho ) \cdot \nabla \phi \dx - 	\sum_{K\in \mathcal{T}} \left( \sum_{\substack{F \in \mathcal{F}_K \\ F \not\subseteq \Gamma_{\text{in}}}} \int_F \Upsilon^{\star}(\rho) \cdot n^K \phi \da - \sum_{\substack{F \in \mathcal{F}_K \\ F \subseteq \Gamma_{\text{in}}}} \rho_{\text{in}} q \cdot n^K \phi \da \right)
-\end{align}
-Sei nun $ \mathcal{T} = \{ K_1,\dots , K_N\} , N \coloneqq |\mathcal{T}| $. Die Semidiskretisierung ist motiviert durch (\ref{fastfertigsemi}) und lautet: Bestimme  $\rho_h \in \mathcal{Q}_h$, sodass für alle $ \phi_h \in \mathcal{Q}_h $ gilt:
-\begin{align}
-	\label{Semidiskretisierung}
-	\sum_{K \in \mathcal{T}} (\partial_t \rho_h, \phi_h)_{K} &= \sum_{k \in \mathcal{T}} \big( (\Upsilon(\rho_h), \nabla \phi_h)_{K} - \sum_{\substack{F \in \mathcal{F}_K \\ F \not \subseteq \Gamma_{\text{in}}}}(\Upsilon^{\star}(\rho_h)\cdot n^K,\phi_h)_{F} - (\rho_{\text{in}}q \cdot n^K,\phi_h)_{\partial K \cap \Gamma_{\text{in}}} \big)
-\end{align}
 
+TODO überarbeiten
 
-Durch Einsetzen der Zellenbasis $ \{\mu_i\}_{i=1}^N \subset \mathcal{Q}_h $  eingeschränkt mit $ \supp(\mu_i) \subseteq \overline{K} (\ i \in \{1, \dots , N\})$ ergibt sich für alle $\ i \in \{1, \dots , N\}$ : \\
-\begin{align*} 
-\left(\partial_t \rho_h, \mu_i  \right)_{K}  &= \bigg( \left(\Upsilon(\rho_h), \nabla\mu_i\right)_{K} - \sum_{\substack{F \in \mathcal{F}_{K} \\ F \not\subseteq \Gamma_{\text{in}}}} \left(\Upsilon^*(\rho_h) \cdot n^{K}, \mu_i \right)_{F} - \left(\rho_{\text{in}} q \cdot n^{K}, \mu_i \right)_{\partial K_i \cap \Gamma_{\text{in}}} \bigg) \\
-\end{align*}
-Wir erhalten so folgende Darstellung:
+%\begin{align}
+%	\label{fastfertigsemi}
+%	\sum_{K \in \mathcal{T}} \int_K \partial_t \rho  \phi \dx = \sum_{K \in \mathcal{T}} \int_K \Upsilon(\rho ) \cdot \nabla \phi \dx - 	\sum_{K\in \mathcal{T}} \left( \sum_{\substack{F \in \mathcal{F}_K \\ F \not\subseteq \Gamma_{\text{in}}}} \int_F \Upsilon^{\star}(\rho) \cdot n^K \phi \da - \sum_{\substack{F \in \mathcal{F}_K \\ F \subseteq \Gamma_{\text{in}}}} \rho_{\text{in}} q \cdot n^K \phi \da \right)
+%\end{align}
+%Sei nun $ \mathcal{T} = \{ K_1,\dots , K_N\} , N \coloneqq |\mathcal{T}| $. Die Semidiskretisierung ist motiviert durch (\ref{fastfertigsemi}) und lautet: Bestimme  $\rho_h \in \mathcal{Q}_h$, sodass für alle $ \phi_h \in \mathcal{Q}_h $ gilt:
+%\begin{align}
+%	\label{Semidiskretisierung}
+%	\sum_{K \in \mathcal{T}} (\partial_t \rho_h, \phi_h)_{K} &= \sum_{K \in \mathcal{T}} \left( (\Upsilon(\rho_h), \nabla \phi_h)_{K} - \sum_{\substack{F \in \mathcal{F}_K \\ F \not \subseteq \Gamma_{\text{in}}}}(\Upsilon^{\star}(\rho_h)\cdot n^K,\phi_h)_{F} - (\rho_{\text{in}}q \cdot n^K,\phi_h)_{\partial K \cap \Gamma_{\text{in}}} \right)
+%\end{align}
+%Für jede feste Zelle $ K $ ergibt sich durch Einsetzen der Zellenbasis $ \{\mu_i\}_{i=1}^N \subset \mathcal{Q}_h $  eingeschränkt mit $ \supp(\mu_i) \subseteq \overline{K} $ für alle $\ i \in \{1, \dots , N\}$ : \\
+%\begin{align*} 
+%\left(\partial_t \rho_h, \mu_i  \right)_{K}  &= \bigg( \left(\Upsilon(\rho_h), \nabla\mu_i\right)_{K} - \sum_{\substack{F \in \mathcal{F}_{K} \\ F \not\subseteq \Gamma_{\text{in}}}} \left(\Upsilon^*(\rho_h) \cdot n^{K}, \mu_i \right)_{F} - \left(\rho_{\text{in}} q \cdot n^{K}, \mu_i \right)_{\partial K \cap \Gamma_{\text{in}}} \bigg) \\
+%\end{align*}
+%Wir erhalten so folgende Darstellung:
+%%\begin{align*}
+%%\left(\partial_t \rho_h, \mu_i  \right)_{K_i} = \bigg( - \sum_{\substack{F \in \mathcal{F}_{K_i}, F \not\subseteq \Gamma_{\text{in}}\\ F \text{ mit }q \cdot n^K_{|F} > 0} } \left(\underbrace{\Upsilon^*(\rho_h)}_{= \rho_{h|K}\, q} \cdot n^{K_i}, \mu_i \right)_{F} - \sum_{\substack{F \in \mathcal{F}_{K_i}, F \not\subseteq \Gamma_{\text{in}}\\ F \text{ mit }q \cdot n^K_{|F} < 0} } \left(\underbrace{\Upsilon^*(\rho_h)}_{= \rho_{h|K'} \, q} \cdot n^{K_i}, \mu_i \right)_{F}\\
+%% - \left(\rho_{\text{in}} q \cdot n^{K_i}, \mu_i \right)_{\partial K_i \cap \Gamma_{\text{in}}} \bigg)
+%%\end{align*} 
+%
+%\begin{align}
+%\label{DarstellungvorLGS}
+%\underbrace{\left(\partial_t \rho_h, \mu_i  \right)_{K}}_{(\ref{DarstellungvorLGS}.1)} = 
+%\underbrace{ \left(\Upsilon(\rho_h), \nabla\mu_i\right)_{K} -  \sum_{F \in \mathcal{F}_{K} , F \not \subseteq \Gamma_{\text{in}}}\left(\Upsilon^{\star}(\rho_h)\cdot n^{K},\mu_i\big)_F \right)}_{(\ref{DarstellungvorLGS}.2)} \underbrace{- \left(\rho_{\text{in}}q\cdot n^{K},\mu_i \right)_{\partial K \cap \Gamma_{\text{in}}}}_{(\ref{DarstellungvorLGS}.3)}
+%\end{align}
+%
+%Zusammen mit der Basisdarstellung von $ \rho_h $ in $\{\mu_i  \}_{i=1}^N$, $ \rho_h = \sum_{i=1}^{N} 
+%\underline{\rho}[i] \; \mu_i$, und \\
+%$ \Upsilon^{\star}(\rho_h) = 
+%\begin{cases} 
+%\rho_h|_K \ ,\text{falls } q\cdot n^K|_F \geq 0\\
+%\rho_{h}|_{K'} \ , \text{falls } q\cdot n^K|_F < 0
+%\end{cases} $ können wir \ref{DarstellungvorLGS} in eine gewöhnliche Differentialgleichung erster Ordnung umformulieren. 
+%Dazu klammern wir jeweils $ \underline{\rho} $ aus und definieren 
+%$ \text{mithilfe von (\ref{DarstellungvorLGS}.1) die Massenmatrix } \underline{M}\in \R^{N \times N} $
 %\begin{align*}
-%\left(\partial_t \rho_h, \mu_i  \right)_{K_i} = \bigg( - \sum_{\substack{F \in \mathcal{F}_{K_i}, F \not\subseteq \Gamma_{\text{in}}\\ F \text{ mit }q \cdot n^K_{|F} > 0} } \left(\underbrace{\Upsilon^*(\rho_h)}_{= \rho_{h|K}\, q} \cdot n^{K_i}, \mu_i \right)_{F} - \sum_{\substack{F \in \mathcal{F}_{K_i}, F \not\subseteq \Gamma_{\text{in}}\\ F \text{ mit }q \cdot n^K_{|F} < 0} } \left(\underbrace{\Upsilon^*(\rho_h)}_{= \rho_{h|K'} \, q} \cdot n^{K_i}, \mu_i \right)_{F}\\
-% - \left(\rho_{\text{in}} q \cdot n^{K_i}, \mu_i \right)_{\partial K_i \cap \Gamma_{\text{in}}} \bigg)
-%\end{align*} 
-
-\begin{align}
-\label{DarstellungvorLGS}
-\underbrace{\left(\partial_t \rho_h, \mu_i  \right)_{K_i}}_{(\ref{DarstellungvorLGS}.1)} = 
-\underbrace{ \left(\Upsilon(\rho_h), \nabla\mu_i\right)_{K} -  \sum_{F \in \mathcal{F}_{K_i} , F \not \subseteq \Gamma_{\text{in}}}\left(\Upsilon^{\star}(\rho_h)\cdot n^{K_i},\mu_i\big)_F \right)}_{(\ref{DarstellungvorLGS}.2)} \underbrace{- \left(\rho_{\text{in}}q\cdot n^{K_i},\mu_i \right)_{\partial K_i \cap \Gamma_{\text{in}}}}_{(\ref{DarstellungvorLGS}.3)}
-\end{align}
-
-Zusammen mit der Basisdarstellung von $ \rho_h $ in $\{\mu_i  \}_{i=1}^N$, $ \rho_h = \sum_{i=1}^{N} 
-\underline{\rho}[i] \; \mu_i$, und \\
-$ \Upsilon^{\star}(\rho_h) = 
-\begin{cases} 
-\rho_h|_K \ ,\text{falls } q\cdot n^K|_F \geq 0\\
-\rho_{h}|_{K'} \ , \text{falls } q\cdot n^K|_F < 0
-\end{cases} $ können wir \ref{DarstellungvorLGS} in eine gewöhnliche Differentialgleichung erster Ordnung umformulieren. 
-Dazu klammern wir jeweils $ \underline{\rho} $ aus und definieren 
-$ \text{mithilfe von (\ref{DarstellungvorLGS}.1) die Massenmatrix } \underline{M}\in \R^{N \times N} $
-\begin{align*}
- &\underline{M}[K,K'] \coloneqq \begin{dcases}
-\int_K \abs{\mu_K}^2 \dx & \text{, für } K = K' \\
-0 &\text{, sonst}
-\end{dcases} \\
-&\text{mit (\ref{DarstellungvorLGS}.2) die Flussmatrix } \underline{A}\in \R^{N \times N} \\ & \underline{A}[K,K'] \coloneqq \begin{dcases}
-\int_K \Upsilon(\rho_h), \nabla\mu_i \dx - \sum_{\substack{F\in \mathcal{F}_K \\ F \text{ mit } q\cdot n^K_{|F} > 0}} \int_F \mu_K^2 q \cdot n^K \da& \text{, für } K = K' \\
-\int_K \Upsilon(\rho_h), \nabla\mu_i \dx - \int_F \mu_K \mu_{K'} q \cdot n^K \da &\text{, für } q \cdot n^K< 0 \\
-& \text{ und } \overline{F} = \partial K \cap \partial K'\\
-\int_K \Upsilon(\rho_h), \nabla\mu_i \dx &\text{, sonst}
-\end{dcases} \\
-&\text{und mit (\ref{DarstellungvorLGS}.3) den Lastvektor } \underline{b}\in \R^{N} \\ &\underline{b}[K] \coloneqq \int_{\partial K \cap \Gamma_{\text{in}}} \rho_{\text{in}} q \cdot n \da
-\end{align*}
+% &\underline{M}[K,K'] \coloneqq \begin{dcases}
+%\int_K \abs{\mu_K}^2 \dx & \text{, für } K = K' \\
+%0 &\text{, sonst}
+%\end{dcases} \\
+%&\text{mit (\ref{DarstellungvorLGS}.2) die Flussmatrix } \underline{A}\in \R^{N \times N} \\ & \underline{A}[K,K'] \coloneqq \begin{dcases}
+%\int_K  \nabla\mu_i^2 \dx - \sum_{\substack{F\in \mathcal{F}_K \\ F \text{ mit } q\cdot n^K_{|F} > 0}} \int_F \mu_K^2 q \cdot n^K \da& \text{, für } K = K' \\
+%\int_K \Upsilon(\rho_h), \nabla\mu_i \dx - \int_F \mu_K \mu_{K'} q \cdot n^K \da &\text{, für } q \cdot n^K< 0 \\
+%& \text{ und } \overline{F} = \partial K \cap \partial K'\\
+%\int_K \Upsilon(\rho_h), \nabla\mu_i \dx &\text{, sonst}
+%\end{dcases} \\
+%&\text{und mit (\ref{DarstellungvorLGS}.3) den Lastvektor } \underline{b}\in \R^{N} \\ &\underline{b}[K] \coloneqq \int_{\partial K \cap \Gamma_{\text{in}}} \rho_{\text{in}} q \cdot n \da
+%\end{align*}
 So ergibt sich die Differentialgleichung
 \begin{align*}
 \begin{cases}
