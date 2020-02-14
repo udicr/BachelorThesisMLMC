@@ -330,14 +330,18 @@ Dann löst $ \rho_h \in Q_h $ die Semidiskretisierung \eqref{Semidiskretisierung
 
 \subsubsection{Konsistenz}
 	 Abschnitt \ref{Diskretisierung} hat sich damit beschäftigt, aus dem ursprünglich unendlich dimensionalen Problem letztendlich eine volldiskretisierte Verfahrensvorschrift in einem endlichen Ansatzraum herzuleiten. Fragen wir nun nach der Konsistenz des Verfahrens, stellen wir damit zugleich die Frage, ob wir immer noch die richtige Gleichung lösen. Genauer heißt das Verfahren genau dann konsistent, wenn eine analytische Lösung $ \rho $ des ursprünglichen Problems (dTP) auch die hergeleitete Verfahrensvorschrift erfüllt. 
-	 Wir betrachten zunächst etwas abstrakter den formalen Prozess der Diskretisierung einer Gleichung \[ B \rho=0 \  \]
+	 Wir betrachten zunächst etwas abstrakter den formalen Prozess der Diskretisierung einer Gleichung \[ B \rho=0 \  \].
+	 Dabei werde das abstrakte Problem $ B \rho=0 $ mit einem Operator $ B: E \to F $ mithilfe der Abbildungen $ L_1,L_2,\Phi_h $ diskretisiert.
+	 Zu einer Lösung der abstrakten Gleichung $ z \in E $ existiere genau ein $ z_h \in E_h$ und der lokale Diskretisierungsfehler sei gegeben durch $
+	 l_h \coloneqq B_h L_1(z) = \phi_h(B) L_1(z) \in F_h
+	 $. Diese Situation kann durch folgendes Diagramm verdeutlicht werden:
 	 \begin{figure}[H]
 	 	\centering
 	 	\captionabove{Diskretisierungsprozess}
 	 	\includegraphics[width=0.45\textwidth]{abstraktkonsistenz2.png} \\
-	 	Abbildung leicht abgeändert aus \cite{brokate2016grundwissen} Seite 392
+	 	Abbildung leicht abgeändert aus \cite{brokate2016grundwissen} Seite 390
 	 \end{figure}
-	 Das diskretisierte Problem $ T_h \rho_h = 0  $ heißt genau dann konsistent, wenn für eine analytische Lösung $ \rho^{\star} \in E $ gilt, dass $ \lim\limits_{h \to 0}\lVert \Phi_h(B)L_1\rho^{\star} - L_2B\rho^{\star} \rVert_{F_h} = 0 $.
+	 Das diskretisierte Problem $ B_h \rho_h = 0  $ heißt genau dann konsistent, wenn für eine analytische Lösung $ \rho^{\star} \in E $ gilt, dass $ \lim\limits_{h \to 0}\lVert \Phi_h(B)L_1\rho^{\star} - L_2B\rho^{\star} \rVert_{F_h} = 0 $.
 	 Betrachten wir zunächst in einem Zwischenschritt die Semidiskretisierung (5.3).
 	 Die gewählte Herleitung dieser Formulierung soll dabei nahelegen, dass für eine exakte (und glatte) Lösung $ \rho $ die Konsistenz für die Semidiskretisierung erfüllt ist. In oben eingeführter Notation gilt also gerade $ B_h(\rho^{\star},\phi) $ für alle Testfunktionen $ \phi $. Auch wenn es sich bei $ \mathcal{Q}_h $ um einen nicht konformen Ansatzraum handelt, ist der Herleitung der Semidiskretisierung dennoch zu entnehmen, dass auch $ B_h(\rho^{\star},\phi_h) $ für alle $ \phi_h \in \mathcal{Q}_h $ gilt $(\star)$.  Wichtig ist dabei unter anderem auch die Wahl der numerischen Flussfunktion, der upwind flux erhält aber gerade gewünschten Eigenschaften. 
 	 Mehr dazu findet sich in \cite{Har08b}.
