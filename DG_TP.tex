@@ -146,30 +146,29 @@ Dabei wurde zusätzlich ausgenutzt, dass es sich bei den Kanten um Nullmengen ha
  Für $ p \geq 1 $ erhalten wir hingegen ein Discontinuous Galerkin Verfahren. Die Anzahl der Zellfreiheitsgrade einer Zelle $ K $ ist dann gerade durch $ G = p \cdot \abs{\mathcal{V}_K} $ (also $ p $-mal die Anzahl der Ecken von $ K $) gegeben.
  Die Zellenbasis hat in diesem Fall $ G \cdot \abs{\mathcal{T}} $ Elemente und für je $ G $ Basisfunktionen $ \mu $ gilt $ \supp(\mu) \subseteq \overline{K} $. \\
  Sei $ N = \abs{\mathcal{T}} $ und $ \mathcal{T} = \{K_1,\dots,K_{\abs{\mathcal{T}}} \} $ geordnet. Dann lässt sich die Zellenbasis $ \{ \mu_i \}_{i=1}^{G\abs{\mathcal{T}}} \subset \mathcal{Q}_h $ gemäß dem Träger der Basisfunktion zu $ \{ \mu_{K_j,i} \}_{j = 1,\dots,N ; i = 1,\dots,G } $ ordnen.
- Für jede feste Zelle $ K $ ergibt sich durch Einsetzen der zugehörigen Basisfunktionen $ \{ \mu_{i} \}_{i = 1,\dots,G } = \{ \mu_{K,i} \}_{i = 1,\dots,G }  $ : \\
+ Für jede feste Zelle $ K $ ergibt sich durch Einsetzen der zugehörigen Basisfunktionen $ \{ \mu_{K,i} \}_{i = 1,\dots,G }  $ : \\
 \begin{align*} 
-\left(\partial_t \rho_h, \mu_i  \right)_{K}  &= \bigg( \left(\Upsilon(\rho_h), \nabla\mu_i\right)_{K} - \sum_{\substack{F \in \mathcal{F}_{K} \\ F \not\subseteq \Gamma_{\text{in}}}} \left(\Upsilon^*(\rho_h) \cdot n^{K}, \mu_i \right)_{F} - \left(\rho_{\text{in}} q \cdot n^{K}, \mu_i \right)_{\partial K \cap \Gamma_{\text{in}}} \bigg) \\
+\left(\partial_t \rho_h, \mu_{K,i}  \right)_{K}  &= \bigg( \left(\Upsilon(\rho_h), \nabla\mu_{K,i}\right)_{K} - \sum_{\substack{F \in \mathcal{F}_{K} \\ F \not\subseteq \Gamma_{\text{in}}}} \left(\Upsilon^*(\rho_h) \cdot n^{K}, \mu_{K,i} \right)_{F} - \left(\rho_{\text{in}} q \cdot n^{K}, \mu_{K,i} \right)_{\partial K \cap \Gamma_{\text{in}}} \bigg) \\
 \end{align*}
-TODO
 Wir erhalten so folgende Darstellung:
 %\begin{align*}
 %\left(\partial_t \rho_h, \mu_i  \right)_{K_i} = \bigg( - \sum_{\substack{F \in \mathcal{F}_{K_i}, F \not\subseteq \Gamma_{\text{in}}\\ F \text{ mit }q \cdot n^K_{|F} > 0} } \left(\underbrace{\Upsilon^*(\rho_h)}_{= \rho_{h|K}\, q} \cdot n^{K_i}, \mu_i \right)_{F} - \sum_{\substack{F \in \mathcal{F}_{K_i}, F \not\subseteq \Gamma_{\text{in}}\\ F \text{ mit }q \cdot n^K_{|F} < 0} } \left(\underbrace{\Upsilon^*(\rho_h)}_{= \rho_{h|K'} \, q} \cdot n^{K_i}, \mu_i \right)_{F}\\
 % - \left(\rho_{\text{in}} q \cdot n^{K_i}, \mu_i \right)_{\partial K_i \cap \Gamma_{\text{in}}} \bigg)
 %\end{align*} 
 %%
-%\begin{align}
-%\label{DarstellungvorLGS}
-%\underbrace{\left(\partial_t \rho_h, \mu_i  \right)_{K}}_{(\ref{DarstellungvorLGS}.1)} = 
-%\underbrace{ \left(\Upsilon(\rho_h), \nabla\mu_i\right)_{K} -  \sum_{F \in \mathcal{F}_{K} , F \not \subseteq \Gamma_{\text{in}}}\left(\Upsilon^{\star}(\rho_h)\cdot n^{K},\mu_i\big)_F \right)}_{(\ref{DarstellungvorLGS}.2)} \underbrace{- \left(\rho_{\text{in}}q\cdot n^{K},\mu_i \right)_{\partial K \cap \Gamma_{\text{in}}}}_{(\ref{DarstellungvorLGS}.3)}
-%\end{align}
-%%
-%Zusammen mit der Basisdarstellung von $ \rho_h $ in $\{\mu_i  \}_{i=1}^N$, $ \rho_h = \sum_{i=1}^{N} 
-%\underline{\rho}[i] \; \mu_i$, und \\
-%$ \Upsilon^{\star}(\rho_h) = 
-%\begin{cases} 
-%\rho_h|_K \ ,\text{falls } q\cdot n^K|_F \geq 0\\
-%\rho_{h}|_{K'} \ , \text{falls } q\cdot n^K|_F < 0
-%\end{cases} $ können wir \ref{DarstellungvorLGS} in eine gewöhnliche Differentialgleichung erster Ordnung umformulieren. 
+\begin{align}
+\label{DarstellungvorLGS}
+\underbrace{\left(\partial_t \rho_h, \mu_{K,i}  \right)_{K}}_{(\ref{DarstellungvorLGS}.1)} = 
+\underbrace{ \left(\Upsilon(\rho_h), \nabla\mu_{K,i}\right)_{K} -  \sum_{F \in \mathcal{F}_{K} , F \not \subseteq \Gamma_{\text{in}}}\left(\Upsilon^{\star}(\rho_h)\cdot n^{K},\mu_{K,i}\big)_F \right)}_{(\ref{DarstellungvorLGS}.2)} \underbrace{- \left(\rho_{\text{in}}q\cdot n^{K},\mu_{K,i} \right)_{\partial K \cap \Gamma_{\text{in}}}}_{(\ref{DarstellungvorLGS}.3)}
+\end{align}
+%
+Zusammen mit der Basisdarstellung von $ \rho_h $ in $\bigcup_{K \in \mathcal{T}}\{\mu_{K,i}  \}_{i=1}^G$, also $ \rho_h = \sum_{K \in \mathcal{T}}\sum_{i=1}^{G} 
+\underline{\rho}[i] \; \mu_{K,i}$, und \\
+$ \Upsilon^{\star}(\rho_h) = 
+\begin{cases} 
+\rho_h|_K \ ,\text{falls } q\cdot n^K|_F \geq 0\\
+\rho_{h}|_{K'} \ , \text{falls } q\cdot n^K|_F < 0
+\end{cases} $ können wir \ref{DarstellungvorLGS} in eine gewöhnliche Differentialgleichung erster Ordnung umformulieren. 
 %Dazu klammern wir jeweils $ \underline{\rho} $ aus und definieren 
 %$ \text{mithilfe von (\ref{DarstellungvorLGS}.1) die Massenmatrix } \underline{M}\in \R^{N \times N} $
 %\begin{align*}
