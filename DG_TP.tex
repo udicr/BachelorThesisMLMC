@@ -133,33 +133,36 @@ Durch Umstellen und das Zusammenfassen der obigen Resultate erhalten wir so:
 \end{align*}
 Dabei wurde zusätzlich ausgenutzt, dass es sich bei den Kanten um Nullmengen handelt und wir so das Integral über $ \mathcal{D} $ als Summe der Integrale über alle Zellen auffassen können. Nutzen wir nun noch aus, dass für den Fluss  $\rho(x,t) = \rho_{\text{in}}(x,t)$ für $ x \in \Gamma_{\text{in}} $ gilt, kommen wir so auf 
 
-TODO überarbeiten
-
-%\begin{align}
-%	\label{fastfertigsemi}
-%	\sum_{K \in \mathcal{T}} \int_K \partial_t \rho  \phi \dx = \sum_{K \in \mathcal{T}} \int_K \Upsilon(\rho ) \cdot \nabla \phi \dx - 	\sum_{K\in \mathcal{T}} \left( \sum_{\substack{F \in \mathcal{F}_K \\ F \not\subseteq \Gamma_{\text{in}}}} \int_F \Upsilon^{\star}(\rho) \cdot n^K \phi \da - \sum_{\substack{F \in \mathcal{F}_K \\ F \subseteq \Gamma_{\text{in}}}} \rho_{\text{in}} q \cdot n^K \phi \da \right)
-%\end{align}
-%Sei nun $ \mathcal{T} = \{ K_1,\dots , K_N\} , N \coloneqq |\mathcal{T}| $. Die Semidiskretisierung ist motiviert durch (\ref{fastfertigsemi}) und lautet: Bestimme  $\rho_h \in \mathcal{Q}_h$, sodass für alle $ \phi_h \in \mathcal{Q}_h $ gilt:
-%\begin{align}
-%	\label{Semidiskretisierung}
-%	\sum_{K \in \mathcal{T}} (\partial_t \rho_h, \phi_h)_{K} &= \sum_{K \in \mathcal{T}} \left( (\Upsilon(\rho_h), \nabla \phi_h)_{K} - \sum_{\substack{F \in \mathcal{F}_K \\ F \not \subseteq \Gamma_{\text{in}}}}(\Upsilon^{\star}(\rho_h)\cdot n^K,\phi_h)_{F} - (\rho_{\text{in}}q \cdot n^K,\phi_h)_{\partial K \cap \Gamma_{\text{in}}} \right)
-%\end{align}
-%Für jede feste Zelle $ K $ ergibt sich durch Einsetzen der Zellenbasis $ \{\mu_i\}_{i=1}^N \subset \mathcal{Q}_h $  eingeschränkt mit $ \supp(\mu_i) \subseteq \overline{K} $ für alle $\ i \in \{1, \dots , N\}$ : \\
-%\begin{align*} 
-%\left(\partial_t \rho_h, \mu_i  \right)_{K}  &= \bigg( \left(\Upsilon(\rho_h), \nabla\mu_i\right)_{K} - \sum_{\substack{F \in \mathcal{F}_{K} \\ F \not\subseteq \Gamma_{\text{in}}}} \left(\Upsilon^*(\rho_h) \cdot n^{K}, \mu_i \right)_{F} - \left(\rho_{\text{in}} q \cdot n^{K}, \mu_i \right)_{\partial K \cap \Gamma_{\text{in}}} \bigg) \\
-%\end{align*}
-%Wir erhalten so folgende Darstellung:
-%%\begin{align*}
-%%\left(\partial_t \rho_h, \mu_i  \right)_{K_i} = \bigg( - \sum_{\substack{F \in \mathcal{F}_{K_i}, F \not\subseteq \Gamma_{\text{in}}\\ F \text{ mit }q \cdot n^K_{|F} > 0} } \left(\underbrace{\Upsilon^*(\rho_h)}_{= \rho_{h|K}\, q} \cdot n^{K_i}, \mu_i \right)_{F} - \sum_{\substack{F \in \mathcal{F}_{K_i}, F \not\subseteq \Gamma_{\text{in}}\\ F \text{ mit }q \cdot n^K_{|F} < 0} } \left(\underbrace{\Upsilon^*(\rho_h)}_{= \rho_{h|K'} \, q} \cdot n^{K_i}, \mu_i \right)_{F}\\
-%% - \left(\rho_{\text{in}} q \cdot n^{K_i}, \mu_i \right)_{\partial K_i \cap \Gamma_{\text{in}}} \bigg)
-%%\end{align*} 
-%
+\begin{align}
+	\label{fastfertigsemi}
+	\sum_{K \in \mathcal{T}} \int_K \partial_t \rho  \phi \dx = \sum_{K \in \mathcal{T}} \int_K \Upsilon(\rho ) \cdot \nabla \phi \dx - 	\sum_{K\in \mathcal{T}} \left( \sum_{\substack{F \in \mathcal{F}_K \\ F \not\subseteq \Gamma_{\text{in}}}} \int_F \Upsilon^{\star}(\rho) \cdot n^K \phi \da + \sum_{\substack{F \in \mathcal{F}_K \\ F \subseteq \Gamma_{\text{in}}}} \rho_{\text{in}} q \cdot n^K \phi \da \right)
+\end{align}
+ Die Semidiskretisierung ist motiviert durch (\ref{fastfertigsemi}) und lautet: Bestimme  $\rho_h \in \mathcal{Q}_h$, sodass für alle $ \phi_h \in \mathcal{Q}_h $ gilt:
+\begin{align}
+	\label{Semidiskretisierung}
+	\sum_{K \in \mathcal{T}} (\partial_t \rho_h, \phi_h)_{K} &= \sum_{K \in \mathcal{T}} \left( (\Upsilon(\rho_h), \nabla \phi_h)_{K} - \sum_{\substack{F \in \mathcal{F}_K \\ F \not \subseteq \Gamma_{\text{in}}}}(\Upsilon^{\star}(\rho_h)\cdot n^K,\phi_h)_{F} - (\rho_{\text{in}}q \cdot n^K,\phi_h)_{\partial K \cap \Gamma_{\text{in}}} \right)
+\end{align}
+ Sei nun $ G $ die Anzahl der Zellenfreiheitsgrade. Diese hängen direkt von der Wahl des Lösungs-/Testraumes $ \mathcal{Q}_h $, bzw. der Wahl von $ p $ ab. Die Wahl $ p=0 $ liefert gerade ein Finite Volumen Verfahren, $ G $ ist dann gerade $ 1 $ und die Zellenbasis $ \{\mu_K \}_{K \in \mathcal{T}}$ ist durch $ \mu_K =  \mathds{1}_{K} $ gegeben.
+ Für $ p \geq 1 $ erhalten wir hingegen ein Discontinuous Galerkin Verfahren. Die Anzahl der Zellfreiheitsgrade einer Zelle $ K $ ist dann gerade durch $ G = p \cdot \abs{\mathcal{V}_K} $ (also $ p $-mal die Anzahl der Ecken von $ K $) gegeben.
+ Die Zellenbasis hat in diesem Fall $ G \cdot \abs{\mathcal{T}} $ Elemente und für je $ G $ Basisfunktionen $ \mu $ gilt $ \supp(\mu) \subseteq \overline{K} $. \\
+ Sei $ N = \abs{\mathcal{T}} $ und $ \mathcal{T} = \{K_1,\dots,K_{\abs{\mathcal{T}}} \} $ geordnet. Dann lässt sich die Zellenbasis $ \{ \mu_i \}_{i=1}^{G\abs{\mathcal{T}}} \subset \mathcal{Q}_h $ gemäß dem Träger der Basisfunktion zu $ \{ \mu_{K_j,i} \}_{j = 1,\dots,N ; i = 1,\dots,G } $ ordnen.
+ Für jede feste Zelle $ K $ ergibt sich durch Einsetzen der zugehörigen Basisfunktionen $ \{ \mu_{i} \}_{i = 1,\dots,G } = \{ \mu_{K,i} \}_{i = 1,\dots,G }  $ : \\
+\begin{align*} 
+\left(\partial_t \rho_h, \mu_i  \right)_{K}  &= \bigg( \left(\Upsilon(\rho_h), \nabla\mu_i\right)_{K} - \sum_{\substack{F \in \mathcal{F}_{K} \\ F \not\subseteq \Gamma_{\text{in}}}} \left(\Upsilon^*(\rho_h) \cdot n^{K}, \mu_i \right)_{F} - \left(\rho_{\text{in}} q \cdot n^{K}, \mu_i \right)_{\partial K \cap \Gamma_{\text{in}}} \bigg) \\
+\end{align*}
+TODO
+Wir erhalten so folgende Darstellung:
+%\begin{align*}
+%\left(\partial_t \rho_h, \mu_i  \right)_{K_i} = \bigg( - \sum_{\substack{F \in \mathcal{F}_{K_i}, F \not\subseteq \Gamma_{\text{in}}\\ F \text{ mit }q \cdot n^K_{|F} > 0} } \left(\underbrace{\Upsilon^*(\rho_h)}_{= \rho_{h|K}\, q} \cdot n^{K_i}, \mu_i \right)_{F} - \sum_{\substack{F \in \mathcal{F}_{K_i}, F \not\subseteq \Gamma_{\text{in}}\\ F \text{ mit }q \cdot n^K_{|F} < 0} } \left(\underbrace{\Upsilon^*(\rho_h)}_{= \rho_{h|K'} \, q} \cdot n^{K_i}, \mu_i \right)_{F}\\
+% - \left(\rho_{\text{in}} q \cdot n^{K_i}, \mu_i \right)_{\partial K_i \cap \Gamma_{\text{in}}} \bigg)
+%\end{align*} 
+%%
 %\begin{align}
 %\label{DarstellungvorLGS}
 %\underbrace{\left(\partial_t \rho_h, \mu_i  \right)_{K}}_{(\ref{DarstellungvorLGS}.1)} = 
 %\underbrace{ \left(\Upsilon(\rho_h), \nabla\mu_i\right)_{K} -  \sum_{F \in \mathcal{F}_{K} , F \not \subseteq \Gamma_{\text{in}}}\left(\Upsilon^{\star}(\rho_h)\cdot n^{K},\mu_i\big)_F \right)}_{(\ref{DarstellungvorLGS}.2)} \underbrace{- \left(\rho_{\text{in}}q\cdot n^{K},\mu_i \right)_{\partial K \cap \Gamma_{\text{in}}}}_{(\ref{DarstellungvorLGS}.3)}
 %\end{align}
-%
+%%
 %Zusammen mit der Basisdarstellung von $ \rho_h $ in $\{\mu_i  \}_{i=1}^N$, $ \rho_h = \sum_{i=1}^{N} 
 %\underline{\rho}[i] \; \mu_i$, und \\
 %$ \Upsilon^{\star}(\rho_h) = 
