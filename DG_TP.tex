@@ -145,7 +145,7 @@ Dabei wurde zusätzlich ausgenutzt, dass es sich bei den Kanten um Nullmengen ha
  Sei nun $ G $ die Anzahl der Zellenfreiheitsgrade. Diese hängen direkt von der Wahl des Lösungs-/Testraumes $ \mathcal{Q}_h $, bzw. der Wahl von $ p $ ab. Die Wahl $ p=0 $ liefert gerade ein Finite Volumen Verfahren, $ G $ ist dann gerade $ 1 $ und die Zellenbasis $ \{\mu_K \}_{K \in \mathcal{T}}$ ist durch $ \mu_K =  \mathds{1}_{K} $ gegeben.
  Für $ p \geq 1 $ erhalten wir hingegen ein Discontinuous Galerkin Verfahren. Die Anzahl der Zellfreiheitsgrade einer Zelle $ K $ ist dann gerade durch $ G = p \cdot \abs{\mathcal{V}_K} $ (also $ p $-mal die Anzahl der Ecken von $ K $) gegeben.
  Die Zellenbasis hat in diesem Fall $ G \cdot \abs{\mathcal{T}} $ Elemente und für je $ G $ Basisfunktionen $ \mu $ gilt $ \supp(\mu) \subseteq \overline{K} $. \\
- Sei $ N = \abs{\mathcal{T}} $ und $ \mathcal{T} = \{K_1,\dots,K_{\abs{\mathcal{T}}} \} $ geordnet. Dann lässt sich die Zellenbasis $ \{ \mu_i \}_{i=1}^{G\abs{\mathcal{T}}} \subset \mathcal{Q}_h $ gemäß dem Träger der Basisfunktion zu $ \{ \mu_{K_j,i} \}_{j = 1,\dots,N ; i = 1,\dots,G } $ ordnen.
+ Sei $ N = \abs{\mathcal{T}} $ und $ \mathcal{T} = \{K_1,\dots,K_N \} $ geordnet. Dann lässt sich die Zellenbasis $ \{ \mu_i \}_{i=1}^{G\abs{\mathcal{T}}} \subset \mathcal{Q}_h $ gemäß dem Träger der Basisfunktion zu $ \{ \mu_{K_j,i} \}_{j = 1,\dots,N ; i = 1,\dots,G } $ ordnen.
  Für jede feste Zelle $ K $ ergibt sich durch Einsetzen der zugehörigen Basisfunktionen $ \{ \mu_{K,i} \}_{i = 1,\dots,G }  $ : \\
 \begin{align*} 
 \left(\partial_t \rho_h, \mu_{K,i}  \right)_{K}  &= \bigg( \left(\Upsilon(\rho_h), \nabla\mu_{K,i}\right)_{K} - \sum_{\substack{F \in \mathcal{F}_{K} \\ F \not\subseteq \Gamma_{\text{in}}}} \left(\Upsilon^*(\rho_h) \cdot n^{K}, \mu_{K,i} \right)_{F} - \left(\rho_{\text{in}} q \cdot n^{K}, \mu_{K,i} \right)_{\partial K \cap \Gamma_{\text{in}}} \bigg) \\
@@ -158,12 +158,13 @@ Wir erhalten so folgende Darstellung:
 %%
 \begin{align}
 \label{DarstellungvorLGS}
-\underbrace{\left(\partial_t \rho_h, \mu_{K,i}  \right)_{K}}_{(\ref{DarstellungvorLGS}.1)} = 
-\underbrace{ \left(\Upsilon(\rho_h), \nabla\mu_{K,i}\right)_{K} -  \sum_{F \in \mathcal{F}_{K} , F \not \subseteq \Gamma_{\text{in}}}\left(\Upsilon^{\star}(\rho_h)\cdot n^{K},\mu_{K,i}\big)_F \right)}_{(\ref{DarstellungvorLGS}.2)} \underbrace{- \left(\rho_{\text{in}}q\cdot n^{K},\mu_{K,i} \right)_{\partial K \cap \Gamma_{\text{in}}}}_{(\ref{DarstellungvorLGS}.3)}
+\underbrace{\left(\partial_t \rho_h, \mu_{K,i}  \right)_{K}}_{\eqqcolon M_K(\partial_t \rho_{h}, \mu_{K,i})} = 
+\underbrace{ \left(\Upsilon(\rho_h), \nabla\mu_{K,i}\right)_{K} -  \sum_{F \in \mathcal{F}_{K} , F \not \subseteq \Gamma_{\text{in}}}\left(\Upsilon^{\star}(\rho_h)\cdot n^{K},\mu_{K,i}\big)_F \right)}_{\eqqcolon A_K(\rho_{h},\mu_{K,i})} \underbrace{- \left(\rho_{\text{in}}q\cdot n^{K},\mu_{K,i} \right)_{\partial K \cap \Gamma_{\text{in}}}}_{b_K(\mu_{K,i})}
 \end{align}
 %
-Zusammen mit der Basisdarstellung von $ \rho_h $ in $\bigcup_{K \in \mathcal{T}}\{\mu_{K,i}  \}_{i=1}^G$, also $ \rho_h = \sum_{K \in \mathcal{T}}\sum_{i=1}^{G} 
-\underline{\rho}[i] \; \mu_{K,i}$, und \\
+Zusammen mit der Basisdarstellung von $ \rho_h $ in $\bigcup_{K \in \mathcal{T}}\{\mu_{K,i}  \}_{i=1}^G$, also 
+\[ \rho_h = \underline{\rho} \cdot (\mu_{K_1,1},\dots,\mu_{K_1,G},\mu_{K_2,1}\dots,\mu_{K_N,1},\dots,\mu_{K_N,G})^T\]
+, und \\
 $ \Upsilon^{\star}(\rho_h) = 
 \begin{cases} 
 \rho_h|_K \ ,\text{falls } q\cdot n^K|_F \geq 0\\
