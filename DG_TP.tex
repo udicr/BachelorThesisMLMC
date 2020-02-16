@@ -164,12 +164,13 @@ Wir erhalten so folgende Darstellung:
 %
 Zusammen mit der Basisdarstellung von $ \rho_h $ in $\bigcup_{K \in \mathcal{T}}\{\mu_{K,i}  \}_{i=1}^G$, also 
 \[ \rho_h = \underline{\rho} \cdot (\mu_{K_1,1},\dots,\mu_{K_1,G},\mu_{K_2,1}\dots,\mu_{K_N,1},\dots,\mu_{K_N,G})^T\]
-, und \\
+mit $ \underline{\rho}\in \R^{NG} $ und 
 $ \Upsilon^{\star}(\rho_h) = 
 \begin{cases} 
 \rho_h|_K \ ,\text{falls } q\cdot n^K|_F \geq 0\\
 \rho_{h}|_{K'} \ , \text{falls } q\cdot n^K|_F < 0
-\end{cases} $ können wir \ref{DarstellungvorLGS} in eine gewöhnliche Differentialgleichung erster Ordnung umformulieren. 
+\end{cases} $
+ können wir \ref{DarstellungvorLGS} in eine gewöhnliche Differentialgleichung erster Ordnung umformulieren. 
 %Dazu klammern wir jeweils $ \underline{\rho} $ aus und definieren 
 %$ \text{mithilfe von (\ref{DarstellungvorLGS}.1) die Massenmatrix } \underline{M}\in \R^{N \times N} $
 %\begin{align*}
@@ -185,13 +186,14 @@ $ \Upsilon^{\star}(\rho_h) =
 %\end{dcases} \\
 %&\text{und mit (\ref{DarstellungvorLGS}.3) den Lastvektor } \underline{b}\in \R^{N} \\ &\underline{b}[K] \coloneqq \int_{\partial K \cap \Gamma_{\text{in}}} \rho_{\text{in}} q \cdot n \da
 %\end{align*}
-So ergibt sich die Differentialgleichung
+So ergibt sich eine Differentialgleichung der Form
 \begin{align*}
 \begin{cases}
 \underline{M} \partial_t \underline{\rho}(t) = \underline{A} \underline{\rho}(t) + \underline{b}(t) \\
 \underline{\rho}(0) = \underline{\rho_0}
 \end{cases}\\
 \end{align*}
+mit $ \underline{M},\underline{A} \in \R^{NG\times NG} $ und $ b: \mathbb{T} \to \R^{NG} $
 Da dies nun eine gewöhnliche Differentialgleichung ist, können wir die Lösung 
 \begin{align}
  \label{semidisklsg}
