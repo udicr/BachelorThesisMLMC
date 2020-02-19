@@ -1,13 +1,13 @@
 % !TeX root = bachelorarbeit.tex
 
-Nachdem wir im dritten Abschnitt die Monte Carlo Methode betrachtet haben, wollen wir uns nun einer Weiterentwicklung der Monte Carlo Methode, der sogenannten Multi Level Monte Carlo Methode zuwenden. Grundsätzlich liegt dieselbe Situation vor wie bei der Monte Carlo Methode:
+Nachdem wir im dritten Abschnitt die Monte Carlo Methode betrachtet haben, wollen wir uns nun einer Weiterentwicklung der Monte Carlo Methode, der sogenannten Multilevel Monte Carlo Methode zuwenden. Grundsätzlich liegt dieselbe Situation vor wie bei der Monte Carlo Methode:
 Wir wollen wieder eine Größe bestimmen, welche sich nach geeigneter Modellierung in der Form eines Erwartungswertes $ \mathbb{E}[X] $ einer Zufallsvariablen $ X $ schreiben lässt. Besonders, wenn diese Größe mit der Lösung von gewöhnlichen oder partiellen Differentialgleichungen zusammenhängen, wie wir sie später betrachten wollen, hat man nun jedoch die Wahl, mit welcher Genauigkeit die numerische Lösung des zugrunde liegenden Problems, z.B. der Differentialgleichung, erfolgen soll. Beispielsweise können wir im Falle der numerischen Lösung von Differentialgleichung Zeitschrittweiten und/oder Gitterweiten der Ortsdiskretisierung festlegen. Wir werden dann in diesem Zusammenhang auch von verschiedenen (Genauigkeits-)Leveln sprechen. An dieser Stelle tritt stets ein typischer Zwiespalt auf:
 \begin{itemize}
 	\item Zum Einen wollen wir möglichst genau rechnen. Dies legt die Wahl von besonders kleinen Zeitschrittweiten bzw. feinen Gittern zur Ortsdiskretisierung nahe.
 	\item Zum Anderen wollen wir die Anzahl der Rechenschritte bzw. die Rechenzeit möglichst gering halten. Dies spricht hingegen für große Zeitschritte bzw. grobe Gitter.
 \end{itemize}
 Zusätzlich zu der oft bereits alleine anspruchsvollen Aufgabe, solche Probleme numerisch zu lösen, müssen wir also stets einen für unsere Bedürfnisse passenden Kompromiss aus möglichst genauer numerischer Approximation und geringem (oder zumindest machbarem) Rechenaufwand eingehen. Obwohl dies zunächst wie eine zusätzliche Hürde erscheint und Mehraufwand vermuten lässt, stellt sich heraus, dass eine solche Wahl der Genauigkeit im Kontext von Monte Carlo Methode sich durchaus als nützlich erweisen kann. 
-Die Multi Level Monte Carlo Methode, wir werden im Folgenden auch oft vom sogenannten Multi Level Monte Carlo Schätzer sprechen, ist der Prototyp einer Familie sogenannter Varianz-reduzierender Methoden, welche das Ziel haben, die naive Monte Carlo Methode in Sachen Konvergenzrate und Effizienz zu schlagen. Bevor wir erklären wie genau die Multilevel Monte Carlo Methode im Allgemeinen dabei vorgeht, möchten wir die Funktionsweise wieder anhand eines Beispiels erklären, welches in \cite{heinrich2001multilevel} ausführlich beleuchtet wird.
+Die Multilevel Monte Carlo Methode, wir werden im Folgenden auch oft vom sogenannten Multilevel Monte Carlo Schätzer sprechen, ist der Prototyp einer Familie sogenannter Varianz-reduzierender Methoden, welche das Ziel haben, die naive Monte Carlo Methode in Sachen Konvergenzrate und Effizienz zu schlagen. Bevor wir erklären wie genau die Multilevel Monte Carlo Methode im Allgemeinen dabei vorgeht, möchten wir die Funktionsweise wieder anhand eines Beispiels erklären, welches in \cite{heinrich2001multilevel} ausführlich beleuchtet wird.
 
 \begin{Beispiel}(Wieder ein Integral über $[0,1]^d$)\\
 	\label{mlmcbeispiel}
@@ -53,11 +53,11 @@ Die Multi Level Monte Carlo Methode, wir werden im Folgenden auch oft vom sogena
 	\[
 	 (P_l I)(\lambda) = \sum_{i=0}^{m_l} \hat{I}(\lambda_{li}) \varphi_{li} \quad (l = 0,\dots,m)
 	 \]
-	 ein. Wir können nun also insbesondere $ P \coloneqq P_L $ also Teleskopsumme darstellen. Es gilt nämlich:
+	 ein. Wir können nun also insbesondere $ P \coloneqq P_L $ als Teleskopsumme darstellen. Es gilt nämlich:
 	 \[
 	 	P = P_L = P_0 + \sum_{l=1}^{L} (P_l-P_{l-1}) \ .
 	 \]
-	 Der Monte Carlo Schätzer von oben lässt sich (mit $ P_{-1} \coloneqq 0 $)dann durch 
+	 Der Monte Carlo Schätzer von oben lässt sich (mit $ P_{-1} \coloneqq 0 $) dann durch 
 	 \[	
 	 \mathcal{I}_{MC} = \sum\limits_{l=0}^{L} \frac{1}{n} \sum\limits_{k=1}^{n} (P_l-P_{l-1})f(\cdot,x_k)	
 	 \]
@@ -67,8 +67,8 @@ Die Multi Level Monte Carlo Methode, wir werden im Folgenden auch oft vom sogena
 	  \[
 	   I(\lambda) \approx \mathcal{I}_{MLMC}(\lambda) = \sum_{l=0}^{L} \frac{1}{n_l} \sum_{j=1}^{n_l} ((P_l - P_{l-1}) f(\cdot,x_{lj}))(\lambda) \ .
 	  \]
-	  Der bedeutendste Schritt ist an dieser Stelle eine passende Wahl der $ n_l $. Bei diesem Beispiel wollen wir uns darauf beschränken, eine passende Wahl anzugeben und den Nutzen hervorzuheben, welchen wir durch diese Wahl erlangen. So zeigt sich, dass, wie in \cite{heinrich2001multilevel} ausführlicher erklärt, eine passende Wahl beispielsweise durch $ n_l = \Theta(2^{-\frac{3l}{2}n})$ für ein $ n \in \N $ groß genug gegeben ist. 
-	  Dann kann für den analog wie für den MC-Schätzer definierten (RMSE-)Fehler gezeigt werden, dass 
+	  Der bedeutendste Schritt ist an dieser Stelle eine passende Wahl der $ n_l $ zu treffen. Bei diesem Beispiel wollen wir uns darauf beschränken, eine passende Wahl anzugeben und den Nutzen hervorzuheben, welchen wir durch diese Wahl erlangen. So zeigt sich, dass, wie in \cite{heinrich2001multilevel} ausführlicher erklärt, eine passende Wahl beispielsweise durch $ n_l = \Theta(2^{-\frac{3l}{2}n})$ für ein $ n \in \N $ groß genug gegeben ist. 
+	  Dann kann analog wie für den MC-Schätzer definierten (RMSE-)Fehler gezeigt werden, dass 
 	  \[
 	  	\epsilon(\mathcal{I}_{MLMC}) = \mathcal{O}(n^{-\frac{1}{2}} + n^{-\frac{1}{2}}) = \mathcal{O}(n^{-\frac{1}{2}}) \ .
 	  \]

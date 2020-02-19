@@ -58,7 +58,7 @@ Die analytischen Grundlagen bauen zum Teil auf der Vorlesung Rand- und Eigenwert
  		\begin{align*}
  		\int_{\mathcal{D}} \dive F \dx =  \int_{\partial \mathcal{D}} F \cdot n \da
  		\end{align*}
- 		wobei $F:\mathcal{D} \to \R^d$ ein Vektorfeld ist. Die Komponentenfunktionen von $F = (f_1,\dots,f_d)$ sollen dann $f_i \in C^1(\overline{\mathcal{D}})$ für $i=1,\dots,n$ erfüllen.
+ 		wobei $F:\mathcal{D} \to \R^d$ ein Vektorfeld ist. Die Komponentenfunktionen von $F = (f_1,\dots,f_d)$ sollen dann $f_i \in C^1(\overline{\mathcal{D}})$ für $i=1,\dots,d$ erfüllen.
 \end{Satz}
 
 \begin{Folgerung}(mehrdimensionale partielle Integration) \\
@@ -80,7 +80,7 @@ Die analytischen Grundlagen bauen zum Teil auf der Vorlesung Rand- und Eigenwert
 
 
 \begin{Definition}(schwache Ableitung)\\
-	Sei $f \in L_{\text{loc}}^1(\mathcal{D})$. Dabei bezeichne $  L_{\text{loc}}^1(\mathcal{D}) $ den Raum der lokal integrierbaren Funktionen auf $ \mathcal{D} $. Wir sagen v besitzt eine schwache Ableitung zum Multiindex $\alpha$, falls eine Funktion $v \in L_{\text{loc}}^1$ existiert, mit 
+	Sei $f \in L_{\text{loc}}^1(\mathcal{D})$. Dabei bezeichne $  L_{\text{loc}}^1(\mathcal{D}) $ den Raum der lokal integrierbaren Funktionen auf $ \mathcal{D} $. Wir sagen $ f $ besitzt eine schwache Ableitung zum Multiindex $\alpha$, falls eine Funktion $v \in L_{\text{loc}}^1$ existiert, mit 
 		\begin{align*}
 			\int_{\mathcal{D}} f \partial^{\alpha} \phi \dx = (-1)^{|\alpha|} \int_{\mathcal{D}} v \phi \dx \qquad \forall \phi \in C_c^{\infty}(\mathcal{D})
 		\end{align*}

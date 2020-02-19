@@ -78,7 +78,7 @@ u           &= u_D               &\text{ ,} \text{auf } \Gamma_D \\
 \end{array}
 \end{cases} 
 \]
-Satz \ref{testfunktionen} sagt uns , dass wir in obiger Formulierung Gleichung (1) mit Testfunktionen $\phi \in H^1(\mathcal{D})$ und Gleichung (2) mit Testfunktionen $\psi \in H^1(\dive,\mathcal{D})$ multiplizieren und anschließend über $\mathcal{D}$ integrieren können und so eine äquivalente schwache Formulierung herleiten:
+Satz \ref{testfunktionen} sagt uns, dass wir in obiger Formulierung Gleichung (1) mit Testfunktionen $\phi \in H^1(\mathcal{D})$ und Gleichung (2) mit Testfunktionen $\psi \in H^1(\dive,\mathcal{D})$ multiplizieren und anschließend über $\mathcal{D}$ integrieren können und so eine äquivalente schwache Formulierung herleiten:
 \begin{align*}
 	\int_{\mathcal{D}} \dive(q) \phi \dx &= 0 \text{ für alle Testfunktionen } \phi : \mathcal{D} \to \R \\
 	\int_{\mathcal{D}} (q + \kappa \nabla u) \cdot \psi \dx &= 0 \text{ für alle Testfunktionen } \psi : \mathcal{D} \to \R^2
@@ -220,7 +220,7 @@ oder anders geschrieben
 \end{align*}
 
 Wir haben so eine diskrete gemischte Formulierung des Potentialströmungsproblems hergeleitet und können mit dieser aus gegebenen Rand- und Anfangswerten ein Flussvektorfeld $q$ erzeugen, welches der obigen Differentialgleichung genügt.
-Es handelt sich hierbei um das gemischte Finite Elemente Verfahren. In M++ selbst lösen wir das Potentialströmungsproblem durch eine Abwandlung dieses Verfahrens. Wir diskretisieren dazu eine äquivalente Formulierung von (sPS) und erhalten so mit dem hybriden Finite Elemente Verfahren die gleichen Ergebnisse, die auch der vorgestellte gemischte Ansatz liefern würde, bei besserer Effizienz und guter Parallelisierbarkeit. Da das Potentialströumgsproblem in dieser Thesis primär dazu genutzt werden soll, das Vektorfeld $q$ zu bestimmen, soll uns aus theoretischer Sicht aber obige Formulierung genügen und wir verweisen hinsichtlich der Lösung mit hybriden gemischten Finiten Elementen, neben einem kleinen, Überblick verschaffendem Abschnitt im Appendix \ref{Referenzzelle&Hyb}, auf die Literatur, wie etwa \cite{brezzi2012mixed} oder  \cite{roberts1991mixed}.
+Es handelt sich hierbei um das gemischte Finite Elemente Verfahren. In M++ selbst lösen wir das Potentialströmungsproblem durch eine Abwandlung dieses Verfahrens. Wir diskretisieren dazu eine äquivalente Formulierung von (sPS) und erhalten so mit dem hybriden Finite Elemente Verfahren die gleichen Ergebnisse, die auch der vorgestellte gemischte Ansatz liefern würde, bei besserer Effizienz und guter Parallelisierbarkeit. Da das Potentialströmungsproblem in dieser Thesis primär dazu genutzt werden soll, das Vektorfeld $q$ zu bestimmen, soll uns aus theoretischer Sicht aber obige Formulierung genügen und wir verweisen hinsichtlich der Lösung mit hybriden gemischten Finiten Elementen, neben einem kleinen, Überblick verschaffendem Abschnitt im Appendix \ref{Referenzzelle&Hyb}, auf die Literatur, wie etwa \cite{brezzi2012mixed} oder  \cite{roberts1991mixed}.
 
 
 

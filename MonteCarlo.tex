@@ -16,7 +16,7 @@ approximiert.
 	\[
 		I = \int_{[0,1]^d} f(u_1,\dots,u_d) \du_1\dots\du_d
 	\]
-	Wir können das Integral dann wie folgt als Erwartungswert ausdrücken:
+	Wir können das Integral dann wie folgt als Erwartungswert ausdrücken: \\
 	Sei $ X = f(U_1,\dots,U_d) $ ein 
 	Zufallsvektor, wobei $ U_1,\dots,U_d $ unabhängig und auf $ [0,1] $ gleichverteilt sind, d.h. jedes $ U_i $ besitzt als Dichte $ f_i(x) = \mathds{1}_{[0,1]}(x) $.
 	Dann ergibt sich so 
@@ -31,7 +31,7 @@ approximiert.
 		&X_2 = f(U_{d+1},\dots,U_{2d}), & &x_2 = f(u_{d+1},\dots,u_{2d}) \\
 		&X_i = f(U_{(i-1)d+1},\dots,U_{id}), & &x_2 = f(u_{(i-1)d+1},\dots,u_{id})
 	\end{align*}
-	Da $ (U_i)_{i \geq 1} $ eine Folge unabhängiger Zufallsvariablen ist, erhalten wir so unter der einzigen echten Voraussetzung, dass $ f $ messbar ist, nach Blockungslemma ebenfalls eine Folge unabhängiger Zufallsvariablen $ (X_i)_{i \geq 1} $.
+	Da $ (U_i)_{i \geq 1} $ eine Folge unabhängiger Zufallsvariablen ist, erhalten wir so unter der einzigen echten Voraussetzung, dass $ f $ messbar ist, nach dem Blockungslemma ebenfalls eine Folge unabhängiger Zufallsvariablen $ (X_i)_{i \geq 1} $.
 	Außerdem erhalten wir so für ein großes $ n \in \N $ eine gute Approximation von $ I $ durch:
 	\[
 		I = \mathbb{E}[X] \approx \frac{1}{n}(x_1+\dots+x_n) = \frac{1}{n} (f(u_1,\dots,u_d)+\dots+f(u_{(n-1)d+1},\dots,u_{nd}))
@@ -63,7 +63,7 @@ approximiert.
 	\]
 	wobei $ (x_i)_{i \geq 1} $ Realisierungen der Zufallsvariablen $ (X_i)_{i \geq 1} $ sind, welche unabhängig und identisch zu $ X $ verteilt seien.
 	
-	Betrachten wir nun wieder die Monte Carlo Methode in einem etwas abstrakteren Sinne ganz allgmein.
+	Betrachten wir nun wieder die Monte Carlo Methode in einem etwas abstrakteren Sinne ganz allgemein.
 	An der Stelle, an der wir letztlich die Realisierungen einer Zufallsvariable eingesetzt haben, also einen Erwartungswert durch $
 	\mathbb{E}[X] \approx \frac{1}{n}(x_1 + \dots x_n)
 	$ approximiert haben, haben wir stets gefordert, dass $ n $ groß ist. 
@@ -104,7 +104,7 @@ approximiert.
 	 	angeben. In der Praxis nehmen wir näherungsweise an, dass $ (\star) $ auch für ein festes $ n \in \N $ erfüllt ist, und entledigen uns so des Grenzwertes. Somit wird dann insbesondere die Wahl $ \hat{\mu} = \frac{1}{n}\sum_{i=1}^{n}(x_1,\dots,x_n) $ gerechtfertigt.
 	 \end{itemize}
  	Wir erhalten also (unter den eben erklärten Annahmen) eine Konvergenzrate des (wahrscheinlichen) Fehlers von $ \frac{\sigma}{\sqrt{n}} $. Dieses Resultat mag auf den ersten Blick relativ ernüchternd wirken, allerdings existieren Fälle, in denen solch eine langsame Methode die bestmögliche ist. \cite{lapeyre2003introduction} nennt hierzu zum Beispiel Integrale in mehr als $ 100 $ Dimensionen oder besonders schwere parabolische Differentialgleichungen. Denn anders als andere Verfahren, besonders deutlich wird dies erneut auf der Ebene der Quadratur (vgl Beispiel \ref{mlmcbeispiel}), sind Monte Carlo Methoden nicht vom sogenannten 'Curse of dimensionality' betroffen. Während bei anderen Quadraturformeln die Anzahl der benötigten Quadraturpunkte mit der Dimension im Exponent steigt, gelten obige Resultate unabhängig von der Dimension. Wir werden später Zufallsprobleme mit sehr hohen Dimensionen betrachten, da wir in einer Bodenschicht jede Zelle als einzelne Zufallsvariable betrachten werden. Deswegen ziehen wir die Monte Carlo Methode bzw. später die Multilevel Monte Carlo Methode einem anderen Ansatz zum Lösen stochastischer partieller Differentialgleichungen, wie etwa stochastische Finite Elemente, vor.
- 	Außerdem lohnt es sich zu erwähnen, dass wir im Falle der numerischen Integration - bis auf Integrierbarkeit und Messbarkeit - keine Voraussetzungen an die Regularität der zu Funktion $ f $ gestellt haben.\\
+ 	Außerdem lohnt es sich zu erwähnen, dass wir im Falle der numerischen Integration - bis auf Integrierbarkeit und Messbarkeit - keine Voraussetzungen an die Regularität der Funktion $ f $ gestellt haben.\\
  	Obiges Resultat legt außerdem nahe, dass es entscheidend für eine Aussage über die Konvergenz und Güte der Methode ist, die Standardabweichung $ \sigma $ zu kennen, oder zumindest über einen guten Schätzer für $ \sigma $ zu verfügen.
  	Falls uns $ \sigma $ bzw. $ \mathbb{V} $ nämlich sogar exakt bekannt ist, können wir die sogenannte Chebyshev Ungleichung \ref{ChebCheb} ausnutzen:
  	Da $ (X_i)_{i \in \N} $ eine u.i.v.-Folge mit Verteilung wie $ X $ ist, gilt nämlich mit den üblichen Rechenregeln für die Varianz (zu finden z.B. in \cite{brokate2016grundwissen} auf den Seiten 778 und 779)
