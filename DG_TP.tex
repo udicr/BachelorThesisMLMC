@@ -145,53 +145,57 @@ Dabei wurde zusätzlich ausgenutzt, dass es sich bei den Kanten um Nullmengen ha
  Sei nun $ G $ die Anzahl der Zellenfreiheitsgrade. Diese hängen direkt von der Wahl des Lösungs-/Testraumes $ \mathcal{Q}_h $, bzw. der Wahl von $ p $ ab. Die Wahl $ p=0 $ liefert gerade ein Finite Volumen Verfahren, $ G $ ist dann gerade $ 1 $ und die Zellenbasis $ \{\mu_K \}_{K \in \mathcal{T}}$ ist durch $ \mu_K =  \mathds{1}_{K} $ gegeben.
  Für $ p \geq 1 $ erhalten wir hingegen ein Discontinuous Galerkin Verfahren. Die Anzahl der Zellfreiheitsgrade einer Zelle $ K $ ist dann gerade durch $ G = p \cdot \abs{\mathcal{V}_K} $ (also $ p $-mal die Anzahl der Ecken von $ K $) gegeben.
  Die Zellenbasis hat in diesem Fall $ G \cdot \abs{\mathcal{T}} $ Elemente und für je $ G $ Basisfunktionen $ \mu $ gilt $ \supp(\mu) \subseteq \overline{K} $. \\
- Sei $ N = \abs{\mathcal{T}} $ und $ \mathcal{T} = \{K_1,\dots,K_{\abs{\mathcal{T}}} \} $ geordnet. Dann lässt sich die Zellenbasis $ \{ \mu_i \}_{i=1}^{G\abs{\mathcal{T}}} \subset \mathcal{Q}_h $ gemäß dem Träger der Basisfunktion zu $ \{ \mu_{K_j,i} \}_{j = 1,\dots,N ; i = 1,\dots,G } $ ordnen.
- Für jede feste Zelle $ K $ ergibt sich durch Einsetzen der zugehörigen Basisfunktionen $ \{ \mu_{i} \}_{i = 1,\dots,G } = \{ \mu_{K,i} \}_{i = 1,\dots,G }  $ : \\
+ Sei $ M = \abs{\mathcal{T}} $ die Anzahl der Zellen und $ \mathcal{T} = \{K_1,\dots,K_M \} $ geordnet. Dann lässt sich die Zellenbasis $ \{ \mu_i \}_{i=1}^{GM} \subset \mathcal{Q}_h $ gemäß dem Träger der Basisfunktion zu $ \{ \mu_{K_j,i} \}_{j = 1,\dots,M ; i = 1,\dots,G } $ ordnen.
+ Für jede feste Zelle $ K $ ergibt sich durch Einsetzen der zugehörigen Basisfunktionen $ \{ \mu_{K,i} \}_{i = 1,\dots,G }  $ : \\
 \begin{align*} 
-\left(\partial_t \rho_h, \mu_i  \right)_{K}  &= \bigg( \left(\Upsilon(\rho_h), \nabla\mu_i\right)_{K} - \sum_{\substack{F \in \mathcal{F}_{K} \\ F \not\subseteq \Gamma_{\text{in}}}} \left(\Upsilon^*(\rho_h) \cdot n^{K}, \mu_i \right)_{F} - \left(\rho_{\text{in}} q \cdot n^{K}, \mu_i \right)_{\partial K \cap \Gamma_{\text{in}}} \bigg) \\
+\left(\partial_t \rho_h, \mu_{K,i}  \right)_{K}  &= \bigg( \left(\Upsilon(\rho_h), \nabla\mu_{K,i}\right)_{K} - \sum_{\substack{F \in \mathcal{F}_{K} \\ F \not\subseteq \Gamma_{\text{in}}}} \left(\Upsilon^*(\rho_h) \cdot n^{K}, \mu_{K,i} \right)_{F} - \left(\rho_{\text{in}} q \cdot n^{K}, \mu_{K,i} \right)_{\partial K \cap \Gamma_{\text{in}}} \bigg) \\
 \end{align*}
-TODO
 Wir erhalten so folgende Darstellung:
 %\begin{align*}
 %\left(\partial_t \rho_h, \mu_i  \right)_{K_i} = \bigg( - \sum_{\substack{F \in \mathcal{F}_{K_i}, F \not\subseteq \Gamma_{\text{in}}\\ F \text{ mit }q \cdot n^K_{|F} > 0} } \left(\underbrace{\Upsilon^*(\rho_h)}_{= \rho_{h|K}\, q} \cdot n^{K_i}, \mu_i \right)_{F} - \sum_{\substack{F \in \mathcal{F}_{K_i}, F \not\subseteq \Gamma_{\text{in}}\\ F \text{ mit }q \cdot n^K_{|F} < 0} } \left(\underbrace{\Upsilon^*(\rho_h)}_{= \rho_{h|K'} \, q} \cdot n^{K_i}, \mu_i \right)_{F}\\
 % - \left(\rho_{\text{in}} q \cdot n^{K_i}, \mu_i \right)_{\partial K_i \cap \Gamma_{\text{in}}} \bigg)
 %\end{align*} 
 %%
-%\begin{align}
-%\label{DarstellungvorLGS}
-%\underbrace{\left(\partial_t \rho_h, \mu_i  \right)_{K}}_{(\ref{DarstellungvorLGS}.1)} = 
-%\underbrace{ \left(\Upsilon(\rho_h), \nabla\mu_i\right)_{K} -  \sum_{F \in \mathcal{F}_{K} , F \not \subseteq \Gamma_{\text{in}}}\left(\Upsilon^{\star}(\rho_h)\cdot n^{K},\mu_i\big)_F \right)}_{(\ref{DarstellungvorLGS}.2)} \underbrace{- \left(\rho_{\text{in}}q\cdot n^{K},\mu_i \right)_{\partial K \cap \Gamma_{\text{in}}}}_{(\ref{DarstellungvorLGS}.3)}
-%\end{align}
-%%
-%Zusammen mit der Basisdarstellung von $ \rho_h $ in $\{\mu_i  \}_{i=1}^N$, $ \rho_h = \sum_{i=1}^{N} 
-%\underline{\rho}[i] \; \mu_i$, und \\
-%$ \Upsilon^{\star}(\rho_h) = 
-%\begin{cases} 
-%\rho_h|_K \ ,\text{falls } q\cdot n^K|_F \geq 0\\
-%\rho_{h}|_{K'} \ , \text{falls } q\cdot n^K|_F < 0
-%\end{cases} $ können wir \ref{DarstellungvorLGS} in eine gewöhnliche Differentialgleichung erster Ordnung umformulieren. 
-%Dazu klammern wir jeweils $ \underline{\rho} $ aus und definieren 
-%$ \text{mithilfe von (\ref{DarstellungvorLGS}.1) die Massenmatrix } \underline{M}\in \R^{N \times N} $
-%\begin{align*}
-% &\underline{M}[K,K'] \coloneqq \begin{dcases}
-%\int_K \abs{\mu_K}^2 \dx & \text{, für } K = K' \\
-%0 &\text{, sonst}
-%\end{dcases} \\
-%&\text{mit (\ref{DarstellungvorLGS}.2) die Flussmatrix } \underline{A}\in \R^{N \times N} \\ & \underline{A}[K,K'] \coloneqq \begin{dcases}
-%\int_K  \nabla\mu_i^2 \dx - \sum_{\substack{F\in \mathcal{F}_K \\ F \text{ mit } q\cdot n^K_{|F} > 0}} \int_F \mu_K^2 q \cdot n^K \da& \text{, für } K = K' \\
-%\int_K \Upsilon(\rho_h), \nabla\mu_i \dx - \int_F \mu_K \mu_{K'} q \cdot n^K \da &\text{, für } q \cdot n^K< 0 \\
-%& \text{ und } \overline{F} = \partial K \cap \partial K'\\
-%\int_K \Upsilon(\rho_h), \nabla\mu_i \dx &\text{, sonst}
-%\end{dcases} \\
-%&\text{und mit (\ref{DarstellungvorLGS}.3) den Lastvektor } \underline{b}\in \R^{N} \\ &\underline{b}[K] \coloneqq \int_{\partial K \cap \Gamma_{\text{in}}} \rho_{\text{in}} q \cdot n \da
-%\end{align*}
-So ergibt sich die Differentialgleichung
+\begin{align}
+\label{DarstellungvorLGS}
+\underbrace{\left(\partial_t \rho_h, \mu_{K,i}  \right)_{K}}_{\eqqcolon M_K(\partial_t \rho_{h}, \mu_{K,i})} = 
+\underbrace{ \left(\Upsilon(\rho_h), \nabla\mu_{K,i}\right)_{K} -  \sum_{F \in \mathcal{F}_{K} , F \not \subseteq \Gamma_{\text{in}}}\left(\Upsilon^{\star}(\rho_h)\cdot n^{K},\mu_{K,i}\big)_F \right)}_{\eqqcolon A_K(\rho_{h},\mu_{K,i})} \underbrace{- \left(\rho_{\text{in}}q\cdot n^{K},\mu_{K,i} \right)_{\partial K \cap \Gamma_{\text{in}}}}_{b_K(\mu_{K,i})}
+\end{align}
+%
+Zusammen mit der Basisdarstellung von $ \rho_h $ in $\bigcup_{K \in \mathcal{T}}\{\mu_{K,i}  \}_{i=1}^G$, also 
+\[ \rho_h = \underline{\rho} \cdot (\mu_{K_1,1},\dots,\mu_{K_1,G},\mu_{K_2,1}\dots,\mu_{K_N,1},\dots,\mu_{K_N,G})^T\]
+mit $ \underline{\rho}\in \R^{MG} $ und 
+$ \Upsilon^{\star}(\rho_h) = 
+\begin{cases} 
+\rho_h|_K \ ,\text{falls } q\cdot n^K|_F \geq 0\\
+\rho_{h}|_{K'} \ , \text{falls } q\cdot n^K|_F < 0
+\end{cases} 
+$
+ können wir \ref{DarstellungvorLGS} in eine gewöhnliche Differentialgleichung erster Ordnung umformulieren. 
+% s
+%%Dazu klammern wir jeweils $ \underline{\rho} $ aus und definieren 
+%%$ \text{mithilfe von (\ref{DarstellungvorLGS}.1) die Massenmatrix } \underline{M}\in \R^{N \times N} $
+%%\begin{align*}
+%% &\underline{M}[K,K'] \coloneqq \begin{dcases}
+%%\int_K \abs{\mu_K}^2 \dx & \text{, für } K = K' \\
+%%0 &\text{, sonst}
+%%\end{dcases} \\
+%%&\text{mit (\ref{DarstellungvorLGS}.2) die Flussmatrix } \underline{A}\in \R^{N \times N} \\ & \underline{A}[K,K'] \coloneqq \begin{dcases}
+%%\int_K  \nabla\mu_i^2 \dx - \sum_{\substack{F\in \mathcal{F}_K \\ F \text{ mit } q\cdot n^K_{|F} > 0}} \int_F \mu_K^2 q \cdot n^K \da& \text{, für } K = K' \\
+%%\int_K \Upsilon(\rho_h), \nabla\mu_i \dx - \int_F \mu_K \mu_{K'} q \cdot n^K \da &\text{, für } q \cdot n^K< 0 \\
+%%& \text{ und } \overline{F} = \partial K \cap \partial K'\\
+%%\int_K \Upsilon(\rho_h), \nabla\mu_i \dx &\text{, sonst}
+%%\end{dcases} \\
+%%&\text{und mit (\ref{DarstellungvorLGS}.3) den Lastvektor } \underline{b}\in \R^{N} \\ &\underline{b}[K] \coloneqq \int_{\partial K \cap \Gamma_{\text{in}}} \rho_{\text{in}} q \cdot n \da
+%%\end{align*}
+So ergibt sich eine Differentialgleichung der Form
 \begin{align*}
 \begin{cases}
 \underline{M} \partial_t \underline{\rho}(t) = \underline{A} \underline{\rho}(t) + \underline{b}(t) \\
 \underline{\rho}(0) = \underline{\rho_0}
 \end{cases}\\
 \end{align*}
+mit $ \underline{M},\underline{A} \in \R^{MG\times MG} $ und $ b: \mathbb{T} \to \R^{MG} $. Wir nennen  $ \underline{M} $ Massematrix, $ \underline{A} $ Flussmatrix und $ \underline{b} $ Lastvektor.
 Da dies nun eine gewöhnliche Differentialgleichung ist, können wir die Lösung 
 \begin{align}
  \label{semidisklsg}
@@ -201,7 +205,7 @@ explizit angeben.
 Es handelt sich hierbei aber immer noch um eine semidiskrete Formulierung. 
 Wir wollen deshalb zuletzt noch auf die Herleitung der Zeitintegratoren eingehen. Diese nutzen wir, um unter Verwendung der oben hergeleiteten Semidiskretisierung die numerische Lösung $ \underline{\rho} $ sowohl orts- al auch zeitdiskret zu berechnen. Der Ansatz leitet sich hierbei direkt aus dem Resultat (\ref{semidisklsg}) ab und besteht aus der 
 Integration der Differentialgleichung $\underline{M} \partial_t \underline{\rho} = \underline{A} \underline{\rho} + \underline{b}$ über die Zeit $t$ im Intervall $[t_i, t_{i+1}]$.
-Dabei ist $t_i = i \delta t$. Hiermit folgt:
+Dabei ist $t_i = i \Delta t$. Hiermit folgt:
 \begin{align*}
 \underline{M}\underline{\rho}(t_{i+1}) - \underline{M}\underline{\rho}(t_i) = \int_{t_i}^{t_{i+1}}
 \underline{M} \partial_t \underline{\rho}(t) dt =\int_{t_i}^{t_{i+1}} \underline{A} \underline{\rho}(t) + \underline{b}(t) dt.
@@ -232,7 +236,7 @@ ergibt sich z.B. das implizite Euler Verfahren
 Ein weiteres Verfahren dieser Art, welches wir an dieser Stelle verwenden werden, ist die implizite Mittelpunktsregel (der Übersicht wegen für $\underline{b} \equiv 0$):
 \begin{align*}
 \underline{\rho}(t_{i+1}) = \underline{\rho}(t_{i}) +
-\delta t \underline{M}^{-1} (
+\Delta t \underline{M}^{-1} (
 \underline{A} 
 \frac{1}{2}(\underline{\rho}(t_{i}) +
 \underline{\rho}(t_{i+1}) )
@@ -310,7 +314,7 @@ Es gilt an dieser Stelle außerdem:
 	\int_{\mathcal{D} \times \mathbb{T}}  
 	\dive(\rho &q ) \phi\; \mathrm{d} (x,t) = \int_{\mathbb{T}} \int_{\mathcal{D}} \dive(\rho q ) \phi \dx \dt \\
 	&= \int_{\mathbb{T}} \big( - \int_{\mathcal{D}} \rho q \nabla \phi \dx + \int_{\partial \mathcal{D}} \rho q \cdot n \ \phi \da \big)  \dt \\
-	&= - \int_{\mathcal{D} \times \mathbb{T}} \rho q \nabla \phi) \; \mathrm{d} (x,t) + \int_{\mathbb{T}} \int_{\partial \mathcal{D}} \rho q \cdot n \phi \da \dt 
+	&= - \int_{\mathcal{D} \times \mathbb{T}} \rho q \nabla \phi \; \mathrm{d} (x,t) + \int_{\mathbb{T}} \int_{\partial \mathcal{D}} \rho q \cdot n \phi \da \dt 
 	\end{align*}
 	Wenn $ \rho  $ eine klassische Lösung ist, dann existieren insbesondere $ \partial_t \rho  $ und $ \dive(\rho q) $ und obige Umformungen sind zulässig, d.h. $ \rho $ erfüllt auch die schwache Formulierung. \\
 	Ist $ \rho $ hingegen eine schwache Lösung die zusätzlich in $ C^2(\mathcal{D}\times\mathbb{T},\R) $ liegt, so lassen sich alle oben durchgeführten Umformungen auch in die andere Richtung durchführen und wir erhalten: 
@@ -333,10 +337,10 @@ Dann löst $ \rho_h \in Q_h $ die Semidiskretisierung \eqref{Semidiskretisierung
 
 \subsubsection{Konsistenz}
 	 Abschnitt \ref{Diskretisierung} hat sich damit beschäftigt, aus dem ursprünglich unendlich dimensionalen Problem letztendlich eine volldiskretisierte Verfahrensvorschrift in einem endlichen Ansatzraum herzuleiten. Fragen wir nun nach der Konsistenz des Verfahrens, stellen wir damit zugleich die Frage, ob wir immer noch die richtige Gleichung lösen. Genauer heißt das Verfahren genau dann konsistent, wenn eine analytische Lösung $ \rho $ des ursprünglichen Problems (dTP) auch die hergeleitete Verfahrensvorschrift erfüllt. 
-	 Wir betrachten zunächst etwas abstrakter den formalen Prozess der Diskretisierung einer Gleichung \[ B \rho=0 \  \].
+	 Wir betrachten zunächst etwas abstrakter den formalen Prozess der Diskretisierung einer Gleichung \[ B \rho=0 \ .  \]
 	 Dabei werde das abstrakte Problem $ B \rho=0 $ mit einem Operator $ B: E \to F $ mithilfe der Abbildungen $ L_1,L_2,\Phi_h $ diskretisiert.
 	 Zu einer Lösung der abstrakten Gleichung $ z \in E $ existiere genau ein $ z_h \in E_h$ und der lokale Diskretisierungsfehler sei gegeben durch $
-	 l_h \coloneqq B_h L_1(z) = \phi_h(B) L_1(z) \in F_h
+	 l_h \coloneqq B_h L_1(z) = \phi_h(B) L_1(z) \in F_h 
 	 $. Diese Situation kann durch folgendes Diagramm verdeutlicht werden:
 	 \begin{figure}[H]
 	 	\centering
@@ -353,7 +357,7 @@ Dann löst $ \rho_h \in Q_h $ die Semidiskretisierung \eqref{Semidiskretisierung
 \subsubsection{Galerkin Orthogonalität}
 Eine direkte Folgerung aus der Konsistenz und $ (\star) $ stellt die Galerkin Orthogonalität dar. Für eine Lösung der Semidiskretisierung $ \rho_h $ und eine analytische Lösung im klassischen Sinne $ \rho^{\star} $ gilt dann nämlich:
 \[
- B_h(\rho^{\star}-\rho_h,\phi_h = 0) \quad \forall \phi_h \in \mathcal{Q}_h
+ B_h(\rho^{\star}-\rho_h,\phi_h ) = 0 \quad \forall \phi_h \in \mathcal{Q}_h
 \]
 \subsubsection{Stabilität und Konvergenz}
 Die Stabilität ist bei der numerischen Lösung der Transportgleichung einer der wesentlichen Gründe, weswegen wir das Discontinuous Galerkin Verfahren einem Standard-Finite-Elemente-Ansatz vorziehen. Es zeigt sich nämlich, dass ein normales Finite Elemente Verfahren, wie wir es zuvor bei der Lösung des Potentialströmungsproblems genutzt haben, beim Transportproblem instabil ist. Grund dafür ist, dass $ \lVert q \cdot \nabla \rho_h \rVert $ beliebig groß werden kann. Für die DG-Diskretisierung mit upwind flux kann hingegen gezeigt werden, dass die Lösung des Transportproblems stabil ist. Auf eine theoretische Stabilitätsanalyse möchten wir aber an dieser Stelle verzichten und verweisen z.B. auf \cite{Har08b} oder \cite{ern2004theory}. Wie bereits an früherer Stelle erwähnt findet sich in \cite{Har08b} auch eine grundlegende numerische Analyse des Discontinuous Galerkin Verfahren angewandt auf die stationäre lineare Transportgleichung.
