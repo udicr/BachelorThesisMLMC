@@ -1,16 +1,26 @@
 % !TeX root = bachelorarbeit.tex
 
-TODO (wird zu einem späteren Zeitpunkt eingefügt)
-%TODO(Einleitung wird zu einem späterem Zeitpunkt noch ausgebaut und nachgebessert mehr cites mehr forschung mehr inhalt)
-%
-%
+\section{Einleitung}
+\begin{quote}
+\textit{Monte Carlo methods are a very general and useful approach for the estimation of expectations arising from stochastic simulation. However, they can be computationally expensive, particularly when the cost of generating individual stochastic samples is very high, as in the case of stochastic PDEs. \\ Multilevel Monte Carlo is a recently developed approach which greatly reduces the computational cost by performing most simulations with low accuracy at a correspondingly low cost, with relatively few simulations being performed at high accuracy and a high cost.}  \\
+\rightline{Michael B. Giles in \cite{giles_2015}. \, \qquad \qquad }
+\end{quote}
+Eine der bekanntesten Anwendungen der Monte Carlo Methode ist die Monte Carlo Quadratur, welche zur numerischen Integration genutzt werden kann. 
+Wir wollen die sogenannte Multilevel Monte Carlo Methode dazu nutzen eine stochastische partielle Differentialgleichung zu lösen. 
+Genauer betrachten wir eine stochastisch beeinflusste Zielgröße $ Q $ der Lösung der Differentialgleichung und fragen uns, welchen Wert $ \mathbb{E}[Q] $ nimmt $ Q $ im Mittel an?
+So entstehende Problemstellungen fallen in das Gebiet der Uncertainty Quantification, einem 'Zusammentreffen der Wahrscheinlichkeitstheorie, Numerik, Statistik und der echten Welt'  \cite{sullivan2015introduction}. Dieses noch recht junge Feld der Mathematik, befasst sich \\
+===TODO===\\
+Wie bereits \cite  betrachten wir dabei eine parabolische Differentialgleichung, in unserem Fall die lineare Transportgleichung. Dabei nutzen wir zur numerischen Lösung der Differentialgleichung ein Discontinuous Galerkin Verfahren (DGV) im Ort und kombinieren diese zunächst semidiskrete Lösung mit einem geeigneten Zeitschrittverfahren. Aufgrund der Wahl eines Runge-Kutta Verfahrens erhalten wir somit ein Runge-Kutta Discontinuos Galerkin Verfahrens. Mit dieser Verfahrensart haben sich auch bereits \cite beschäftigt. 
+Um die eigentliche Idee der Multilevel Monte Carlo Methode in den Vordergrund zu rücken, wollen wir diese aber auch wie in \cite{heinrich2001multilevel} am Beispiel der numerischen Integration betrachten.
+Dabei wollen wir insbesondere auf die Unterschiede zu und Vorteile gegenüber der Standard Monte Carlo Methode hervorheben, welche im Kern bereits durch obiges Zitat zusammengefasst sind:
+
 %Monte Carlo Methoden sind weit verbreitet und finden in verschiedenen Bereichen der Mathematik ihre Anwendung.
 %Sie dienen dabei als statistische Schätzer für Erwartungswerte. 
 %Eine der bekanntesten Anwendungen ist wohl die Monte Carlo Quadratur, welche zur numerischen Integration genutzt werden kann.
 % 
 %Nachdem Giles (cite ...) ... gewöhnliche DGL ... kam ... für SPDE's zu nutzen ...cite .
 %
-%So entstehende Problemstellungen fallen in das Gebiet der Uncertainty Quantification, einem 'Zusammentreffen der Wahrscheinlichkeitstheorie, Numerik, Statistik und der echten Welt' \cite{sullivan2015introduction}.
+%
 %Allerdings besitzt die Monte Carlo Methode einen entscheidenden Nachteil, will man sie im Zusammenhang unsicherer Ausgangsdaten für die Lösung von partiellen Differentialgleichungen nutzen, sie konvergiert im Normalfall relativ langsam und das numerische Lösen von PDE's ist oft sehr aufwendig.
 %Es werden also unter Umständen sehr viele, sehr teure Zufallssamples benötigt, um ein vernünftiges Ergebnis zu erhalten. \newline
 %Diese Thesis soll sich daher mit der Multilevel Monte Carlo Methode (im Folgenden MLMC Methode genannt) beschäftigen, welche an die Monte Carlo Methode angelehnt ist, aber durch die geschickte Auswertung der (Zufalls-Samples) deutliche Effizienzvorteile gegenüber der Standard Monte Carlo Methode besitzt.
