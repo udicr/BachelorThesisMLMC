@@ -28,7 +28,7 @@ Visuell kann diese Anfangskonzentration folgendermaßen dargestellt werden:
 \begin{figure}[H]
 	\centering
 	\captionabove{Anfangsbedingung $ \rho_0 $}
-	\includegraphics[width=0.55\textwidth]{anfangsbedingung.png} 
+	\includegraphics[width=0.65\textwidth]{plots/anfangsbedingung.png} 
 \end{figure}
 Der Maximalwert ist dabei so gewählt, dass die Gesamtmasse der Anfangsbedingung gerade den Wert $ 1 $ ergibt.\\
 Uns interessiert nun folgende Fragestellung: \\
@@ -44,8 +44,8 @@ Wir können auch den das lognormal verteilte Zufallsfeld und das daraus resultie
 \begin{figure}[H]
 	\centering
 	\captionabove{Visualisierung der stochastischen Modellierung}
-	\subfigure[Streamlines des entstehenden Flussvektorfeldes]{\includegraphics[width=0.423\textwidth]{flussvektorfeld.png}}
-	\subfigure[lognormal verteiltes Zufallsfeld mit obigen Parametern]{\includegraphics[width=0.54\textwidth]{perm.png}}
+	\subfigure[Streamlines des entstehenden Flussvektorfeldes]{\includegraphics[width=0.49\textwidth]{plots/permquiv.png}}
+	\subfigure[lognormal verteiltes Zufallsfeld mit obigen Parametern]{\includegraphics[width=0.49\textwidth]{plots/perm.png}}
 	
 \end{figure}
 
@@ -68,9 +68,9 @@ In M++ entspricht Level $ l_0 $ bei der gewählten Diskretisierung 'UnitSquare' 
 \begin{figure}[H]
 	\centering
 	\captionabove{Zerlegung des Gebietes $ \mathcal{D} $ in Finite Elemente}
-	\subfigure[$l_0$ (256 Zellen)]{\includegraphics[width=0.3\textwidth]{zerlegung4.png}}
-	\subfigure[$l_1$ (1024 Zellen)]{\includegraphics[width=0.3\textwidth]{zerlegung5.png}}
-	\subfigure[$l_2$ (4096 Zellen)]{\includegraphics[width=0.3\textwidth]{zerlegung6.png}}
+	\subfigure[$l_0$ (256 Zellen)]{\includegraphics[width=0.31\textwidth]{plots/mesh4.png}}
+	\subfigure[$l_1$ (1024 Zellen)]{\includegraphics[width=0.31\textwidth]{plots/mesh5.png}}
+	\subfigure[$l_2$ (4096 Zellen)]{\includegraphics[width=0.31\textwidth]{plots/mesh6.png}}
 \end{figure}
 Die Schrittweite für die Diskretisierung in der Zeit setzen wir auf $ \Delta t = \frac{h}{8} $. Diese Wahl ist besonders hinsichtlich der Stabilität des Verfahrens wichtig. Bei zu kleinen Zeitschrittweiten treten Oszillationen in der Lösung auf. Obige Wahl hat sich für unser Problem als hinreichend erwiesen.
 Entsprechend unserer Fragestellung können wir nun das betrachtete Zielfunktional formulieren:
