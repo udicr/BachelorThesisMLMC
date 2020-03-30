@@ -11,8 +11,8 @@ Wir setzen dazu
 	\item $ \rho_0(x) = 
 	\begin{cases*}
 		\begin{array}{llll}
-			&c & , &\text{für }x \in B \coloneqq [0.2,0.8] \times [0.7 ,0.8]  \\
-			&c\exp \left(\frac{\abs{\frac{\text{dist}(x,B)}{0.15}}^2}{\abs{\frac{\text{dist}(x,B)}{0.15}}^2-1}\right) &, &\text{falls } \text{dist}(x,B)>0.15 \\
+			&c & , &\text{für }x \in B \coloneqq [0.2,0.8] \times [0.775 ,0.825]  \\
+			&c\exp \left(\frac{ \left| \frac{\text{dist}(x,B)}{0.12} \right| ^2}{\left|\frac{\text{dist}(x,B)}{0.12}\right|^2-1}\right) &, &\text{falls } \text{dist}(x,B)>0.12 \\
 			&0 &, & \text{sonst}
 		\end{array}
 	\end{cases*}$ \\
@@ -82,7 +82,84 @@ Wir suchen gemäß unserer Fragestellung also gerade nach $ \mathbb{E}[Q] $.
 	Die Wahl $ T=1 $ ist an dieser Stelle gerade so getroffen, dass das der Fragestellung entsprechende Zielfunktional in gewisser Weise interessant ist. 
 	Genauer ist $ T $ so gewählt, dass die im Algorithmus auftretende Varianz $ \mathbb{V}[Y_l] $ 'groß' ausfällt. Ist $ T $ nämlich zu groß gewählt befindet sich für fast alle $ \omega \in \Omega $ kaum noch Masse im Gebiet und die erwartete Endmasse ist $ \mathbb{E}[Q] = 0 $, während für sehr kleine $ T $ Masse zum Zeitpunkt $ T $ für fast alle $ \omega \in \Omega $ mit der Anfangsmasse übereinstimmt und somit $ \mathbb{E}[Q] = 1$. Für $ T = 1 $ erhalten wir für verschiedene $ \omega \in \Omega $ recht unterschiedliche Ergebnisse, da die Masse je nach Beschaffenheit des Flussvektorfeldes schneller oder langsamer durch das Gebiet transportiert wird. 
 \end{Bemerkung2}
+Einen guten kompakten Überblick über ein einzelnes Sample bietet folgende Darstellung:
+\begin{figure}[H]
+	\centering
+	\captionabove{Verlauf der Konzentration eines Beispielsamples auf Level $ l_3=7 $}
+	\includegraphics[width=\textwidth]{plots/solution3.png} 
+\end{figure}
+Die Abbildung links zeigt die Anfangsbedingung zum Zeitpunkt $ t=0 $, in der Mitte ist ein Zwischenschritt der Lösung (zum Zeitpunkt $ t=0.5 $ zu sehen) sowie das zum Sample zugehörige Flussvektorfeld zu sehen. Wir wollen an dieser Stelle noch einmal darauf hinweisen, dass wir das Flussvektorfeld als Lösung eines statischen Problems erhalten. Insbesondere ist also das Flussvektorfeld nicht zeitabhängig und könnte gleichermaßen auch bei Anfangs- und Endzustand eingezeichnet werden. 
+Wir berechnen diesen Erwartungswert nun gemäß Abschnitt 6 mit der Multilevel Monte Carlo Methode für die Startwerte $ l_0 = 4, L_0 = 7, N_0 = \{n_4,\dots,n_7\} = \{16,8,4,2\} $und $ \epsilon \in \{0.01,0.005,0.003,0.001\} $.
+\subsubsection{Verarbeiten und Darstellen von Vtk-Dateien}
+In M++ werden zur Speicherung von Gitterdaten sogenannte Vtk-Dateien genutzt. Alle obigen sowie noch folgende Schaubilder wurden aus diesen Vtk-Dateien generiert. Dafür wurden im Rahmen der Thesis einzelne Module in Python implementiert, welche den Umgang mit diesen Vtk-Dateien erleichtern. 
+\begin{figure}[H]
+	\centering
+	\captionabove{Überblick über implementierte Module}
+	\includegraphics[width=\textwidth]{plots/klassenuml2.png} 
+\end{figure}
+Wie oben anhand der Klassenstrukturen dargestellt, können die Module in 6 Gruppen unterteilt werden. Gruppe 1 ermöglicht auf Grundlage des externen Moduls 'vtk' \cite{sitevtk} das Lesen von Vtk Dateien. Insbesondere ist es Möglich die Gitterdaten in sogenannten 'numpy-Arrays' zu exportieren. 
+Gruppe 2 implementiert ein Interface zum Erstellen verschiedener Schaubilder aus den eingelesen Vtk Dateien. Im später beigefügten Notebook und den entsprechenden Skripten im Hintergrund sind einige exemplarische Beispiele vorhanden. Außerdem wurde alle Schaubilder dieser Thesis über dieses Interface erstellt.
+In Gruppe 3 werden die eingelesenen Arrays wieder als 'UnstructuredMesh' aufgefasst. Die Lösungen des Transportproblems selbst besteht aufgrund der Zeitabhängigkeit aus mehreren Gittern. Deshalb fassen wir diese als 'UnstructuredMultiScalarMesh' auf. Das Flussvektorfeld hingegen trägt als Daten Vektoren in jeder Zelle und wird deshalb als 'UnstructuredVectorMesh' betrachtet. Diese objektorientierte Unterteilung zieht sich bis auf Gruppe 2 durch alle Gruppen und ermöglicht den Umgang mit einzelnen Gittern und Skalaren, beispielsweise die Permeabilität des Bodens, mit einzelnen Gittern und Vektordaten, wie etwa das Flussvektorfeld, oder aber einer ganzen Gruppe von Gittern mit Skalaren, womit sich die zeitabhängige Lösung darstellen lässt. Wir können so die Lösungen der Samples als Gitterdaten auffassen und bearbeiten. Insbesondere wurden beispielsweise die Addition und Subtraktion von Gitterdaten implementiert, welche für Generierung von weiteren Gittern nach Vorbild der im Experiment durchgeführten Monte Carlo und Multilevel Monte Carlo Methoden unabdingbar sind. Unter anderem wurde dafür auch eine 'Upscale'-Methode entworfen, welche es ermöglicht unterschiedlich feine Quadratgitter miteinander zu verrechnen.
+Gruppe 4 und 5 kombinieren die von M++ während des Experiments abgespeicherten Vtk Dateien wie oben beschrieben. Im Folgenden nennen wir die so (in Form von Gitterdaten) erzeugte Lösung auch 'Mlmc-Lösung'.
+Gruppe 6 dient dem Testen der anderen Gruppen in der Form sogenannter 'UnitTests'.
+https://github.com/udicr/VtkTools4UnstructeredMeshes.git
 
 \subsection{Ergebnisse}
+\subsubsection{Einige Beispielsamples}
+\begin{figure}[H]
+	\centering
+	\captionabove{Verlauf der Konzentration eines Samples auf Level $ l_0 = 4 $}
+	\includegraphics[width=\textwidth]{plots/sample_4_1.png} 
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\captionabove{Verlauf der Konzentration eines Samples auf Level $ l_1 = 5 $ und des zugehörigen Vergleichssamples auf Level $ l_0 = 4 $}
+	\includegraphics[width=\textwidth]{plots/sample_5_1.png} 
+	\includegraphics[width=\textwidth]{plots/sample_coarse_5_1.png} 
+\end{figure}
+An diesem direkten Vergleich sieht man sehr schön, dass sich die beiden Vergleichssamples zwar im Level unterscheiden, aber sich auf dasselbe Zufallsereignis $ \omega_i $ beziehen. Noch offensichtlicher wird das, je höher das aktuell betrachtete Level ist:
+\begin{figure}[H]
+	\centering
+	\captionabove{Verlauf der Konzentration eines Samples auf Level $ l_2 = 6 $ und des zugehörigen Vergleichssamples auf Level $ l_1 = 5 $}
+	\includegraphics[width=\textwidth]{plots/sample_6_0.png} 
+	\includegraphics[width=\textwidth]{plots/sample_coarse_6_0.png} 
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\captionabove{Verlauf der Konzentration eines Samples auf Level $ l_3 = 7 $ und des zugehörigen Vergleichssamples auf Level $ l_2 = 6 $}
+	\includegraphics[width=\textwidth]{plots/sample_7_0.png} 
+	\includegraphics[width=\textwidth]{plots/sample_coarse_7_0.png} 
+\end{figure}
 
+\subsubsection{$ \epsilon=0.01 $}
+\subsubsection{$ \epsilon=0.005 $}
+\subsubsection{$ \epsilon=0.003 $}
+\subsubsection{$ \epsilon=0.001 $}
+
+
+ l     M    E[Qf-Qc]       E[Qf]    V[Qf-Qc]       V[Qf]    kurtosis        cost
+--------------------------------------------------------------------------------
+4 60343     0.26179     0.26179   0.0178733   0.0178733     2.79784      294912
+5  2422 0.000190291     0.25248 0.000231646   0.0198675     4.85386  2.3593e+06
+6   178 0.000974837    0.243871 9.76543e-06   0.0200241     3.38187 1.88744e+07
+7    12 0.000199838    0.304479 3.18839e-07   0.0337465      5.9948 1.50995e+08
+8     2 0.000113336   0.0899359 1.30611e-08  0.00672331     32.3407 1.20796e+09
+9     2  3.5332e-06    0.482761       1e-10 0.000475294    0.178766 1.07374e+09
+--------------------------------------------------------------------------------
+
+eps       value   MLMC cost             l                                   M
+--------------------------------------------------------------------------------
+0.001    0.263271 3.32451e+10   4 5 6 7 8 9               60343 2422 178 12 2 2
+--------------------------------------------------------------------------------
+alpha: 1.460672 beta: 5.183324 gamma: 2.366015
+
+alpha   =    1.46067   (exponent for the weak convergence of the FEM)
+beta   =    5.18332   (exponent for the decay of the variance)
+gamma   =    2.36601   (exponent for the growth of the cost)
+numErr  = 6.95372e-05   (estimated numerical error)
+statErr = 0.000692712   (estimated statistical error)
+error   = 0.000762249   (estimated total error)
+end program after 54:11:02.00 hours on 32 procs at Sun Mar 29 23:56:21 2020
+
+\subsection{Notebook}
 
