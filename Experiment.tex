@@ -105,6 +105,8 @@ Gruppe 6 dient dem Testen der anderen Gruppen in der Form sogenannter 'UnitTests
 https://github.com/udicr/VtkTools4UnstructeredMeshes.git
 
 \subsection{Ergebnisse}
+
+\subsubsection{Konvergenztest}
 \subsubsection{Einige Beispielsamples}
 \begin{figure}[H]
 	\centering
@@ -130,36 +132,67 @@ An diesem direkten Vergleich sieht man sehr schön, dass sich die beiden Verglei
 	\includegraphics[width=\textwidth]{plots/sample_7_0.png} 
 	\includegraphics[width=\textwidth]{plots/sample_coarse_7_0.png} 
 \end{figure}
-
 \subsubsection{$ \epsilon=0.01 $}
 \subsubsection{$ \epsilon=0.005 $}
 \subsubsection{$ \epsilon=0.003 $}
 \subsubsection{$ \epsilon=0.001 $}
+\newlength\q
+\setlength\q{\dimexpr .125\textwidth -2.0\tabcolsep}
+\noindent\begin{tabular}{|p{0.15\q}|p{0.55\q}|p{1.3\q}|p{1.05\q}|p{1.35\q}|p{1.25\q}|p{\q}|p{1.35\q}|}
+\hline
+$ l $   &  $ M $  &  $ \mathbb{E}[Q_f-Q_c] $  &   $ \mathbb{E}[Q_f] $ &  $ \mathbb{V}[Q_f-Q_c] $   &   $ \mathbb{V}[Q_f] $ &  kurtosis    &    cost\\
+\hline
+4 & 60343 &    0.26179  &  0.26179  & 0.0178733   &  0.0178733   &  2.79784 &  294912    \\
+5 & 2422  & 0.000190291 &   0.25248 & 0.000231646 &  0.0198675   &  4.85386 & 2.3593e+06 \\
+6 & 178   & 0.000974837 & 0.243871  & 9.76543e-06 &  0.0200241   &  3.38187 & 1.88744e+07\\
+7 & 12    & 0.000199838 & 0.304479  & 3.18839e-07 &  0.0337465   &   5.9948 & 1.50995e+08\\
+8 & 2     & 0.000113336 & 0.0899359 & 1.30611e-08 & 0.00672331   &  32.3407 & 1.20796e+09\\
+9 & 2     & 3.5332e-06  & 0.482761  &   1e-10     & 0.000475294  & 0.178766 & 1.07374e+09\\
+\hline
+\hline
+ \multicolumn{2}{|c|}{$ \mathbb{E}[Q] $ }  &  \multicolumn{2}{c|}{MLMC Cost}   & \multicolumn{2}{c|}{$ l $}  &    \multicolumn{2}{c|}{$ M$} \\
+\hline
+ \multicolumn{2}{|c|}{0.263271} & \multicolumn{2}{c|}{3.32451e+10 } &  \multicolumn{2}{c|}{ 4 5 6 7 8 9  }     & \multicolumn{2}{c|}{60343 2422 178 12 2 2}    \\
+\hline 
+\hline
+\end{tabular}\\
+%\begin{tabular}{|c|c|c|c|c|c|c|c|}
+%	\hline
+%	$ l $   &  $ M $  &  $ \mathbb{E}[Q_f-Q_c] $  &   $ \mathbb{E}[Q_f] $ &  $ \mathbb{V}[Q_f-Q_c] $   &   $ \mathbb{V}[Q_f] $ &  kurtosis    &    cost\\
+%	\hline
+%	4 & 60343 &    0.26179  &  0.26179  & 0.0178733   &  0.0178733   &  2.79784 &  294912    \\
+%	5 & 2422  & 0.000190291 &   0.25248 & 0.000231646 &  0.0198675   &  4.85386 & 2.3593e+06 \\
+%	6 & 178   & 0.000974837 & 0.243871  & 9.76543e-06 &  0.0200241   &  3.38187 & 1.88744e+07\\
+%	7 & 12    & 0.000199838 & 0.304479  & 3.18839e-07 &  0.0337465   &   5.9948 & 1.50995e+08\\
+%	8 & 2     & 0.000113336 & 0.0899359 & 1.30611e-08 & 0.00672331   &  32.3407 & 1.20796e+09\\
+%	9 & 2     & 3.5332e-06  & 0.482761  &   1e-10     & 0.000475294  & 0.178766 & 1.07374e+09\\
+%	\hline
+%	\hline
+%	$ \epsilon $  &     $ \mathbb{E}[Q] $  & MLMC cost   & \multicolumn{2}{c|}{$ l $}  &    \multicolumn{3}{c|}{$ M$} \\
+%	\hline
+%	0.001  &  0.263271 & 3.32451e+10  &  \multicolumn{2}{c|}{ 4 5 6 7 8 9  }     & \multicolumn{3}{c|}{60343 2422 178 12 2 2}    \\
+%	\hline 
+%	\hline
+%\end{tabular} \\
+                                                                           \\
+Außerdem lassen sich auf Grundlage dieser Daten die Konvergenzparameter und Fehlerkomponenten abschätzen. 
+Wir schätzen an dieser Stelle $ \alpha $, also den Exponent der schwachen Konvergenz des Verfahrens, durch lineare Regression der Erwartungswerte $ \mathbb{E}[Q_f - Q_c] $. Anzumerken ist hierbei dass auf dem Basislevel, hier Level 4, keine Differenz in Spalte 3 und 5 angegeben werden kann, da auf dem Basislevel nur einzelne Samples ohne gröberes Vergleichssample betrachtet werden. Stattdessen werden hier in Spalte 3 und 5 ebenfalls wie in Spalte 4 und 6 der einzelne Erwartungswert bzw. die einzelne Varianz angegeben. Bei der Schätzung von $ \alpha $ wird deshalb das Basislevel nicht einbezogen.
+Den Exponenten des Rückgangs der Varianz $ \beta $ schätzen wir über den den Rückgang der empirischen Varianzen. Die Kosten in der letzten Spalte selbst werden während des Experiments über die Anzahl der Freiheitsgrade des zugrunde liegenden linearen Gleichungssystems abgeschätzt. 
+Auf Grundlage dieser geschätzten Kosten lässt sich auch dann $ \gamma $ bestimmen.
+Konkret erhalten wir mit obigen Daten: 
+\begin{align*}
+	\alpha  &=    1.46067   \\
+	\beta   &=    5.18332   \\
+	\gamma  &=    2.36601   \\
+\end{align*}
+Außerdem können wir auch die einzelnen Fehlerkomponenten abschätzen, diese Fehlerschätzung wird auch im Algorithmus selbst vorgenommen. Wir erhalten: 
+\begin{align*}
+\text{numErr}  &= 6.95372e-05   \quad \text{(geschätzter numerischer Fehler)}\\
+\text{statErr} &= 0.000692712  \quad  \text{(geschätzter statistischer Fehler)}\\
+\text{error}   &= 0.000762249  \quad  \text{(geschätzter Gesamtfehler)}\\
+\end{align*}
 
 
- l     M    E[Qf-Qc]       E[Qf]    V[Qf-Qc]       V[Qf]    kurtosis        cost
---------------------------------------------------------------------------------
-4 60343     0.26179     0.26179   0.0178733   0.0178733     2.79784      294912
-5  2422 0.000190291     0.25248 0.000231646   0.0198675     4.85386  2.3593e+06
-6   178 0.000974837    0.243871 9.76543e-06   0.0200241     3.38187 1.88744e+07
-7    12 0.000199838    0.304479 3.18839e-07   0.0337465      5.9948 1.50995e+08
-8     2 0.000113336   0.0899359 1.30611e-08  0.00672331     32.3407 1.20796e+09
-9     2  3.5332e-06    0.482761       1e-10 0.000475294    0.178766 1.07374e+09
---------------------------------------------------------------------------------
-
-eps       value   MLMC cost             l                                   M
---------------------------------------------------------------------------------
-0.001    0.263271 3.32451e+10   4 5 6 7 8 9               60343 2422 178 12 2 2
---------------------------------------------------------------------------------
-alpha: 1.460672 beta: 5.183324 gamma: 2.366015
-
-alpha   =    1.46067   (exponent for the weak convergence of the FEM)
-beta   =    5.18332   (exponent for the decay of the variance)
-gamma   =    2.36601   (exponent for the growth of the cost)
-numErr  = 6.95372e-05   (estimated numerical error)
-statErr = 0.000692712   (estimated statistical error)
-error   = 0.000762249   (estimated total error)
-end program after 54:11:02.00 hours on 32 procs at Sun Mar 29 23:56:21 2020
 
 \subsection{Notebook}
 
