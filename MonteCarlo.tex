@@ -12,7 +12,7 @@ approximiert.
 
 \begin{Beispiel}(Integral über $ [0,1]^d $ - aus \cite{lapeyre2003introduction})\\
 	\label{BeispielIntegral}
-	Angenommen wir wollen für $ d \geq 1 $ folgendes Integral berechnen:
+	Angenommen, wir wollen für $ d \geq 1 $ folgendes Integral berechnen:
 	\[
 		I = \int_{[0,1]^d} f(u_1,\dots,u_d) \du_1\dots\du_d
 	\]
@@ -73,7 +73,7 @@ approximiert.
 	Damit die Methode überhaupt in irgendeiner Weise als nützlich zu erachten ist, bedarf es Möglichkeiten, den Fehler \[
 	 \epsilon_n = \frac{1}{n}\sum_{i=1}^{n}X_i -  \mathbb{E}[X]
 	\]
-	abzuschätzen. Um diesem Problem beizukommen, bedienen wir uns zweier zentraler Aussagen der Wahrscheinlichkeitstheorie. Zum einen sagt uns das starke Gesetz großer Zahlen \ref{starkesGgZ}, dass unter der Voraussetzung $ \mathbb{E}[\abs{X}]<\infty $ der Fehler $ \epsilon_n $ für $ n \to \infty $ für fast alle $ \omega \in \Omega $ gegen $ 0 $ konvergiert. Wir erhalten also zunächst Konvergenz der Methode in einem sehr grundlegendem Sinn. Aus dem zentralen Grenzwertsatz \ref{ZGWS} lassen sich zum anderen Aussagen über die Genauigkeit der Methode und letztlich somit auch der Art der Konvergenz ableiten. Nach \ref{ZGWS} erhalten wir nämlich für eine u.i.v.-Folge $ (X_i)_{i \in \N} $ mit gleicher Verteilung wie $ X $ und $ \mathbb{E}[X^2] < \infty $, dass
+	abzuschätzen. Um diesem Problem beizukommen, bedienen wir uns zweier zentraler Aussagen der Wahrscheinlichkeitstheorie. Zum einen sagt uns das starke Gesetz großer Zahlen \ref{starkesGgZ}, dass unter der Voraussetzung $ \mathbb{E}[\abs{X}]<\infty $ der Fehler $ \epsilon_n $ für $ n \to \infty $ für fast alle $ \omega \in \Omega $ gegen $ 0 $ konvergiert. Wir erhalten also zunächst Konvergenz der Methode in einem sehr grundlegenden Sinn. Aus dem zentralen Grenzwertsatz \ref{ZGWS} lassen sich zum anderen Aussagen über die Genauigkeit der Methode und letztlich somit auch der Art der Konvergenz ableiten. Nach \ref{ZGWS} erhalten wir nämlich für eine u.i.v.-Folge $ (X_i)_{i \in \N} $ mit gleicher Verteilung wie $ X $ und $ \mathbb{E}[X^2] < \infty $, dass
 	 \[ 
 	 \frac{\sqrt{n}}{\sqrt{\mathbb{V}[X]}} \epsilon_n =  \frac{\frac{1}{\sqrt{n}}\sum_{i=1}^{n}X_i-\sqrt{n}\mathbb{E}[X]}{\sqrt{\mathbb{V}[X]}} = \frac{\sum_{i=1}^{n}X_i-n\mathbb{E}[X]}{\sqrt{n\mathbb{V}[X]}} \eqqcolon \hat{S}_n \stackrel{\mathcal{D}}{\to}  \widetilde{\mathcal{N}} \text{ für } n \to \infty \ ,
 	 \]
@@ -91,7 +91,7 @@ approximiert.
 	 	\item Der zentrale Grenzwertsatz erlaubt uns ebenso \underline{nicht} eine für andere Verfahren typische Fehlerschranke der Form $ \epsilon_n \leq M_n $ für eine von n und möglicherweise anderen Faktoren, wie z.B. Ausgangsdaten, abhängigen Schranke $ M_n $ aufzustellen. Grund dafür ist, dass der Träger von $\frac{1}{\sqrt{2\pi}}e^{-\frac{x^2}{2}}$ ganz $ \R $ ist.
 	 	\item Was der zentrale Grenzwertsatz uns jedoch erlaubt, ist, ein sogenanntes $ 95\% $ Konfidenzintervall für $ \epsilon_n $ zu bestimmen. Das bedeutet, dass das tatsächliche Ergebnis mit einer Wahrscheinlichkeit von mindestens $ 95 \% $ im gegebenen Intervall enthalten ist. Denn, da 
 	 	\[
-	 		\mathbb{P}(\abs{N} \leq 1.96) \approx 0.95
+	 		\mathbb{P}(\abs{N} \leq 1.96) \approx 0.95 \quad ,
 	 	\]
 	 	können wir wegen
 	 	\[

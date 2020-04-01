@@ -1,5 +1,5 @@
 % !TeX root = bachelorarbeit.tex
-Nachdem wir in Abschnitt 2 an einige Grundlagen erinnert, in Abschnitt 3 und 4 sowohl die Monte Carlo Methode, als auch die Multilevel Monte Carlo Methode eingeführt und in Abschnitt 5 das Transportproblem, sowie das Potentialströmungsproblem inklusive numerischer Verfahren, welche zur Lösung dergleichen genutzt werden können, erklärt haben, soll nun dieser Abschnitt dazu dienen, die bisherigen Ergebnisse zu bündeln und die Anwendung der Multilevel Monte Carlo Methode auf partielle Differentialgleichungen am Beispiel des Transportproblem nahe zu legen. Dabei nimmt dieser Abschnitt einen zentralen Platz in dieser Thesis ein, weswegen wir noch einmal darlegen wollen, was genau unser Ziel ist und wie wir die uns an dieser Stelle zu Verfügung stehenden Mittel einsetzen, um das Gewünschte zu erreichen. Sei hierzu $ \mathcal{ D} \subset \R^2 $ beschränktes Polygongebiet, $ \mathbb{T} = (0,T] $ für ein $ T>0 $ und $ (\Omega,\mathcal{A},\mathbb{P}) $ ein Wahrscheinlichkeitsraum.
+Nachdem wir in Abschnitt 2 an einige Grundlagen erinnert haben, in Abschnitt 3 und 4 sowohl die Monte Carlo Methode, als auch die Multilevel Monte Carlo Methode eingeführt und in Abschnitt 5 das Transportproblem, sowie das Potentialströmungsproblem inklusive numerischer Verfahren, welche zur Lösung dergleichen genutzt werden können, erklärt haben, soll nun dieser Abschnitt dazu dienen, die bisherigen Ergebnisse zu bündeln und die Anwendung der Multilevel Monte Carlo Methode auf partielle Differentialgleichungen am Beispiel des Transportproblems nahe zu legen. Dabei nimmt dieser Abschnitt einen zentralen Platz in dieser Thesis ein, weswegen wir noch einmal darlegen wollen, was genau unser Ziel ist und wie wir die uns an dieser Stelle zur Verfügung stehenden Mittel einsetzen, um das Gewünschte zu erreichen. Sei hierzu $ \mathcal{ D} \subset \R^2 $ beschränktes Polygongebiet, $ \mathbb{T} = (0,T] $ für ein $ T>0 $ und $ (\Omega,\mathcal{A},\mathbb{P}) $ ein Wahrscheinlichkeitsraum.
 \begin{align*}
 &\text{Für ein stochastisches Flussvektorfeld } q: \Omega \times \overline{\mathcal{D}} \to \R^2 \text{, bestimme }\rho: \Omega \times \overline{\mathcal{D}} \times \mathbb{T} \to \R_{\geq 0}\\ 
 &\text{ mit} \\
@@ -20,7 +20,7 @@ u_D&: \Gamma_{\text{D}} \to \R \\
 \end{array} \newline \\
 &\text{ wobei } \partial \mathcal{D} = \Gamma_{\text{D}} \dot{\cup} \Gamma_{\text{N}}  \text{ und }  \Gamma_{\text{in}} \coloneqq  \{ z \in \partial \mathcal{D}: q(z)\cdot n(z) \leq 0 \} \subset  \partial \mathcal{D}
 \end{align*}
-Genauer sei $ Q(\omega) = J(\rho(\omega)) $ ein gegebenes Zielfunktional, dann ist es unser Ziel den Erwartungswert $ \mathbb{E}[Q(\omega)] $ möglichst genau zu bestimmen. Beispielsweise kann eine beliebige Norm von $ \rho(\omega) $ als Zielfunktional betrachtet werden.
+Genauer sei $ Q(\omega) = J(\rho(\omega)) $ ein gegebenes Zielfunktional, dann ist es unser Ziel, den Erwartungswert $ \mathbb{E}[Q(\omega)] $ möglichst genau zu bestimmen. Beispielsweise kann eine beliebige Norm von $ \rho(\omega) $ als Zielfunktional betrachtet werden.
 Unser Modellproblem lautet also:
 
 \begin{align}
@@ -32,12 +32,12 @@ Unser Modellproblem lautet also:
 &\text{mit } \rho \text{ als Lösung von (pTP) inklusive Anfangs- und Randwerten}
 \end{cases}
 \end{align} 
-Dabei erhalten wir das stochastische Flussvektorfeld $ q $, wie bereits in \ref{Probabilistisches Problem} erklärt selbst als Lösung des Potentialströmungsproblem.
+Dabei erhalten wir das stochastische Flussvektorfeld $ q $, wie bereits in \ref{Probabilistisches Problem} erklärt, selbst als Lösung des Potentialströmungsproblems.
 Da wir an der numerischen Lösung partieller Differentialgleichungen interessiert sind und wir die im Allgemeinen unendlich dimensionale Lösung $ \rho $ durch eine endlich dimensionale Lösung $ \rho_{h,\Delta t} $ approximieren, betrachten wir $ Q_{h,\Delta t}(\omega) \coloneqq J(\rho_{h,\Delta t}(\omega )) $.
-Wir nutzen dabei das in Abschnitt \ref{DG} behandelte Discontinuous Galerkin Verfahren zur Lösung des linearen Transportproblems. Außerdem werden wir im Folgenden eine uniforme Familie $ \{ \mathcal{T}_h \} $ von Zerlegungen von $ \mathcal{D} $ (vgl. Abschnitt \ref{num_pot} Definition \ref{FEMDISC}) als Diskretisierungsgitter für die Ortsdiskretisierung, sowie $ \mathbb{T}_{\Delta t} $ als Zerlegung von $ \mathbb{T} $ betrachten.
+Wir nutzen dabei das in Abschnitt \ref{DG} behandelte \\ Discontinuous Galerkin Verfahren zur Lösung des linearen Transportproblems. Außerdem werden wir im Folgenden eine uniforme Familie $ \{ \mathcal{T}_h \} $ von Zerlegungen von $ \mathcal{D} $ (vgl. Abschnitt \ref{num_pot} Definition \ref{FEMDISC}) als Diskretisierungsgitter für die Ortsdiskretisierung, sowie $ \mathbb{T}_{\Delta t} $ als Zerlegung von $ \mathbb{T} $ betrachten.
 Insbesondere wählen wir später $ \Delta t $ in Abhängigkeit von $ h $, etwa $ \Delta t = c  h $ für ein $ c>0 $ und betrachten dann
 $ Q_h(\omega) \coloneqq Q_{h,ch}(\omega) = J(\rho_h(\omega )) \coloneqq J(\rho_{h,ch}(\omega )) $.
-An dieser Stelle sei betont, dass es sich in diesem Abschnitt bei $ \rho_h $ um eine volldiskrtisierte Approximation an $ \rho $ handelt und nicht die Semidiskretisierung aus Abschnitt \ref{DG} gemeint ist. Um die Notation im Folgenden zu erleichtern schreiben wir für $ a,b \in \R_{> 0} $ $ a \lesssim b $, falls $\frac{a}{b}$ gleichmäßig beschränkt und insbesondere unabhängig von den Parametern $ h $ und $ n $ ist.
+An dieser Stelle sei betont, dass es sich in diesem Abschnitt bei $ \rho_h $ um eine volldiskrtisierte Approximation an $ \rho $ handelt und nicht die Semidiskretisierung aus Abschnitt \ref{DG} gemeint ist. Um die Notation im Folgenden zu erleichtern, schreiben wir für $ a,b \in \R_{> 0} $ $ a \lesssim b $, falls $\frac{a}{b}$ gleichmäßig beschränkt und insbesondere unabhängig von den Parametern $ h $ und $ n $ ist.
 \begin{Annahme}(Konvergenz im Erwartungswert des Zielfunktionals)\\
 	\label{Annahme1}
 	In obiger Situation gelte 
@@ -54,13 +54,13 @@ An dieser Stelle sei betont, dass es sich in diesem Abschnitt bei $ \rho_h $ um 
 
 \subsection{Die Monte Carlo Methode}
 Wie bereits im Kontext der numerischen Integration wollen wir die Monte Carlo Methode als Ausgangspunkt nutzen und anschließend bei der Betrachtung der Multilevel Monte Carlo Methode auch auf entscheidende Unterschiede zu und Vorteile gegenüber der Monte Carlo Methode eingehen.
-Sowohl bei der Monte Carlo Methode, als auch bei der Multilevel Variante approximieren wir den Erwartungswert $ \mathbb{E}[Q_h] $ durch einen Schätzwert $ \widehat{Q}_h $. Um die Genauigkeit und die Kosten zu bemessen betrachten wir zum einen den sogenannten 'root mean square error' (RMSE) 
+Sowohl bei der Monte Carlo Methode, als auch bei der Multilevel Variante approximieren wir den Erwartungswert $ \mathbb{E}[Q_h] $ durch einen Schätzwert $ \widehat{Q}_h $. Um die Genauigkeit und die Kosten zu bemessen, betrachten wir zum einen den sogenannten 'root mean square error' (RMSE) 
 \begin{align}
 	\label{RMSE}
 	e( \widehat{Q}_h) \coloneqq \left(  \mathbb{E} \left[ (\widehat{Q}_h - \mathbb{E}[Q] )^2 \right] \right)^{\frac{1}{2}}
 \end{align}
 zum anderen die Anzahl an floating-point-Rechenoperationen $ C_{\epsilon}(\widehat{Q}_h) $, die benötigt werden um einen RMSE mit $ e( \widehat{Q}_h) \leq \epsilon $ zu erhalten.
-Zu beachten ist hierbei, dass in dem RMSE einige Fehlerquellen gemeinsam betrachtet werden. So gehen sowohl der Discontinuous Galerkin Fehler des Transportproblems (Approximation von $ \rho $ durch $ \rho_h $), der Approximationsfehler der Approximation von $ Q $ durch $ Q_h $, als auch der statistische Fehler des Schätzers $\widehat{Q}_h$ in den RMSE mit ein. Insbesondere bedeutet also $ e( \widehat{Q}_h) \leq \epsilon $, dass alle oben genannten Fehlerquellen kleiner als $ \epsilon $ ausfallen. Betrachten wir also, wie bei der Monte Carlo Methode, welche wir gleich noch einmal kurz behandeln wollen, nur eine einzige Zerlegung $ \mathcal{T} $ der Familie $ \mathcal{T}_h $, so kann es sein, dass es gar nicht möglich ist den RMSE durch ein bestimmtes $ \epsilon $ zu beschränken, da einer der Approximationsfehler für das gewählte feste Level bereits alleine größer als $ \epsilon $ ist. 
+Zu beachten ist hierbei, dass in dem RMSE einige Fehlerquellen gemeinsam betrachtet werden. So gehen sowohl der Discontinuous Galerkin Fehler des Transportproblems (Approximation von $ \rho $ durch $ \rho_h $), der Approximationsfehler der Approximation von $ Q $ durch $ Q_h $, als auch der statistische Fehler des Schätzers $\widehat{Q}_h$ in den RMSE mit ein. Insbesondere bedeutet also $ e( \widehat{Q}_h) \leq \epsilon $, dass alle oben genannten Fehlerquellen kleiner als $ \epsilon $ ausfallen. Betrachten wir also, wie bei der Monte Carlo Methode, welche wir gleich noch einmal kurz behandeln wollen, nur eine einzige Zerlegung $ \mathcal{T} $ der Familie $ \mathcal{T}_h $, so kann es sein, dass es gar nicht möglich ist, den RMSE durch ein bestimmtes $ \epsilon $ zu beschränken, da einer der Approximationsfehler für das gewählte feste Level bereits alleine größer als $ \epsilon $ ist. 
 %der Finite Elemente Fehler des Potentialströmungsproblems (Approximation von $ q $ durch $ q_h $),
 %Wir wollen diesen Sachverhalt im Hinterkopf behalten, denn auch bei der Multilevel Monte Carlo  Methode werden wir später initiale Level wählen, in der konkreten Anwendung geben wir aus praktischen Gründen sogar ein maximales Level an, welches wiederum unter Umständen einen RMSE $ e( \widehat{Q}_h) \leq \epsilon $ verhindern kann.\\
 Bei der Standard Monte Carlo Methode schätzen wir $ \mathbb{E}[Q] $ durch den Mittelwert  $ n $ unabhängiger gleichverteilter Zufallssamples und erhalten so 
@@ -87,7 +87,7 @@ Der Algorithmus wurde 1997 erstmals in \cite{dietrich1997fast} vorgestellt und
 erzeugt Gauß'sche Zufallsfelder auf regulären Gittern und basiert auf der Fast Fourier Transformation, welche in der Literatur auch oft unter der Abkürzung FFT zu finden ist.
 Dabei werden spezielle Strukturen der Kovarianzmatrix ausgenutzt. Anschließend kann das Gauß'sche Zufallsfeld über eine einfache Transformation in ein lognormal Feld überführt werden. Mehr zu Circulant Embedding findet sich z.B. in \cite{schmidt2014stochastic} Abschnitt 12.
 Auch die grundsätzliche Idee Circulant Embedding für die Modellierung der Ausgangsdaten in stochastischen partiellen Differentialgleichungen zu nutzen ist keineswegs neu und findet sich z.B. in \cite{charrier2012strong} oder \cite{cliffe2011multilevel}.
-Wir haben nun alle Mittel in der Hand um die Monte Carlo Methode angewandt auf das Transportproblem als Algorithmus zu formulieren. Dabei fassen wir die eben erklärte Erzeugung des zufälligen Vektorfeldes in der Funktion 'RndVecField' zusammen.
+Wir haben nun alle Mittel in der Hand, um die Monte Carlo Methode angewandt auf das Transportproblem als Algorithmus zu formulieren. Dabei fassen wir die eben erklärte Erzeugung des zufälligen Vektorfeldes in der Funktion 'RndVecField' zusammen.
 Außerdem gehen wir davon aus, dass bereits alle übrigen freien Parameter, sowie die Rand- und Anfangswerte fest gewählt sind.
 \begin{algorithm}[H]
 	\DontPrintSemicolon
@@ -101,7 +101,7 @@ Außerdem gehen wir davon aus, dass bereits alle übrigen freien Parameter, sowi
 	\While{$i<n$}{
 		Erzeuge ein Zufallssample: $ q(\omega_i,x)  \leftarrow $ RndVecField\;
 		Löse das Transportproblem: $ \rho_{h}(\omega_i,x)  \leftarrow$ Löse mit Discontinuous Galerkin\;
-		Berechne das zugehörige Zielfuinktional: $ Q_h(\omega_i) \leftarrow$ Berechne Zielfunktional\;
+		Berechne das zugehörige Zielfunktional: $ Q_h(\omega_i) \leftarrow$ Berechne Zielfunktional\;
 		Setze: $ \Sigma = \Sigma + Q_h(\omega_i) $, i = i+1\;
 	}
 	\BlankLine
@@ -113,7 +113,7 @@ Wir nehmen an dieser Stelle an, dass sich die Gesamtkosten an Rechenoperationen,
  \[
  	C(Q_h(\omega_i))  \lesssim h^{- \gamma}
  \] beschränken lassen.
- Im Folgenden wollen uns überlegen, wie wir unter dieser Annahme die Kosten für $ C_{\epsilon} $ abschätzen können. Diese Überlegungen finden sich auch in \cite{cliffe2011multilevel}.
+ Im Folgenden wollen wir uns überlegen, wie wir unter dieser Annahme die Kosten für $ C_{\epsilon} $ abschätzen können. Diese Überlegungen finden sich auch in \cite{cliffe2011multilevel}.
  Der 'mean square error' $ e(\widehat{Q}_{h,n}^{\text{MC}})^2 $, also das Quadrat des RMSE, lässt sich nämlich auch folgendermaßen betrachten:
  \begin{align}
  \label{badumts}
@@ -148,7 +148,7 @@ Wie bereits in \ref{MLMC} erhalten wir
 \[
 \mathbb{E}[Q_{h_L}] = \mathbb{E}[Q_{h_0}] + \sum_ {l=0}^L \mathbb{E}[Q_{h_l}-Q_{h_{l-1}}]  
 \]
-Um uns an dieser Stelle die Notation zu vereinfachen führen wir an dieser Stelle für $ l=0,\dots,L $ die Zufallsvariable $ Y_l $ ein mit $ Y_0(\omega) \coloneqq Q_{h_0}(\omega) = J(\rho_{h_0}(\omega)) $ und $ Y_l \coloneqq Q_{h_l}(\omega) - Q_{h_{l-1}}(\omega) =  J(\rho_{h_l}(\omega)) - J(\rho_{h_{l-1}}(\omega))  $ für $ l=1,\dots,L $. Man beachte hierbei, dass wie bereits an früher Stelle erwähnt, beim Vergleich zweier verschiedener Level das gleiche Sample zugrunde gelegt wird. 
+Um uns an dieser Stelle die Notation zu vereinfachen, führen wir an dieser Stelle für $ l=0,\dots,L $ die Zufallsvariable $ Y_l $ ein mit $ Y_0(\omega) \coloneqq Q_{h_0}(\omega) = J(\rho_{h_0}(\omega)) $ und $ Y_l \coloneqq Q_{h_l}(\omega) - Q_{h_{l-1}}(\omega) =  J(\rho_{h_l}(\omega)) - J(\rho_{h_{l-1}}(\omega))  $ für $ l=1,\dots,L $. Man beachte hierbei, dass, wie bereits an früher Stelle erwähnt, beim Vergleich zweier verschiedener Level das gleiche Sample zugrunde gelegt wird. 
 So folgt:
 \[
 	\mathbb{E}[Q_{h_L}] = \sum_{l=0}^L \mathbb{E}[Y_l]
@@ -157,7 +157,7 @@ Dann ist der Multilevel Monte Carlo Schätzer gegeben durch die Summe der Monte 
 \begin{align}
 	\widehat{Q}_{\tilde{\mathcal{H}},\{ n_l \}_{l=0}^L }^{\text{MLMC}} = \sum_{l=0}^{L} \widehat{Y}_{l,n_l}^{\text{MC}} =  \frac{1}{n_0} \sum_{i_0=0}^{n_0} Q_{h_0}(\omega_{i_0}) + \sum_{l=1}^{L} \frac{1}{n_l} \sum_{i_l=1}^{n_l} \left( Q_{h_l}(\omega_{i_l}) - Q_{h_{l-1}}(\omega_{i_l})\right)
 \end{align}
-Da für jedes $ l \ $ $ \widehat{Y}_{l,n_l}^{\text{MC}} $ getrennt berechnet und somit jeder Erwartungswert $ \mathbb{E}[Y_l] $ unabhängig geschätzt wird, erhalten wir die Varianz des MLMC-Schätzers durch $\mathbb{V}[ \widehat{Q}_{\tilde{\mathcal{H}},\{ n_l \}_{l=0}^L }^{\text{MLMC}} ] = \sum_{l=0}^{L} \frac{1}{n_l} \mathbb{V}[Y_l]$. Wie in \ref{badumts} lässt sich dann der mean square error dann ausdrücken durch:
+Da für jedes $ l \ $ $ \widehat{Y}_{l,n_l}^{\text{MC}} $ getrennt berechnet und somit jeder Erwartungswert $ \mathbb{E}[Y_l] $ unabhängig geschätzt wird, erhalten wir die Varianz des MLMC-Schätzers durch $\mathbb{V}[ \widehat{Q}_{\tilde{\mathcal{H}},\{ n_l \}_{l=0}^L }^{\text{MLMC}} ] = \sum_{l=0}^{L} \frac{1}{n_l} \mathbb{V}[Y_l]$. Wie in \ref{badumts} lässt sich dann der mean square error ausdrücken durch:
 \begin{align}
 e(\widehat{Q}_{\tilde{\mathcal{H}},\{ n_l \}_{l=0}^L }^{\text{MLMC}})^2 &= \mathbb{E}  \left[ (\widehat{Q}_{\tilde{\mathcal{H}},\{ n_l \}_{l=0}^L }^{\text{MLMC}}- \mathbb{E}[Q])^2 \right] \nonumber \\
 &= \mathbb{E}  \left[ (\widehat{Q}_{\tilde{\mathcal{H}},\{ n_l \}_{l=0}^L }^{\text{MLMC}} - \mathbb{E}[\widehat{Q}_{\tilde{\mathcal{H}},\{ n_l \}_{l=0}^L }^{\text{MLMC}}]+\mathbb{E}[\widehat{Q}_{\tilde{\mathcal{H}},\{ n_l \}_{l=0}^L }^{\text{MLMC}}]- \mathbb{E}[Q])^2 \right] \nonumber \\
@@ -168,8 +168,8 @@ e(\widehat{Q}_{\tilde{\mathcal{H}},\{ n_l \}_{l=0}^L }^{\text{MLMC}})^2 &= \math
 	\begin{itemize}
 %		\item $ (2) $ stimmt mit $ (2) $ aus \ref{mseMC} überein. Insbesondere ist also wieder  $ h \lesssim \epsilon^{\frac{1}{\alpha}}  $ dafür hinreichend, dass der Diskretisierungs- und Lösungsfehler kleiner als $ \frac{\epsilon^2}{2} $  ausfällt.
 %		\item Um also einen kleineren RMSE als $ \epsilon $ zu erhalten, muss auch $ (1) \leq  \frac{\epsilon^2}{2} $ gelten.
-		\item Unter Annahme \ref{Annahme1} gilt $ \mathbb{V}[Y_l] = \mathbb{V}[Q_{h_l}-Q_{h_{l-1}}] \stackrel{l \to \infty}{\to} 0  $, das bedeutet für uns: Je größer $ l $ und damit je feiner die Gitterweite $ h_l $ ist, desto weniger Samples werden benötigt um $ \mathbb{E}[Y_l] $ zu schätzen.
-		\item Das niedrigste betrachtete Level $ l = 0 $ kann unabhängig von $ \epsilon $ fest gewählt werden. So bleibt insbesondere die benötigte Anzahl an Rechenoperationen pro Sample auf dem niedrigsten Level konstant, auch wenn $ \epsilon \to 0 $ geht. Bei der tatsächlichen Anwendung muss allerdings $ h_0 $ so gewählt werden, dass zumindest ein Mindestmaß an Auflösung des Problems gegeben ist. Deswegen werden wir später beim Algorithmus die Level beginnend bei $ l_0 $ indizieren. Um in der Theorie aber die Notation so schlank wie möglich zu halten, haben wir uns bewusst dafür entschieden bei der Indizierung in der Theorie mit Level $ l=0 $ zu beginnen.
+		\item Unter Annahme \ref{Annahme1} gilt $ \mathbb{V}[Y_l] = \mathbb{V}[Q_{h_l}-Q_{h_{l-1}}] \stackrel{l \to \infty}{\to} 0  $, das bedeutet für uns: Je größer $ l $ und damit je feiner die Gitterweite $ h_l $ ist, desto weniger Samples werden benötigt, um $ \mathbb{E}[Y_l] $ zu schätzen.
+		\item Das niedrigste betrachtete Level $ l = 0 $ kann unabhängig von $ \epsilon $ fest gewählt werden. So bleibt insbesondere die benötigte Anzahl an Rechenoperationen pro Sample auf dem niedrigsten Level konstant, auch wenn $ \epsilon \to 0 $ geht. Bei der tatsächlichen Anwendung muss allerdings $ h_0 $ so gewählt werden, dass zumindest ein Mindestmaß an Auflösung des Problems gegeben ist. Deswegen werden wir später beim Algorithmus die Level beginnend bei $ l_0 $ indizieren. Um in der Theorie aber die Notation so schlank wie möglich zu halten, haben wir uns bewusst dafür entschieden, bei der Indizierung in der Theorie mit Level $ l=0 $ zu beginnen.
 	\end{itemize}
 \end{Bemerkung} 
 Wir sind nun in der Lage folgendes zentrale Resultat aus \cite{cliffe2011multilevel} nachzuvollziehen:
@@ -210,7 +210,7 @@ Wir sind nun in der Lage folgendes zentrale Resultat aus \cite{cliffe2011multile
 				\end{array} \qquad (\star)
 			\end{cases}
 	\]
-	Wir nehmen o.B.d.A an, dass $ h_0 = 1 $. Ist dies nicht der Fall, lassen sich die Konstanten $ c_1,c_2,c_3 $ und $ \tilde{c} $ entsprechend skalieren.
+	Wir nehmen o.B.d.A. an, dass $ h_0 = 1 $. Ist dies nicht der Fall, lassen sich die Konstanten $ c_1,c_2,c_3 $ und $ \tilde{c} $ entsprechend skalieren.
 	Wir wählen nun $ L \coloneqq \lceil \alpha^{-1} \log_2 (\sqrt{2}c_1\epsilon^{-1}) \rceil < \alpha^{-1} \log_2 (\sqrt{2}c_1\epsilon^{-1}) +1 $ . 
 	Dann gilt:
 	\[
@@ -222,8 +222,8 @@ Wir sind nun in der Lage folgendes zentrale Resultat aus \cite{cliffe2011multile
 	\]
 	Nach (6.8) ist
 	\[ 
-	 	e(\widehat{Q}_{\tilde{\mathcal{H}},\{ n_l \}_{l=0}^L }^{\text{MLMC}})^2 	= \underbrace{	\mathbb{V}[\widehat{Q}_{\tilde{\mathcal{H}},\{ n_l \}_{l=0}^L }^{\text{MLMC}}]}_{(1)} + \underbrace{\left( \mathbb{E}[Q_{h_L}-Q] \right)^2}_{(2)}	
-	\].
+	 	e(\widehat{Q}_{\tilde{\mathcal{H}},\{ n_l \}_{l=0}^L }^{\text{MLMC}})^2 	= \underbrace{	\mathbb{V}[\widehat{Q}_{\tilde{\mathcal{H}},\{ n_l \}_{l=0}^L }^{\text{MLMC}}]}_{(1)} + \underbrace{\left( \mathbb{E}[Q_{h_L}-Q] \right)^2}_{(2)}	\ .
+	\]
 	Für das gewählte $ L $ ist also bereits $ (2) \leq \frac{1}{2}\epsilon^2 $.
 	Um also $ e(\widehat{Q}_{\tilde{\mathcal{H}},\{ n_l \}_{l=0}^L }^{\text{MLMC}})^2 < \epsilon^2 $ zu gewährleisten, müssen wir nachweisen, dass für entsprechend gewählte $ \{n_l\}_{l=0}^L $ auch (1) kleiner als $ \frac{1}{2}\epsilon^2 $ ausfällt.
 	Wir nutzen dazu die linke Ungleichung aus $ (\star \star) $ und erhalten 
@@ -244,15 +244,15 @@ Wir sind nun in der Lage folgendes zentrale Resultat aus \cite{cliffe2011multile
 			\leq c_3 \left( 2 \epsilon^{-2}(L+1)^2 c_2 + \sum_{l=0}^{L} 2^{\gamma l} \right)
 		\end{align*}
 		Für $ \epsilon < e^{-1} < 1 $ ist $ 1 < \log \epsilon^{-1} $ und $ \epsilon^{- \frac{\gamma}{\alpha}} \leq \epsilon^{-2} \leq \epsilon^{-2}(\log \epsilon)^2$, da $ \alpha \geq \frac{1}{2} \gamma $.
-		Nutzen wir nun $ L = \lceil \alpha^{-1} \log_2 (\sqrt{2}c_1\epsilon^{-1}) \rceil < \alpha^{-1} \log_2 (\sqrt{2}c_1\epsilon^{-1}) +1 $  erhalten wir 
+		Nutzen wir nun $ L = \lceil \alpha^{-1} \log_2 (\sqrt{2}c_1\epsilon^{-1}) \rceil < \alpha^{-1} \log_2 (\sqrt{2}c_1\epsilon^{-1}) +1 \ $ , erhalten wir 
 		\[
 			C_{\epsilon}(\widehat{Q}_{\tilde{\mathcal{H}},\{ n_l \}_{l=0}^L }^{\text{MLMC}}) \leq \tilde{c}_1 \epsilon^{-2} (\log \epsilon )^2 , \quad \text{ für ein }\tilde{c}_1>0
 		\]
 		\item $ \beta > \gamma: $\\
 		Wir setzen $ n_l = \lceil 2\epsilon^{-2} c_2 (1-2^{-(\beta-\gamma)/2})^{-1} 2^{-(\beta-\gamma)l/2} \rceil $, dann ist
 		\[
-		\sum_{l=0}^{L} \mathbb{V}[\widehat{Y}_l] \leq \frac{1}{2}\epsilon^2\left( 1-2^{-(\beta - \gamma)/2} \right) \sum_{l=0}^{L} 2^{-(\beta - \gamma)l/2} < \frac{1}{2} \epsilon^2
-		\].
+		\sum_{l=0}^{L} \mathbb{V}[\widehat{Y}_l] \leq \frac{1}{2}\epsilon^2\left( 1-2^{-(\beta - \gamma)/2} \right) \sum_{l=0}^{L} 2^{-(\beta - \gamma)l/2} < \frac{1}{2} \epsilon^2 \ .
+		\]
 		Mit $ n_l <  2\epsilon^{-2} c_2 (1-2^{-(\beta-\gamma)/2})^{-1} 2^{-(\beta-\gamma)l/2} +1 $ ist so 
 		\[
 			C_{\epsilon}(\widehat{Q}_{\tilde{\mathcal{H}},\{ n_l \}_{l=0}^L }^{\text{MLMC}}) \leq c_3 \left( 2\epsilon^{-2}c_2 \left( 1 - 2^{-(\beta-\gamma)/2}\right)^{-2} + \sum_{l=0}^{L}2^{\gamma l} \right) \ .
@@ -261,7 +261,7 @@ Wir sind nun in der Lage folgendes zentrale Resultat aus \cite{cliffe2011multile
 		\[
 			C_{\epsilon}(\widehat{Q}_{\tilde{\mathcal{H}},\{ n_l \}_{l=0}^L }^{\text{MLMC}}) \leq \tilde{c}_2 \epsilon^{-2}, \quad \text{  für ein }\tilde{c}_2>0
 		\]
-		\item $ \beta < \gamma $\\
+		\item $ \beta < \gamma $:\\
 		Wir setzen $ n_l =  \lceil  \epsilon^{-2} c_2 2^{(\gamma-\beta)L/2+1} \left( 1-2^{-(\gamma - \beta)/2} \right)^{-1} 2^{-(\beta+\gamma)l/2} \rceil $.
 		Dann ist 
 		\[
@@ -275,7 +275,7 @@ Wir sind nun in der Lage folgendes zentrale Resultat aus \cite{cliffe2011multile
 		Nutzen wir nun ein letztes Mal $ (\star \star) $, so ist $ 2^{(\gamma-\beta)L} < \left( \sqrt{2}c_1 \right)^{\frac{\gamma-\beta}{\alpha}} 2^{\gamma-\beta} \epsilon^{-(\gamma-\beta)/\alpha} $ und mit $ \epsilon < e^{-1} < 1 $ gilt wegen $ \alpha \geq \frac{1}{2}\beta $ auch $ \epsilon^{-\frac{\gamma}{\alpha}} \leq \epsilon^{-2 -(\gamma - \beta)/\alpha} $.
 		Mit (6.9) folgt dann 
 		\[
-		C_{\epsilon}(\widehat{Q}_{\tilde{\mathcal{H}},\{ n_l \}_{l=0}^L }^{\text{MLMC}}) \leq \tilde{c}_3 \epsilon^{-2-(\gamma-\beta)\alpha} , \quad \text{  für ein } \tilde{c}_3>0
+		C_{\epsilon}(\widehat{Q}_{\tilde{\mathcal{H}},\{ n_l \}_{l=0}^L }^{\text{MLMC}}) \leq \tilde{c}_3 \epsilon^{-2-(\gamma-\beta)\alpha} , \quad \text{  für ein } \tilde{c}_3>0 \ .
 		\]
 	\end{enumerate}
 	Mit $ \tilde{c} \coloneqq \max\{\tilde{c}_1,\tilde{c}_2,\tilde{c}_3\} $ folgt also die Behauptung.\\
@@ -284,7 +284,7 @@ Wir haben also gezeigt, dass für ein gegebenes $ 0 < \epsilon < e^{-1} $ stets 
 existieren, sodass der Multilevel Monte Carlo Schätzer $ \widehat{Q}_{\tilde{\mathcal{H}},\{ n_l \}_{l=0}^L }^{\text{MLMC}} $ im RMSE höchstens $ \epsilon $ vom tatsächlichen Erwartungswert $ \mathbb{E}[Q] $ entfernt ist. Außerdem haben wir unter entsprechenden Voraussetzungen an $ \{n_l\}_{l=0}^L $ obere Schranken für die Anzahl der benötigten Rechenoperationen bewiesen.
 Verglichen mit den Kosten für die Monte Carlo Methode erhalten wir so für alle zulässigen $ \alpha,\beta,\gamma $ einen theoretischen Kostenvorteil. 
 Durch eine geschickte, konkrete Wahl von $ \{n_l\}_{l=0}^L $ lässt sich zudem für feste Kosten $ C(\widehat{Q}_{\tilde{\mathcal{H}},\{ n_l \}_{l=0}^L }^{\text{MLMC}} ) = \sum_{l=0}^{L} n_l C_l$ die Varianz des Schätzers minimieren.
-Wie in \cite{giles_2015} näher erklärt kann hierfür 
+Wie in \cite{giles_2015} näher erklärt, kann hierfür 
 \begin{align}
 	\label{OptimalN}
 	n_l = \left\lceil 2 \epsilon^{-2} \sqrt{\frac{\mathbb{V}[Y_l]}{C_l}} \left( \sum_{l=0}^{L}\sqrt{\mathbb{V}[Y_l]C_l} \right) \right\rceil
@@ -325,10 +325,10 @@ Davon ausgehend können wir nun den Algorithmus formulieren:
  	\caption{MLMC angewandt auf das Transportproblem}
  \end{algorithm}
 \bigskip % add 12pt space in-between
-Dabei überprüfen wir beim Test auf schwache Konvergenz ob $ \abs{\mathbb{E}[Q-Q_{h_{L_i}}]} < \frac{\epsilon}{\sqrt{2}}$ (vgl. (6.8)).
-Unter der Annahme \ref{Annahme1} testen wir also ob
+Dabei überprüfen wir beim Test auf schwache Konvergenz, ob $ \abs{\mathbb{E}[Q-Q_{h_{L_i}}]} < \frac{\epsilon}{\sqrt{2}}$ (vgl. (6.8)).
+Unter der Annahme \ref{Annahme1} testen wir also, ob
 \[
-	\abs{\mathbb{E}[Q_{h_{L_{i}}}-Q_{h_{L_{i}-1}}]} < (2^{\alpha}-1)\frac{\epsilon}{\sqrt{2}}
+	\abs{\mathbb{E}[Q_{h_{L_{i}}}-Q_{h_{L_{i}-1}}]} < (2^{\alpha}-1)\frac{\epsilon}{\sqrt{2}} \ . 
 \]
 Zu beachten ist, dass diese Version des Algorithmus, ebenso wie die in \cite{giles_2015} etwas allgemeinere Variante von heuristischer Natur ist. Es kann je nach Problemstellung nicht garantiert werden, dass mit diesem Verfahren stets ein RMSE kleiner $ \epsilon $ erreicht werden kann.
 Satz \ref{MLMCTheorem} liefert zwar gerade die Garantie, dass es einen Multilevel Monte Carlo Schätzer gibt, welcher einen kleineren RMSE als $ \epsilon $ besitzt, für die genaue Konstruktion brauchen wir allerdings a-priori Kenntnisse über die Konstanten $ c_1 $ und $ c_2 $. Obiger Algorithmus verzichtet hingegen auf diese a-priori Kenntnisse und schätzt diese Konstanten on-the-fly.

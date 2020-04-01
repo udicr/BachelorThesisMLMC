@@ -20,7 +20,7 @@ Wir setzen dazu
 	\[
 		\int_{\mathcal{D}} \rho_0(x) \dx = 1 \ ,
 	\]
-	wir skalieren also die zur Beginn im Rechengebiet enthaltene Masse auf $ 1 $.
+	wir skalieren also die zu Beginn im Rechengebiet enthaltene Masse auf $ 1 $.
 \end{itemize} 
 Die Anfangskonzentration $ \rho_0 $ entspricht also gerade einer rechteckigen Ansammlung mit Länge $ 0.6$ und Breite $ 0.1$ und Mittelpunkt $ (0.5,0.75) $, welcher in beide Richtungen auf einem $ 0.15$ breiten Streifen mit einer Exponentialfunktion in die Ebene geglättet wird. 
 Wir stellen so für die Anfangsbedingungen unseres Modellproblems einen sehr hohen Grad an Regularität sicher. 
@@ -39,13 +39,13 @@ Wie bereits an früherer Stelle erklärt, berechnen wir hierzu ein stochastische
  C(x,y) = \sigma^2 \exp(- \frac{\lVert x-y \rVert_2^s}{\lambda^s} ) .
 \]
 Dabei ist $ 0 < \sigma^2 < \infty $ die Varianz des zugrundeliegenden Gauß'schen Zufallsfeldes, durch $ \lambda = (\lambda_1,\lambda_2) \in \R^2 $ werden die Korrelationslängen in die verschiedenen Koordinatenrichtungen gegeben und $ s \in (1,2) $ ist ein Glättungsparameter. \\
-Wir können auch den das lognormal verteilte Zufallsfeld und das daraus resultierende stochastische Flussvektorfeld $ q $ exemplarisch für ein $ \omega \in \Omega $ grafisch darstellen. Bei der Visualisierung des Flussvektorfeldes nutzen wir dabei sogenannte 'Streamlines'. Im Wesentlichen nutzt man dabei einen Zeitintegrator, wie etwa ein Runge Kutta Verfahren, und integriert mit deren Hilfe an verschiedenen Ausgangspunkten entlang des Vektorfeldes.
+Wir können auch das lognormal verteilte Zufallsfeld und das daraus resultierende stochastische Flussvektorfeld $ q $ exemplarisch für ein $ \omega \in \Omega $ grafisch darstellen. Bei der Visualisierung des Flussvektorfeldes nutzen wir dabei sogenannte 'Streamlines'. Im Wesentlichen nutzt man dabei einen Zeitintegrator, wie etwa ein Runge Kutta Verfahren, und integriert mit deren Hilfe an verschiedenen Ausgangspunkten entlang des Vektorfeldes.
 
 \begin{figure}[H]
 	\centering
 	\captionabove{Visualisierung der stochastischen Modellierung}
-	\subfigure[Streamlines des entstehenden Flussvektorfeldes]{\includegraphics[width=0.49\textwidth]{plots/permquiv.png}}
 	\subfigure[lognormal verteiltes Zufallsfeld mit obigen Parametern]{\includegraphics[width=0.49\textwidth]{plots/perm.png}}
+	\subfigure[Zufallsfeld und zugehöriges  Flussvektorfeldes]{\includegraphics[width=0.49\textwidth]{plots/permquiv.png}}
 	
 \end{figure}
 
@@ -63,7 +63,7 @@ Weiter setzen wir
 	
 \end{itemize}
 
-Als Zerlegung von $ \mathcal{D} $ wählen wir gleichartige Quadrate. Um auf dem geringsten Level ein Mindestmaß an Auflösung zu gewährleisten wählen wir auf Level $ l_0 $ eine Zerlegung in $ 256 = 16^2 $ Quadrate. Dies entspricht einer Ortsdiskretisierungsschrittweite von $ h_0 = \frac{1}{16} = 0.0625 $. Wie bereits im Theorieteil angemerkt, wählen wir von $ h_0 $ ausgehend die uniforme Familie von Zerlegungen $ \{\mathcal{T}_h \}_{h \in \mathcal{H}} $ mit $ \mathcal{H} = \{ h_0 , h_1 \coloneqq \frac{h_0}{2},h_2 \coloneqq \frac{h_1}{2} = \frac{h_0}{4}, \dots \} $. Auf Level $ l_1 $ betrachten wir also $ 1024 = 32^2 $ und auf Level $ l_k $ dementsprechend $ 2^{2(k+4)} $ Quadrate. 
+Als Zerlegung von $ \mathcal{D} $ wählen wir gleichartige Quadrate. Um auf dem geringsten Level ein Mindestmaß an Auflösung zu gewährleisten, wählen wir auf Level $ l_0 $ eine Zerlegung in $ 256 = 16^2 $ Quadrate. Dies entspricht einer Ortsdiskretisierungsschrittweite von $ h_0 = \frac{1}{16} = 0.0625 $. Wie bereits im Theorieteil angemerkt, wählen wir von $ h_0 $ ausgehend die uniforme Familie von Zerlegungen $ \{\mathcal{T}_h \}_{h \in \mathcal{H}} $ mit $ \mathcal{H} = \{ h_0 , h_1 \coloneqq \frac{h_0}{2},h_2 \coloneqq \frac{h_1}{2} = \frac{h_0}{4}, \dots \} $. Auf Level $ l_1 $ betrachten wir also $ 1024 = 32^2 $ und auf Level $ l_k $ dementsprechend $ 2^{2(k+4)} $ Quadrate. 
 In M++ entspricht Level $ l_0 $ bei der gewählten Diskretisierung 'UnitSquare' gerade Level $ 4 $. Die Zerlegungen auf $ l_0 = 4, l_1 = 5 $ und $ l_2 = 6 $ lassen sich folgendermaßen darstellen:
 \begin{figure}[H]
 	\centering
@@ -80,7 +80,7 @@ Q(\omega) = J(\rho(\omega)) \coloneqq \int_{\mathcal{D}} \rho(\omega,x,T) \dx = 
 Wir suchen gemäß unserer Fragestellung also gerade nach $ \mathbb{E}[Q] $.
 \begin{Bemerkung2}\label{wahlfunk}
 	Die Wahl $ T=1 $ ist an dieser Stelle gerade so getroffen, dass das der Fragestellung entsprechende Zielfunktional in gewisser Weise interessant ist. 
-	Genauer ist $ T $ so gewählt, dass die im Algorithmus auftretende Varianz $ \mathbb{V}[Y_l] $ 'groß' ausfällt. Ist $ T $ nämlich zu groß gewählt befindet sich für fast alle $ \omega \in \Omega $ kaum noch Masse im Gebiet und die erwartete Endmasse ist $ \mathbb{E}[Q] = 0 $, während für sehr kleine $ T $ Masse zum Zeitpunkt $ T $ für fast alle $ \omega \in \Omega $ mit der Anfangsmasse übereinstimmt und somit $ \mathbb{E}[Q] = 1$. Für $ T = 1 $ erhalten wir für verschiedene $ \omega \in \Omega $ recht unterschiedliche Ergebnisse, da die Masse je nach Beschaffenheit des Flussvektorfeldes schneller oder langsamer durch das Gebiet transportiert wird. 
+	Genauer ist $ T $ so gewählt, dass die im Algorithmus auftretende Varianz $ \mathbb{V}[Y_l] $ 'groß' ausfällt. Ist $ T $ nämlich zu groß gewählt, befindet sich für fast alle $ \omega \in \Omega $ kaum noch Masse im Gebiet und die erwartete Endmasse ist $ \mathbb{E}[Q] = 0 $, während für sehr kleine $ T $ Masse zum Zeitpunkt $ T $ für fast alle $ \omega \in \Omega $ mit der Anfangsmasse übereinstimmt und somit $ \mathbb{E}[Q] = 1$. Für $ T = 1 $ erhalten wir für verschiedene $ \omega \in \Omega $ recht unterschiedliche Ergebnisse, da die Masse je nach Beschaffenheit des Flussvektorfeldes schneller oder langsamer durch das Gebiet transportiert wird. 
 \end{Bemerkung2}
 Einen guten kompakten Überblick über ein einzelnes Sample bietet folgende Darstellung:
 \begin{figure}[H]
@@ -105,7 +105,7 @@ Gruppe 6 dient dem Testen der anderen Gruppen in der Form sogenannter 'UnitTests
 https://github.com/udicr/VtkTools4UnstructeredMeshes.git
 
 \subsection{Ergebnisse}
-
+\subsubsection{Wahl der Zufallsparameter}
 \subsubsection{Konvergenztest}
 \subsubsection{Einige Beispielsamples}
 \begin{figure}[H]
