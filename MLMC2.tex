@@ -18,7 +18,7 @@ u_D&: \Gamma_{\text{D}} \to \R \\
 \rho_{\text{in}}&: \Gamma_{\text{in}} \times \mathbb{T} \to \R_{\geq0} \\
 \rho_0&: \mathcal{D} \to \R_{\geq0} \\
 \end{array} \newline \\
-&\text{ wobei } \partial \mathcal{D} = \Gamma_{\text{D}} \dot{\cup} \Gamma_{\text{N}}  \text{ und }  \Gamma_{\text{in}} \coloneqq  \{ z \in \partial \mathcal{D}: q(z)\cdot n(z) \leq 0 \} \subset  \partial \mathcal{D}
+&\text{ wobei } \partial \mathcal{D} = \Gamma_{\text{D}} \dot{\cup} \Gamma_{\text{N}}  \text{ und }  \Gamma_{\text{in}} \coloneqq  \{ z \in \partial \mathcal{D}: q(z)\cdot \nu(z) \leq 0 \} \subset  \partial \mathcal{D}
 \end{align*}
 Genauer sei $ Q(\omega) = J(\rho(\omega)) $ ein gegebenes Zielfunktional, dann ist es unser Ziel, den Erwartungswert $ \mathbb{E}[Q(\omega)] $ möglichst genau zu bestimmen. Beispielsweise kann eine beliebige Norm von $ \rho(\omega) $ als Zielfunktional betrachtet werden.
 Unser Modellproblem lautet also:
@@ -77,7 +77,7 @@ Dabei modellieren wir das zufällige Flussvektorfeld $ q(\omega_i)  : \mathcal{D
 \begin{array}{rlll}
 \dive (q(\omega_i,x)) &= 0  &\text{, für } x \in \mathcal{ D}\\  
 q(\omega_i,x) &= - \kappa(\omega_i) \nabla u(\omega_i,x)  &\text{, für } x \in \mathcal{D}\\
--q(\omega_i,x) \cdot n &= g_N(x)  &\text{, für } x \in \Gamma_N \\
+-q(\omega_i,x) \cdot \nu(x) &= g_N(x)  &\text{, für } x \in \Gamma_N \\
 u(\omega_i,x) &= u_D(x)  &\text{, für } x \in \Gamma_D \\
 \end{array}
 \end{cases} \\
@@ -334,7 +334,7 @@ Zu beachten ist, dass diese Version des Algorithmus, ebenso wie die in \cite{gil
 Satz \ref{MLMCTheorem} liefert zwar gerade die Garantie, dass es einen Multilevel Monte Carlo Schätzer gibt, welcher einen kleineren RMSE als $ \epsilon $ besitzt, für die genaue Konstruktion brauchen wir allerdings a-priori Kenntnisse über die Konstanten $ c_1 $ und $ c_2 $. Obiger Algorithmus verzichtet hingegen auf diese a-priori Kenntnisse und schätzt diese Konstanten on-the-fly.
 Bei der tatsächlichen Implementierung, welche wir später verwenden werden, geben wir außerdem ein $ L_{\max} $ vor. Der Algorithmus bricht ab, wenn $ L_{\max} $ überschritten werden würde, und liefert dann kein Ergebnis zurück.
 Dies liegt aber weniger an obigem Algorithmus, sondern vielmehr an der Erzeugung des zufälligen Vektorfeldes $ q(\omega_i,x) \leftarrow \text{RndVecField} $. Hierbei werden für die Permeabilität $ \kappa(\omega_i) $ log-normal verteilte Zufallsfelder mithilfe des Circulant-Embedding Algorithmus erzeugt. Um diese Erzeugung möglichst effizient zu gestalten, werden dafür nötige komplexe Eigenwertberechnungen zu Beginn vor der eigentlichen Multilevel Monte Carlo Methode für alle möglichen Level $ \widehat{\mathcal{H}} = \{ l_0,\dots,L_{\max}\}$ durchgeführt.
-In zukünftigen Arbeiten könnte dies unter Umständen aber auch insofern verbessert werden, dass diese Berechnung ebenfalls in den MLMC Algorithmus integriert wird, aber ohne den Effizienzgewinn durch die einmalige Eigenwertberechnung für jedes Level aufzugeben.
+In zukünftigen Arbeiten könnte dies unter Umständen etwas verbessert werden, indem diese Berechnung ebenfalls in den MLMC Algorithmus integriert wird, aber ohne den Effizienzgewinn durch die einmalige Eigenwertberechnung für jedes Level aufzugeben. Allerdings lässt sich die Wahl eine maximalen Level $ L_{\max} $ nicht endgültig umgehen, da schlicht nicht unendlich viel Speicher alloziert werden kann.
  
  
  

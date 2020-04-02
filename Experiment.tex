@@ -176,16 +176,19 @@ $ l $   &  $ M $  &  $ \mathbb{E}[Q_f-Q_c] $  &   $ \mathbb{E}[Q_f] $ &  $ \math
 %\end{tabular} \\
                                                                            \\
 Außerdem lassen sich auf Grundlage dieser Daten die Konvergenzparameter und Fehlerkomponenten abschätzen. 
-Wir schätzen an dieser Stelle $ \alpha $, also den Exponent der schwachen Konvergenz des Verfahrens, durch lineare Regression der Erwartungswerte $ \mathbb{E}[Q_f - Q_c] $. Anzumerken ist hierbei dass auf dem Basislevel, hier Level 4, keine Differenz in Spalte 3 und 5 angegeben werden kann, da auf dem Basislevel nur einzelne Samples ohne gröberes Vergleichssample betrachtet werden. Stattdessen werden hier in Spalte 3 und 5 ebenfalls wie in Spalte 4 und 6 der einzelne Erwartungswert bzw. die einzelne Varianz angegeben. Bei der Schätzung von $ \alpha $ wird deshalb das Basislevel nicht einbezogen.
-Den Exponenten des Rückgangs der Varianz $ \beta $ schätzen wir über den den Rückgang der empirischen Varianzen. Die Kosten in der letzten Spalte selbst werden während des Experiments über die Anzahl der Freiheitsgrade des zugrunde liegenden linearen Gleichungssystems abgeschätzt. 
-Auf Grundlage dieser geschätzten Kosten lässt sich auch dann $ \gamma $ bestimmen.
+Wir schätzen an dieser Stelle $ \alpha $, also den Exponent der schwachen Konvergenz des Verfahrens, durch den Logarithmus der Steigung der lineare Regressionsgerade der Erwartungswerte $ \mathbb{E}[Q_f - Q_c] $ gegenüber der Level. Anzumerken ist hierbei dass auf dem Basislevel, hier Level 4, keine Differenz in Spalte 3 und 5 angegeben werden kann, da auf dem Basislevel nur einzelne Samples ohne gröberes Vergleichssample betrachtet werden. Stattdessen werden hier in Spalte 3 und 5 ebenfalls wie in Spalte 4 und 6 der einzelne Erwartungswert bzw. die einzelne Varianz angegeben. Bei der Schätzung von $ \alpha $ wird deshalb das Basislevel nicht einbezogen.
+Den Exponenten des Rückgangs der Varianz $ \beta $ schätzen ähnlich wie $ \alpha $ als Logarithmus der Steigung einer Regressionsgeraden, diesmal über den den Rückgang der empirischen Varianzdifferenzen  $ \mathbb{V}[Q_f-Q_c] $ gegen die entsprechenden Level. Die Kosten in der letzten Spalte selbst werden während des Experiments über die Anzahl der Freiheitsgrade des zugrunde liegenden linearen Gleichungssystems abgeschätzt. 
+Auf Grundlage dieser geschätzten Kosten lässt sich dann genauso $ \gamma $ als Logarithmus der Steigung einer entsprechenden linearen Regression über die pro Level erwarteten Kosten $ \mathbb{E}[C_l] $ bestimmen. Da in unserer Schätzung die Kosten der Samples auf einem Level konstant ist, stimmt dieser Erwartungswert mit den Kosten jedes einzelnen Samples überein.  
 Konkret erhalten wir mit obigen Daten: 
 \begin{align*}
 	\alpha  &=    1.46067   \\
 	\beta   &=    5.18332   \\
 	\gamma  &=    2.36601   \\
 \end{align*}
-Außerdem können wir auch die einzelnen Fehlerkomponenten abschätzen, diese Fehlerschätzung wird auch im Algorithmus selbst vorgenommen. Wir erhalten: 
+Außerdem können wir auch die einzelnen Fehlerkomponenten abschätzen, diese Fehlerschätzung wird auch im Algorithmus selbst vorgenommen. So lässt sich der statistische Fehler durch \[
+ \text{statErr} \leq \sqrt{\sum_l   \frac{\mathbb{V}[Q_f-Q_c]}{M_l}} \ . \] 
+Den numerischen Fehler können wir über einen Romberg Fehlerschätzer abschätzen und nutzen dabei die Abschätzung \[ \left| \mathbb{E}[Q_f-Q_c] \right| < (2^{\alpha}-1)\frac{\epsilon}{2} \ . \] Mehr zu obigen Fehlerschätzern und eine Erklärung für obige Abschätzung findet sich in \cite{giles_2015}.
+Wir erhalten an dieser Stelle so: 
 \begin{align*}
 \text{numErr}  &= 6.95372e-05   \quad \text{(geschätzter numerischer Fehler)}\\
 \text{statErr} &= 0.000692712  \quad  \text{(geschätzter statistischer Fehler)}\\

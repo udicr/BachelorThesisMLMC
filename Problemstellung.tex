@@ -13,11 +13,11 @@ Nehmen wir die physikalische Annahme hinzu, dass der Fluss $q$ 'quellfrei' sein 
 \[ \text{Bestimme } u:\overline{\mathcal{D}} \to \R \text{ und } q: \overline{\mathcal{D}} \to \R^2 \text{ mit } \newline \]
 \[\setlength\arraycolsep{1pt}
 \text{(PS)}\begin{cases} 
-\begin{array}{rlc}
-\dive q     &= 0                 &\text{ ,} \text{in } \mathcal{D}\\
-q           &= - \kappa \nabla u &\text{ ,} \text{in }\mathcal{D}\\
-u           &= u_D               &\text{ ,} \text{auf } \Gamma_D \\
--q \cdot n  &= g_N               &\text{ ,} \text{auf } \Gamma_N 
+\begin{array}{rll}
+\dive q     &= 0                 &\text{ , } \text{in } \mathcal{D}\\
+q           &= - \kappa \nabla u &\text{ , } \text{in }\mathcal{D}\\
+u           &= u_D               &\text{ , } \text{auf } \Gamma_D \\
+-q \cdot \nu  &= g_N               &\text{ , } \text{auf } \Gamma_N 
 \end{array}
 \end{cases} \\
 \]
@@ -27,12 +27,12 @@ u           &= u_D               &\text{ ,} \text{auf } \Gamma_D \\
 Anschließend suchen wir die Dichteverteilung $\rho: \mathcal{D} \times \mathbb{T} \rightarrow \R_{\geq0} $ einer transportierten Substanz (in unserem Modell das Öl).  \newline
 Gegeben sei dazu die Anfangsverteilung $\rho_0: \mathcal{D} \rightarrow \R_{\geq0}$ und der Einfluss der Substanz über die Zeit
 $
-\rho_{\text{in}} : \Gamma_{\text{in}} \times \mathbb{T} \rightarrow \R_{\geq0} \text{ mit }  \Gamma_{\text{in}} \coloneqq  \{ z \in \partial \mathcal{D}: q(z)\cdot n(z) \leq 0 \} \subset  \partial \mathcal{D}
+\rho_{\text{in}} : \Gamma_{\text{in}} \times \mathbb{T} \rightarrow \R_{\geq0} \text{ mit }  \Gamma_{\text{in}} \coloneqq  \{ z \in \partial \mathcal{D}: q(z)\cdot \nu(z) \leq 0 \} \subset  \partial \mathcal{D}
 $.
-Dabei ist $n(z)$ der äußere Normalenvektor im (Rand-)Punkt $z$.
+Dabei ist $\nu(z)$ der äußere Normalenvektor im (Rand-)Punkt $z$.
 Wir bedienen uns wieder der Physik und fordern die Erfüllung der Bilanzgleichung
 \begin{align*}
-\forall K \subseteq \mathcal{D} , t\in \mathbb{T} : \frac{d}{dt} \int_K \rho(x,t) \, \mathrm{d}x + \int_{\partial K} \rho(x,t)q(x)\cdot n(x) \, \mathrm{d}a = 0.
+\forall K \subseteq \mathcal{D} , t\in \mathbb{T} : \frac{d}{dt} \int_K \rho(x,t) \, \mathrm{d}x + \int_{\partial K} \rho(x,t)q(x)\cdot \nu(x) \, \mathrm{d}a = 0.
 \end{align*}
 Wenden wir für ein zulässiges $K \subseteq \mathcal{D}$ und $\rho,q \in C^1(\mathcal{D})$ den Satz von Gauß an, erhalten wir
 \begin{align*}
@@ -49,9 +49,9 @@ Mit den entsprechenden Rand- und Anfangswerten erhalten wir so:
 \[\setlength\arraycolsep{1pt}
 \text{(TP)}\begin{cases} 
 \begin{array}{rlll}
-\partial_t \rho + \dive(\rho q) &= 0 &\text{ ,in } &\mathcal{D} \times (0,T)\\
-\rho(x,t) &= \rho_{\text{in}}(x,t) &\text{ ,auf } &\Gamma_{\text{in}} \times (0,T)\\
-\rho(x,0) &= \rho_0(x) &\text{ ,auf } &\mathcal{D} \\
+\partial_t \rho + \dive(\rho q) &= 0 &\text{ , in } &\mathcal{D} \times (0,T)\\
+\rho(x,t) &= \rho_{\text{in}}(x,t) &\text{ , auf } &\Gamma_{\text{in}} \times (0,T)\\
+\rho(x,0) &= \rho_0(x) &\text{ , auf } &\mathcal{D} \\
 \end{array}
 \end{cases} \\
 \]
@@ -77,7 +77,7 @@ Unser so entstehendes Problem fällt somit in den Bereich der Uncertainty Quanti
 		\begin{array}{rlll}
 		\dive (q(\omega,x)) &= 0  &\text{, für } x \in \mathbb{ D}\\  
 		q(\omega,x) &= - \kappa(\omega) \nabla u(\omega,x)  &\text{, für } x \in \mathcal{D}\\
-		-q(\omega,x) \cdot n &= g_N(x)  &\text{, für } x \in \Gamma_N \\
+		-q(\omega,x) \cdot \nu(x) &= g_N(x)  &\text{, für } x \in \Gamma_N \\
 		u(\omega,x) &= u_D(x)  &\text{, für } x \in \Gamma_D \\
 		\end{array}
 	\end{cases} \\
@@ -97,6 +97,6 @@ Unser so entstehendes Problem fällt somit in den Bereich der Uncertainty Quanti
 	    \rho_{\text{in}}&: \Gamma_{\text{in}} \times \mathbb{T} \to \R_{\geq0} \\
 		\rho_0&: \mathcal{D} \to \R_{\geq0} \\
 	\end{array} \newline \\
-&\text{ wobei } \partial \mathcal{D} = \Gamma_{\text{D}} \dot{\cup} \Gamma_{\text{N}}  \text{ und }  \Gamma_{\text{in}} \coloneqq  \{ z \in \partial \mathcal{D}: q(z)\cdot n(z) \leq 0 \} \subset  \partial \mathcal{D}
+&\text{ wobei } \partial \mathcal{D} = \Gamma_{\text{D}} \dot{\cup} \Gamma_{\text{N}}  \text{ und }  \Gamma_{\text{in}} \coloneqq  \{ z \in \partial \mathcal{D}: q(z)\cdot \nu(z) \leq 0 \} \subset  \partial \mathcal{D}
 \end{align*}
 Dabei stellen wir uns die Aufgabe, den Erwartungswert eines gegebenen Zielfunktionals $Q(\rho(\omega))$ zu berechnen, etwa dem Ausfluss der transportierten Substanz über den Rand. An dieser Stelle können wir dann, nachdem wir uns in den nächsten zwei Unterabschnitten damit beschäftigt haben, wie wir obige Probleme numerisch lösen, die MLMC Methode nutzen, um diesen Erwartungswert zu berechnen. 

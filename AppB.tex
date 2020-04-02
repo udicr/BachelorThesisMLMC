@@ -89,7 +89,7 @@ An dieser Stelle hat es sich nämlich bereits oft als nützlich erwiesen, eine s
 %	\xi_2
 %	\end{pmatrix}.
 %	\end{align*}
-	und $ \hat{n} $ sei der äußere Normalenvektor von $ \hat{K} $.
+	und $ \hat{\nu} $ sei der äußere Normalenvektor von $ \hat{K} $.
 \end{Definition}
 
 \begin{figure}[H]
@@ -100,7 +100,7 @@ An dieser Stelle hat es sich nämlich bereits oft als nützlich erwiesen, eine s
 \end{figure}
 
 \begin{Bemerkung}
-	$\forall i,j\in\{0,1,2,3\}: \int_{F_j} \hat{\psi}_i \cdot \hat{n} \da = \delta_{i,j} \text{ und } \hat{\psi}_i \in \mathbb{P}_1(\hat{K}, \R^2).$
+	$\forall i,j\in\{0,1,2,3\}: \int_{F_j} \hat{\psi}_i \cdot \hat{\nu} \da = \delta_{i,j} \text{ und } \hat{\psi}_i \in \mathbb{P}_1(\hat{K}, \R^2).$
 \end{Bemerkung}
 
 Weiter setzen wir noch 
@@ -108,7 +108,7 @@ Weiter setzen wir noch
 \text{ die Menge der Seiten }&& \hat{\mathcal{F}} &\coloneqq \left\{ \hat{F}_0, \hat{F}_1, \hat{F}_2,\hat{F}_3 \right\} \\
 \text{und den Seitenansatzraum }&&  \hat{W} &\coloneqq \spann \left\{ \psi_0,\psi_1, \psi_2, \psi_3 \right\}.
 \end{align*}
-\textbf{Transformation von $ \hat{K} $ zu $ K $:} Für ein beliebiges $ K \in \mathcal{K} $ wollen wir jetzt eine Seitenbasis $ \{ \psi_0^K, \psi_1^K, \psi_2^K, \psi_3^K \} $ berechnen (Wie bisher gegeben durch $ \forall i\in\{0,1,2,3\}: \psi_i^K\in\mathbb{P}_1(K,\R^2) \text{ und } \int_{F_j^K} \psi_i^K \cdot n^K \da = \delta_{i,j} $, wobei $ n^K $ äußere Normale von  $ K $ und $ F_j^K  $ beliebige Seite von $ K $). Dazu betrachten wir die affine Transformationsabbildung $ \varphi_K $ von $ \hat{K} $ zu $ K $:
+\textbf{Transformation von $ \hat{K} $ zu $ K $:} Für ein beliebiges $ K \in \mathcal{K} $ wollen wir jetzt eine Seitenbasis $ \{ \psi_0^K, \psi_1^K, \psi_2^K, \psi_3^K \} $ berechnen (Wie bisher gegeben durch $ \forall i\in\{0,1,2,3\}: \psi_i^K\in\mathbb{P}_1(K,\R^2) \text{ und } \int_{F_j^K} \psi_i^K \cdot \nu^K \da = \delta_{i,j} $, wobei $ \nu^K $ äußere Normale von  $ K $ und $ F_j^K  $ beliebige Seite von $ K $). Dazu betrachten wir die affine Transformationsabbildung $ \varphi_K $ von $ \hat{K} $ zu $ K $:
 \begin{align*}
 \varphi_K: \hat{K} \to K, \varphi_K(\xi) = z_{0,K} + B_K \xi \text{ mit passenden } B_K\in\R^{2 \times 2} \text{ und } \\
 J_K \coloneqq \det(B_K) > 0.
@@ -121,7 +121,7 @@ J_K \coloneqq \det(B_K) > 0.
 	Abbildung modifiziert aus \cite{knabner2013numerik} Seite 53
 \end{figure} 
 \begin{Lemma}
-	Es gilt: $\tilde{n}^K = \frac{1}{\abs{B_K^{-T} \hat{n}}} B_K^{-T} \hat{n} $ ist Normale zu $ \partial K $.
+	Es gilt: $\nu^K = \frac{1}{\abs{B_K^{-T} \hat{\nu}}} B_K^{-T} \hat{\nu} $ ist Normale zu $ \partial K $.
 \end{Lemma} $\newline$
 Die Seitenbasis auf $ K $ ist dann gegeben durch 
 \[ \psi_i^K = J_K^{-1}B_K \hat{\psi}_i \circ \varphi_K \ (i\in \{0,1,2,3\}) \]
@@ -146,7 +146,7 @@ Wir betrachten die Räume
 \[ M_h(u_D) \coloneqq \left\{ \mu_h \in M_h:\forall  F \subset \Gamma_D \int_F \mu_h \da = \int_F u_D \da  \right\}\]
 
 An dieser Stelle nutzen wir die folgende Äquivalenz:\\
-	\[ \psi_h \in W_h \iff \big[ \psi_h \in W_{\mathcal{K}} \text{ und }  (\psi_{K_1} - \psi_{K_2}) \cdot n^F = 0 \ (F= \partial K_1 \cap \partial K_2 \in \mathcal{F}^{\circ})\big] \]
+	\[ \psi_h \in W_h \iff \big[ \psi_h \in W_{\mathcal{K}} \text{ und }  (\psi_{K_1} - \psi_{K_2}) \cdot \nu^F = 0 \ (F= \partial K_1 \cap \partial K_2 \in \mathcal{F}^{\circ})\big] \]
 
 
 
@@ -154,9 +154,9 @@ Und untersuchen folgendes Problem:
 \begin{align*}
 \text{Bestimmme } (q_h,u_h, \lambda_h) \in W_\mathcal{K} \times \mathcal{Q}_h \times M_h(u_D) \text{ mit}\\
 \begin{dcases}
-(1) \int_K \kappa^{-1} q_h \psi_K \dx - \int_K u_h \dive(\psi_K) \dx = - \int_{\partial K} \lambda_h \psi_K \cdot n^K \da \\
+(1) \int_K \kappa^{-1} q_h \psi_K \dx - \int_K u_h \dive(\psi_K) \dx = - \int_{\partial K} \lambda_h \psi_K \cdot \nu^K \da \\
 (2) \int_K \dive(q_h) \phi_K \dx = 0\\
-(3) \sum_{K\in \mathcal{K}} \int_{\partial K} q_h \cdot n \mu_h \da = - \int_{\Gamma_N} g_N \mu_h \da
+(3) \sum_{K\in \mathcal{K}} \int_{\partial K} q_h \cdot \nu \mu_h \da = - \int_{\Gamma_N} g_N \mu_h \da
 \end{dcases}\\
 \text{für alle } K \in \mathcal{K}, \psi_K \in W_K, \phi_K \in \mathcal{Q}_h  \text{ und } \mu_h \in M_h(0)
 \end{align*}
@@ -165,7 +165,7 @@ Dieses Problem ist äquivalent zu dem diskreten gemischten FE-Problem, welches w
 \begin{align*}
 \text{Bestimme } (q_h,u_h) \in W_h(-g_N) \times \mathcal{Q}_h \text{ mit}\\
 \begin{cases}
-\int_{\Omega} \kappa ^{-1} q_h \cdot \psi_h \dx \mkern-15mu &- \int_{\Omega} u_h \dive(\psi_h) \dx = - \int_{\Gamma_D} u_D \psi_h \cdot n \da\\
+\int_{\Omega} \kappa ^{-1} q_h \cdot \psi_h \dx \mkern-15mu &- \int_{\Omega} u_h \dive(\psi_h) \dx = - \int_{\Gamma_D} u_D \psi_h \cdot \nu \da\\
 &- \int_{\Omega} \dive(q_h) \phi_h \dx = 0
 \end{cases} \\
 \text{für alle } (\psi_h, \phi_h) \in W_h(0) \times \mathcal{Q}_h

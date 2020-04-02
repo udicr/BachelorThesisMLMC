@@ -107,21 +107,21 @@ sogenannten upwind flux:
 		\Upsilon^{\star} : \text{Abb}(\mathcal{D}\times\mathbb{T},\R) &\to \text{Abb}(\mathcal{D}\times\mathbb{T},\R^2) \\
 		\rho_h &\mapsto 
 		\begin{cases}
-			\Upsilon(\rho_h|_K) , \ \text{ für } q\cdot n_F^K \geq 0 \\  
-			\Upsilon(\rho_h|_{K'}) ,\text{ für } q\cdot n_F^K < 0 \text{ und } \overline{F} = \partial K \cap \partial K'
+			\Upsilon(\rho_h|_K) , \ \text{ für } q\cdot \nu_F^K \geq 0 \\  
+			\Upsilon(\rho_h|_{K'}) ,\text{ für } q\cdot \nu_F^K < 0 \text{ und } \overline{F} = \partial K \cap \partial K'
 		\end{cases}
 	\end{align*}
 \end{Definition}
 Sei nun also $ \rho $ klassische Lösung von (dTP) mit $ \partial_t \rho = -\dive(\Upsilon(\rho)) $ auf $ \mathcal{D} $. Dann gilt nach Satz von Gauß:
 \begin{align}
 		\label{gaus1}
-		\int_{\partial \mathcal{D}} \rho q \cdot n \phi \da  =\int_{\partial \mathcal{D}} \Upsilon(\rho) \cdot n \phi \da = \int_{\mathcal{D}} \dive (\Upsilon(\rho)\phi) \dx
+		\int_{\partial \mathcal{D}} \rho q \cdot  \nu \phi \da  =\int_{\partial \mathcal{D}} \Upsilon(\rho) \cdot \nu \phi \da = \int_{\mathcal{D}} \dive (\Upsilon(\rho)\phi) \dx
 \end{align}
 Das Integral über den Rand von $ \mathcal{D} $ können wir nach der folgenden kleinen Vorüberlegung auch als Integral über alle Kanten der gewählten Zerlegung $ \mathcal{T} $ ausdrücken: \\
-Es gilt nämlich für alle inneren Kanten, also solche Kanten $ F $, für die zwei Zellen $ K $ und $ K' $ existieren, sodass $ \overline{F} = K \cap K' $ ist, dass \[ \int_F \Upsilon^{\star}(\rho) \cdot n^K \phi \da = - \int_F \Upsilon^{\star}(\rho) \cdot n^{K'} \phi \da \] stets erhalten ist. \\
+Es gilt nämlich für alle inneren Kanten, also solche Kanten $ F $, für die zwei Zellen $ K $ und $ K' $ existieren, sodass $ \overline{F} = K \cap K' $ ist, dass \[ \int_F \Upsilon^{\star}(\rho) \cdot \nu^K \phi \da = - \int_F \Upsilon^{\star}(\rho) \cdot \nu^{K'} \phi \da \] stets erhalten ist. \\
 Summieren wir also zunächst über alle Zellen, summieren anschließend die Integrale über alle Kanten und ersetzen dabei den analytischen durch den numerischen Fluss, erhalten wir gerade wieder obiges Randintegral. Es gilt also:
 \begin{align*}
-	\sum_{K\in \mathcal{T}} \sum_{F \in \mathcal{F}_K} \int_F \Upsilon^{\star}(\rho) \cdot n^K \phi \da = \int_{\partial \mathcal{D}} \Upsilon(\rho) \cdot n \phi \da \stackrel{\text{\ref{gaus1}}}{=} \int_{\mathcal{D}} \dive (\Upsilon(\rho)\phi) \dx
+	\sum_{K\in \mathcal{T}} \sum_{F \in \mathcal{F}_K} \int_F \Upsilon^{\star}(\rho) \cdot \nu^K \phi \da = \int_{\partial \mathcal{D}} \Upsilon(\rho) \cdot \nu \phi \da \stackrel{\text{\ref{gaus1}}}{=} \int_{\mathcal{D}} \dive (\Upsilon(\rho)\phi) \dx
 \end{align*}
 Nach der Produktregel der Divergenz lässt sich das letzte Integral auswerten zu:
 \begin{align*}
@@ -129,18 +129,18 @@ Nach der Produktregel der Divergenz lässt sich das letzte Integral auswerten zu
 \end{align*}
 Durch Umstellen und das Zusammenfassen der obigen Resultate erhalten wir so: 
 \begin{align*}
-	\sum_{K \in \mathcal{T}} \int_K \partial_t \rho  \phi \dx = \sum_{K \in \mathcal{T}} \int_K \Upsilon(\rho ) \cdot \nabla \phi \dx - 	\sum_{K\in \mathcal{T}} \sum_{F \in \mathcal{F}_K} \int_F \Upsilon^{\star}(\rho) \cdot n^K \phi \da
+	\sum_{K \in \mathcal{T}} \int_K \partial_t \rho  \phi \dx = \sum_{K \in \mathcal{T}} \int_K \Upsilon(\rho ) \cdot \nabla \phi \dx - 	\sum_{K\in \mathcal{T}} \sum_{F \in \mathcal{F}_K} \int_F \Upsilon^{\star}(\rho) \cdot \nu^K \phi \da
 \end{align*}
 Dabei wurde zusätzlich ausgenutzt, dass es sich bei den Kanten um Nullmengen handelt und wir so das Integral über $ \mathcal{D} $ als Summe der Integrale über alle Zellen auffassen können. Nutzen wir nun noch aus, dass für den Fluss  $\rho(x,t) = \rho_{\text{in}}(x,t)$ für $ x \in \Gamma_{\text{in}} $ gilt, kommen wir so auf 
 
 \begin{align}
 	\label{fastfertigsemi}
-	\sum_{K \in \mathcal{T}} \int_K \partial_t \rho  \phi \dx = \sum_{K \in \mathcal{T}} \int_K \Upsilon(\rho ) \cdot \nabla \phi \dx - 	\sum_{K\in \mathcal{T}} \left( \sum_{\substack{F \in \mathcal{F}_K \\ F \not\subseteq \Gamma_{\text{in}}}} \int_F \Upsilon^{\star}(\rho) \cdot n^K \phi \da + \sum_{\substack{F \in \mathcal{F}_K \\ F \subseteq \Gamma_{\text{in}}}} \rho_{\text{in}} q \cdot n^K \phi \da \right)
+	\sum_{K \in \mathcal{T}} \int_K \partial_t \rho  \phi \dx = \sum_{K \in \mathcal{T}} \int_K \Upsilon(\rho ) \cdot \nabla \phi \dx - 	\sum_{K\in \mathcal{T}} \left( \sum_{\substack{F \in \mathcal{F}_K \\ F \not\subseteq \Gamma_{\text{in}}}} \int_F \Upsilon^{\star}(\rho) \cdot \nu^K \phi \da + \sum_{\substack{F \in \mathcal{F}_K \\ F \subseteq \Gamma_{\text{in}}}} \rho_{\text{in}} q \cdot \nu^K \phi \da \right)
 \end{align}
  Die Semidiskretisierung ist motiviert durch (\ref{fastfertigsemi}) und lautet: Bestimme  $\rho_h \in \mathcal{Q}_h$, sodass für alle $ \phi_h \in \mathcal{Q}_h $ gilt:
 \begin{align}
 	\label{Semidiskretisierung}
-	\sum_{K \in \mathcal{T}} (\partial_t \rho_h, \phi_h)_{K} &= \sum_{K \in \mathcal{T}} \left( (\Upsilon(\rho_h), \nabla \phi_h)_{K} - \sum_{\substack{F \in \mathcal{F}_K \\ F \not \subseteq \Gamma_{\text{in}}}}(\Upsilon^{\star}(\rho_h)\cdot n^K,\phi_h)_{F} - (\rho_{\text{in}}q \cdot n^K,\phi_h)_{\partial K \cap \Gamma_{\text{in}}} \right)
+	\sum_{K \in \mathcal{T}} (\partial_t \rho_h, \phi_h)_{K} &= \sum_{K \in \mathcal{T}} \left( (\Upsilon(\rho_h), \nabla \phi_h)_{K} - \sum_{\substack{F \in \mathcal{F}_K \\ F \not \subseteq \Gamma_{\text{in}}}}(\Upsilon^{\star}(\rho_h)\cdot \nu^K,\phi_h)_{F} - (\rho_{\text{in}}q \cdot \nu^K,\phi_h)_{\partial K \cap \Gamma_{\text{in}}} \right)
 \end{align}
  Sei nun $ G $ die Anzahl der Zellenfreiheitsgrade. Diese hängen direkt von der Wahl des Lösungs-/Testraumes $ \mathcal{Q}_h $, bzw. der Wahl von $ p $ ab. Die Wahl $ p=0 $ liefert gerade ein Finite Volumen Verfahren, $ G $ ist dann gerade $ 1 $ und die Zellenbasis $ \{\mu_K \}_{K \in \mathcal{T}}$ ist durch $ \mu_K =  \mathds{1}_{K} $ gegeben.
  Für $ p \geq 1 $ erhalten wir hingegen ein Discontinuous Galerkin Verfahren. Die Anzahl der Zellfreiheitsgrade einer Zelle $ K $ ist dann gerade durch $ G = p \cdot \abs{\mathcal{V}_K} $ (also $ p $-mal die Anzahl der Ecken von $ K $) gegeben.
@@ -148,7 +148,7 @@ Dabei wurde zusätzlich ausgenutzt, dass es sich bei den Kanten um Nullmengen ha
  Sei $ M = \abs{\mathcal{T}} $ die Anzahl der Zellen und $ \mathcal{T} = \{K_1,\dots,K_M \} $ geordnet. Dann lässt sich die Zellenbasis $ \{ \mu_i \}_{i=1}^{GM} \subset \mathcal{Q}_h $ gemäß dem Träger der Basisfunktion zu $ \{ \mu_{K_j,i} \}_{j = 1,\dots,M ; i = 1,\dots,G } $ ordnen.
  Für jede feste Zelle $ K $ ergibt sich durch Einsetzen der zugehörigen Basisfunktionen $ \{ \mu_{K,i} \}_{i = 1,\dots,G }  $ : \\
 \begin{align*} 
-\left(\partial_t \rho_h, \mu_{K,i}  \right)_{K}  &= \bigg( \left(\Upsilon(\rho_h), \nabla\mu_{K,i}\right)_{K} - \sum_{\substack{F \in \mathcal{F}_{K} \\ F \not\subseteq \Gamma_{\text{in}}}} \left(\Upsilon^*(\rho_h) \cdot n^{K}, \mu_{K,i} \right)_{F} - \left(\rho_{\text{in}} q \cdot n^{K}, \mu_{K,i} \right)_{\partial K \cap \Gamma_{\text{in}}} \bigg) \\
+\left(\partial_t \rho_h, \mu_{K,i}  \right)_{K}  &= \bigg( \left(\Upsilon(\rho_h), \nabla\mu_{K,i}\right)_{K} - \sum_{\substack{F \in \mathcal{F}_{K} \\ F \not\subseteq \Gamma_{\text{in}}}} \left(\Upsilon^*(\rho_h) \cdot \nu^{K}, \mu_{K,i} \right)_{F} - \left(\rho_{\text{in}} q \cdot \nu^{K}, \mu_{K,i} \right)_{\partial K \cap \Gamma_{\text{in}}} \bigg) \\
 \end{align*}
 Wir erhalten so folgende Darstellung:
 %\begin{align*}
@@ -159,7 +159,7 @@ Wir erhalten so folgende Darstellung:
 \begin{align}
 \label{DarstellungvorLGS}
 \underbrace{\left(\partial_t \rho_h, \mu_{K,i}  \right)_{K}}_{\eqqcolon M_K(\partial_t \rho_{h}, \mu_{K,i})} = 
-\underbrace{ \left(\Upsilon(\rho_h), \nabla\mu_{K,i}\right)_{K} -  \sum_{F \in \mathcal{F}_{K} , F \not \subseteq \Gamma_{\text{in}}}\left(\Upsilon^{\star}(\rho_h)\cdot n^{K},\mu_{K,i}\big)_F \right)}_{\eqqcolon A_K(\rho_{h},\mu_{K,i})} \underbrace{- \left(\rho_{\text{in}}q\cdot n^{K},\mu_{K,i} \right)_{\partial K \cap \Gamma_{\text{in}}}}_{b_K(\mu_{K,i})}
+&\underbrace{ \left(\Upsilon(\rho_h), \nabla\mu_{K,i}\right)_{K} -  \sum_{F \in \mathcal{F}_{K} , F \not \subseteq \Gamma_{\text{in}}}\left(\Upsilon^{\star}(\rho_h)\cdot \nu^{K},\mu_{K,i}\big)_F \right)}_{\eqqcolon A_K(\rho_{h},\mu_{K,i})} \nonumber \\ &\underbrace{- \left(\rho_{\text{in}}q\cdot \nu^{K},\mu_{K,i} \right)_{\partial K \cap \Gamma_{\text{in}}}}_{b_K(\mu_{K,i})}
 \end{align}
 %
 Zusammen mit der Basisdarstellung von $ \rho_h $ in $\bigcup_{K \in \mathcal{T}}\{\mu_{K,i}  \}_{i=1}^G$, also 
@@ -167,8 +167,8 @@ Zusammen mit der Basisdarstellung von $ \rho_h $ in $\bigcup_{K \in \mathcal{T}}
 mit $ \underline{\rho}\in \R^{MG} $ und 
 $ \Upsilon^{\star}(\rho_h) = 
 \begin{cases} 
-\rho_h|_K \ ,\text{falls } q\cdot n^K|_F \geq 0\\
-\rho_{h}|_{K'} \ , \text{falls } q\cdot n^K|_F < 0
+\rho_h|_K \ ,\text{falls } q\cdot \nu^K|_F \geq 0\\
+\rho_{h}|_{K'} \ , \text{falls } q\cdot \nu^K|_F < 0
 \end{cases} 
 $
  können wir \ref{DarstellungvorLGS} in eine gewöhnliche Differentialgleichung erster Ordnung umformulieren. 
@@ -208,11 +208,11 @@ Integration der Differentialgleichung $\underline{M} \partial_t \underline{\rho}
 Dabei ist $t_i = i \Delta t$. Hiermit folgt:
 \begin{align*}
 \underline{M}\underline{\rho}(t_{i+1}) - \underline{M}\underline{\rho}(t_i) = \int_{t_i}^{t_{i+1}}
-\underline{M} \partial_t \underline{\rho}(t) dt =\int_{t_i}^{t_{i+1}} \underline{A} \underline{\rho}(t) + \underline{b}(t) dt.
+\underline{M} \partial_t \underline{\rho}(t) \dt =\int_{t_i}^{t_{i+1}} \underline{A} \underline{\rho}(t) + \underline{b}(t) \dt.
 \end{align*}
 Mithilfe der Anwendung verschiedener Quadraturformeln lässt sich daraus ein Runge-Kutta Verfahren herleiten. Über die Rechteckformel 
 \begin{align*}
-\int_{t_i}^{t_{i+1}}\underline{A} \underline{\rho}(t) + \underline{b} dt \approx (t_{i+1}-t_i)( 
+\int_{t_i}^{t_{i+1}}\underline{A} \underline{\rho}(t) + \underline{b} \dt \approx (t_{i+1}-t_i)( 
 \underline{A} \underline{\rho}(t_{i+1}) + \underline{b}(t_{i+1})) = \Delta t (\underline{A} \underline{\rho}(t_{i+1}) + \underline{b}(t_{i+1}))
 \end{align*}
 ergibt sich z.B. das implizite Euler Verfahren
@@ -265,10 +265,10 @@ $\rho(x,t) = \rho_{\text{in}}(x,t) \text{ für } (x,t) \in \Gamma_{\text{in}} \t
 	\begin{array}{rllll}
 	&\text{(swTP)} \ &B(\rho,\phi) &= \langle b,\phi\rangle \quad \forall \phi \in H^1(\mathcal{D}\times\mathbb{T}) \text{ mit } \phi(\cdot,T) = 0 \text{ und } \phi|_{\Gamma_{\text{out}}} = 0 \\
 	&\text{Dabei sind :} & & &\\
-	& &B(\rho,\phi) &\coloneqq  \int_{0}^{T} \int_{\mathcal{D}} \rho (\partial_t \phi + q \nabla \phi ) \dx \dt - \int_{\Gamma_{\text{out}}} \rho q \cdot n \phi \da  \dt \\
-	& &\langle b,\phi \rangle &\coloneqq \int_{\Gamma_{\text{in}}} \rho_{\text{in}} q \cdot n \phi \da  \dt - \int_{\mathcal{D}} \rho_0 \phi(0) \dx \\
-	& & \Gamma_{\text{out}} &\coloneqq  \{ z \in \partial \mathcal{D}: q(z)\cdot n(z) > 0 \} & \\
-	& & \Gamma_{\text{in}} &\coloneqq  \{ z \in \partial \mathcal{D}: q(z)\cdot n(z) \leq 0 \} &
+	& &B(\rho,\phi) &\coloneqq  \int_{0}^{T} \int_{\mathcal{D}} \rho (\partial_t \phi + q \nabla \phi ) \dx \dt - \int_{\Gamma_{\text{out}}} \rho q \cdot \nu \phi \da  \dt \\
+	& &\langle b,\phi \rangle &\coloneqq \int_{\Gamma_{\text{in}}} \rho_{\text{in}} q \cdot \nu \phi \da  \dt - \int_{\mathcal{D}} \rho_0 \phi(0) \dx \\
+	& & \Gamma_{\text{out}} &\coloneqq  \{ z \in \partial \mathcal{D}: q(z)\cdot \nu(z) > 0 \} & \\
+	& & \Gamma_{\text{in}} &\coloneqq  \{ z \in \partial \mathcal{D}: q(z)\cdot \nu(z) \leq 0 \} &
 	\end{array}\\
 	%		\text{(swTP)}
 	%		\begin{cases}
@@ -313,8 +313,8 @@ Es gilt an dieser Stelle außerdem:
 	\begin{align*}
 	\int_{\mathcal{D} \times \mathbb{T}}  
 	\dive(\rho &q ) \phi\; \mathrm{d} (x,t) = \int_{\mathbb{T}} \int_{\mathcal{D}} \dive(\rho q ) \phi \dx \dt \\
-	&= \int_{\mathbb{T}} \big( - \int_{\mathcal{D}} \rho q \nabla \phi \dx + \int_{\partial \mathcal{D}} \rho q \cdot n \ \phi \da \big)  \dt \\
-	&= - \int_{\mathcal{D} \times \mathbb{T}} \rho q \nabla \phi \; \mathrm{d} (x,t) + \int_{\mathbb{T}} \int_{\partial \mathcal{D}} \rho q \cdot n \phi \da \dt 
+	&= \int_{\mathbb{T}} \big( - \int_{\mathcal{D}} \rho q \nabla \phi \dx + \int_{\partial \mathcal{D}} \rho q \cdot \nu \ \phi \da \big)  \dt \\
+	&= - \int_{\mathcal{D} \times \mathbb{T}} \rho q \nabla \phi \; \mathrm{d} (x,t) + \int_{\mathbb{T}} \int_{\partial \mathcal{D}} \rho q \cdot \nu \phi \da \dt 
 	\end{align*}
 	Wenn $ \rho  $ eine klassische Lösung ist, dann existieren insbesondere $ \partial_t \rho  $ und $ \dive(\rho q) $ und obige Umformungen sind zulässig, d.h. $ \rho $ erfüllt auch die schwache Formulierung. \\
 	Ist $ \rho $ hingegen eine schwache Lösung, die zusätzlich in $ C^2(\mathcal{D}\times\mathbb{T},\R) $ liegt, so lassen sich alle oben durchgeführten Umformungen auch in die andere Richtung durchführen und wir erhalten: 
@@ -328,8 +328,8 @@ Es gilt an dieser Stelle außerdem:
 
 Auch die Semidiskretisierung können wir in ähnlicher Form, wie eben noch die schwache Formulierung, ausdrücken. Sei dazu
 \begin{align*}
-B_h(\rho_h,\phi) &\coloneqq \sum_{i=1}^{N} (\partial_t\rho_{h},\phi_h)_{K_i}  - \left( \sum_{i=1}^{N} (\Upsilon(\rho_h),\nabla \phi_h)_{K_i} - \sum_{\substack{F \in \mathcal{F}_{K_i} \\ F \not\subseteq \Gamma_{\text{in}}}} (\Upsilon^{\star}(\rho_h)\cdot n^K,\phi_h)_F\right) \\
-\langle b_h , \phi_h \rangle &\coloneqq (\rho_{\text{in}}q \cdot n^K,\phi_h)_{\partial K_i \cap \Gamma_{\text{in}}}
+B_h(\rho_h,\phi) &\coloneqq \sum_{i=1}^{N} (\partial_t\rho_{h},\phi_h)_{K_i}  - \left( \sum_{i=1}^{N} (\Upsilon(\rho_h),\nabla \phi_h)_{K_i} - \sum_{\substack{F \in \mathcal{F}_{K_i} \\ F \not\subseteq \Gamma_{\text{in}}}} (\Upsilon^{\star}(\rho_h)\cdot \nu^K,\phi_h)_F\right) \\
+\langle b_h , \phi_h \rangle &\coloneqq (\rho_{\text{in}}q \cdot \nu^K,\phi_h)_{\partial K_i \cap \Gamma_{\text{in}}}
 \end{align*}
 Dann löst $ \rho_h \in Q_h $ die Semidiskretisierung \eqref{Semidiskretisierung}, wenn $ B_h(\rho_{h},\phi) = \langle l_h,\phi_h \rangle  $ für alle $ \phi_h \in Q_h$ erhalten ist.
 

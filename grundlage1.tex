@@ -49,14 +49,14 @@ Die analytischen Grundlagen bauen zum Teil auf der Vorlesung "Rand- und Eigenwer
 
 
 \begin{Satz} (Gaußscher Integralsatz für Lipschitz-Gebiete) \newline
- 	Sei $\mathcal{D}  \subset \R^d$ ein beschränktes Lipschitz-Gebiet und sei $n$ der äußere Einheitsnormalenvektor an $\partial \mathcal{D}$. Dann gilt:
+ 	Sei $\mathcal{D}  \subset \R^d$ ein beschränktes Lipschitz-Gebiet und sei $\nu$ der äußere Einheitsnormalenvektor an $\partial \mathcal{D}$ mit Komponenten $ \nu_i $. Dann gilt:
  		\begin{align*}
-	 		\int_{\mathcal{D}} \frac{\partial f}{\partial x_i} \dx  = \int_{\partial \mathcal{D}} f n_i \da
+	 		\int_{\mathcal{D}} \frac{\partial f}{\partial x_i} \dx  = \int_{\partial \mathcal{D}} f \nu_i \da
  		\end{align*}
  		für jede Funktion $f \in C^1(\overline{\mathcal{D}})$. \\ 
  		Oft erscheint der Gaußsche Integralsatz auch in folgender Form:
  		\begin{align*}
- 		\int_{\mathcal{D}} \dive F \dx =  \int_{\partial \mathcal{D}} F \cdot n \da
+ 		\int_{\mathcal{D}} \dive F \dx =  \int_{\partial \mathcal{D}} F \cdot \nu \da
  		\end{align*}
  		wobei $F:\mathcal{D} \to \R^d$ ein Vektorfeld ist. Die Komponentenfunktionen von $F = (f_1,\dots,f_d)$ sollen dann $f_i \in C^1(\overline{\mathcal{D}})$ für $i=1,\dots,d$ erfüllen.
 \end{Satz}
@@ -67,7 +67,7 @@ Die analytischen Grundlagen bauen zum Teil auf der Vorlesung "Rand- und Eigenwer
 	Dann gilt:
 	
 	\begin{align*}
-		\int_{\mathcal{D}} f \dive ( F) \dx = \int_{\partial \mathcal{D}} f F \cdot n \da
+		\int_{\mathcal{D}} f \dive ( F) \dx = \int_{\partial \mathcal{D}} f F \cdot \nu \da
 		- \int_{\mathcal{D}}  F \cdot \nabla f \dx
 	\end{align*}
 \end{Folgerung}

@@ -74,11 +74,11 @@ Betrachten wir also die deterministische Version des Potentialströmungsproblems
 \dive q     &= 0                 &\text{ ,} \text{in } \mathcal{D} &(1)\\
 q           &= - \kappa \nabla u &\text{ ,} \text{in }\mathcal{D} &(2)\\
 u           &= u_D               &\text{ ,} \text{auf } \Gamma_D \\
--q \cdot n  &= g_N               &\text{ ,} \text{auf } \Gamma_N 
+-q \cdot \nu  &= g_N               &\text{ ,} \text{auf } \Gamma_N 
 \end{array}
 \end{cases} 
 \]
-Satz \ref{testfunktionen} sagt uns, dass wir in obiger Formulierung Gleichung (1) mit Testfunktionen $\phi \in H^1(\mathcal{D})$ und Gleichung (2) mit Testfunktionen $\psi \in H^1(\dive,\mathcal{D})$ multiplizieren und anschließend über $\mathcal{D}$ integrieren können und so eine äquivalente schwache Formulierung herleiten:
+Satz \ref{testfunktionen} sagt aus, dass wir in obiger Formulierung Gleichung (1) mit Testfunktionen $\phi \in H^1(\mathcal{D})$ und Gleichung (2) mit Testfunktionen $\psi \in H^1(\dive,\mathcal{D})$ multiplizieren und anschließend über $\mathcal{D}$ integrieren können und so eine äquivalente schwache Formulierung herleiten:
 \begin{align*}
 	\int_{\mathcal{D}} \dive(q) \phi \dx &= 0 \text{ für alle Testfunktionen } \phi : \mathcal{D} \to \R \\
 	\int_{\mathcal{D}} (q + \kappa \nabla u) \cdot \psi \dx &= 0 \text{ für alle Testfunktionen } \psi : \mathcal{D} \to \R^2
@@ -91,26 +91,26 @@ Da $\kappa$ weiter symmetrisch positiv definit ist, lässt sich letztere Gleichu
 umformen. Außerdem wollen wir nun noch die Dirichlet-Randbedingungen $u = u_D \text{ auf } \Gamma_{\text{D}}$ einfließen lassen. Dazu verwenden wir den Satz von Gauß:
 
 
-\[ \int_{\partial\Omega} (u\psi) \cdot n \da \stackrel{\text{Gauß}}{=} 
+\[ \int_{\partial\Omega} (u\psi) \cdot \nu \da \stackrel{\text{Gauß}}{=} 
  \int_{\Omega} \dive(u\psi) \dx = \int_{\Omega} \nabla u \cdot \psi \dx + \int_{\Omega} u \dive(\psi) \dx \quad (\psi:\Omega \to \R^2) \]
-Wählen wir nun unseren Ansatzraum so, dass  für die Funktion $ \psi$ gilt $ \psi \cdot n = 0 \text{ auf } \Gamma_N $. Damit folgt
+Wählen wir nun unseren Ansatzraum so, dass  für die Funktion $ \psi$ gilt $ \psi \cdot \nu = 0 \text{ auf } \Gamma_N $. Damit folgt
 \begin{align*}
-\int_{\Gamma_D} (u_D\psi) \cdot n \da \overset{\psi \cdot n|_{\Gamma_N} = 0}{\underset{u |_{\Gamma_D} = u_D} {=}} \int_{\partial\Omega} (u\psi) \cdot n \da = \underbrace{\int_{\Omega} \nabla u \cdot \psi \dx}_{\stackrel{(\star)}{=}- \int_{\Omega} (\kappa^{-1} q) \cdot \psi \dx } + \int_{\Omega} u \dive(\psi) \dx.
+\int_{\Gamma_D} (u_D\psi) \cdot \nu \da \overset{\psi \cdot \nu|_{\Gamma_N} = 0}{\underset{u |_{\Gamma_D} = u_D} {=}} \int_{\partial\Omega} (u\psi) \cdot \nu \da = \underbrace{\int_{\Omega} \nabla u \cdot \psi \dx}_{\stackrel{(\star)}{=}- \int_{\Omega} (\kappa^{-1} q) \cdot \psi \dx } + \int_{\Omega} u \dive(\psi) \dx.
 \end{align*}
-Die Neumann-Randbedingung $ (\kappa\nabla u) \cdot n = g_N \text{ auf } \Gamma_N $ wird durch die Wahl des Lösungsraumes erfüllt.
+Die Neumann-Randbedingung $ (\kappa\nabla u) \cdot \nu = g_N \text{ auf } \Gamma_N $ wird durch die Wahl des Lösungsraumes erfüllt.
 
 
 Wir erhalten so folgende schwache Formulierung:
 \label{sPS}
 \begin{align*}
-&\text{Bestimme } (q,u) \text{ mit } q\cdot n = -g_N \text{ auf } \Gamma_N \text{ und}\\
+&\text{Bestimme } (q,u) \text{ mit } q\cdot \nu = -g_N \text{ auf } \Gamma_N \text{ und}\\
 &\text{(sPS)}\begin{cases}
 \begin{array}{llll}
-\int_{\mathcal{D}} \kappa^{-1} q \cdot \psi \dx \, - \mkern-15mu &\int_{\mathcal{D}} u \, \dive(\psi) \dx &= - \int_{\Gamma_D} (u_D \psi) \cdot n \da\\
+\int_{\mathcal{D}} \kappa^{-1} q \cdot \psi \dx \, - \mkern-15mu &\int_{\mathcal{D}} u \, \dive(\psi) \dx &= - \int_{\Gamma_D} (u_D \psi) \cdot \nu \da\\
 &\int_{\mathcal{D}} \dive(q) \, \phi \dx &= 0
 \end{array}
 \end{cases}	\\
-&\text{ für alle } (\psi, \phi) \text{ in einem geeigneten Testraum mit } \psi \cdot n = 0 \text{ auf } \Gamma_N 
+&\text{ für alle } (\psi, \phi) \text{ in einem geeigneten Testraum mit } \psi \cdot \nu = 0 \text{ auf } \Gamma_N 
 \end{align*}
 
 \subsubsection{Diskretisierung}
@@ -127,7 +127,7 @@ Als Nächstes soll es nun Ziel sein, eine Lösung der im letzten Abschnitt erkl�
 	\begin{enumerate}[label=(\alph*)]
 		\item $ \{ \psi_i \}_{i=1}^{N} $ heißt Seitenbasis und ist definiert durch
 			\begin{align*}
-					\forall i,j \in \{1, \dots , N \} : \int_{F_j} \psi_i \cdot n^K \da = \pm \delta_{i,j} \text{ und }  \psi_i|_K \in \mathbb{P}_1(K,\R^2) \cap C(\overline{\mathcal{D}}) \ (K \in \mathcal{T}) 
+					\forall i,j \in \{1, \dots , N \} : \int_{F_j} \psi_i \cdot \nu^K \da = \pm \delta_{i,j} \text{ und }  \psi_i|_K \in \mathbb{P}_1(K,\R^2) \cap C(\overline{\mathcal{D}}) \ (K \in \mathcal{T}) 
 			\end{align*} 
 		\item $ \{ \mu_i \}_{i=1}^{M} $ heißt Zellenbasis und ist gegeben durch
 			\begin{align*}
@@ -140,7 +140,7 @@ Anschließend können wir mithilfe dieser Basisfunktionen die Testräume bzw. Fi
 \begin{Definition}(Ansatzräume)
 	\begin{enumerate}[label=(\alph*)]
 		\item $ W_h \coloneqq \spann \{ \psi_1,\dots,\psi_{N}\}$ (Seitenansatzraum/ Raum für $ \psi $ und $ q_h $)
-		\item $ W_h(g) \coloneqq \{ \psi_h \in W_h:  \int_F \psi_h \cdot n \da = \int_F g \da \; \text{ für alle } F \subseteq \Gamma_{\text{N}})  \}$
+		\item $ W_h(g) \coloneqq \{ \psi_h \in W_h:  \int_F \psi_h \cdot \nu \da = \int_F g \da \; \text{ für alle } F \subseteq \Gamma_{\text{N}})  \}$
 		\item $ \mathcal{Q}_h \coloneqq \spann \{ \mu_1, \dots, \mu_{M} \} $ (Zellenansatzraum/ Raum für $\phi $ und $ u_h $)
 	\end{enumerate}
 \end{Definition}
@@ -160,7 +160,7 @@ Zusammen mit der schwachen Formulierung \eqref{sPS} erhalten wir so das nun disk
 &\text{Bestimme } (q_h,u_h) \in W_h(-g_N) \times \mathcal{Q}_h \text{ mit}\\
 &\begin{cases}
 \begin{array}{llll}
-\int_{\Omega} \kappa^{-1} q_h \cdot \psi_h \dx \, - \mkern-15mu &\int_{\Omega} u_h \, \dive(\psi_h) \dx &= - \int_{\Gamma_D} (u_D \psi_h) \cdot n \da\\
+\int_{\Omega} \kappa^{-1} q_h \cdot \psi_h \dx \, - \mkern-15mu &\int_{\Omega} u_h \, \dive(\psi_h) \dx &= - \int_{\Gamma_D} (u_D \psi_h) \cdot \nu \da\\
 &\int_{\Omega} \dive(q_h) \, \phi_h \dx &= 0
 \end{array}
 \end{cases}	\\
@@ -183,7 +183,7 @@ Wir können nun damit beginnen, das so entstandene endlich dimensionale Problem 
 	\begin{align*}
 	&\underline{A} \in \R^{N \times N} \text{ mit } \underline{A}[n,k] \coloneqq \int_{\Omega} \kappa^{-1} \psi_n \cdot \psi_k \dx \\
 	&\underline{B} \in \R^{M \times N} \text{ mit } \underline{B}[m,k] \coloneqq - \int_{\Omega} \mu_m \dive(\psi_k) \dx \\
-	&\underline{b} \in \R^N \text{ mit } \underline{b}[k] \coloneqq - \int_{\Gamma_D} u_D \psi_k \cdot n \da
+	&\underline{b} \in \R^N \text{ mit } \underline{b}[k] \coloneqq - \int_{\Gamma_D} u_D \psi_k \cdot \nu \da
 	\end{align*}
 	und (für die Randbedingungen)
 	\begin{align*}
@@ -218,7 +218,7 @@ oder anders geschrieben :
 \end{align*}
 
 Wir haben so eine diskrete gemischte Formulierung des Potentialströmungsproblems hergeleitet und können mit dieser aus gegebenen Rand- und Anfangswerten ein Flussvektorfeld $q$ erzeugen, welches der obigen Differentialgleichung genügt.
-Es handelt sich hierbei um das gemischte Finite Elemente Verfahren. In M++ selbst lösen wir das Potentialströmungsproblem durch eine Abwandlung dieses Verfahrens. Wir diskretisieren dazu eine äquivalente Formulierung von (sPS) und erhalten so mit dem hybriden Finite Elemente Verfahren die gleichen Ergebnisse, die auch der vorgestellte gemischte Ansatz liefern würde, bei besserer Effizienz und guter Parallelisierbarkeit. Da das Potentialströmungsproblem in dieser Thesis primär dazu genutzt werden soll, das Vektorfeld $q$ zu bestimmen, soll uns aus theoretischer Sicht aber obige Formulierung genügen und wir verweisen hinsichtlich der Lösung mit hybriden gemischten Finiten Elementen, neben einem kleinen, Überblick verschaffendem Abschnitt im Appendix \ref{Referenzzelle&Hyb}, auf die Literatur, wie etwa \cite{brezzi2012mixed} oder  \cite{roberts1991mixed}.
+Es handelt sich hierbei um das gemischte Finite Elemente Verfahren. In M++ selbst lösen wir das Potentialströmungsproblem durch eine Abwandlung dieses Verfahrens. Wir diskretisieren dazu eine äquivalente Formulierung der schwachen Formulierung des Potentialströmungsproblems (sPS) und erhalten so mit dem hybriden Finite Elemente Verfahren die gleichen Ergebnisse, die auch der vorgestellte gemischte Ansatz liefern würde, bei besserer Effizienz und guter Parallelisierbarkeit. Da das Potentialströmungsproblem in dieser Thesis primär dazu genutzt werden soll, das Vektorfeld $q$ zu bestimmen, soll uns aus theoretischer Sicht aber obige Formulierung genügen und wir verweisen hinsichtlich der Lösung mit hybriden gemischten Finiten Elementen, neben einem kleinen, Überblick verschaffendem Abschnitt im Appendix \ref{Referenzzelle&Hyb}, auf die Literatur, wie etwa \cite{brezzi2012mixed} oder  \cite{roberts1991mixed}.
 
 
 
