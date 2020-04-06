@@ -73,9 +73,9 @@ In M++ entspricht Level $ l_0 $ bei der gewählten Diskretisierung 'UnitSquare' 
 \begin{figure}[H]
 	\centering
 	\captionabove{Zerlegung des Gebietes $ \mathcal{D} $ in Finite Elemente}
-	\subfigure[$l_0$ (256 Zellen)]{\includegraphics[width=0.31\textwidth]{plots/mesh4.png}}
-	\subfigure[$l_1$ (1024 Zellen)]{\includegraphics[width=0.31\textwidth]{plots/mesh5.png}}
-	\subfigure[$l_2$ (4096 Zellen)]{\includegraphics[width=0.31\textwidth]{plots/mesh6.png}}
+	\subfigure[$l_0 = 4$ (256 Zellen)]{\includegraphics[width=0.31\textwidth]{plots/mesh4.png}}
+	\subfigure[$l_1 = 5$ (1024 Zellen)]{\includegraphics[width=0.31\textwidth]{plots/mesh5.png}}
+	\subfigure[$l_2 = 6$ (4096 Zellen)]{\includegraphics[width=0.31\textwidth]{plots/mesh6.png}}
 \end{figure}
 Die Schrittweite für die Diskretisierung in der Zeit setzen wir auf $ \Delta t = \frac{h}{8} $. Diese Wahl ist besonders hinsichtlich der Stabilität des Verfahrens wichtig. Bei zu kleinen Zeitschrittweiten treten Oszillationen in der Lösung auf. Obige Wahl hat sich für unser Problem als hinreichend erwiesen.
 Entsprechend unserer Fragestellung können wir nun das betrachtete Zielfunktional formulieren:
@@ -107,13 +107,25 @@ Gruppe 2 implementiert ein Interface zum Erstellen verschiedener Schaubilder aus
 In Gruppe 3 werden die eingelesenen Arrays wieder als 'UnstructuredMesh' aufgefasst. Die Lösungen des Transportproblems selbst besteht aufgrund der Zeitabhängigkeit aus mehreren Gittern. Deshalb fassen wir diese als 'UnstructuredMultiScalarMesh' auf. Das Flussvektorfeld hingegen trägt als Daten Vektoren in jeder Zelle und wird deshalb als 'UnstructuredVectorMesh' betrachtet. Diese objektorientierte Unterteilung zieht sich bis auf Gruppe 2 durch alle Gruppen und ermöglicht den Umgang mit einzelnen Gittern und Skalaren, beispielsweise die Permeabilität des Bodens, mit einzelnen Gittern und Vektordaten, wie etwa das Flussvektorfeld, oder aber einer ganzen Gruppe von Gittern mit Skalaren, womit sich die zeitabhängige Lösung darstellen lässt. Wir können so die Lösungen der Samples als Gitterdaten auffassen und bearbeiten. Insbesondere wurden beispielsweise die Addition und Subtraktion von Gitterdaten implementiert, welche für Generierung von weiteren Gittern nach Vorbild der im Experiment durchgeführten Monte Carlo und Multilevel Monte Carlo Methoden unabdingbar sind. Unter anderem wurde dafür auch eine 'Upscale'-Methode entworfen, welche es ermöglicht unterschiedlich feine Quadratgitter miteinander zu verrechnen.
 Gruppe 4 und 5 kombinieren die von M++ während des Experiments abgespeicherten Vtk Dateien wie oben beschrieben. Im Folgenden nennen wir die so (in Form von Gitterdaten) erzeugte Lösung auch 'MLMC-Lösung'.
 Gruppe 6 dient dem Testen der anderen Gruppen in der Form sogenannter 'UnitTests'.
-Der Code und weitere zusätzliche Informationen sich auch im zugehörigen Github-Repository \cite{githubvtk} zu finden. Das Notebook und die in das MLMC Framework eingearbeiteten Skripte finden sich auch unter \cite{branchMLMCTP}.
+Der Code und weitere zusätzliche Informationen sind auch im zugehörigen Github-Repository \cite{githubvtk} zu finden. Das Notebook und die in das MLMC Framework eingearbeiteten Skripte finden sich auch unter \cite{branchMLMCTP}.
 
 \subsection{Ergebnisse}
 \subsubsection{Konvergenztest}
 Bevor wir auf die Ergebnisse des eigentlichen Experiments eingehen, wollen wir einen kurzen Blick auf die Ergebnisse des Konvergenztests werfen. Dieser Test ist dafür da, die Annahmen welche wir unter Anderem für \eqref{MLMCTheorem} getroffen hatten, für unser konkretes Problem nachzuweisen.
 
-TODO TABLE
+%\noindent\begin{tabular}{|p{0.15\q}|p{0.55\q}|p{1.4\q}|p{1.05\q}|p{1.35\q}|p{1.25\q}|p{0.9\q}|p{1.35\q}|}
+%	\hline
+%	$ l $   &  $ M $  &  $ \mathbb{E}[Q_f-Q_c] $  &   $ \mathbb{E}[Q_f] $ &  $ \mathbb{V}[Q_f-Q_c] $   &   $ \mathbb{V}[Q_f] $ &  kurtosis    &    cost\\
+%	\hline
+%	4 & 4374&    0.224298 &   0.224298&   0.0169387 &  0.0169387  &   2.75002 &     294912 \\
+%	5  &  59 & 0.00141127  &  0.231847 & 2.14581e-05 &  0.0239913  &   2.59309 & 2.3593e+06\\
+%	6   &  5  &0.000726783  &  0.104317 & 9.88656e-07 & 0.00614564  &   1.66323 &1.88744e+07\\
+%	\hline
+%	\multicolumn{2}{|c|}{$ \mathbb{E}[Q] $ }  &  \multicolumn{2}{c|}{MLMC Cost}   & \multicolumn{2}{c|}{$ l $}  &    \multicolumn{2}{c|}{$ M$} \\
+%	\hline
+%	\multicolumn{2}{|c|}{0.226436} & \multicolumn{2}{c|}{1.52352e+09  } &  \multicolumn{2}{c|}{   4 5 6 }     & \multicolumn{2}{c|}{4374 59 5}    \\
+%	\hline 
+%\end{tabular}\\
 
 
 Außerdem lassen sich auf Grundlage dieser Daten die Konvergenzparameter und später im Experiment auch einzelne Fehlerkomponenten abschätzen. 
@@ -280,9 +292,9 @@ Betrachten wir die MLMC Kosten gegen die Genauigkeit $ \epsilon $ erhalten wir s
 Zu guter Letzt ist es uns zudem über die Verarbeitung der gespeicherten VTK-Dateien möglich, die berechneten Lösungen, welche uns in Form von Gitterdaten vorliegen zu einer MLMC-Lösung zu kombinieren. Dazu addieren wir die Gitterdaten der Samples auf dem jeweiligen Level, subtrahieren überall außer im Basislevel $ 4 $ jeweils die Summe der Coarse-Samples, skalieren mit der Anzahl der betrachteten Samples und kombinieren anschließend die so entstandenen Monte-Carlo Lösungen zu einer Multilevel Monte Carlo Lösung.
 Einer der wichtigsten Schritte ist dabei das sogenannten "Upscaling", welches uns ermöglicht verschieden feine Gitter miteinander zu verrechnen. In unserem Fall ist dies recht einfach, da wir im Ort reguläre Gitter mit identischen Quadraten und in der Zeit eine äquidistante Zerlegung betrachten. Der zugehörige Code findet sich ebenfalls in \cite{githubvtk} in der Datei $'mlmc\_solution.py'$.
 Auch zu den so entstehenden Gitterdaten können wir wieder entsprechende Schaubilder generieren:
-\begin{figure}[H]
-	\centering
-	\captionabove{MLMC-Lösung für den Durchlauf $ \epsilon = 0.001 $}
-	\includegraphics[width=\textwidth]{plots/mlmc.png} 
-\end{figure}
+%\begin{figure}[H]
+%	\centering
+%	\captionabove{MLMC-Lösung für den Durchlauf $ \epsilon = 0.001 $}
+%	\includegraphics[width=\textwidth]{plots/mlmc.png} 
+%\end{figure}
 
