@@ -30,6 +30,7 @@
 \usepackage[ruled,vlined,linesnumbered]{algorithm2e}
 \usepackage{longtable}
 \usepackage{tabularx}
+\usepackage{pdfpages}
 
 
 % Abstand obere Blattkante zur Kopfzeile ist 2.54cm - 15mm
@@ -95,7 +96,7 @@
     Bachelorarbeit
     \vspace*{2cm}
 
-    {\huge Die Multilevel Monte Carlo Methode und deren Anwendung am Beispiel der linearen Transportgleichung}
+    {\huge Die Multilevel Monte Carlo Methode und\\ deren Anwendung am Beispiel der linearen \\Transportgleichung}
     \vspace*{2.5cm}
 
     Tim Buchholz
@@ -195,6 +196,9 @@
 \section{Appendix}
 \input{AppA}
 \input{AppB}
+\subsection{Jupyter-Notebook}
+Zuletzt wollen wir noch das Jupyter-Notebook angeben, mit welchem es möglich ist die gezeigten Ergebnisse zu reproduzieren. Es findet sich in \cite{branchMLMCTP} im Unterordner $'notebooks'$ unter dem Namen $'mlmc\_transport.ipynb'$. Ebenfalls ist in \cite{branchMLMCTP} eine Installationsanleitung zu finden. 
+\includepdf[pages=-]{mlmc_transport.pdf}
 
   % Literaturverzeichnis (beginnt auf einer ungeraden Seite)
   \newpage
