@@ -44,7 +44,7 @@ s &=  1.9\\
 \lambda_1,\lambda_2 &= 0.15\\
 \sigma &= 1.0
 \end{align*}
-Wir können auch das lognormal verteilte Zufallsfeld und das daraus resultierende stochastische Flussvektorfeld $ q $ exemplarisch für ein $ \omega \in \Omega $ grafisch darstellen. Bei der Visualisierung des Flussvektorfeldes nutzen wir dabei einen sogenannten 'Quiverplot'. Im Wesentlichen wird dabei FLussvektorfeld auf einem Gitter ausgewertet und die resultierenden Vektoren mithilfe eines Skalierungsparameters skaliert, damit die so eingezeichneten Vektoren eine dem Gitter angepasste Länge besitzen.
+Wir können auch das lognormal verteilte Zufallsfeld und das daraus resultierende stochastische Flussvektorfeld $ q $ exemplarisch für ein $ \omega \in \Omega $ grafisch darstellen. Bei der Visualisierung des Flussvektorfeldes nutzen wir dabei einen sogenannten 'Quiverplot'. Im Wesentlichen wird dabei Flussvektorfeld auf einem Gitter ausgewertet und die resultierenden Vektoren mithilfe eines Skalierungsparameters skaliert, damit die so eingezeichneten Vektoren eine dem Gitter angepasste Länge besitzen.
 
 \begin{figure}[H]
 	\centering
@@ -127,8 +127,13 @@ Bevor wir auf die Ergebnisse des eigentlichen Experiments eingehen, wollen wir e
 %	\hline 
 %\end{tabular}\\
 
+%\begin{figure}[H]
+%	\centering
+%	\captionabove{Erwartungswerte und Varianzen für $ \epsilon=0.003 $ }
+%	\includegraphics[width=\textwidth]{plots/eps003.png} 
+%\end{figure}
 
-Außerdem lassen sich auf Grundlage dieser Daten die Konvergenzparameter und später im Experiment auch einzelne Fehlerkomponenten abschätzen. 
+
 Wir schätzen an dieser Stelle $ \alpha $, also den Exponent der schwachen Konvergenz des Verfahrens, durch den Logarithmus der Steigung der lineare Regressionsgerade der Erwartungswerte $ \mathbb{E}[Q_f - Q_c] $ gegenüber der Level. Anzumerken ist hierbei dass auf dem Basislevel, hier Level 4, keine Differenz in Spalte 3 und 5 angegeben werden kann, da auf dem Basislevel nur einzelne Samples ohne gröberes Vergleichssample betrachtet werden. Stattdessen werden hier in Spalte 3 und 5 ebenfalls wie in Spalte 4 und 6 der einzelne Erwartungswert bzw. die einzelne Varianz angegeben. Bei der Schätzung von $ \alpha $ wird deshalb das Basislevel nicht einbezogen.
 Den Exponenten des Rückgangs der Varianz $ \beta $ schätzen ähnlich wie $ \alpha $ als Logarithmus der Steigung einer Regressionsgeraden, diesmal über den den Rückgang der empirischen Varianzdifferenzen  $ \mathbb{V}[Q_f-Q_c] $ gegen die entsprechenden Level. Die Kosten in der letzten Spalte selbst werden während des Experiments über die Anzahl der Freiheitsgrade des zugrunde liegenden linearen Gleichungssystems abgeschätzt. 
 Auf Grundlage dieser geschätzten Kosten lässt sich dann genauso $ \gamma $ als Logarithmus der Steigung einer entsprechenden linearen Regression über die pro Level erwarteten Kosten $ \mathbb{E}[C_l] $ bestimmen. Da in unserer Schätzung die Kosten der Samples auf einem Level konstant ist, stimmt dieser Erwartungswert mit den Kosten jedes einzelnen Samples überein.  
@@ -152,13 +157,14 @@ Um einen ersten Eindruck über die berechneten Samples zu gewinnen, ist es hilfr
 	\includegraphics[width=\textwidth]{plots/sample_5_1.png} 
 	\includegraphics[width=\textwidth]{plots/sample_coarse_5_1.png} 
 \end{figure}
-An diesem direkten Vergleich sieht man sehr schön, dass sich die beiden Vergleichssamples zwar im Level unterscheiden, aber sich auf dasselbe Zufallsereignis $ \omega_i $ beziehen. Noch offensichtlicher wird das, je höher das aktuell betrachtete Level ist:
-\begin{figure}[H]
-	\centering
-	\captionabove{Verlauf der Konzentration eines Samples auf Level $ l_2 = 6 $ und des zugehörigen Vergleichssamples auf Level $ l_1 = 5 $}
-	\includegraphics[width=\textwidth]{plots/sample_6_0.png} 
-	\includegraphics[width=\textwidth]{plots/sample_coarse_6_0.png} 
-\end{figure}
+An diesem direkten Vergleich sieht man sehr schön, dass sich die beiden Vergleichssamples zwar im Level unterscheiden, aber sich auf dasselbe Zufallsereignis $ \omega_i $ beziehen. Noch offensichtlicher wird das, je höher das aktuell betrachtete Level ist.
+%\begin{figure}[H]
+%	\centering
+%	\captionabove{Verlauf der Konzentration eines Samples auf Level $ l_2 = 6 $ und des zugehörigen Vergleichssamples auf Level $ l_1 = 5 $}
+%	\includegraphics[width=\textwidth]{plots/sample_6_0.png} 
+%	\includegraphics[width=\textwidth]{plots/sample_coarse_6_0.png} 
+%\end{figure}
+So erscheinen die Vergleichssamples auf dem höchsten betrachteten Level nahezu identisch:
 \begin{figure}[H]
 	\centering
 	\captionabove{Verlauf der Konzentration eines Samples auf Level $ l_3 = 7 $ und des zugehörigen Vergleichssamples auf Level $ l_2 = 6 $}
@@ -184,13 +190,19 @@ Wir führen das Experiment für vier verschiedene Werte von $ \epsilon $ durch u
 	\multicolumn{2}{|c|}{0.227824} & \multicolumn{2}{c|}{4.65371e+08  } &  \multicolumn{2}{c|}{   4 5 6 7}     & \multicolumn{2}{c|}{  378 6 2 2}    \\
 	\hline 
 \end{tabular}\\
-
-Wie bereits oben beim Konvergenztest können wir auch auf Grundlage der konkreten Daten des Experiments die Konvergenzparameter $ \alpha, \beta $ und  $ \gamma $ schätzen:
+Wieder lohnt es sich $ \mathbb{E}[Q_f-Q_c] $ und $ \mathbb{V}[Q_f-Q_c] $ auf den verschiedenen Levels zu vergleichen:
+\begin{figure}[H]
+	\centering
+	\captionabove{Erwartungswerte und Varianzen für $ \epsilon=0.01 $ }
+	\includegraphics[width=\textwidth]{plots/eps001.png} 
+\end{figure}
+Wie bereits oben beim Konvergenztest können wir auch auf Grundlage dieser Daten die Konvergenzparameter $ \alpha, \beta $ und  $ \gamma $ schätzen:
 \begin{align*}
 \alpha  &=     2.33362   \\
 \beta   &=    8.89928   \\
 \gamma  &=    3  \\
 \end{align*}
+
 Zudem können wir auch die einzelnen Fehlerkomponenten abschätzen, diese Fehlerschätzung wird auch im Algorithmus selbst vorgenommen. So lässt sich der statistische Fehler durch \[
 \text{statErr} \leq \sqrt{\sum_l   \frac{\mathbb{V}[Q_f-Q_c]}{M_l}} \ . \] 
 Den numerischen Fehler können wir über einen Romberg Fehlerschätzer abschätzen und nutzen dabei die Abschätzung \[ \left| \mathbb{E}[Q_f-Q_c] \right| < (2^{\alpha}-1)\frac{\epsilon}{2} \ . \] Mehr zu obigen Fehlerschätzern und eine Erklärung für obige Abschätzung findet sich in \cite{giles_2015}.
@@ -200,6 +212,7 @@ Wir erhalten an dieser Stelle so:
 \text{statErr} &= 0.00682769  \quad  \text{(geschätzter statistischer Fehler)}\\
 \text{error}   &= 0.00699115   \quad  \text{(geschätzter Gesamtfehler)}\\
 \end{align*}
+
 
 
 \subsubsection{$ \epsilon=0.005 $}
@@ -218,6 +231,11 @@ Wir erhalten an dieser Stelle so:
 	\multicolumn{2}{|c|}{0.226363} & \multicolumn{2}{c|}{8.45513e+08  } &  \multicolumn{2}{c|}{  4 5 6 7 }     & \multicolumn{2}{c|}{1539 22 2 2}    \\
 	\hline 
 \end{tabular}\\
+\begin{figure}[H]
+	\centering
+	\captionabove{Erwartungswerte und Varianzen für $ \epsilon=0.005 $ }
+	\includegraphics[width=\textwidth]{plots/eps005.png} 
+\end{figure}
 \begin{align*}
 \alpha  &=     2.30178   \\
 \beta   &=    8.66208   \\
@@ -242,7 +260,12 @@ Wir erhalten an dieser Stelle so:
 	\multicolumn{2}{|c|}{0.226436} & \multicolumn{2}{c|}{1.52352e+09  } &  \multicolumn{2}{c|}{   4 5 6 }     & \multicolumn{2}{c|}{4374 59 5}    \\
 	\hline 
 \end{tabular}\\
-
+\begin{figure}[H]
+	\centering
+	\captionabove{Erwartungswerte und Varianzen für $ \epsilon=0.003 $ }
+	\includegraphics[width=\textwidth]{plots/eps003.png} 
+\end{figure}
+Auffällig ist hier, dass im Gegensatz zu den anderen Durchläufen kein viertes Level angehängt wird. Tatsächlich genügen an dieser Stelle sogar die ersten drei Level um die erwünschte Genauigkeit zu erzielen. Allerdings fällt dafür der Konvergenzparameter $ \alpha $ etwas schlechter aus. Grund dafür ist, dass hier eine lineare Regression auf Grundlage von nur zwei Datenpunkten durchgeführt wird. Hinzukommt, dass die Erwartungswerte $ \mathbb{E}[Q_f-Q_c] $ von Level 5 zu 6 in allen Durchläufen etwas flacher abfällt, als etwa von 6 zu 7 in den anderen Durchläufen. Zur Ursache dieser Beobachtung können wir aktuell nur Vermutungen anstellen, zu einem stichhaltigem Resultat sind noch weitere Analysen nötig.
 \begin{align*}
 \alpha  &=    0.957394   \\
 \beta   &=    4.43991   \\
@@ -270,6 +293,11 @@ $ l $   &  $ M $  &  $ \mathbb{E}[Q_f-Q_c] $  &   $ \mathbb{E}[Q_f] $ &  $ \math
 \hline 
 \end{tabular}\\
 
+\begin{figure}[H]
+	\centering
+	\captionabove{Erwartungswerte und Varianzen für $ \epsilon=0.001 $ }
+	\includegraphics[width=\textwidth]{plots/eps0001.png} 
+\end{figure}
 
 \begin{align*}
 	\alpha  &=    2.22754   \\
@@ -289,12 +317,14 @@ Betrachten wir die MLMC Kosten gegen die Genauigkeit $ \epsilon $ erhalten wir s
 
 
 \subsection{MLMC Lösung}
-Zu guter Letzt ist es uns zudem über die Verarbeitung der gespeicherten VTK-Dateien möglich, die berechneten Lösungen, welche uns in Form von Gitterdaten vorliegen zu einer MLMC-Lösung zu kombinieren. Dazu addieren wir die Gitterdaten der Samples auf dem jeweiligen Level, subtrahieren überall außer im Basislevel $ 4 $ jeweils die Summe der Coarse-Samples, skalieren mit der Anzahl der betrachteten Samples und kombinieren anschließend die so entstandenen Monte-Carlo Lösungen zu einer Multilevel Monte Carlo Lösung.
-Einer der wichtigsten Schritte ist dabei das sogenannten "Upscaling", welches uns ermöglicht verschieden feine Gitter miteinander zu verrechnen. In unserem Fall ist dies recht einfach, da wir im Ort reguläre Gitter mit identischen Quadraten und in der Zeit eine äquidistante Zerlegung betrachten. Der zugehörige Code findet sich ebenfalls in \cite{githubvtk} in der Datei $'mlmc\_solution.py'$.
+Zu guter Letzt ist es uns zudem über die Verarbeitung der gespeicherten VTK-Dateien möglich, die berechneten Lösungen, welche uns in Form von Gitterdaten vorliegen zu einer MLMC-Lösung zu kombinieren. Auf die gleiche Weise lässt sich zudem auch ein Gesamt-Flussvektorfeld berechnen. Dazu addieren wir die Gitterdaten der Samples auf dem jeweiligen Level, subtrahieren überall außer im Basislevel $ 4 $ jeweils die Summe der Coarse-Samples, skalieren mit der Anzahl der betrachteten Samples und kombinieren anschließend die so entstandenen Monte-Carlo Lösungen zu einer Multilevel Monte Carlo Lösung.
+Einer der wichtigsten Schritte ist dabei das sogenannten 'Upscaling', welches uns ermöglicht verschieden feine Gitter miteinander zu verrechnen. In unserem Fall ist dies recht einfach, da wir im Ort reguläre Gitter mit identischen Quadraten und in der Zeit eine äquidistante Zerlegung betrachten. Der zugehörige Code findet sich ebenfalls in \cite{githubvtk} in der Datei $'mlmc\_solution.py'$.
 Auch zu den so entstehenden Gitterdaten können wir wieder entsprechende Schaubilder generieren:
-%\begin{figure}[H]
-%	\centering
-%	\captionabove{MLMC-Lösung für den Durchlauf $ \epsilon = 0.001 $}
-%	\includegraphics[width=\textwidth]{plots/mlmc.png} 
-%\end{figure}
+\begin{figure}[H]
+	\centering
+	\captionabove{MLMC-Lösung für den Durchlauf $ \epsilon = 0.001 $}
+	\includegraphics[width=\textwidth]{plots/mlmc.png} 
+\end{figure}
+Wir haben so die Lösung bestimmt, welche ausgewertet im gewählten Zielfunktional gerade den Wert des durch die Multilevel Monte Carlo Methode bestimmten Erwartungswertes
+$ \mathbb{E}[Q] = 0.229027 $ ergibt und zudem auf die gleiche Weise aus den Lösungen der partiellen Differentialgleichungen für die zufällig bestimmten Flussvektorfelder $ q(\omega_i) $ hervorgeht wie $ \mathbb{E}[Q] $ aus den Werten $ Q(\omega_i) $.
 
