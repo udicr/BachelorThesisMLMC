@@ -111,39 +111,47 @@ Der Code und weitere zusätzliche Informationen sind auch im zugehörigen Github
 
 \subsection{Ergebnisse}
 \subsubsection{Konvergenztest}
-Bevor wir auf die Ergebnisse des eigentlichen Experiments eingehen, wollen wir einen kurzen Blick auf die Ergebnisse des Konvergenztests werfen. Dieser Test ist dafür da, die Annahmen welche wir unter Anderem für \eqref{MLMCTheorem} getroffen hatten, für unser konkretes Problem nachzuweisen.
+Bevor wir auf die Ergebnisse des eigentlichen Experiments eingehen, wollen wir einen kurzen Blick auf die Ergebnisse des Konvergenztests werfen. Dieser Test ist dafür da, die Annahmen welche wir unter anderem für \eqref{MLMCTheorem} getroffen hatten, für unser konkretes Problem nachzuweisen.
+Konkret erhalten wir bei der Auswertung von 100 Samples pro Level (und den jeweiligen Vergleichssamples) folgende Ergebnisse:
 
-%\noindent\begin{tabular}{|p{0.15\q}|p{0.55\q}|p{1.4\q}|p{1.05\q}|p{1.35\q}|p{1.25\q}|p{0.9\q}|p{1.35\q}|}
-%	\hline
-%	$ l $   &  $ M $  &  $ \mathbb{E}[Q_f-Q_c] $  &   $ \mathbb{E}[Q_f] $ &  $ \mathbb{V}[Q_f-Q_c] $   &   $ \mathbb{V}[Q_f] $ &  kurtosis    &    cost\\
-%	\hline
-%	4 & 4374&    0.224298 &   0.224298&   0.0169387 &  0.0169387  &   2.75002 &     294912 \\
-%	5  &  59 & 0.00141127  &  0.231847 & 2.14581e-05 &  0.0239913  &   2.59309 & 2.3593e+06\\
-%	6   &  5  &0.000726783  &  0.104317 & 9.88656e-07 & 0.00614564  &   1.66323 &1.88744e+07\\
-%	\hline
-%	\multicolumn{2}{|c|}{$ \mathbb{E}[Q] $ }  &  \multicolumn{2}{c|}{MLMC Cost}   & \multicolumn{2}{c|}{$ l $}  &    \multicolumn{2}{c|}{$ M$} \\
-%	\hline
-%	\multicolumn{2}{|c|}{0.226436} & \multicolumn{2}{c|}{1.52352e+09  } &  \multicolumn{2}{c|}{   4 5 6 }     & \multicolumn{2}{c|}{4374 59 5}    \\
-%	\hline 
-%\end{tabular}\\
+\newlength\q
+\setlength\q{\dimexpr .125\textwidth -2.0\tabcolsep}
+\noindent\begin{tabular}{|p{0.15\q}|p{0.55\q}|p{1.4\q}|p{1.05\q}|p{1.35\q}|p{1.25\q}|p{0.9\q}|p{1.35\q}|}
+	\hline
+	$ l $   &  $ M $  &  $ \mathbb{E}[Q_f-Q_c] $  &   $ \mathbb{E}[Q_f] $ &  $ \mathbb{V}[Q_f-Q_c] $   &   $ \mathbb{V}[Q_f] $ &  kurtosis    &    cost\\
+	\hline
+	4 &  100&    0.206865 &   0.206865&   0.0159427 &  0.0159427 &     2.4997&      294912 \\
+	5 &  100&  0.00155785 &   0.229484&  3.2821e-05 &   0.024385 &    4.00513&  2.3593e+06 \\
+	6 &  100&  0.00081706 &   0.185469& 1.61547e-06 &  0.0186312 &    3.99497& 1.88744e+07 \\
+	7 &  100& 6.29135e-05 &   0.221811& 2.65752e-08 &  0.0239019 &    2.75915& 1.50995e+08 \\
+	8 &  100& 1.86929e-05 &   0.221853& 2.63677e-09 &  0.0209867 &    3.37952& 1.20796e+09 \\
+	\hline
+	\multicolumn{2}{|c|}{$ \mathbb{E}[Q] $ }  &  \multicolumn{2}{c|}{MLMC Cost}   & \multicolumn{2}{c|}{$ l $}  &    \multicolumn{2}{c|}{$ M$} \\
+	\hline
+	\multicolumn{2}{|c|}{0.226436} & \multicolumn{2}{c|}{1.52352e+09  } &  \multicolumn{2}{c|}{   4 5 6 }     & \multicolumn{2}{c|}{4374 59 5}    \\
+	\hline 
+\end{tabular}\\
 
-%\begin{figure}[H]
-%	\centering
-%	\captionabove{Erwartungswerte und Varianzen für $ \epsilon=0.003 $ }
-%	\includegraphics[width=\textwidth]{plots/eps003.png} 
-%\end{figure}
+Stellen wir die Erwartungswerte und Varianzen obiger Tabelle als Verlauf über die verschiedenen Level dar, erhalten wir:
 
+\begin{figure}[H]
+	\centering
+	\captionabove{Erwartungswerte und Varianzen im Konvergenztest }
+	\includegraphics[width=\textwidth]{plots/mlmckonv.png} 
+\end{figure}
 
-Wir schätzen an dieser Stelle $ \alpha $, also den Exponent der schwachen Konvergenz des Verfahrens, durch den Logarithmus der Steigung der lineare Regressionsgerade der Erwartungswerte $ \mathbb{E}[Q_f - Q_c] $ gegenüber der Level. Anzumerken ist hierbei dass auf dem Basislevel, hier Level 4, keine Differenz in Spalte 3 und 5 angegeben werden kann, da auf dem Basislevel nur einzelne Samples ohne gröberes Vergleichssample betrachtet werden. Stattdessen werden hier in Spalte 3 und 5 ebenfalls wie in Spalte 4 und 6 der einzelne Erwartungswert bzw. die einzelne Varianz angegeben. Bei der Schätzung von $ \alpha $ wird deshalb das Basislevel nicht einbezogen.
+Um nun die getroffenen Annahmen zu überprüfen, müssen wir die Konvergenzparameter aus \eqref{MLMCTheorem} bestimmen.
+Wir schätzen an dieser Stelle $ \alpha $, also den Exponent der schwachen Konvergenz des Verfahrens, durch den Logarithmus der Steigung einer lineare Regressionsgerade der Erwartungswerte $ \mathbb{E}[Q_f - Q_c] $ gegenüber der Level. Anzumerken ist hierbei dass auf dem Basislevel, hier Level 4, keine Differenz in Spalte 3 und 5 angegeben werden kann, da auf dem Basislevel nur einzelne Samples ohne gröberes Vergleichssample betrachtet werden. Stattdessen werden hier in Spalte 3 und 5 ebenfalls wie in Spalte 4 und 6 der einzelne Erwartungswert bzw. die einzelne Varianz angegeben. Bei der Schätzung von $ \alpha $ wird deshalb das Basislevel nicht einbezogen.
 Den Exponenten des Rückgangs der Varianz $ \beta $ schätzen ähnlich wie $ \alpha $ als Logarithmus der Steigung einer Regressionsgeraden, diesmal über den den Rückgang der empirischen Varianzdifferenzen  $ \mathbb{V}[Q_f-Q_c] $ gegen die entsprechenden Level. Die Kosten in der letzten Spalte selbst werden während des Experiments über die Anzahl der Freiheitsgrade des zugrunde liegenden linearen Gleichungssystems abgeschätzt. 
 Auf Grundlage dieser geschätzten Kosten lässt sich dann genauso $ \gamma $ als Logarithmus der Steigung einer entsprechenden linearen Regression über die pro Level erwarteten Kosten $ \mathbb{E}[C_l] $ bestimmen. Da in unserer Schätzung die Kosten der Samples auf einem Level konstant ist, stimmt dieser Erwartungswert mit den Kosten jedes einzelnen Samples überein.  
 Konkret erhalten wir mit obigen Daten: 
 
 \begin{align*}
-\alpha &= \\
-\beta &= \\
-\gamma &= \\
+\alpha &=2.28418 \\
+\beta &=4.67364 \\
+\gamma &=  3\\
 \end{align*}
+Insbesondere sind also (zumindest nach unserer Schätzung) die getroffenen Annahmen für das betrachtete Problem erfüllt.
 \subsubsection{Einige Beispielsamples}
 Um einen ersten Eindruck über die berechneten Samples zu gewinnen, ist es hilfreich einige Beispielsamples zu betrachten. Im Experiment werden wir Samples auf den Levels $ 4,5,6 $ und $ 7 $ betrachten. Im Folgenden sind daher zu diesen Levels je ein Beispielsample dargestellt.
 \begin{figure}[H]
@@ -174,8 +182,7 @@ So erscheinen die Vergleichssamples auf dem höchsten betrachteten Level nahezu 
 \subsubsection{$ \epsilon=0.01 $}
 Wir führen das Experiment für vier verschiedene Werte von $ \epsilon $ durch und beginnen mit dem größten Wert $ \epsilon=0.01 $. Wir erhalten: 
 
-\newlength\q
-\setlength\q{\dimexpr .125\textwidth -2.0\tabcolsep}
+
 \noindent\begin{tabular}{|p{0.15\q}|p{0.55\q}|p{1.4\q}|p{1.05\q}|p{1.35\q}|p{1.25\q}|p{0.9\q}|p{1.35\q}|}
 	\hline
 	$ l $   &  $ M $  &  $ \mathbb{E}[Q_f-Q_c] $  &   $ \mathbb{E}[Q_f] $ &  $ \mathbb{V}[Q_f-Q_c] $   &   $ \mathbb{V}[Q_f] $ &  kurtosis    &    cost\\
