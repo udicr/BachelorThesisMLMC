@@ -5,7 +5,7 @@
 In diesem Abschnitt wollen wir anhand des linearen Transportproblems auch tatsächliche praktische Resultate der Multilevel Monte Carlo Methode beleuchten.
 Wir setzen dazu
 \begin{itemize}
-	\item $ \mathcal{D} = (0,1)^2 \subset \R^2 $ (also insbesondere wie breits zuvor in der Theorie $ n=2 $)
+	\item $ \mathcal{D} = (0,1)^2 \subset \R^2 $ (also insbesondere wie bereits zuvor in der Theorie $ n=2 $)
 	\item $ \mathbb{T} = [0,T] = [0,1] $ (vgl. Bemerkung \ref{wahlfunk})
 	\item $ \rho_{\text{in}} \equiv 0 $
 	\item $ \rho_0(x) = 
@@ -34,7 +34,7 @@ Der Maximalwert ist dabei so gewählt, dass die Gesamtmasse der Anfangsbedingung
 Uns interessiert nun folgende Fragestellung: \\
 \textbf{Wie groß ist der erwartete Anteil der Masse, welcher nach Ablauf des betrachteten Zeitintervalls $ \mathbb{T} $ im Rechengebiet $ \mathcal{D} $ verbleibt?}\\
 
-Wie bereits an früherer Stelle erklärt, berechnen wir hierzu ein stochastische Flussvektorfeld $ q : \Omega \times \overline{\mathcal{ D}} \to \R^2 $ als Lösung des zugehörigen Potentialströmungsproblems, wobei wir dabei den Permeabilitätstensor $ \kappa : \Omega \times \mathcal{D} \to \R_{\geq0} $ als lognormal verteiltes Zufallsfeld modellieren. Wir identifizieren dabei die Verteilung von $ \kappa $ mit der zugehörigen Kovarianzfunktion:
+Wie bereits an früherer Stelle erklärt, berechnen wir hierzu ein stochastisches Flussvektorfeld $ q : \Omega \times \overline{\mathcal{ D}} \to \R^2 $ als Lösung des zugehörigen Potentialströmungsproblems, wobei wir dabei den Permeabilitätstensor $ \kappa : \Omega \times \mathcal{D} \to \R_{\geq0} $ als lognormal verteiltes Zufallsfeld modellieren. Wir identifizieren dabei die Verteilung von $ \kappa $ mit der zugehörigen Kovarianzfunktion:
 \[
  C(x,y) = \sigma^2 \exp(- \frac{\lVert x-y \rVert_2^s}{\lambda^s} ) .
 \]
@@ -44,13 +44,13 @@ s &=  1.9\\
 \lambda_1,\lambda_2 &= 0.15\\
 \sigma &= 1.0
 \end{align*}
-Wir können auch das lognormal verteilte Zufallsfeld und das daraus resultierende stochastische Flussvektorfeld $ q $ exemplarisch für ein $ \omega \in \Omega $ grafisch darstellen. Bei der Visualisierung des Flussvektorfeldes nutzen wir dabei einen sogenannten 'Quiverplot'. Im Wesentlichen wird dabei Flussvektorfeld auf einem Gitter ausgewertet und die resultierenden Vektoren mithilfe eines Skalierungsparameters skaliert, damit die so eingezeichneten Vektoren eine dem Gitter angepasste Länge besitzen.
+Wir können auch das lognormal verteilte Zufallsfeld und das daraus resultierende stochastische Flussvektorfeld $ q $ exemplarisch für ein $ \omega \in \Omega $ grafisch darstellen. Bei der Visualisierung des Flussvektorfeldes nutzen wir dabei einen sogenannten 'Quiverplot'. Im Wesentlichen wird dabei das Flussvektorfeld auf einem Gitter ausgewertet und die resultierenden Vektoren mithilfe eines Skalierungsparameters skaliert, damit die so eingezeichneten Vektoren eine dem Gitter angepasste Länge besitzen.
 
 \begin{figure}[H]
 	\centering
 	\captionabove{Visualisierung der stochastischen Modellierung}
 	\subfigure[lognormal verteiltes Zufallsfeld mit obigen Parametern]{\includegraphics[width=0.49\textwidth]{plots/perm.png}}
-	\subfigure[Zufallsfeld und zugehöriges  Flussvektorfeldes]{\includegraphics[width=0.49\textwidth]{plots/permquiv.png}}
+	\subfigure[Zufallsfeld und zugehöriges  Flussvektorfeld]{\includegraphics[width=0.49\textwidth]{plots/permquiv.png}}
 	
 \end{figure}
 
@@ -102,16 +102,16 @@ In M++ werden zur Speicherung von Gitterdaten sogenannte Vtk-Dateien genutzt. Al
 	\captionabove{Überblick über implementierte Module}
 	\includegraphics[width=\textwidth]{plots/klassenuml2.png} 
 \end{figure}
-Wie oben anhand der Klassenstrukturen dargestellt, können die Module in 6 Gruppen unterteilt werden. Gruppe 1 ermöglicht auf Grundlage des externen Moduls 'vtk' \cite{sitevtk} das Lesen von Vtk Dateien. Insbesondere ist es Möglich die Gitterdaten in sogenannten 'numpy-Arrays' zu exportieren. 
-Gruppe 2 implementiert ein Interface zum Erstellen verschiedener Schaubilder aus den eingelesen Vtk Dateien. Im später im Appendix beigefügten Notebook und den entsprechenden Skripten im Hintergrund sind einige exemplarische Beispiele vorhanden. Außerdem wurde alle Schaubilder dieser Thesis über dieses Interface erstellt.
-In Gruppe 3 werden die eingelesenen Arrays wieder als 'UnstructuredMesh' aufgefasst. Die Lösungen des Transportproblems selbst besteht aufgrund der Zeitabhängigkeit aus mehreren Gittern. Deshalb fassen wir diese als 'UnstructuredMultiScalarMesh' auf. Das Flussvektorfeld hingegen trägt als Daten Vektoren in jeder Zelle und wird deshalb als 'UnstructuredVectorMesh' betrachtet. Diese objektorientierte Unterteilung zieht sich bis auf Gruppe 2 durch alle Gruppen und ermöglicht den Umgang mit einzelnen Gittern und Skalaren, beispielsweise die Permeabilität des Bodens, mit einzelnen Gittern und Vektordaten, wie etwa das Flussvektorfeld, oder aber einer ganzen Gruppe von Gittern mit Skalaren, womit sich die zeitabhängige Lösung darstellen lässt. Wir können so die Lösungen der Samples als Gitterdaten auffassen und bearbeiten. Insbesondere wurden beispielsweise die Addition und Subtraktion von Gitterdaten implementiert, welche für Generierung von weiteren Gittern nach Vorbild der im Experiment durchgeführten Monte Carlo und Multilevel Monte Carlo Methoden unabdingbar sind. Unter anderem wurde dafür auch eine 'Upscale'-Methode entworfen, welche es ermöglicht unterschiedlich feine Quadratgitter miteinander zu verrechnen.
-Gruppe 4 und 5 kombinieren die von M++ während des Experiments abgespeicherten Vtk Dateien wie oben beschrieben. Im Folgenden nennen wir die so (in Form von Gitterdaten) erzeugte Lösung auch 'MLMC-Lösung'.
+Wie oben anhand der Klassenstrukturen dargestellt, können die Module in 6 Gruppen unterteilt werden. Gruppe 1 ermöglicht auf Grundlage des externen Moduls 'vtk' \cite{sitevtk} das Lesen von Vtk Dateien. Insbesondere ist es möglich, die Gitterdaten in sogenannten 'numpy-Arrays' zu exportieren. 
+Gruppe 2 implementiert ein Interface zum Erstellen verschiedener Schaubilder aus den eingelesenen Vtk Dateien. Im später im Appendix beigefügten Notebook und den entsprechenden Skripten im Hintergrund sind einige exemplarische Beispiele vorhanden. Außerdem wurden alle Schaubilder dieser Thesis über dieses Interface erstellt.
+In Gruppe 3 werden die eingelesenen Arrays wieder als 'UnstructuredMesh' aufgefasst. Die Lösungen des Transportproblems selbst bestehen aufgrund der Zeitabhängigkeit aus mehreren Gittern. Deshalb fassen wir diese als 'UnstructuredMultiScalarMesh' auf. Das Flussvektorfeld hingegen trägt als Daten Vektoren in jeder Zelle und wird deshalb als 'UnstructuredVectorMesh' betrachtet. Diese objektorientierte Unterteilung zieht sich bis auf Gruppe 2 durch alle Gruppen und ermöglicht den Umgang mit einzelnen Gittern und Skalaren, beispielsweise die Permeabilität des Bodens, mit einzelnen Gittern und Vektordaten, wie etwa das Flussvektorfeld, oder aber einer ganzen Gruppe von Gittern mit Skalaren, womit sich die zeitabhängige Lösung darstellen lässt. Wir können so die Lösungen der Samples als Gitterdaten auffassen und bearbeiten. Insbesondere wurden beispielsweise die Addition und Subtraktion von Gitterdaten implementiert, welche für Generierung von weiteren Gittern nach Vorbild der im Experiment durchgeführten Monte Carlo und Multilevel Monte Carlo Methoden unabdingbar sind. Unter anderem wurde dafür auch eine 'Upscale'-Methode entworfen, welche es ermöglicht, unterschiedlich feine Quadratgitter miteinander zu verrechnen.
+Gruppe 4 und 5 kombinieren die von M++ während des Experiments abgespeicherten Vtk Dateien, wie oben beschrieben. Im Folgenden nennen wir die so (in Form von Gitterdaten) erzeugte Lösung auch 'MLMC-Lösung'.
 Gruppe 6 dient dem Testen der anderen Gruppen in der Form sogenannter 'UnitTests'.
 Der Code und weitere zusätzliche Informationen sind auch im zugehörigen Github-Repository \cite{githubvtk} zu finden. Das Notebook und die in das MLMC Framework eingearbeiteten Skripte finden sich auch unter \cite{branchMLMCTP}.
 
 \subsection{Ergebnisse}
 \subsubsection{Konvergenztest}
-Bevor wir auf die Ergebnisse des eigentlichen Experiments eingehen, wollen wir einen kurzen Blick auf die Ergebnisse des Konvergenztests werfen. Dieser Test ist dafür da, die Annahmen welche wir unter anderem für \eqref{MLMCTheorem} getroffen hatten, für unser konkretes Problem nachzuweisen.
+Bevor wir auf die Ergebnisse des eigentlichen Experiments eingehen, wollen wir einen kurzen Blick auf die Ergebnisse des Konvergenztests werfen. Dieser Test ist dafür da, die Annahmen, welche wir unter anderem für \eqref{MLMCTheorem} getroffen hatten, für unser konkretes Problem nachzuweisen.
 Konkret erhalten wir bei der Auswertung von 100 Samples pro Level (und den jeweiligen Vergleichssamples) folgende Ergebnisse:
 
 \newlength\q
@@ -141,17 +141,17 @@ Stellen wir die Erwartungswerte und Varianzen obiger Tabelle als Verlauf über d
 \end{figure}
 
 Um nun die getroffenen Annahmen zu überprüfen, müssen wir die Konvergenzparameter aus \eqref{MLMCTheorem} bestimmen.
-Wir schätzen an dieser Stelle $ \alpha $, also den Exponent der schwachen Konvergenz des Verfahrens, durch den Logarithmus der Steigung einer lineare Regressionsgerade der Erwartungswerte $ \mathbb{E}[Q_f - Q_c] $ gegenüber der Level. Anzumerken ist hierbei dass auf dem Basislevel, hier Level 4, keine Differenz in Spalte 3 und 5 angegeben werden kann, da auf dem Basislevel nur einzelne Samples ohne gröberes Vergleichssample betrachtet werden. Stattdessen werden hier in Spalte 3 und 5 ebenfalls wie in Spalte 4 und 6 der einzelne Erwartungswert bzw. die einzelne Varianz angegeben. Bei der Schätzung von $ \alpha $ wird deshalb das Basislevel nicht einbezogen.
-Den Exponenten des Rückgangs der Varianz $ \beta $ schätzen ähnlich wie $ \alpha $ als Logarithmus der Steigung einer Regressionsgeraden, diesmal über den den Rückgang der empirischen Varianzdifferenzen  $ \mathbb{V}[Q_f-Q_c] $ gegen die entsprechenden Level. Die Kosten in der letzten Spalte selbst werden während des Experiments über die Anzahl der Freiheitsgrade des zugrunde liegenden linearen Gleichungssystems abgeschätzt. 
+Wir schätzen an dieser Stelle $ \alpha $, also den Exponent der schwachen Konvergenz des Verfahrens, durch den Logarithmus der Steigung einer lineare Regressionsgerade der Erwartungswerte $ \mathbb{E}[Q_f - Q_c] $ gegenüber der Level. Anzumerken ist hierbei, dass auf dem Basislevel, hier Level 4, keine Differenz in Spalte 3 und 5 angegeben werden kann, da auf dem Basislevel nur einzelne Samples ohne gröberes Vergleichssample betrachtet werden. Stattdessen werden hier in Spalte 3 und 5 ebenfalls wie in Spalte 4 und 6 der einzelne Erwartungswert bzw. die einzelne Varianz angegeben. Bei der Schätzung von $ \alpha $ wird deshalb das Basislevel nicht einbezogen.
+Den Exponenten des Rückgangs der Varianz $ \beta $ schätzen ähnlich wie $ \alpha $ als Logarithmus der Steigung einer Regressionsgeraden, diesmal über den den Rückgang der empirischen Varianzdifferenzen  $ \mathbb{V}[Q_f-Q_c] $ für die entsprechenden Level. Die Kosten in der letzten Spalte werden während des Experiments über die Anzahl der Freiheitsgrade des zugrunde liegenden linearen Gleichungssystems abgeschätzt. 
 Auf Grundlage dieser geschätzten Kosten lässt sich dann genauso $ \gamma $ als Logarithmus der Steigung einer entsprechenden linearen Regression über die pro Level erwarteten Kosten $ \mathbb{E}[C_l] $ bestimmen. Da in unserer Schätzung die Kosten der Samples auf einem Level konstant ist, stimmt dieser Erwartungswert mit den Kosten jedes einzelnen Samples überein.  
-Konkret erhalten wir mit obigen Daten: 
+Konkret erhalten wir mit obigen Daten also: 
 
 \begin{align*}
 \alpha &=2.28418 \\
 \beta &=4.67364 \\
 \gamma &=  3\\
 \end{align*}
-Insbesondere sind also (zumindest nach unserer Schätzung) die getroffenen Annahmen für das betrachtete Problem erfüllt.
+Insbesondere sind somit (zumindest gemäß den vorgenommenen Schätzungen) die getroffenen Annahmen für das betrachtete Problem erfüllt.
 \subsubsection{Einige Beispielsamples}
 Um einen ersten Eindruck über die berechneten Samples zu gewinnen, ist es hilfreich einige Beispielsamples zu betrachten. Im Experiment werden wir Samples auf den Levels $ 4,5,6 $ und $ 7 $ betrachten. Im Folgenden sind daher zu diesen Levels je ein Beispielsample dargestellt.
 \begin{figure}[H]
@@ -210,7 +210,7 @@ Wie bereits oben beim Konvergenztest können wir auch auf Grundlage dieser Daten
 \gamma  &=    3  \\
 \end{align*}
 
-Zudem können wir auch die einzelnen Fehlerkomponenten abschätzen, diese Fehlerschätzung wird auch im Algorithmus selbst vorgenommen. So lässt sich der statistische Fehler durch \[
+Zudem können wir auch die einzelnen Fehlerkomponenten abschätzen, diese Fehlerschätzung wird auch im Algorithmus selbst vorgenommen. So lässt sich der statistische Fehler darstellen durch \[
 \text{statErr} \leq \sqrt{\sum_l   \frac{\mathbb{V}[Q_f-Q_c]}{M_l}} \ . \] 
 Den numerischen Fehler können wir über einen Romberg Fehlerschätzer abschätzen und nutzen dabei die Abschätzung \[ \left| \mathbb{E}[Q_f-Q_c] \right| < (2^{\alpha}-1)\frac{\epsilon}{2} \ . \] Mehr zu obigen Fehlerschätzern und eine Erklärung für obige Abschätzung findet sich in \cite{giles_2015}.
 Wir erhalten an dieser Stelle so: 
@@ -324,8 +324,8 @@ Betrachten wir die MLMC Kosten gegen die Genauigkeit $ \epsilon $ erhalten wir s
 
 
 \subsection{MLMC Lösung}
-Zu guter Letzt ist es uns zudem über die Verarbeitung der gespeicherten VTK-Dateien möglich, die berechneten Lösungen, welche uns in Form von Gitterdaten vorliegen zu einer MLMC-Lösung zu kombinieren. Auf die gleiche Weise lässt sich zudem auch ein Gesamt-Flussvektorfeld berechnen. Dazu addieren wir die Gitterdaten der Samples auf dem jeweiligen Level, subtrahieren überall außer im Basislevel $ 4 $ jeweils die Summe der Coarse-Samples, skalieren mit der Anzahl der betrachteten Samples und kombinieren anschließend die so entstandenen Monte-Carlo Lösungen zu einer Multilevel Monte Carlo Lösung.
-Einer der wichtigsten Schritte ist dabei das sogenannten 'Upscaling', welches uns ermöglicht verschieden feine Gitter miteinander zu verrechnen. In unserem Fall ist dies recht einfach, da wir im Ort reguläre Gitter mit identischen Quadraten und in der Zeit eine äquidistante Zerlegung betrachten. Der zugehörige Code findet sich ebenfalls in \cite{githubvtk} in der Datei $'mlmc\_solution.py'$.
+Zu guter Letzt ist es uns zudem über die Verarbeitung der gespeicherten VTK-Dateien möglich, die berechneten Lösungen, welche uns in Form von Gitterdaten vorliegen, zu einer MLMC-Lösung zu kombinieren. Auf die gleiche Weise lässt sich zudem auch ein Gesamt-Flussvektorfeld berechnen. Dazu addieren wir die Gitterdaten der Samples auf dem jeweiligen Level, subtrahieren überall außer im Basislevel $ 4 $ jeweils die Summe der Coarse-Samples, skalieren mit der Anzahl der betrachteten Samples und kombinieren anschließend die so entstandenen Monte-Carlo Lösungen zu einer Multilevel Monte Carlo Lösung.
+Einer der wichtigsten Schritte ist dabei das sogenannten 'Upscaling', welches uns ermöglicht, verschieden feine Gitter miteinander zu verrechnen. In unserem Fall ist dies recht einfach, da wir im Ort reguläre Gitter mit identischen Quadraten und in der Zeit eine äquidistante Zerlegung betrachten. Der zugehörige Code findet sich ebenfalls in \cite{githubvtk} in der Datei $'mlmc\_solution.py'$.
 Auch zu den so entstehenden Gitterdaten können wir wieder entsprechende Schaubilder generieren:
 \begin{figure}[H]
 	\centering
