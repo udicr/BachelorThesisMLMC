@@ -5,7 +5,7 @@
 In diesem Abschnitt wollen wir anhand des linearen Transportproblems auch tatsächliche praktische Resultate der Multilevel Monte Carlo Methode beleuchten.
 Wir setzen dazu
 \begin{itemize}
-	\item $ \mathcal{D} = (0,1)^2 \subset \R^2 $ (also insbesondere wie bereits zuvor in der Theorie $ n=2 $)
+	\item $ \mathcal{D} = (0,1)^2 \subset \R^2 $ (also insbesondere wie bereits zuvor in der Theorie $ d=2 $)
 	\item $ \mathbb{T} = [0,T] = [0,1] $ (vgl. Bemerkung \ref{wahlfunk})
 	\item $ \rho_{\text{in}} \equiv 0 $
 	\item $ \rho_0(x) = 
@@ -77,7 +77,7 @@ In M++ entspricht Level $ l_0 $ bei der gewählten Diskretisierung 'UnitSquare' 
 	\subfigure[$l_1 = 5$ (1024 Zellen)]{\includegraphics[width=0.31\textwidth]{plots/mesh5.png}}
 	\subfigure[$l_2 = 6$ (4096 Zellen)]{\includegraphics[width=0.31\textwidth]{plots/mesh6.png}}
 \end{figure}
-Die Schrittweite für die Diskretisierung in der Zeit setzen wir auf $ \Delta t = \frac{h}{8} $. Diese Wahl ist besonders hinsichtlich der Stabilität des Verfahrens wichtig. Bei zu kleinen Zeitschrittweiten treten Oszillationen in der Lösung auf. Obige Wahl hat sich für unser Problem als hinreichend erwiesen.
+Die Schrittweite für die Diskretisierung in der Zeit setzen wir auf $ \Delta t = \frac{h}{8} $. Diese Wahl ist besonders hinsichtlich der Stabilität des Verfahrens wichtig. Bei zu großen Zeitschrittweiten treten Oszillationen in der Lösung auf. Obige Wahl hat sich für unser Problem als hinreichend erwiesen.
 Entsprechend unserer Fragestellung können wir nun das betrachtete Zielfunktional formulieren:
 \[
 Q(\omega) = J(\rho(\omega)) \coloneqq \int_{\mathcal{D}} \rho(\omega,x,T) \dx = \int_{\mathcal{D}} \rho(\omega,x,1) \dx
@@ -100,10 +100,10 @@ In M++ werden zur Speicherung von Gitterdaten sogenannte Vtk-Dateien genutzt. Al
 \begin{figure}[H]
 	\centering
 	\captionabove{Überblick über implementierte Module}
-	\includegraphics[width=\textwidth]{plots/klassenuml2.png} 
+	\includegraphics[width=\textwidth]{plots/umlklassen2.png} 
 \end{figure}
 Wie oben anhand der Klassenstrukturen dargestellt, können die Module in 6 Gruppen unterteilt werden. Gruppe 1 ermöglicht auf Grundlage des externen Moduls 'vtk' \cite{sitevtk} das Lesen von Vtk Dateien. Insbesondere ist es möglich, die Gitterdaten in sogenannten 'numpy-Arrays' zu exportieren. 
-Gruppe 2 implementiert ein Interface zum Erstellen verschiedener Schaubilder aus den eingelesenen Vtk Dateien. Im später im Appendix beigefügten Notebook und den entsprechenden Skripten im Hintergrund sind einige exemplarische Beispiele vorhanden. Außerdem wurden alle Schaubilder dieser Thesis über dieses Interface erstellt.
+Gruppe 2 implementiert ein Interface zum Erstellen verschiedener Schaubilder aus den eingelesenen Vtk Dateien. Im später beigefügten Notebook (siehe Appendix) und den entsprechenden Skripten im Hintergrund sind einige exemplarische Beispiele vorhanden. Außerdem wurden alle Schaubilder dieser Thesis über dieses Interface erstellt.
 In Gruppe 3 werden die eingelesenen Arrays wieder als 'UnstructuredMesh' aufgefasst. Die Lösungen des Transportproblems selbst bestehen aufgrund der Zeitabhängigkeit aus mehreren Gittern. Deshalb fassen wir diese als 'UnstructuredMultiScalarMesh' auf. Das Flussvektorfeld hingegen trägt als Daten Vektoren in jeder Zelle und wird deshalb als 'UnstructuredVectorMesh' betrachtet. Diese objektorientierte Unterteilung zieht sich bis auf Gruppe 2 durch alle Gruppen und ermöglicht den Umgang mit einzelnen Gittern und Skalaren, beispielsweise die Permeabilität des Bodens, mit einzelnen Gittern und Vektordaten, wie etwa das Flussvektorfeld, oder aber einer ganzen Gruppe von Gittern mit Skalaren, womit sich die zeitabhängige Lösung darstellen lässt. Wir können so die Lösungen der Samples als Gitterdaten auffassen und bearbeiten. Insbesondere wurden beispielsweise die Addition und Subtraktion von Gitterdaten implementiert, welche für Generierung von weiteren Gittern nach Vorbild der im Experiment durchgeführten Monte Carlo und Multilevel Monte Carlo Methoden unabdingbar sind. Unter anderem wurde dafür auch eine 'Upscale'-Methode entworfen, welche es ermöglicht, unterschiedlich feine Quadratgitter miteinander zu verrechnen.
 Gruppe 4 und 5 kombinieren die von M++ während des Experiments abgespeicherten Vtk Dateien, wie oben beschrieben. Im Folgenden nennen wir die so (in Form von Gitterdaten) erzeugte Lösung auch 'MLMC-Lösung'.
 Gruppe 6 dient dem Testen der anderen Gruppen in der Form sogenannter 'UnitTests'.
@@ -125,10 +125,6 @@ Konkret erhalten wir bei der Auswertung von 100 Samples pro Level (und den jewei
 	6 &  100&  0.00081706 &   0.185469& 1.61547e-06 &  0.0186312 &    3.99497& 1.88744e+07 \\
 	7 &  100& 6.29135e-05 &   0.221811& 2.65752e-08 &  0.0239019 &    2.75915& 1.50995e+08 \\
 	8 &  100& 1.86929e-05 &   0.221853& 2.63677e-09 &  0.0209867 &    3.37952& 1.20796e+09 \\
-	\hline
-	\multicolumn{2}{|c|}{$ \mathbb{E}[Q] $ }  &  \multicolumn{2}{c|}{MLMC Cost}   & \multicolumn{2}{c|}{$ l $}  &    \multicolumn{2}{c|}{$ M$} \\
-	\hline
-	\multicolumn{2}{|c|}{0.226436} & \multicolumn{2}{c|}{1.52352e+09  } &  \multicolumn{2}{c|}{   4 5 6 }     & \multicolumn{2}{c|}{4374 59 5}    \\
 	\hline 
 \end{tabular}\\
 
@@ -143,7 +139,7 @@ Stellen wir die Erwartungswerte und Varianzen obiger Tabelle als Verlauf über d
 Um nun die getroffenen Annahmen zu überprüfen, müssen wir die Konvergenzparameter aus \eqref{MLMCTheorem} bestimmen.
 Wir schätzen an dieser Stelle $ \alpha $, also den Exponent der schwachen Konvergenz des Verfahrens, durch den Logarithmus der Steigung einer lineare Regressionsgerade der Erwartungswerte $ \mathbb{E}[Q_f - Q_c] $ gegenüber der Level. Anzumerken ist hierbei, dass auf dem Basislevel, hier Level 4, keine Differenz in Spalte 3 und 5 angegeben werden kann, da auf dem Basislevel nur einzelne Samples ohne gröberes Vergleichssample betrachtet werden. Stattdessen werden hier in Spalte 3 und 5 ebenfalls wie in Spalte 4 und 6 der einzelne Erwartungswert bzw. die einzelne Varianz angegeben. Bei der Schätzung von $ \alpha $ wird deshalb das Basislevel nicht einbezogen.
 Den Exponenten des Rückgangs der Varianz $ \beta $ schätzen ähnlich wie $ \alpha $ als Logarithmus der Steigung einer Regressionsgeraden, diesmal über den den Rückgang der empirischen Varianzdifferenzen  $ \mathbb{V}[Q_f-Q_c] $ für die entsprechenden Level. Die Kosten in der letzten Spalte werden während des Experiments über die Anzahl der Freiheitsgrade des zugrunde liegenden linearen Gleichungssystems abgeschätzt. 
-Auf Grundlage dieser geschätzten Kosten lässt sich dann genauso $ \gamma $ als Logarithmus der Steigung einer entsprechenden linearen Regression über die pro Level erwarteten Kosten $ \mathbb{E}[C_l] $ bestimmen. Da in unserer Schätzung die Kosten der Samples auf einem Level konstant ist, stimmt dieser Erwartungswert mit den Kosten jedes einzelnen Samples überein.  
+Auf Grundlage dieser geschätzten Kosten lässt sich dann genauso $ \gamma $ als Logarithmus der Steigung einer entsprechenden linearen Regression über die pro Level erwarteten Kosten $ \mathbb{E}[C_l] $ bestimmen. Da in unserer Schätzung die Kosten der Samples auf einem Level konstant sind, stimmt dieser Erwartungswert mit den Kosten jedes einzelnen Samples überein.  
 Konkret erhalten wir mit obigen Daten also: 
 
 \begin{align*}
@@ -210,9 +206,9 @@ Wie bereits oben beim Konvergenztest können wir auch auf Grundlage dieser Daten
 \gamma  &=    3  \\
 \end{align*}
 
-Zudem können wir auch die einzelnen Fehlerkomponenten abschätzen, diese Fehlerschätzung wird auch im Algorithmus selbst vorgenommen. So lässt sich der statistische Fehler darstellen durch \[
+Zudem können wir auch die einzelnen Fehlerkomponenten abschätzen, so lässt sich der statistische Fehler darstellen durch \[
 \text{statErr} \leq \sqrt{\sum_l   \frac{\mathbb{V}[Q_f-Q_c]}{M_l}} \ . \] 
-Den numerischen Fehler können wir über einen Romberg Fehlerschätzer abschätzen und nutzen dabei die Abschätzung \[ \left| \mathbb{E}[Q_f-Q_c] \right| < (2^{\alpha}-1)\frac{\epsilon}{2} \ . \] Mehr zu obigen Fehlerschätzern und eine Erklärung für obige Abschätzung findet sich in \cite{giles_2015}.
+Den numerischen Fehler können wir über einen Romberg Fehlerschätzer approximieren und nutzen dabei  \[ \left| \mathbb{E}[Q_f-Q_c] \right| < (2^{\alpha}-1)\frac{\epsilon}{2} \ . \] Mehr zu obigen Fehlerschätzern und eine Erklärung für obige Abschätzung findet sich in \cite{giles_2015}.
 Wir erhalten an dieser Stelle so: 
 \begin{align*}
 \text{numErr}  &=  0.000163463   \quad \text{(geschätzter numerischer Fehler)}\\
@@ -321,6 +317,7 @@ Betrachten wir die MLMC Kosten gegen die Genauigkeit $ \epsilon $ erhalten wir s
 	\captionabove{Vergleich über $ \epsilon $}
 	\includegraphics[width=\textwidth]{plots/mlmctable.png} 
 \end{figure}
+Links sind die Anzahlen der Samples bei den vier verschiedenen Durchläufen aufgetragen. Man sieht hierbei sehr schön die Abnahme der benötigten Samples auf den unterschiedlichen Levels; vor allem ist dies der Fall, wenn man die logarithmische Skala beachtet. Auf der rechten Seite sind die geschätzten MLMC-Kosten aufgetragen. Dabei wurden diese mit $ \epsilon^2 $ multipliziert. Somit entspricht ein konstanter Verlauf im Schaubild den theoretische Vorhersagen. Stellen wir uns eine Regressionsgerade auf Grundlage der vier Datenpunkte vor, lässt sich durchaus ein nahezu konstanter Verlauf erahnen. 
 
 
 \subsection{MLMC Lösung}

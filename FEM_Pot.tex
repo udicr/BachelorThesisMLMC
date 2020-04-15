@@ -1,7 +1,7 @@
 % !TeX root = bachelorarbeit.tex
 \label{num_pot}
 \begin{Bemerkung}
-	Die beiden folgenden Abschnitte bauen im Wesentlichen auf den beiden Vorlesungen 'Einführung in das Wissenschaftliche Rechnen' (SS 2019) und 'Finite Elemente Methoden' (WS 2019/2020) von Herrn Prof. Dr. Wieners auf. Dem entsprechend sind als Quellen neben \cite{brenner2007mathematical},
+	Die beiden folgenden Abschnitte bauen im Wesentlichen auf den beiden Vorlesungen 'Einführung in das Wissenschaftliche Rechnen' (SS 2019) und 'Finite Elemente Methoden' (WS 2019/2020) von Herrn Prof. Dr. Wieners auf. Dementsprechend sind als Quellen neben \cite{brenner2007mathematical},
 	\cite{braess2013finite} und \cite{hanke2002grundlagen} vor allem die Mitschriebe zu den oben genannten Vorlesungen, sowie die Berichte zum Rechnerpraktikum mit M++ \cite{siteM++} zu nennen. Außerdem finden sich die oben vorgestellten Probleme auch in \cite{ern2004theory} bzw. \cite{di2011mathematical}.
 \end{Bemerkung}
 Wie bereits in obigem Abschnitt erwähnt, sollen sich die nächsten beiden Abschnitte damit beschäftigen, wie wir die oben beschriebenen Probleme für ein festes $\omega \in \Omega$ numerisch lösen können. 
@@ -179,7 +179,7 @@ Zusammen mit der schwachen Formulierung \eqref{sPS} erhalten wir so das nun disk
 %&&&Q_h = \{\mu_1 , \dots , \mu_M  \}.
 %\end{align*}
 
-Wir können nun damit beginnen, das so entstandene endlich dimensionale Problem in ein Lineares Gleichungssystem umzuformulieren. Dazu definieren wir:
+Wir können nun damit beginnen, das so entstandene endlich dimensionale Problem in ein lineares Gleichungssystem umzuformulieren. Dazu definieren wir:
 	\begin{align*}
 	&\underline{A} \in \R^{N \times N} \text{ mit } \underline{A}[n,k] \coloneqq \int_{\Omega} \kappa^{-1} \psi_n \cdot \psi_k \dx \\
 	&\underline{B} \in \R^{M \times N} \text{ mit } \underline{B}[m,k] \coloneqq - \int_{\Omega} \mu_m \dive(\psi_k) \dx \\

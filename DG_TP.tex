@@ -93,7 +93,7 @@ Wie bereits eben erklärt, werden wir im Folgenden zunächst den Raum diskretisi
 \end{Definition}
 $\newline$
 Für eine klassische Lösung $ \rho  $ von (dTP) gilt dann insbesondere $ \partial_t \rho = - \dive (\Upsilon(\rho)) $ auf $ \mathcal{D} \times (0,T] $.	\\
-Halten wir also zunächst $ t \in \mathbb{T} $ und leiten so die Semidiskretisierung her.\\
+Halten wir also zunächst $ t \in \mathbb{T} $ fest und leiten so die Semidiskretisierung her.\\
 Sei nun $ \mathcal{T} $ eine zulässige Triangulierung von $ \mathcal{D} $ aus Dreiecken wie in \ref{num_pot} und  $ (\cdot , \cdot)_A $ das $ L^2(A)-$Skalarprodukt.
 Wir wählen als Lösungs-/Testraum $\mathcal{Q}_h = \prod_{K \in \mathcal{T}} \mathbb{P}_p(K,\R) $ für ein festes $p \geq 0 $. Anders als zuvor fordern wir für unsere Lösungs- und Testfunktionen diesmal aber \underline{nicht} die Stetigkeit auf $\mathcal{D}$. Da so $\mathcal{Q}_h$ nicht im betrachteten analytischen Lösungs- und Testraum liegt, etwa  $\mathcal{Q}_h \nsubseteq H^1(\mathcal{D})$, nennt man $\mathcal{Q}_h$ auch einen nicht-konformen Ansatzraum.
 Außerdem lässt sich im Allgemeinen auch die später bestimmte Lösung $ \rho_h \in \mathcal{Q}_h $ (definiert auf $\mathcal{D}_h = \bigcup_{K \in \mathcal{T}} K$ ) nicht stetig auf $ \mathcal{D} $ fortsetzen, denn für eine beliebige innere Kante $ F $ kann der Grenzwert von $ \rho_h $ auf den anliegenden Zellen $ K,K' $ ($ \overline{F} = \partial K \cap \partial K' $) unterschiedlich sein. \\
@@ -121,7 +121,7 @@ Das Integral über den Rand von $ \mathcal{D} $ können wir nach der folgenden k
 Es gilt nämlich für alle inneren Kanten, also solche Kanten $ F $, für die zwei Zellen $ K $ und $ K' $ existieren, sodass $ \overline{F} = K \cap K' $ ist, dass \[ \int_F \Upsilon^{\star}(\rho) \cdot \nu^K \phi \da = - \int_F \Upsilon^{\star}(\rho) \cdot \nu^{K'} \phi \da \] stets erhalten ist. \\
 Summieren wir also zunächst über alle Zellen, summieren anschließend die Integrale über alle Kanten und ersetzen dabei den analytischen durch den numerischen Fluss, erhalten wir gerade wieder obiges Randintegral. Es gilt also:
 \begin{align*}
-	\sum_{K\in \mathcal{T}} \sum_{F \in \mathcal{F}_K} \int_F \Upsilon^{\star}(\rho) \cdot \nu^K \phi \da = \int_{\partial \mathcal{D}} \Upsilon(\rho) \cdot \nu \phi \da \stackrel{\text{\ref{gaus1}}}{=} \int_{\mathcal{D}} \dive (\Upsilon(\rho)\phi) \dx
+	\sum_{K\in \mathcal{T}} \sum_{F \in \mathcal{F}_K} \int_F \Upsilon^{\star}(\rho) \cdot \nu^K \phi \da = \int_{\partial \mathcal{D}} \Upsilon(\rho) \cdot \nu \phi \da \stackrel{\text{\eqref{gaus1}}}{=} \int_{\mathcal{D}} \dive (\Upsilon(\rho)\phi) \dx
 \end{align*}
 Nach der Produktregel der Divergenz lässt sich das letzte Integral auswerten zu:
 \begin{align*}
@@ -145,7 +145,7 @@ Dabei wurde zusätzlich ausgenutzt, dass es sich bei den Kanten um Nullmengen ha
  Sei nun $ G $ die Anzahl der Zellenfreiheitsgrade. Diese hängen direkt von der Wahl des Lösungs-/Testraumes $ \mathcal{Q}_h $, bzw. der Wahl von $ p $ ab. Die Wahl $ p=0 $ liefert gerade ein Finite Volumen Verfahren, $ G $ ist dann gerade $ 1 $ und die Zellenbasis $ \{\mu_K \}_{K \in \mathcal{T}}$ ist durch $ \mu_K =  \mathds{1}_{K} $ gegeben.
  Für $ p \geq 1 $ erhalten wir hingegen ein Discontinuous Galerkin Verfahren. Die Anzahl der Zellfreiheitsgrade einer Zelle $ K $ ist dann gerade durch $ G = p \cdot \abs{\mathcal{V}_K} $ (also $ p $-mal die Anzahl der Ecken von $ K $) gegeben.
  Die Zellenbasis hat in diesem Fall $ G \cdot \abs{\mathcal{T}} $ Elemente und für je $ G $ Basisfunktionen $ \mu $ gilt $ \supp(\mu) \subseteq \overline{K} $. \\
- Sei $ M = \abs{\mathcal{T}} $ die Anzahl der Zellen und $ \mathcal{T} = \{K_1,\dots,K_M \} $ geordnet. Dann lässt sich die Zellenbasis $ \{ \mu_i \}_{i=1}^{GM} \subset \mathcal{Q}_h $ gemäß dem Träger der Basisfunktion zu $ \{ \mu_{K_j,i} \}_{j = 1,\dots,M ; i = 1,\dots,G } $ ordnen.
+ Sei $ M = \abs{\mathcal{T}} $ die Anzahl der Zellen und $ \mathcal{T} = \{K_1,\dots,K_M \} $ geordnet. Dann lässt sich die Zellenbasis $ \{ \mu_i \}_{i=1}^{GM} \subset \mathcal{Q}_h $ gemäß dem Träger der Basisfunktion zu $ \{ \mu_{K_j,i} \}_{j = 1,\dots,M , i = 1,\dots,G } $ ordnen.
  Für jede feste Zelle $ K $ ergibt sich durch Einsetzen der zugehörigen Basisfunktionen $ \{ \mu_{K,i} \}_{i = 1,\dots,G }  $ : \\
 \begin{align*} 
 \left(\partial_t \rho_h, \mu_{K,i}  \right)_{K}  &= \bigg( \left(\Upsilon(\rho_h), \nabla\mu_{K,i}\right)_{K} - \sum_{\substack{F \in \mathcal{F}_{K} \\ F \not\subseteq \Gamma_{\text{in}}}} \left(\Upsilon^*(\rho_h) \cdot \nu^{K}, \mu_{K,i} \right)_{F} - \left(\rho_{\text{in}} q \cdot \nu^{K}, \mu_{K,i} \right)_{\partial K \cap \Gamma_{\text{in}}} \bigg) \\
@@ -238,10 +238,10 @@ Ein weiteres Verfahren dieser Art, welches wir an dieser Stelle verwenden werden
 \underline{\rho}(t_{i+1}) = \underline{\rho}(t_{i}) +
 \Delta t \underline{M}^{-1} (
 \underline{A} 
-\frac{1}{2}(\underline{\rho}(t_{i}) +
+\tfrac{1}{2}(\underline{\rho}(t_{i}) +
 \underline{\rho}(t_{i+1}) )
 +
-\frac{1}{2} ( \underline{\rho}(t_{i}) +
+\tfrac{1}{2} ( \underline{\rho}(t_{i}) +
 \underline{\rho}(t_{i+1}) )).
 \end{align*}
 

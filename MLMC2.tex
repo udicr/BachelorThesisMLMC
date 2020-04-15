@@ -2,7 +2,7 @@
 Nachdem wir in Abschnitt 2 an einige Grundlagen erinnert haben, in Abschnitt 3 und 4 sowohl die Monte Carlo Methode, als auch die Multilevel Monte Carlo Methode eingeführt und in Abschnitt 5 das Transportproblem, sowie das Potentialströmungsproblem inklusive numerischer Verfahren, welche zur Lösung dergleichen genutzt werden können, erklärt haben, soll nun dieser Abschnitt dazu dienen, die bisherigen Ergebnisse zu bündeln und die Anwendung der Multilevel Monte Carlo Methode auf partielle Differentialgleichungen am Beispiel des Transportproblems nahe zu legen. Dabei nimmt dieser Abschnitt einen zentralen Platz in dieser Thesis ein, weswegen wir noch einmal darlegen wollen, was genau unser Ziel ist und wie wir die uns an dieser Stelle zur Verfügung stehenden Mittel einsetzen, um das Gewünschte zu erreichen. Sei hierzu $ \mathcal{ D} \subset \R^2 $ beschränktes Polygongebiet, $ \mathbb{T} = (0,T] $ für ein $ T>0 $ und $ (\Omega,\mathcal{A},\mathbb{P}) $ ein Wahrscheinlichkeitsraum.
 \begin{align*}
 &\text{Für ein stochastisches Flussvektorfeld } q: \Omega \times \overline{\mathcal{D}} \to \R^2 \text{, bestimme }\rho: \Omega \times \overline{\mathcal{D}} \times \mathbb{T} \to \R_{\geq 0}\\ 
-&\text{ mit} \\
+&\text{mit} \\
 &\text{(pTP)} 
 \begin{cases}
 \begin{array}{rlll}
@@ -54,7 +54,7 @@ An dieser Stelle sei betont, dass es sich in diesem Abschnitt bei $ \rho_h $ um 
 
 \subsection{Die Monte Carlo Methode}
 Wie bereits im Kontext der numerischen Integration wollen wir die Monte Carlo Methode als Ausgangspunkt nutzen und anschließend bei der Betrachtung der Multilevel Monte Carlo Methode auch auf entscheidende Unterschiede zu und Vorteile gegenüber der Monte Carlo Methode eingehen.
-Sowohl bei der Monte Carlo Methode, als auch bei der Multilevel Variante approximieren wir den Erwartungswert $ \mathbb{E}[Q_h] $ durch einen Schätzwert $ \widehat{Q}_h $. Um die Genauigkeit und die Kosten zu bemessen, betrachten wir zum einen den sogenannten 'root mean square error' (RMSE) 
+Sowohl bei der Monte Carlo Methode, als auch bei der Multilevel Variante approximieren wir den Erwartungswert $ \mathbb{E}[Q_h] $ durch einen Schätzwert $ \widehat{Q}_h $. Um die Genauigkeit und die Kosten zu bemessen, betrachten wir zum einen den 'root mean square error' (RMSE) 
 \begin{align}
 	\label{RMSE}
 	e( \widehat{Q}_h) \coloneqq \left(  \mathbb{E} \left[ (\widehat{Q}_h - \mathbb{E}[Q] )^2 \right] \right)^{\frac{1}{2}}
