@@ -2,7 +2,7 @@
  \label{DG}
 In diesem Abchnitt soll nun, nachdem wir $q(\omega,\cdot)$ als Finite-Elemente-Lösung des Potentialströmungsproblems erhalten haben, die numerische Lösung des linearen Transportproblems behandelt werden:
 \begin{align*}
-	&\text{Für } \omega \in \Omega \text{ und }q(\omega,\cdot): \overline{\mathcal{D}} \to \R^2 \text{, bestimme }\rho(\omega,\cdot): \overline{\mathcal{D}} \times \mathbb{T} \to \R_{\geq 0} \text{ mit} \\
+	&\text{Für } \omega \in \Omega \text{ und }q(\omega,\cdot)\colon \overline{\mathcal{D}} \to \R^2 \text{, bestimme }\rho(\omega,\cdot)\colon \overline{\mathcal{D}} \times \mathbb{T} \to \R_{\geq 0} \text{ mit} \\
 	&\text{(pTP)} 
 	\begin{cases}
 	\begin{array}{rlll}
@@ -14,7 +14,7 @@ In diesem Abchnitt soll nun, nachdem wir $q(\omega,\cdot)$ als Finite-Elemente-L
 \end{align*}
 Insbesondere wollen wir an dieser Stelle wieder $\omega \in \Omega$ festhalten und betrachten deshalb zunächst nur das deterministische Problem wie in \ref{det_prob}:
 \[ 
-\text{Bestimme } \rho: \overline{\mathcal{D}} \times \mathbb{T} \to \R_{\geq 0} \text{, sodass} \newline \]
+\text{Bestimme } \rho \colon \overline{\mathcal{D}} \times \mathbb{T} \to \R_{\geq 0} \text{, sodass} \newline \]
 \[\setlength\arraycolsep{1pt}
 \text{(dTP)}\begin{cases} 
 \begin{array}{rlll}
@@ -85,9 +85,9 @@ Anders als zuvor das Potentialströmungsproblem ist die lineare Transportgleichu
 Wie bereits eben erklärt, werden wir im Folgenden zunächst den Raum diskretisieren und anschließend die so entstandene Semidiskretisierung in eine Volldiskretisierung auflösen. Insgesamt wollen wir das Discontinuous Galerkin Verfahren mit einem Zeitintegrator, wie der impliziten Mittelpunktsregel oder einem klassischen Runge-Kutta-Verfahren nutzen. Zunächst führen wir die analytische Flussfunktion ein. 
 \begin{Definition}(Flussfunkion) \\
 	\label{Flussfunktion}
-	Zu einem gegebenen Flussvektorfeld $ q : \mathcal{D} \to \R^2 $ ist die Flussfunktion $ \Upsilon$ definiert als:\\
+	Zu einem gegebenen Flussvektorfeld $ q \colon \mathcal{D} \to \R^2 $ ist die Flussfunktion $ \Upsilon$ definiert als:\\
 	\begin{align*}
-		 \Upsilon : \text{Abb}(\mathcal{D}\times\mathbb{T},\R) &\to \text{Abb}(\mathcal{D}\times\mathbb{T},\R^2) \\
+		 \Upsilon \colon \text{Abb}(\mathcal{D}\times\mathbb{T},\R) &\to \text{Abb}(\mathcal{D}\times\mathbb{T},\R^2) \\
 		 \rho &\mapsto \rho q
 	\end{align*}
 \end{Definition}
@@ -104,7 +104,7 @@ sogenannten upwind flux:
 \begin{Definition}(upwind flux)\\
 	Sei $K \in \mathcal{T}$ eine beliebige Zelle und $ F \in \mathcal{F}_K$ eine Kante von $K$. Dann ist
 	\begin{align*}
-		\Upsilon^{\star} : \text{Abb}(\mathcal{D}\times\mathbb{T},\R) &\to \text{Abb}(\mathcal{D}\times\mathbb{T},\R^2) \\
+		\Upsilon^{\star} \colon \text{Abb}(\mathcal{D}\times\mathbb{T},\R) &\to \text{Abb}(\mathcal{D}\times\mathbb{T},\R^2) \\
 		\rho_h &\mapsto 
 		\begin{cases}
 			\Upsilon(\rho_h|_K) , \ \text{ für } q\cdot \nu_F^K \geq 0 \\  
@@ -195,7 +195,7 @@ So ergibt sich eine Differential\-gleichung der Form
 \underline{\rho}(0) = \underline{\rho_0}
 \end{cases}\\
 \end{align*}
-mit $ \underline{M},\underline{A} \in \R^{MG\times MG} $ und $ b: \mathbb{T} \to \R^{MG} $. Wir nennen  $ \underline{M} $ Massematrix, $ \underline{A} $ Flussmatrix und $ \underline{b} $ Lastvektor.
+mit $ \underline{M},\underline{A} \in \R^{MG\times MG} $ und $ b\colon \mathbb{T} \to \R^{MG} $. Wir nennen  $ \underline{M} $ Massematrix, $ \underline{A} $ Flussmatrix und $ \underline{b} $ Lastvektor.
 Da dies nun eine gewöhnliche Differentialgleichung ist, können wir die Lösung 
 \begin{align}
  \label{semidisklsg}
@@ -260,15 +260,15 @@ Runge-Kutta DG Verfahren für der linearen Transportgleichung ähnliche Problems
 	Wie zuvor bereits beim Potentialströmungsproblem können wir auch für das Transportproblem eine sogenannte schwache Formulierung bestimmen. Diese hängt im Fall des Transportproblems eng mit der Semidiskretisierung zusammen und lautet mit $ \partial \mathcal{D} = \Gamma_{\text{in}} \dot{\cup} \Gamma_{\text{out}} $ und 
 $\rho(x,t) = \rho_{\text{in}}(x,t) \text{ für } (x,t) \in \Gamma_{\text{in}} \times (0,T)$ :
 \begin{Definition} 
-	$ \rho \in L_1 (\mathcal{D} \times (0,T)) $ heißt schwache Lösung des linearen Transportproblems, falls es für ein gegebenes $ q : \overline{\mathcal{D}} \to \R^2 $ folgende Bedingungen erfüllt:
+	$ \rho \in L_1 (\mathcal{D} \times (0,T)) $ heißt schwache Lösung des linearen Transportproblems, falls es für ein gegebenes $ q \colon \overline{\mathcal{D}} \to \R^2 $ folgende Bedingungen erfüllt:
 	\begin{align*}
 	\begin{array}{rllll}
 	&\text{(swTP)} \ &B(\rho,\phi) &= \langle b,\phi\rangle \quad \forall \phi \in H^1(\mathcal{D}\times\mathbb{T}) \text{ mit } \phi(\cdot,T) = 0 \text{ und } \phi|_{\Gamma_{\text{out}}} = 0 \\
 	&\text{Dabei sind :} & & &\\
 	& &B(\rho,\phi) &\coloneqq  \int_{0}^{T} \int_{\mathcal{D}} \rho (\partial_t \phi + q \nabla \phi ) \dx \dt - \int_{\Gamma_{\text{out}}} \rho q \cdot \nu \phi \da  \dt \\
 	& &\langle b,\phi \rangle &\coloneqq \int_{\Gamma_{\text{in}}} \rho_{\text{in}} q \cdot \nu \phi \da  \dt - \int_{\mathcal{D}} \rho_0 \phi(0) \dx \\
-	& & \Gamma_{\text{out}} &\coloneqq  \{ z \in \partial \mathcal{D}: q(z)\cdot \nu(z) > 0 \} & \\
-	& & \Gamma_{\text{in}} &\coloneqq  \{ z \in \partial \mathcal{D}: q(z)\cdot \nu(z) \leq 0 \} &
+	& & \Gamma_{\text{out}} &\coloneqq  \{ z \in \partial \mathcal{D} \colon q(z)\cdot \nu(z) > 0 \} & \\
+	& & \Gamma_{\text{in}} &\coloneqq  \{ z \in \partial \mathcal{D} \colon q(z)\cdot \nu(z) \leq 0 \} &
 	\end{array}\\
 	%		\text{(swTP)}
 	%		\begin{cases}
@@ -338,7 +338,7 @@ Dann löst $ \rho_h \in Q_h $ die Semidiskretisierung \eqref{Semidiskretisierung
 \subsubsection{Konsistenz}
 	 Abschnitt \ref{Diskretisierung} hat sich damit beschäftigt, aus dem ursprünglich unendlich dimensionalen Problem letztendlich eine volldiskretisierte Verfahrensvorschrift in einem endlichen Ansatzraum herzuleiten. Fragen wir nun nach der Konsistenz des Verfahrens, stellen wir damit zugleich die Frage, ob wir immer noch die richtige Gleichung lösen. Genauer heißt das Verfahren genau dann konsistent, wenn eine analytische Lösung $ \rho $ des ursprünglichen Problems (dTP) auch die hergeleitete Verfahrensvorschrift erfüllt. 
 	 Wir betrachten zunächst etwas abstrakter den formalen Prozess der Diskretisierung einer Gleichung \[ B \rho=0 \ .  \]
-	 Dabei werde das abstrakte Problem $ B \rho=0 $ mit einem Operator $ B: E \to F $ mithilfe der Abbildungen $ L_1,L_2,\Phi_h $ diskretisiert.
+	 Dabei diskretisieren wir das abstrakte Problem $ B \rho=0 $ mit einem Operator $ B \colon E \to F $ mithilfe der Abbildungen $ L_1,L_2,\Phi_h $.
 	 Zu einer Lösung der abstrakten Gleichung $ z \in E $ existiere genau ein $ z_h \in E_h$ und der lokale Diskretisierungsfehler sei gegeben durch $
 	 l_h \coloneqq B_h L_1(z) = \phi_h(B) L_1(z) \in F_h 
 	 $. Diese Situation kann durch folgendes Diagramm verdeutlicht werden:

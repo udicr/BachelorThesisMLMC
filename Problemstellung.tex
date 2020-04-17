@@ -5,12 +5,12 @@ Sei $\mathbb{T} = [0,T]$ ein Zeitintervall für $T>0$ und $\mathcal{D} \subset \
 Wie bereits in der Einleitung beschrieben, wollen wir den Transport eines Stoffes in einer porösen Bodenschicht auf Grundlage eines vorhandenen Flusses beschreiben. 
 Als modellhaftes Problem soll uns hierfür die Versickerung eines Stoffes unter Hinzunahme der Regenwasserversickerung dienen: In einer porösen Bodenschicht befindet sich zum Zeitpunkt $t=0$ ein Stoff (beispielsweise Öl) in einer gegebenen Anfangskonzentration und -verteilung. Nun sickert Regenwasser in diese poröse Bodenschicht ein. Zusätzlich wollen wir weitere Zuflüsse des Fremdstoffes über den Einflussrand $\Gamma_{\text{in}} \subset \partial \mathcal{D}$ zulassen.
 Wir sind letztendlich an der Konzentration dieser Substanz an einer Stelle $x \in \overline{\mathcal{D}}$ zu einem Zeitpunkt $t \in \mathbb{T}$ interessiert. \newline
-Bevor allerdings die Konzentration als Lösung des Transportproblems bestimmt werden kann, muss zunächst das Flussvektorfeld $q: \overline{\mathcal{D}} \rightarrow \R^d$ berechnet werden. \newline
-Sei hierfür $p: D \rightarrow \R$ der hydrostatische Druck, $\kappa: D \rightarrow (\R_{\text{sym}})^{d \times d}$ der Permeabilitätstensor und $G=(0,0,p_0 g_0)^{\top}$. 
+Bevor allerdings die Konzentration als Lösung des Transportproblems bestimmt werden kann, muss zunächst das Flussvektorfeld $q \colon \overline{\mathcal{D}} \rightarrow \R^d$ berechnet werden. \newline
+Sei hierfür $p \colon D \rightarrow \R$ der hydrostatische Druck, $\kappa \colon D \rightarrow (\R_{\text{sym}})^{d \times d}$ der Permeabilitätstensor und $G=(0,0,p_0 g_0)^{\top}$. 
 Wie bereits in der Einleitung angedeutet, kann der Fluss des Regenwassers durch das Darcy-Gesetz $q=-\kappa(\nabla p + G)$ modelliert werden.
-Durch $u(x) := p(x) + p_0 g_0 x_3$ vereinfacht sich das Darcy-Gesetz zu $q=-\kappa \nabla u$.\newline
+Durch $u(x) \coloneqq p(x) + p_0 g_0 x_3$ vereinfacht sich das Darcy-Gesetz zu $q=-\kappa \nabla u$.\newline
 Nehmen wir die physikalische Annahme hinzu, dass der Fluss $q$ 'quellfrei' sein soll, also an keiner Stelle Masse verschwinden oder erscheinen kann, erhalten wir das Potentialströmungsproblem:
-\[ \text{Bestimme } u:\overline{\mathcal{D}} \to \R \text{ und } q: \overline{\mathcal{D}} \to \R^2 \text{ mit } \newline \]
+\[ \text{Bestimme } u\colon \overline{\mathcal{D}} \to \R \text{ und } q\colon \overline{\mathcal{D}} \to \R^2 \text{ mit } \newline \]
 \[\setlength\arraycolsep{1pt}
 \text{(PS)}\begin{cases} 
 \begin{array}{rll}
@@ -24,15 +24,15 @@ u           &= u_D               &\text{ , } \text{auf } \Gamma_D \\
 \begin{Bemerkung}
 	Wir wollen aus verschiedenen Gründen direkt die sogenannte gemischte Formulierung des Potentialströmungsproblem nutzen. Näheres dazu findet sich im nächsten Abschnitt.
 \end{Bemerkung}
-Anschließend suchen wir die Dichteverteilung $\rho: \mathcal{D} \times \mathbb{T} \rightarrow \R_{\geq0} $ einer transportierten Substanz (in unserem Modell das Öl).  \newline
-Gegeben sei dazu die Anfangsverteilung $\rho_0: \mathcal{D} \rightarrow \R_{\geq0}$ und der Einfluss der Substanz über die Zeit
+Anschließend suchen wir die Dichteverteilung $\rho\colon \mathcal{D} \times \mathbb{T} \rightarrow \R_{\geq0} $ einer transportierten Substanz (in unserem Modell das Öl).  \newline
+Gegeben sei dazu die Anfangsverteilung $\rho_0\colon \mathcal{D} \rightarrow \R_{\geq0}$ und der Einfluss der Substanz über die Zeit
 $
-\rho_{\text{in}} : \Gamma_{\text{in}} \times \mathbb{T} \rightarrow \R_{\geq0} \text{ mit }  \Gamma_{\text{in}} \coloneqq  \{ z \in \partial \mathcal{D}: q(z)\cdot \nu(z) \leq 0 \} \subset  \partial \mathcal{D}
+\rho_{\text{in}} \colon \Gamma_{\text{in}} \times \mathbb{T} \rightarrow \R_{\geq0} \text{ mit }  \Gamma_{\text{in}} \coloneqq  \{ z \in \partial \mathcal{D}\colon q(z)\cdot \nu(z) \leq 0 \} \subset  \partial \mathcal{D}
 $.
 Dabei ist $\nu(z)$ der äußere Normalenvektor im (Rand-)Punkt $z$.
 Wir bedienen uns wieder der Physik und fordern die Erfüllung der Bilanzgleichung
 \begin{align*}
-\forall K \subseteq \mathcal{D} , t\in \mathbb{T} : \frac{d}{dt} \int_K \rho(x,t) \, \mathrm{d}x + \int_{\partial K} \rho(x,t)q(x)\cdot \nu(x) \, \mathrm{d}a = 0.
+\forall K \subseteq \mathcal{D} , t\in \mathbb{T} \colon \frac{d}{dt} \int_K \rho(x,t) \, \mathrm{d}x + \int_{\partial K} \rho(x,t)q(x)\cdot \nu(x) \, \mathrm{d}a = 0.
 \end{align*}
 Wenden wir für ein zulässiges $K \subseteq \mathcal{D}$ und $\rho,q \in C^1(\mathcal{D})$ den Satz von Gauß an, erhalten wir
 \begin{align*}
@@ -45,7 +45,7 @@ und können so die lineare Transportgleichung ableiten:
 Mit den entsprechenden Rand- und Anfangswerten erhalten wir so:
 
 \[ 
-\text{Bestimme } \rho: \overline{\mathcal{D}} \times \mathbb{T} \to \R_{\geq 0} \text{, sodass} \newline \]
+\text{Bestimme } \rho \colon \overline{\mathcal{D}} \times \mathbb{T} \to \R_{\geq 0} \text{, sodass} \newline \]
 \[\setlength\arraycolsep{1pt}
 \text{(TP)}\begin{cases} 
 \begin{array}{rlll}
@@ -64,14 +64,14 @@ Sei dazu $(\Omega, \mathcal{A},\mathbb{P})$ ein Wahrscheinlichkeitsraum und ab n
 \begin{Bemerkung}
 	Grundsätzlich funktionieren die vorgestellten Verfahren auch für $d=3$, wir wollen uns aber der Anschaulichkeit halber auf zwei Dimensionen beschränken. Das so betrachtete Gebiet $\mathcal{D}$ lässt sich so z.B. als Querschnitt einer Bodenschicht interpretieren.
 \end{Bemerkung} 
-Weiter sei nun $\kappa (\cdot,x): \Omega \rightarrow \R_{\geq0}$ die (vom Zufall abhängige) Permeabilität.
+Weiter sei nun $\kappa (\cdot,x) \colon \Omega \rightarrow \R_{\geq0}$ die (vom Zufall abhängige) Permeabilität.
 Wie schon an anderer Stelle (z.B. in \cite{kumar2018multigrid}) wollen wir die Permeabilität als lognormal-Feld modellieren.
 Unser so entstehendes Problem fällt somit in den Bereich der Uncertainty Quantification und ist gegeben durch: 
 
 
 \begin{align*}
 \setlength\arraycolsep{1pt}
-&\text{Für jedes benötigte } \omega \in \Omega \text{, bestimme } u(\omega,\cdot):\overline{\mathcal{D}} \to \R \text{ und } q(\omega, \cdot): \overline{\mathcal{D}} \to \R^2 \text{ mit } \\
+&\text{Für jedes benötigte } \omega \in \Omega \text{, bestimme } u(\omega,\cdot)\colon \overline{\mathcal{D}} \to \R \text{ und } q(\omega, \cdot) \colon \overline{\mathcal{D}} \to \R^2 \text{ mit } \\
 &\text{(PS)}
 	\begin{cases}
 		\begin{array}{rlll}
@@ -81,7 +81,7 @@ Unser so entstehendes Problem fällt somit in den Bereich der Uncertainty Quanti
 		u(\omega,x) &= u_D(x)  &\text{, für } x \in \Gamma_D \\
 		\end{array}
 	\end{cases} \\
-&\text{Für } q: \Omega \times \overline{\mathcal{D}} \to \R^2 \text{, bestimme }\rho: \Omega \times \overline{\mathcal{D}} \times \mathbb{T} \to \R_{\geq 0} \text{ mit} \\
+&\text{Für } q\colon \Omega \times \overline{\mathcal{D}} \to \R^2 \text{, bestimme }\rho \colon \Omega \times \overline{\mathcal{D}} \times \mathbb{T} \to \R_{\geq 0} \text{ mit} \\
 &\text{(TP)} 
 	\begin{cases}
 		\begin{array}{rlll}
@@ -92,11 +92,11 @@ Unser so entstehendes Problem fällt somit in den Bereich der Uncertainty Quanti
 	\end{cases} \\
 &\text{ für die Anfangs- und Randwerte: } \\ 
 	&\begin{array}{llr}
-		g_N&: \Gamma_{\text{N}} \to \R \\
-		u_D&: \Gamma_{\text{D}} \to \R \\
-	    \rho_{\text{in}}&: \Gamma_{\text{in}} \times \mathbb{T} \to \R_{\geq0} \\
-		\rho_0&: \mathcal{D} \to \R_{\geq0} \\
+		g_N&\colon \Gamma_{\text{N}} \to \R \\
+		u_D&\colon \Gamma_{\text{D}} \to \R \\
+	    \rho_{\text{in}}&\colon \Gamma_{\text{in}} \times \mathbb{T} \to \R_{\geq0} \\
+		\rho_0&\colon \mathcal{D} \to \R_{\geq0} \\
 	\end{array} \newline \\
-&\text{ wobei } \partial \mathcal{D} = \Gamma_{\text{D}} \dot{\cup} \Gamma_{\text{N}}  \text{ und }  \Gamma_{\text{in}} \coloneqq  \{ z \in \partial \mathcal{D}: q(z)\cdot \nu(z) \leq 0 \} \subset  \partial \mathcal{D}
+&\text{ wobei } \partial \mathcal{D} = \Gamma_{\text{D}} \dot{\cup} \Gamma_{\text{N}}  \text{ und }  \Gamma_{\text{in}} \coloneqq  \{ z \in \partial \mathcal{D}\colon q(z)\cdot \nu(z) \leq 0 \} \subset  \partial \mathcal{D}
 \end{align*}
 Dabei stellen wir uns die Aufgabe, den Erwartungswert eines gegebenen Zielfunktionals $Q(\rho(\omega))$ zu berechnen, etwa dem Ausfluss der transportierten Substanz über den Rand. An dieser Stelle können wir dann, nachdem wir uns in den nächsten zwei Unterabschnitten damit beschäftigt haben, wie wir obige Probleme numerisch lösen, die MLMC Methode nutzen, um diesen Erwartungswert zu berechnen. 

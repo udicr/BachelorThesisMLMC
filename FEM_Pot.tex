@@ -60,14 +60,14 @@ Zudem führen wir für alle Zerlegungen folgende Bezeichnungen ein:
 %	\item $ \mathcal{D}_h \coloneqq \bigcup_{K \in \mathcal{T}} K $ sei die Menge der Zellen
 	\item ein $ z \in \mathcal{V}_K \coloneqq \{ z_{K,0} , z_{K,1} , z_{K,2}, z_{K,3}\} \subset \R^2 $ nennen wir Knoten und $\mathcal{V}_K$ die Menge der Knoten von K
 	\item $ \mathcal{V}_{\mathcal{T}} \coloneqq \bigcup_{K \in \mathcal{T}} \mathcal{V}_K $ sei die Menge aller Knoten
-	\item $\mathcal{F}  \coloneqq (\{ \partial K_1 \cap \partial K_2 : K_1,K_2 \in \mathcal{T} \} \cup \{ \partial K_1 \cap \partial \mathcal{D} : K_1 \in \mathcal{T} \}) \setminus \{\emptyset\} $ sei die Menge aller Seiten
-	\item $ \mathcal{F}_K \coloneqq (\{ \partial K \cap \partial K' : K' \in \mathcal{T} \} \cup \{ \partial K \cap \partial \mathcal{D} \}) \setminus \{ \emptyset \} $ sei die Menge aller Seiten von K 
+	\item $\mathcal{F}  \coloneqq (\{ \partial K_1 \cap \partial K_2 \colon K_1,K_2 \in \mathcal{T} \} \cup \{ \partial K_1 \cap \partial \mathcal{D} \colon K_1 \in \mathcal{T} \}) \setminus \{\emptyset\} $ sei die Menge aller Seiten
+	\item $ \mathcal{F}_K \coloneqq (\{ \partial K \cap \partial K' \colon K' \in \mathcal{T} \} \cup \{ \partial K \cap \partial \mathcal{D} \}) \setminus \{ \emptyset \} $ sei die Menge aller Seiten von K 
 	\item $ \partial \mathcal{D}_h \coloneqq \bigcup_{F \in \mathcal{F}} F $ sei der Rand von $ \mathcal{D}_h $.
 \end{itemize}
 
 \subsubsection{Schwache Formulierung}
 Betrachten wir also die deterministische Version des Potentialströmungsproblems:
-\[ \text{Bestimme } u:\overline{\mathcal{D}} \to \R \text{ und } q: \overline{\mathcal{D}} \to \R^2 \text{ mit } \newline \]
+\[ \text{Bestimme } u \colon \overline{\mathcal{D}} \to \R \text{ und } q \colon \overline{\mathcal{D}} \to \R^2 \text{ mit } \newline \]
 \[\setlength\arraycolsep{1pt}
 \text{(PS)}\begin{cases} 
 \begin{array}{rlcr}
@@ -80,8 +80,8 @@ u           &= u_D               &\text{ ,} \text{auf } \Gamma_D \\
 \]
 Satz \ref{testfunktionen} sagt aus, dass wir in obiger Formulierung Gleichung (1) mit Testfunktionen $\phi \in H^1(\mathcal{D})$ und Gleichung (2) mit Testfunktionen $\psi \in H^1(\dive,\mathcal{D})$ multiplizieren und anschließend über $\mathcal{D}$ integrieren können und so eine äquivalente schwache Formulierung herleiten:
 \begin{align*}
-	\int_{\mathcal{D}} \dive(q) \phi \dx &= 0 \text{ für alle Testfunktionen } \phi : \mathcal{D} \to \R \\
-	\int_{\mathcal{D}} (q + \kappa \nabla u) \cdot \psi \dx &= 0 \text{ für alle Testfunktionen } \psi : \mathcal{D} \to \R^2
+	\int_{\mathcal{D}} \dive(q) \phi \dx &= 0 \text{ für alle Testfunktionen } \phi \colon \mathcal{D} \to \R \\
+	\int_{\mathcal{D}} (q + \kappa \nabla u) \cdot \psi \dx &= 0 \text{ für alle Testfunktionen } \psi \colon \mathcal{D} \to \R^2
 \end{align*}
 Da $\kappa$ weiter symmetrisch positiv definit ist, lässt sich letztere Gleichung zu 
 \begin{align*}
@@ -92,7 +92,7 @@ umformen. Außerdem wollen wir nun noch die Dirichlet-Randbedingungen $u = u_D \
 
 
 \[ \int_{\partial\Omega} (u\psi) \cdot \nu \da \stackrel{\text{Gauß}}{=} 
- \int_{\Omega} \dive(u\psi) \dx = \int_{\Omega} \nabla u \cdot \psi \dx + \int_{\Omega} u \dive(\psi) \dx \quad (\psi:\Omega \to \R^2) \]
+ \int_{\Omega} \dive(u\psi) \dx = \int_{\Omega} \nabla u \cdot \psi \dx + \int_{\Omega} u \dive(\psi) \dx \quad (\psi \colon \Omega \to \R^2) \]
 Wählen wir nun unseren Ansatzraum so, dass  für die Funktion $ \psi$ gilt $ \psi \cdot \nu = 0 \text{ auf } \Gamma_N $. Damit folgt
 \begin{align*}
 \int_{\Gamma_D} (u_D\psi) \cdot \nu \da \overset{\psi \cdot \nu|_{\Gamma_N} = 0}{\underset{u |_{\Gamma_D} = u_D} {=}} \int_{\partial\Omega} (u\psi) \cdot \nu \da = \underbrace{\int_{\Omega} \nabla u \cdot \psi \dx}_{\stackrel{(\star)}{=}- \int_{\Omega} (\kappa^{-1} q) \cdot \psi \dx } + \int_{\Omega} u \dive(\psi) \dx.
@@ -127,11 +127,11 @@ Als Nächstes soll es nun Ziel sein, eine Lösung der im letzten Abschnitt erkl�
 	\begin{enumerate}[label=(\alph*)]
 		\item $ \{ \psi_i \}_{i=1}^{N} $ heißt Seitenbasis und ist definiert durch
 			\begin{align*}
-					\forall i,j \in \{1, \dots , N \} : \int_{F_j} \psi_i \cdot \nu^K \da = \pm \delta_{i,j} \text{ und }  \psi_i|_K \in \mathbb{P}_1(K,\R^2) \cap C(\overline{\mathcal{D}}) \ (K \in \mathcal{T}) 
+					\forall i,j \in \{1, \dots , N \} \colon \int_{F_j} \psi_i \cdot \nu^K \da = \pm \delta_{i,j} \text{ und }  \psi_i|_K \in \mathbb{P}_1(K,\R^2) \cap C(\overline{\mathcal{D}}) \ (K \in \mathcal{T}) 
 			\end{align*} 
 		\item $ \{ \mu_i \}_{i=1}^{M} $ heißt Zellenbasis und ist gegeben durch
 			\begin{align*}
-				\forall i \in \{1, \dots , M \} : \mu_i \coloneqq  \mathds{1}_{K_i}.
+				\forall i \in \{1, \dots , M \} \colon \mu_i \coloneqq  \mathds{1}_{K_i}.
 			\end{align*}
 	\end{enumerate}
 \end{Definition} 
@@ -140,7 +140,7 @@ Anschließend können wir mithilfe dieser Basisfunktionen die Testräume bzw. Fi
 \begin{Definition}(Ansatzräume)
 	\begin{enumerate}[label=(\alph*)]
 		\item $ W_h \coloneqq \spann \{ \psi_1,\dots,\psi_{N}\}$ (Seitenansatzraum/ Raum für $ \psi $ und $ q_h $)
-		\item $ W_h(g) \coloneqq \{ \psi_h \in W_h:  \int_F \psi_h \cdot \nu \da = \int_F g \da \; \text{ für alle } F \subseteq \Gamma_{\text{N}})  \}$
+		\item $ W_h(g) \coloneqq \{ \psi_h \in W_h \colon  \int_F \psi_h \cdot \nu \da = \int_F g \da \; \text{ für alle } F \subseteq \Gamma_{\text{N}})  \}$
 		\item $ \mathcal{Q}_h \coloneqq \spann \{ \mu_1, \dots, \mu_{M} \} $ (Zellenansatzraum/ Raum für $\phi $ und $ u_h $)
 	\end{enumerate}
 \end{Definition}
@@ -187,7 +187,7 @@ Wir können nun damit beginnen, das so entstandene endlich dimensionale Problem 
 	\end{align*}
 	und (für die Randbedingungen)
 	\begin{align*}
-	\underline{W}(g) \coloneqq \left\{ \underline{q} \in \R^N : \underline{q}[k] = \int_{F_k} g  \da \ (\text{für } k \text{ mit } F_k \subseteq \Gamma_N) \right\} 
+	\underline{W}(g) \coloneqq \left\{ \underline{q} \in \R^N \colon \underline{q}[k] = \int_{F_k} g  \da \ (\text{für } k \text{ mit } F_k \subseteq \Gamma_N) \right\} 
 	\end{align*}
 Unser zu lösendes Problem lässt sich so mit $ q_h = \sum_{n=1}^{N} \underline{q}[n] \psi_n $ und $ u_h = \sum_{m=1}^{M} \underline{u}[m] \mu_m $ umformen zu :
 \begin{align*}

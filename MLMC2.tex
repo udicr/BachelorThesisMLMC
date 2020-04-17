@@ -1,7 +1,7 @@
 % !TeX root = bachelorarbeit.tex
 Nachdem wir in Abschnitt 2 an einige Grundlagen erinnert haben, in Abschnitt 3 und 4 sowohl die Monte Carlo Methode, als auch die Multilevel Monte Carlo Methode eingeführt und in Abschnitt 5 das Transportproblem, sowie das Potentialströmungsproblem inklusive numerischer Verfahren, welche zur Lösung dergleichen genutzt werden können, erklärt haben, soll nun dieser Abschnitt dazu dienen, die bisherigen Ergebnisse zu bündeln und die Anwendung der Multilevel Monte Carlo Methode auf partielle Differentialgleichungen am Beispiel des Transportproblems nahe zu legen. Dabei nimmt dieser Abschnitt einen zentralen Platz in dieser Thesis ein, weswegen wir noch einmal darlegen wollen, was genau unser Ziel ist und wie wir die uns an dieser Stelle zur Verfügung stehenden Mittel einsetzen, um das Gewünschte zu erreichen. Sei hierzu $ \mathcal{ D} \subset \R^2 $ beschränktes Polygongebiet, $ \mathbb{T} = (0,T] $ für ein $ T>0 $ und $ (\Omega,\mathcal{A},\mathbb{P}) $ ein Wahrscheinlichkeitsraum.
 \begin{align*}
-&\text{Für ein stochastisches Flussvektorfeld } q: \Omega \times \overline{\mathcal{D}} \to \R^2 \text{, bestimme }\rho: \Omega \times \overline{\mathcal{D}} \times \mathbb{T} \to \R_{\geq 0}\\ 
+&\text{Für ein stochastisches Flussvektorfeld } q \colon \Omega \times \overline{\mathcal{D}} \to \R^2 \text{, bestimme }\rho \colon \Omega \times \overline{\mathcal{D}} \times \mathbb{T} \to \R_{\geq 0}\\ 
 &\text{mit} \\
 &\text{(pTP)} 
 \begin{cases}
@@ -13,12 +13,12 @@ Nachdem wir in Abschnitt 2 an einige Grundlagen erinnert haben, in Abschnitt 3 u
 \end{cases} \\
 &\text{ für die Anfangs- und Randwerte: } \\ 
 &\begin{array}{llr}
-g_N&: \Gamma_{\text{N}} \to \R \\
-u_D&: \Gamma_{\text{D}} \to \R \\
-\rho_{\text{in}}&: \Gamma_{\text{in}} \times \mathbb{T} \to \R_{\geq0} \\
-\rho_0&: \mathcal{D} \to \R_{\geq0} \\
+g_N& \colon \Gamma_{\text{N}} \to \R \\
+u_D& \colon \Gamma_{\text{D}} \to \R \\
+\rho_{\text{in}}& \colon \Gamma_{\text{in}} \times \mathbb{T} \to \R_{\geq0} \\
+\rho_0& \colon \mathcal{D} \to \R_{\geq0} \\
 \end{array} \newline \\
-&\text{ wobei } \partial \mathcal{D} = \Gamma_{\text{D}} \dot{\cup} \Gamma_{\text{N}}  \text{ und }  \Gamma_{\text{in}} \coloneqq  \{ z \in \partial \mathcal{D}: q(z)\cdot \nu(z) \leq 0 \} \subset  \partial \mathcal{D}
+&\text{ wobei } \partial \mathcal{D} = \Gamma_{\text{D}} \dot{\cup} \Gamma_{\text{N}}  \text{ und }  \Gamma_{\text{in}} \coloneqq  \{ z \in \partial \mathcal{D} \colon q(z)\cdot \nu(z) \leq 0 \} \subset  \partial \mathcal{D}
 \end{align*}
 Genauer sei $ Q(\omega) = J(\rho(\omega)) $ ein gegebenes Zielfunktional, dann ist es unser Ziel, den Erwartungswert $ \mathbb{E}[Q(\omega)] $ möglichst genau zu bestimmen. Beispielsweise kann eine beliebige Norm von $ \rho(\omega) $ als Zielfunktional betrachtet werden.
 Unser Modellproblem lautet also:
@@ -27,7 +27,7 @@ Unser Modellproblem lautet also:
 \text{(MP)}
 \begin{cases}
 \label{Modellproblem}
-&\text{Für ein stochastisches Flussvektorfeld } q: \Omega \times \overline{\mathcal{D}} \to \R^2 \\
+&\text{Für ein stochastisches Flussvektorfeld } q \colon \Omega \times \overline{\mathcal{D}} \to \R^2 \\
 &\text{und ein Zielfunktional } J \text{ , bestimme }  \mathbb{E}[J(\rho)]  \\
 &\text{mit } \rho \text{ als Lösung von (pTP) inklusive Anfangs- und Randwerten}
 \end{cases}
@@ -68,10 +68,10 @@ Bei der Standard Monte Carlo Methode schätzen wir $ \mathbb{E}[Q] $ durch den M
 	\label{MC-Schätzer}
 	\widehat{Q}_{h,n}^{\text{MC}} \coloneqq \frac{1}{n} \sum_{i=1}^{n} Q_h(\omega_i) = \sum_{i=1}^{n} J(\rho_h(\omega_i))
 \end{align}
-Dabei modellieren wir das zufällige Flussvektorfeld $ q(\omega_i)  : \mathcal{D} \to \R^2 $, indem wir zunächst für $ \kappa(\omega_i) : \mathcal{D} \rightarrow (\R_{\text{sym}})^{d \times d} $ ein lognormal-verteiltes unabhängiges Zufallsfeld erzeugen und anschließend das Potentialströmungsproblem
+Dabei modellieren wir das zufällige Flussvektorfeld $ q(\omega_i)  \colon \mathcal{D} \to \R^2 $, indem wir zunächst für $ \kappa(\omega_i) \colon \mathcal{D} \rightarrow (\R_{\text{sym}})^{d \times d} $ ein lognormal-verteiltes unabhängiges Zufallsfeld erzeugen und anschließend das Potentialströmungsproblem
 \begin{align*}
 \setlength\arraycolsep{1pt}
-&\text{Für } \kappa(\omega_i) : \mathcal{D} \rightarrow (\R_{\text{sym}})^{d \times d} \text{, bestimme } u(\omega_i,\cdot):\overline{\mathcal{D}} \to \R \text{ und } q(\omega_i, \cdot): \overline{\mathcal{D}} \to \R^2 \text{ mit } \\
+&\text{Für } \kappa(\omega_i) \colon \mathcal{D} \rightarrow (\R_{\text{sym}})^{d \times d} \text{, bestimme } u(\omega_i,\cdot) \colon \overline{\mathcal{D}} \to \R \text{ und } q(\omega_i, \cdot) \colon \overline{\mathcal{D}} \to \R^2 \text{ mit } \\
 &\text{(PS)}
 \begin{cases}
 \begin{array}{rlll}
@@ -143,7 +143,7 @@ Wir nehmen an dieser Stelle an, dass sich die Gesamtkosten an Rechenoperationen,
  
 \subsection{Die Multilevel Monte Carlo Methode}
 
-Wie wir bereits in Abschnitt \ref{MLMC} dargelegt haben, ist die entscheidende Idee der Multilevel Monte Carlo Methode Zufallssamples auf mehreren verschiedenen Leveln $ \{ h_l : l = 0,\dots,L \} $ mit $ h_0 > h_1 > \cdots > h_L $ zu betrachten. Wir erinnern an dieser Stelle daran, dass wir für die Menge aller betrachtbaren Level $ \mathcal{H} = \{ h_0 , h_1 \coloneqq \frac{h_0}{2},h_2 \coloneqq \frac{h_1}{2} = \frac{h_0}{4}, \dots \} $ gefordert hatten, insbesondere war hier $0 \in \overline{\mathcal{H}}$. Theoretisch gesehen berechnet der Algorithmus, welchen wir an späterer Stelle noch formulieren wollen, für ein gegebenes $ \epsilon $ nur Samples auf den für diese Genauigkeit benötigten Leveln, einer endlichen Untermenge von $ \mathcal{H} $. Die Menge der tatsächlich betrachteten Samples $ \tilde{\mathcal{H}} = \{ h_l : l = 0,\dots,L \} \subset \mathcal{H} $ ist also stets endlich.
+Wie wir bereits in Abschnitt \ref{MLMC} dargelegt haben, ist die entscheidende Idee der Multilevel Monte Carlo Methode Zufallssamples auf mehreren verschiedenen Leveln $ \{ h_l \colon l = 0,\dots,L \} $ mit $ h_0 > h_1 > \cdots > h_L $ zu betrachten. Wir erinnern an dieser Stelle daran, dass wir für die Menge aller betrachtbaren Level $ \mathcal{H} = \{ h_0 , h_1 \coloneqq \frac{h_0}{2},h_2 \coloneqq \frac{h_1}{2} = \frac{h_0}{4}, \dots \} $ gefordert hatten, insbesondere war hier $0 \in \overline{\mathcal{H}}$. Theoretisch gesehen berechnet der Algorithmus, welchen wir an späterer Stelle noch formulieren wollen, für ein gegebenes $ \epsilon $ nur Samples auf den für diese Genauigkeit benötigten Leveln, einer endlichen Untermenge von $ \mathcal{H} $. Die Menge der tatsächlich betrachteten Samples $ \tilde{\mathcal{H}} = \{ h_l \colon l = 0,\dots,L \} \subset \mathcal{H} $ ist also stets endlich.
 Wie bereits in \ref{MLMC} erhalten wir 
 \[
 \mathbb{E}[Q_{h_L}] = \mathbb{E}[Q_{h_0}] + \sum_ {l=0}^L \mathbb{E}[Q_{h_l}-Q_{h_{l-1}}]  
@@ -232,7 +232,7 @@ Wir sind nun in der Lage folgendes zentrale Resultat aus \cite{cliffe2011multile
 	\end{align}
 	Wir führen nun eine Fallunterscheidung für das Verhältnis zwischen $ \beta $ und $ \gamma $ durch.
 	\begin{enumerate}[label=(\roman*)]
-		\item $ \beta = \gamma: $\\
+		\item $ \beta = \gamma \colon $\\
 		Wir setzen $ n_l = \lceil 2\epsilon^-2(L+1)c_2 2^{-\beta l} \rceil $ für $ l= 0,\dots,L $, dann gilt mit (b):
 		\[
 		\mathbb{V}[\widehat{Q}_{\tilde{\mathcal{H}},\{ n_l \}_{l=0}^L }^{\text{MLMC}}] = \sum_{l=0}^{L}\mathbb{V}[\widehat{Y}_l] \leq \sum_{l=0}^{L} c_2 n_l^{-1} 2^{- \beta l} \leq \frac{1}{2} \epsilon^2
@@ -248,7 +248,7 @@ Wir sind nun in der Lage folgendes zentrale Resultat aus \cite{cliffe2011multile
 		\[
 			C_{\epsilon}(\widehat{Q}_{\tilde{\mathcal{H}},\{ n_l \}_{l=0}^L }^{\text{MLMC}}) \leq \tilde{c}_1 \epsilon^{-2} (\log \epsilon )^2 , \quad \text{ für ein }\tilde{c}_1>0
 		\]
-		\item $ \beta > \gamma: $\\
+		\item $ \beta > \gamma \colon $\\
 		Wir setzen $ n_l = \lceil 2\epsilon^{-2} c_2 (1-2^{-(\beta-\gamma)/2})^{-1} 2^{-(\beta-\gamma)l/2} \rceil $, dann ist
 		\[
 		\sum_{l=0}^{L} \mathbb{V}[\widehat{Y}_l] \leq \frac{1}{2}\epsilon^2\left( 1-2^{-(\beta - \gamma)/2} \right) \sum_{l=0}^{L} 2^{-(\beta - \gamma)l/2} < \frac{1}{2} \epsilon^2 \ .
@@ -261,7 +261,7 @@ Wir sind nun in der Lage folgendes zentrale Resultat aus \cite{cliffe2011multile
 		\[
 			C_{\epsilon}(\widehat{Q}_{\tilde{\mathcal{H}},\{ n_l \}_{l=0}^L }^{\text{MLMC}}) \leq \tilde{c}_2 \epsilon^{-2}, \quad \text{  für ein }\tilde{c}_2>0
 		\]
-		\item $ \beta < \gamma $:\\
+		\item $ \beta < \gamma \colon $  \\
 		Wir setzen $ n_l =  \lceil  \epsilon^{-2} c_2 2^{(\gamma-\beta)L/2+1} \left( 1-2^{-(\gamma - \beta)/2} \right)^{-1} 2^{-(\beta+\gamma)l/2} \rceil $.
 		Dann ist 
 		\[
