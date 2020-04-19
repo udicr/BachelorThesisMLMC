@@ -3,7 +3,7 @@
 \subsection{Herleitung und Beispiel}
 Wie in \cite{lapeyre2003introduction} wollen wir uns, um die Monte Carlo Methode von Grund auf einzuführen, zunächst mit der numerischen Integration beschäftigen. Grundsätzlich handelt es sich bei der Monte Carlo Methode um einen sogenannten Erwartungswertschätzer. Bevor wir also ein Problem mithilfe der Monte Carlo Methode lösen können, müssen wir die Größe, welche wir berechnen wollen, zunächst in der Form eines Erwartungswertes ausdrücken.
 Wir suchen dann also einen Erwartungswert $ \mathbb{E}[X] $, wobei $ X $ eine Zufallsvariable, einen Zufallsvektor oder gar ein Zufallsfeld beschreiben kann.
-Mithilfe der Monte-Carlo-Methode können wir dann versuchen eben diesen Erwartungswert zu schätzen. Dazu müssen wir $ X $ simulieren können. Damit ist gemeint, dass wir in der Lage sein müssen eine Realisierung $ (x_1,\dots,x_n) $ von $ (X_1,\dots,X_n) $ zu generieren (oft sagt man auch in Anlehnung an das Bernoulli'sche Urnenmodell 'zu ziehen'). Dabei sollen die Zufallsgrößen $ X_1,\dots,X_n $ unabhängig sein und die gleiche Verteilung besitzen wie die Zufallsgröße $ X $. Außerdem sei vorausgesetzt, dass der Erwartungswert $ \mathbb{E}[X] < \infty $ existiert.
+Mithilfe der Monte-Carlo-Methode können wir dann versuchen, eben diesen Erwartungswert zu schätzen. Dazu müssen wir $ X $ simulieren können. Damit ist gemeint, dass wir in der Lage sein müssen eine Realisierung $ (x_1,\dots,x_n) $ von $ (X_1,\dots,X_n) $ zu generieren (oft sagt man auch in Anlehnung an das Bernoulli'sche Urnenmodell 'zu ziehen'). Dabei sollen die Zufallsgrößen $ X_1,\dots,X_n $ unabhängig sein und die gleiche Verteilung besitzen wie die Zufallsgröße $ X $. Außerdem sei vorausgesetzt, dass der Erwartungswert $ \mathbb{E}[X] < \infty $ existiert.
 Anschließend wird der gesuchte Erwartungswert durch
 \[
 	\mathbb{E}[X] \approx \frac{1}{n}(x_1 + \dots x_n)
@@ -43,7 +43,7 @@ approximiert.
 
  	Oft wollen wir über eine andere Grundmenge als $ [0,1]^d $ integrieren. 
  	Bei endlichen Mengen, etwa einer beschränkten Borelmenge $ B \subset \R^d $ mit $ 0 < \abs{B} \coloneqq \lambda^d(B) $ (hierbei ist $ \lambda^d(\cdot) $ das Borel-Lebesgue-Maß) lässt sich $ I = \int_{B} f(x) \dx $ ähnlich wie in obigem Beispiel berechnen.
-	Für einen Zufallsvektor $ U $ mit Gleichverteilung $ U(B) $ auf $ B $ existiert nämlich der Erwartungswert $ f(U) $ und es gilt:
+	Für einen Zufallsvektor $ U $ mit Gleichverteilung $ U(B) $ auf $ B $ existiert der Erwartungswert $ f(U) $ und es gilt:
 	\[
 		\mathbb{E}[f(U)] = \int_{B} f(x) \frac{1}{\abs{B}} \dx = \frac{I}{\abs{B}}
 	\]
@@ -72,7 +72,7 @@ approximiert.
 	Damit die Methode überhaupt in irgendeiner Weise als nützlich zu erachten ist, bedarf es Möglichkeiten, den Fehler \[
 	 \epsilon_n = \frac{1}{n}\sum_{i=1}^{n}X_i -  \mathbb{E}[X]
 	\]
-	abzuschätzen. Um diesem Problem beizukommen, bedienen wir uns zweier zentraler Aussagen der Wahrscheinlichkeitstheorie. Zum einen sagt uns das starke Gesetz großer Zahlen \ref{starkesGgZ}, dass unter der Voraussetzung $ \mathbb{E}[\abs{X}]<\infty $ der Fehler $ \epsilon_n $ für $ n \to \infty $ für fast alle $ \omega \in \Omega $ gegen $ 0 $ konvergiert. Wir erhalten also zunächst Konvergenz der Methode in einem sehr grundlegenden Sinn. Aus dem zentralen Grenzwertsatz \ref{ZGWS} lassen sich zum anderen Aussagen über die Genauigkeit der Methode und letztlich somit auch der Art der Konvergenz ableiten. Nach \ref{ZGWS} erhalten wir nämlich für eine u.i.v.-Folge $ (X_i)_{i \in \N} $ mit gleicher Verteilung wie $ X $ und $ \mathbb{E}[X^2] < \infty $, dass
+	abzuschätzen. Um diesem Problem beizukommen, bedienen wir uns zweier zentraler Aussagen der Wahrscheinlichkeitstheorie. Zum einen sagt uns das starke Gesetz großer Zahlen \ref{starkesGgZ}, dass unter der Voraussetzung $ \mathbb{E}[\abs{X}]<\infty $ der Fehler $ \epsilon_n $ für $ n \to \infty $ für fast alle $ \omega \in \Omega $ gegen $ 0 $ konvergiert. Wir erhalten also zunächst Konvergenz der Methode in einem sehr grundlegenden Sinn. Aus dem zentralen Grenzwertsatz \ref{ZGWS} lassen sich zum anderen Aussagen über die Genauigkeit der Methode und letztlich somit auch der Art der Konvergenz ableiten. Nach \ref{ZGWS} erhalten wir für eine u.i.v.-Folge $ (X_i)_{i \in \N} $ mit gleicher Verteilung wie $ X $ und $ \mathbb{E}[X^2] < \infty $, dass
 	 \[ 
 	 \frac{\sqrt{n}}{\sqrt{\mathbb{V}[X]}} \epsilon_n =  \frac{\frac{1}{\sqrt{n}}\sum_{i=1}^{n}X_i-\sqrt{n}\mathbb{E}[X]}{\sqrt{\mathbb{V}[X]}} = \frac{\sum_{i=1}^{n}X_i-n\mathbb{E}[X]}{\sqrt{n\mathbb{V}[X]}} \eqqcolon \hat{S}_n \stackrel{\mathcal{D}}{\to}  \widetilde{\mathcal{N}} \text{ für } n \to \infty \ ,
 	 \]
@@ -103,10 +103,10 @@ approximiert.
 	 	angeben. In der Praxis nehmen wir näherungsweise an, dass $ (\star) $ auch für ein festes $ n \in \N $ erfüllt ist, und entledigen uns so des Grenzwertes. Somit wird dann insbesondere die Wahl $ \hat{\mu} = \frac{1}{n}\sum_{i=1}^{n}(x_1,\dots,x_n) $ gerechtfertigt.
 	 \end{itemize}
  	Wir erhalten also (unter den eben erklärten Annahmen) eine Konvergenzrate des (wahrscheinlichen) Fehlers von $ \frac{\sigma}{\sqrt{n}} $. Dieses Resultat mag auf den ersten Blick relativ ernüchternd wirken, allerdings existieren Fälle, in denen solch eine langsame Methode die Bestmögliche ist. \cite{lapeyre2003introduction} nennt hierzu zum Beispiel Integrale in mehr als $ 100 $ Dimensionen oder besonders schwere parabolische Differentialgleichungen. Denn anders als andere Verfahren, besonders deutlich wird dies erneut auf der Ebene der Quadratur (vgl Beispiel \eqref{mlmcbeispiel}), sind Monte Carlo Methoden nicht vom sogenannten 'Curse of dimensionality' betroffen. Während bei anderen Quadraturformeln die Anzahl der benötigten Quadraturpunkte mit der Dimension im Exponent steigt, gelten obige Resultate unabhängig von der Dimension. Wir werden später Zufallsprobleme mit sehr hohen Dimensionen betrachten, da wir in einer Bodenschicht jede Zelle als einzelne Zufallsvariable betrachten werden. Deswegen ziehen wir die Monte Carlo Methode bzw. später die Multilevel Monte Carlo Methode einem anderen Ansatz zum Lösen stochastischer partieller Differentialgleichungen, wie etwa stochastische Finite Elemente, vor.
- 	Außerdem lohnt es sich zu erwähnen, dass wir im Falle der numerischen Integration - bis auf Integrierbarkeit und Messbarkeit - keine Voraussetzungen an die Regularität der Funktion $ f $ gestellt haben.\\
+ 	Außerdem ist es erwähnenswert, dass wir im Falle der numerischen Integration - bis auf Integrierbarkeit und Messbarkeit - keine Voraussetzungen an die Regularität der Funktion $ f $ gestellt haben.\\
  	Obiges Resultat legt außerdem nahe, dass es entscheidend für eine Aussage über die Konvergenz und Güte der Methode ist, die Standardabweichung $ \sigma $ zu kennen, oder zumindest über einen guten Schätzer für $ \sigma $ zu verfügen.
  	Falls uns $ \sigma $ bzw. $ \mathbb{V} $ nämlich sogar exakt bekannt ist, können wir die sogenannte Chebyshev Ungleichung \eqref{ChebCheb} ausnutzen:
- 	Da $ (X_i)_{i \in \N} $ eine u.i.v.-Folge mit Verteilung wie $ X $ ist, gilt nämlich mit den üblichen Rechenregeln für die Varianz (zu finden z.B. in \cite{brokate2016grundwissen} auf den Seiten 778 und 779)
+ 	Da $ (X_i)_{i \in \N} $ eine u.i.v.-Folge mit Verteilung wie $ X $ ist, gilt mit den üblichen Rechenregeln für die Varianz (zu finden z.B. in \cite{brokate2016grundwissen} auf den Seiten 778 und 779)
  	\[
  		\mathbb{V}[\frac{1}{n}\sum_{i=1}^{n}X_i] =  \frac{1}{n^2} \sum_{i=1}^{n} \mathbb{V}[X] = \frac{\mathbb{V}[X]}{n}
  	\]
